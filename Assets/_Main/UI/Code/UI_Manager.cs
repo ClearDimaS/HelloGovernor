@@ -27,6 +27,7 @@ public class UI_Manager : Singleton<UI_Manager>
             panel.Value.gameObject.SetActive(false);
         }
 
+        Debug.Log($"panels count: {panelsDict.Count}");
         foreach (var screen in screenDatasDict)
         {
             screen.Value.screen.gameObject.SetActive(false);

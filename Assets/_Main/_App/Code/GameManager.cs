@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        LaunchLobby();
+        LaunchGame();
     }
 
     public void LaunchLobby()
