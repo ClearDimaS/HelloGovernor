@@ -28,7 +28,9 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
+
+        var dir = delta.normalized;
+        rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(dir, Vector3.up), 1f);
         rb.MovePosition(rb.position + delta * Time.fixedDeltaTime * gameConfig.playerSpeed);
     }
 }
