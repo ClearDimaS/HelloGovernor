@@ -1100,7 +1100,7 @@ PrefabInstance:
     - target: {fileID: 6755986594778601473, guid: e9f3d18ac61214aa9bf74aae499ffbb7,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -373.00006
+      value: -373.00012
       objectReference: {fileID: 0}
     - target: {fileID: 6770039833638091028, guid: e9f3d18ac61214aa9bf74aae499ffbb7,
         type: 3}
@@ -1670,6 +1670,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 395677185903725752, guid: 7892a69ada47c407dbf0b59733a2da12,
+        type: 3}
+      propertyPath: animatorController
+      value: 
+      objectReference: {fileID: 9100000, guid: 9f58149dc528147348f334e56b55ed4d, type: 2}
     - target: {fileID: 6330541117859915596, guid: 7892a69ada47c407dbf0b59733a2da12,
         type: 3}
       propertyPath: m_RootOrder

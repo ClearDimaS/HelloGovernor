@@ -13,19 +13,5 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         StopAllCoroutines();
         var playerData = playerRepository.GetData();
-        if (playerData.levelIndex == 0)
-        {
-            //StartCoroutine(nameof(DoubleTapTutorial));
-        }
-
-        if (playerData.levelIndex == 1)
-        {
-            //StartCoroutine(nameof(DragTutorial));
-        }
-
-        if (playerData.levelIndex == 2)
-        {
-            //StartCoroutine(nameof(MagicTutorial));
-        }
     }
 }

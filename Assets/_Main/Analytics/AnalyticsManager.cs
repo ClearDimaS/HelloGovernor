@@ -7,9 +7,6 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
     protected override void OnCreated()
     {
         base.OnCreated();
-        GameManager.Instance.levelStartEvent += StartLevel;
-        GameManager.Instance.levelSuccessEvent += WinLevel;
-        GameManager.Instance.levelFailEvent += LoseLevel;
         AppMetrica.Instance.RequestTrackingAuthorization (status => {  });
     }
 
