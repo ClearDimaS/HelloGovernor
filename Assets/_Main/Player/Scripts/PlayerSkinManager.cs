@@ -18,7 +18,9 @@ public class PlayerSkinManager : MonoBehaviour
     private Animator animator;
     private SkinData[] skins;
 
+    public GameObject[] Prefabs { get; private set; }
     public Animator Animator => animator;
+    public int SkinCount => skins.Length;
     
     private void Start()
     {
@@ -52,18 +54,17 @@ public class PlayerSkinManager : MonoBehaviour
                 skins[i] = new SkinData(skinConfig.femaleSkins[i/2]);
             }
         }
+
+        Prefabs = skins.Select(x => x.prefab).ToArray();
     }
 
     private void SpawnSkin()
     {
         var data = playerDataRepository.GetData();
         var modedIndex = data.skinIndex % skins.Length;
-        if (modedIndex % 2 == 0)
-        {
-            skinGO = Instantiate(skins[modedIndex].prefab, gfxRoot);
-            animator = skinGO.GetComponentInChildren<Animator>();
-            animator.runtimeAnimatorController = animatorOverride;
-        }
+        skinGO = Instantiate(skins[modedIndex].prefab, gfxRoot);
+        animator = skinGO.GetComponentInChildren<Animator>();
+        animator.runtimeAnimatorController = animatorOverride;
         skinIndex = data.skinIndex;
     }
 }
