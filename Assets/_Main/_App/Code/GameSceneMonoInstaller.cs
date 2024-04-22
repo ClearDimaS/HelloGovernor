@@ -10,5 +10,7 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<PlayerSkinManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<UI_Manager>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<HousesManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<EnvironmentManager>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 }

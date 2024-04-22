@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -12,15 +13,22 @@ public class BuildingLevel
 
 public class HouseBuilding : MonoBehaviour
 {
+    [Inject] private HousesManager housesManager;
+    
     [SerializeField] private BuildingLevel[] gfxLevels;
-
+    [field: SerializeField] public Transform CitizenPlace { get; private set; }
+    
     private int colorOptionIndex = 0;
     private int levelIndex = 0;
     
+    public int LevelIndex => levelIndex;
+    public int CitizensCount => 2;
+
     private void Awake()
     {
         colorOptionIndex = Random.Range(0, gfxLevels[0].colors.Length);
-        levelIndex = Random.Range(0, gfxLevels.Length);
+        levelIndex = Random.Range(-1, gfxLevels.Length);
+        housesManager.Add(this);
     }
 
     private void Start()

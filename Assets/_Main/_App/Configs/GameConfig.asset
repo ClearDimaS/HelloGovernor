@@ -12,15 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcd6e347890c4e64bd5f6c7bf346652, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  playerSpeed: 5
+  moveForward: {x: 0, y: 0, z: -1}
+  moveRight: {x: -1, y: 0, z: 0}
   delayBeforeResult: 2
-  themesPeriod: 1
-  levelsPeriod: 1
-  buildingsPeriod: 1
-  soldierSpeed: 3
-  crowdSpacing: 0.5
-  spawnSoldiersTimeTower: 0.6
-  spawnSoldiersTimeCabin: 1
-  spawnSoldiersTimeMine: 1
-  maxSoldiersCountMine: 2
-  maxSoldiersCountCabin: 3
-  maxSoldiersCountTower: 7
+  <mapSize>k__BackingField: {x: 50, y: 50, z: 50}
+  <mapCenter>k__BackingField: {x: 0, y: 0, z: 0}
