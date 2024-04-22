@@ -39,7 +39,7 @@ public class SkinChooser : MonoBehaviour
     }
 
     [Button]
-    private void Show()
+    public void Show()
     {
         cam.enabled = true;
         if (!isInit)

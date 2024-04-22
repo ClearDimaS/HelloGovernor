@@ -1,30 +1,31 @@
 {
-    "scopedRegistries": [
-      {
-        "name": "Game Package Registry by Google",
-        "url": "https://unityregistry-pa.googleapis.com/",
-        "scopes": [
-          "com.google"
-        ]
-      },
-      {
-        "name": "package.openupm.com",
-        "url": "https://package.openupm.com",
-        "scopes": [
-          "com.gameanalytics"
-        ]
-      }
-    ],
+  "scopedRegistries": [
+    {
+      "name": "Game Package Registry by Google",
+      "url": "https://unityregistry-pa.googleapis.com/",
+      "scopes": [
+        "com.google"
+      ]
+    },
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.gameanalytics"
+      ]
+    }
+  ],
   "dependencies": {
-    "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.gameanalytics.sdk": "7.8.0",
     "com.google.external-dependency-manager": "file:../com.google.external-dependency-manager-1.2.168.tgz",
-    "com.unity.nuget.newtonsoft-json": "3.0.1",
+    "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
     "com.unity.collab-proxy": "2.0.7",
     "com.unity.ide.rider": "3.0.24",
     "com.unity.ide.visualstudio": "2.0.18",
     "com.unity.ide.vscode": "1.2.5",
+    "com.unity.nuget.newtonsoft-json": "3.0.1",
+    "com.unity.recorder": "3.0.3",
     "com.unity.render-pipelines.universal": "12.1.12",
     "com.unity.test-framework": "1.1.33",
     "com.unity.textmeshpro": "3.0.6",
