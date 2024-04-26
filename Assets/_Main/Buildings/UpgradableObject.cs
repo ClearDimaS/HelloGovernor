@@ -8,24 +8,30 @@ public class UpgradableData
 {
     public int spentMoney;
     public int level;
+    public int optionIndex;
 }
 
+[RequireComponent(typeof(UpgradableSavable))]
 public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
 {
     [Inject] private UpgradablePricesManager _upgradablePricesManager;
-
+    
     [SerializeField] private bool autoGrantLevel1;
-    [SerializeField] private ScaleAnimator[] levels;
+    [SerializeField] protected ScaleAnimator[] levels;
     [SerializeField] private MoneyConsumer moneyConsumer;
 
     private List<Price> levelPrices;
-    private UpgradableData data;
+    protected UpgradableData data;
     
     public int LevelsCount => levels.Length;
     public int UpgradesCount => autoGrantLevel1 ? LevelsCount - 1 : LevelsCount;
     
     private void Awake()
     {
+        if (moneyConsumer == null)
+        {
+            moneyConsumer = GetComponentInChildren<MoneyConsumer>();
+        }
         moneyConsumer.reachGoalEvent += LevelUp;
     }
 
@@ -55,7 +61,7 @@ public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
         SetPrice();
     }
 
-    private void RefreshLevelGFX(bool instant)
+    protected virtual void RefreshLevelGFX(bool instant)
     {
         for (int i = 0; i < levels.Length; i++)
         {

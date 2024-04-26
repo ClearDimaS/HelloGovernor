@@ -20,6 +20,9 @@ public class SaveManager : Singleton<SaveManager>
 
     private void OnApplicationFocus(bool hasFocus)
     {
+#if UNITY_EDITOR
+        return;
+#endif
         if (!hasFocus)
         {
             SaveAll();

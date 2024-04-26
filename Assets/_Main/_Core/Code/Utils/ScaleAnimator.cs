@@ -17,9 +17,21 @@ public class ScaleAnimator : MonoBehaviour
     [SerializeField] private Vector3[] localScales;
     
     private int state = -1;
+    private bool isInit = false;
     
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        if (isInit)
+        {
+            return;
+        }
+
+        isInit = true;
         mrs = mrs.Where(x => x != null).ToArray();
         localPositions = mrs.Select(x => x.transform.localPosition).ToArray();
         localScales = mrs.Select(x => x.transform.localScale).ToArray();
@@ -39,6 +51,8 @@ public class ScaleAnimator : MonoBehaviour
         {
             return;
         }
+
+        Init();
         state = 1;
         if (instant)
         {
@@ -66,6 +80,8 @@ public class ScaleAnimator : MonoBehaviour
         {
             return;
         }
+        
+        Init();
         state = 0;
         if (instant)
         {

@@ -24,7 +24,12 @@ public class UpgradablePricesManager : MonoBehaviour
     [SerializeField] private List<MoneyConsumerData> upgradablePriceDatas;
 
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
-    
+
+    private void Awake()
+    {
+        CollectAllConsumers();
+    }
+
     public List<Price> GetLevelPrices(UpgradableObject upgradable)
     {
         var prices = GetLevelPricesInternal(upgradable);
@@ -53,6 +58,15 @@ public class UpgradablePricesManager : MonoBehaviour
     [Button]
     private void CollectAllConsumers()
     {
+        for (int i = 0; i < upgradablePriceDatas.Count; i++)
+        {
+            if (upgradablePriceDatas[i].upgradable == null)
+            {
+                upgradablePriceDatas.RemoveAt(i);
+                i--;
+            }
+        }
+        
         var onSceneUpgradables = FindObjectsOfType<UpgradableObject>(true);
         foreach (var onScene in onSceneUpgradables)
         {
@@ -61,6 +75,12 @@ public class UpgradablePricesManager : MonoBehaviour
             for (int i = countCreated; i < needUpgradesCount; i++)
             {
                 upgradablePriceDatas.Add(new MoneyConsumerData(0, onScene));
+            }
+
+            for (int i = 0; i < countCreated - needUpgradesCount; i++)
+            {
+                var removeData = upgradablePriceDatas.First(x => x.upgradable == onScene);
+                upgradablePriceDatas.Remove(removeData);
             }
         }
 

@@ -10,5 +10,6 @@ public class UpgradableSavable : SavableMonoBehaviour<UpgradableData>
     protected override void SetDataString(string key, string value)
     {
         PlayerPrefs.SetString(key, value);
+        PlayerPrefs.Save();
     }
 }

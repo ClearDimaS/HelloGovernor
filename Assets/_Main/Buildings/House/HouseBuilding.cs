@@ -5,29 +5,15 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-[Serializable]
-public class BuildingLevel
-{
-    public ScaleAnimator[] colors;
-}
-
 public class HouseBuilding : MonoBehaviour
 {
     [Inject] private HousesManager housesManager;
-    
-    [SerializeField] private BuildingLevel[] gfxLevels;
     [field: SerializeField] public Transform CitizenPlace { get; private set; }
     
-    private int colorOptionIndex = 0;
-    private int levelIndex = 0;
-    
-    public int LevelIndex => levelIndex;
     public int CitizensCount => 2;
 
     private void Awake()
     {
-        colorOptionIndex = Random.Range(0, gfxLevels[0].colors.Length);
-        levelIndex = Random.Range(-1, gfxLevels.Length);
         housesManager.Add(this);
     }
 
@@ -38,19 +24,6 @@ public class HouseBuilding : MonoBehaviour
 
     private void RefreshState()
     {
-        for (int i = 0; i < gfxLevels.Length; i++)
-        {
-            for (int j = 0; j < gfxLevels[i].colors.Length; j++)
-            {
-                if (j == colorOptionIndex && i == levelIndex)
-                {
-                    gfxLevels[i].colors[j].Show(true);
-                }
-                else
-                {
-                    gfxLevels[i].colors[j].Hide(true);
-                }
-            }
-        }
+
     }
 }
