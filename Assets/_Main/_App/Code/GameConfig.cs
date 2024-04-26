@@ -9,6 +9,5 @@ public class GameConfig : ScriptableObject
     public float playerSpeed = 5f;
     public Vector3 moveForward = Vector3.back;
     public Vector3 moveRight = Vector3.left;
-    
-    public float delayBeforeResult = 2f;
+    public float moneySpendTime;
 }

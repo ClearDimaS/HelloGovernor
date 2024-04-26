@@ -40,7 +40,7 @@ public class CitizenController : MonoBehaviour
         Place(pos);
     }
     
-    private void Place(Vector3 target)
+    public void Place(Vector3 target)
     {
         if (NavMesh.SamplePosition(target, out hit, Mathf.Infinity, NavMesh.AllAreas)) 
         {
