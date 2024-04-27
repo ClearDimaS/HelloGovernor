@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -10,44 +9,25 @@ public class CitizenController : MonoBehaviour
 {
     [Inject] private EnvironmentManager environment;
     
-    [SerializeField] private float speed;
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Walker walker;
 
-    public float Speed => speed;
-    public bool IsMoving => agent.hasPath && agent.velocity.sqrMagnitude != 0f;
-    private NavMeshHit hit;
+    public Walker Walker => walker;
     
-    private void Start()
-    {
-        agent.speed = speed;
-    }
-
     private void Update()
     {
-        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+        if (!walker.IsMoving)
         {
             var pos = GetRandomPos();
-            if (NavMesh.SamplePosition(pos, out hit, Mathf.Infinity, NavMesh.AllAreas)) 
-            {
-                agent.SetDestination(hit.position);   
-            }
+            walker.SetWalkTarget(pos);
         }
     }
     
     public void PlaceRandom()
     {
         var pos = GetRandomPos();
-        Place(pos);
+        walker.Place(pos);
     }
-    
-    public void Place(Vector3 target)
-    {
-        if (NavMesh.SamplePosition(target, out hit, Mathf.Infinity, NavMesh.AllAreas)) 
-        {
-            transform.position = hit.position;
-        }
-    }
-    
+        
     private Vector3 GetRandomPos()
     {
         var pos = environment.mapCenter + new Vector3(
@@ -55,5 +35,10 @@ public class CitizenController : MonoBehaviour
             0,
             Random.Range(-environment.mapSize.z / 2f, environment.mapSize.z / 2f));
         return pos;
+    }
+
+    public void Place(Vector3 citizenPlacePosition)
+    {
+        walker.Place(citizenPlacePosition);
     }
 }

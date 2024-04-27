@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class PlayerController : MonoBehaviour, IMoneySpender
+public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private PlayerInput playerInput;

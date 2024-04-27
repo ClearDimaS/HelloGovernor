@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CitizenAnimationSetter : MonoBehaviour
 {
-    [SerializeField] private CitizenController citizenController;
+    [SerializeField] private Walker walker;
     [SerializeField] private RuntimeAnimatorController animatorController;
     
     private int SpeedHash = Animator.StringToHash("Speed");
@@ -23,8 +23,8 @@ public class CitizenAnimationSetter : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.SetFloat(SpeedHash, citizenController.Speed);
-            animator.SetBool(IsWalkingHash, citizenController.IsMoving);   
+            animator.SetFloat(SpeedHash, walker.Speed);
+            animator.SetBool(IsWalkingHash, walker.IsMoving);   
         }
     }
 }

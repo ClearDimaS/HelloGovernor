@@ -25,6 +25,7 @@ public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
     
     public int LevelsCount => levels.Length;
     public int UpgradesCount => autoGrantLevel1 ? LevelsCount - 1 : LevelsCount;
+    public bool IsBought => data.level > 0;
     
     private void Awake()
     {

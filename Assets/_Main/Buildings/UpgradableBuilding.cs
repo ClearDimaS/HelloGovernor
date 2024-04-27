@@ -7,6 +7,7 @@ public class UpgradableBuilding : UpgradableObject
     [Inject] private DiContainer container;
     [Inject] private BuildingsConfig buildingsConfig;
     
+    [SerializeField] private Transform boughtRoot;
     [SerializeField] private EBuilding type;
 
     private GameObject spawnedGFX;
@@ -17,6 +18,11 @@ public class UpgradableBuilding : UpgradableObject
         base.RefreshLevelGFX(instant);
         if (spawnedLevel != data.level && data.level > 0)
         {
+            if (!boughtRoot.gameObject.activeSelf)
+            {
+                boughtRoot.gameObject.SetActive(true);
+            }
+            
             spawnedLevel = data.level;
             var buildingData = buildingsConfig.GetBuildingData(type);
             var level = buildingData.levels[data.level - 1];
@@ -40,6 +46,13 @@ public class UpgradableBuilding : UpgradableObject
                 {
                     spawnedGFX.transform.DOScale(1f, 0.15f);
                 });
+            }
+        }
+        else
+        {
+            if (boughtRoot.gameObject.activeSelf)
+            {
+                boughtRoot.gameObject.SetActive(false);   
             }
         }
     }

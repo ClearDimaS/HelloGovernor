@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5186151205844757385}
-  - component: {fileID: 3086927628684801019}
   - component: {fileID: 5278300530741864252}
   - component: {fileID: 3103095942397822185}
   - component: {fileID: 5987337840702366086}
   m_Layer: 0
-  m_Name: _HumanBase
+  m_Name: Repairer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3086927628684801019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5186151205844757384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f5565bb18d9a4a17a2eb5bbafaefb21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walker: {fileID: 3103095942397822185}
 --- !u!114 &5278300530741864252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  agent: {fileID: 0}
+  agent: {fileID: 5987337840702366086}
 --- !u!195 &5987337840702366086
 NavMeshAgent:
   m_ObjectHideFlags: 0

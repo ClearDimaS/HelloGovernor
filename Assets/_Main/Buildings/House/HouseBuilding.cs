@@ -5,25 +5,59 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class HouseBuilding : MonoBehaviour
+public class HouseBuilding : BuildingBase
 {
     [Inject] private HousesManager housesManager;
+
+    [SerializeField] private List<HouseRepairable> repairables;
     [field: SerializeField] public Transform CitizenPlace { get; private set; }
-    
+
     public int CitizensCount => 2;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         housesManager.Add(this);
     }
 
-    private void Start()
+    public bool CanRepair(IRepairer repairer, out IRepairable target)
     {
-        RefreshState();
+        foreach (var repairable in repairables)
+        {
+            if (repairable.CanRepair(repairer))
+            {
+                target = repairable;
+                return true;
+            }
+        }
+
+        target = null;
+        return false;
+    }
+    
+    public bool CanRepair(IRepairer repairer)
+    {
+        return CanRepair(repairer, out IRepairable target);
     }
 
-    private void RefreshState()
+    public void Break()
     {
+        foreach (var repairable in repairables)
+        {
+            repairable.Break();
+        }
+    }
 
+    public bool IsBroken()
+    {
+        foreach (var repairable in repairables)
+        {
+            if (repairable.IsBroken)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
