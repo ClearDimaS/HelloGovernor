@@ -12,7 +12,7 @@ public class HouseBuilding : BuildingBase
     [SerializeField] private List<HouseRepairable> repairables;
     [field: SerializeField] public Transform CitizenPlace { get; private set; }
 
-    public int CitizensCount => 2;
+    public int CitizensCount => 6;
 
     protected override void OnAwake()
     {

@@ -11,13 +11,24 @@ public class CitizenController : MonoBehaviour
     
     [SerializeField] private Walker walker;
 
+    private HouseBuilding house;
+    
     public Walker Walker => walker;
+
+    public void SetHouse(HouseBuilding house)
+    {
+        this.house = house;
+    }
     
     private void Update()
     {
         if (!walker.IsMoving)
         {
             var pos = GetRandomPos();
+            if (house != null && house.IsBroken())
+            {
+                pos = house.CitizenPlace.position;
+            }
             walker.SetWalkTarget(pos);
         }
     }
