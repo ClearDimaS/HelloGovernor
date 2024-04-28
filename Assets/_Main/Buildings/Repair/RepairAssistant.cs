@@ -32,6 +32,6 @@ public class RepairAssistant : MonoBehaviour, IRepairer
     {
         buildingTarget = housesManager.GetBrokenBuildingForRepair();
         buildingTarget.CanRepair(this, out IRepairable target);
-        walker.SetWalkTarget(target.Place.position);
+        walker.MoveToTarget(target.Place.position, null);
     }
 }

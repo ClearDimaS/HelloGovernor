@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[Serializable]
 public class WishProbabilityData
 {
     public EWish type;
@@ -20,4 +22,6 @@ public class GameConfig : ScriptableObject
     public float repairHouseTime;
     [Header("Wishes")] 
     public List<WishProbabilityData> wishChances;
+    public float wanderDuration;
+    public float chatDuration;
 }

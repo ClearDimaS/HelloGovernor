@@ -17,3 +17,16 @@ MonoBehaviour:
   moveRight: {x: -1, y: 0, z: 0}
   moneySpendTime: 2
   breakTimerMinMax: {x: 15, y: 30}
+  repairHouseTime: 1
+  wishChances:
+  - type: 1
+    weight: 3
+  - type: 0
+    weight: 3
+  - type: 2
+    weight: 3
+  - type: 3
+    weight: 3
+  - type: 4
+    weight: 3
+  wanderDuration: 10

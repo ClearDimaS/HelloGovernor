@@ -10,10 +10,12 @@ public class CitizenController : MonoBehaviour
     [Inject] private EnvironmentManager environment;
     
     [SerializeField] private Walker walker;
-
-    private HouseBuilding house;
+    [SerializeField] private WishesController wishesController;
     
+    private HouseBuilding house;
+
     public Walker Walker => walker;
+    public WishesController WishesController => wishesController;
 
     public void SetHouse(HouseBuilding house)
     {
@@ -22,14 +24,14 @@ public class CitizenController : MonoBehaviour
     
     private void Update()
     {
-        if (!walker.IsMoving)
+        if (!walker.IsMoving && !WishesController.HasAnyWishes())
         {
             var pos = GetRandomPos();
             if (house != null && house.IsBroken())
             {
                 pos = house.CitizenPlace.position;
             }
-            walker.SetWalkTarget(pos);
+            walker.MoveToTarget(pos, null);
         }
     }
     

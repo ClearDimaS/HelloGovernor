@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5186151205844757385}
   - component: {fileID: 3086927628684801019}
+  - component: {fileID: 6060851746811512130}
   - component: {fileID: 5278300530741864252}
-  - component: {fileID: 9171971957310132086}
   - component: {fileID: 3103095942397822185}
   - component: {fileID: 5987337840702366086}
   m_Layer: 0
@@ -50,6 +50,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walker: {fileID: 3103095942397822185}
+  wishesController: {fileID: 6060851746811512130}
+--- !u!114 &6060851746811512130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186151205844757384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dea4e25f7f3e481aaa4f46e867d6a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  citizenController: {fileID: 3086927628684801019}
 --- !u!114 &5278300530741864252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,18 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walker: {fileID: 3103095942397822185}
   animatorController: {fileID: 9100000, guid: a0ceb0b6923f62447af7bf91227b7c19, type: 2}
---- !u!114 &9171971957310132086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5186151205844757384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dea4e25f7f3e481aaa4f46e867d6a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3103095942397822185
 MonoBehaviour:
   m_ObjectHideFlags: 0
