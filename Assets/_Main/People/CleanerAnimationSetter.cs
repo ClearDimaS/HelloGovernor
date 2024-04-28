@@ -1,17 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CitizenAnimationSetter : MonoBehaviour
+public class CleanerAnimationSetter : MonoBehaviour
 {
-    [SerializeField] private CitizenController citizenController;
     [SerializeField] private Walker walker;
     [SerializeField] private RuntimeAnimatorController animatorController;
     
     private int SpeedHash = Animator.StringToHash("Speed");
     private int IsWalkingHash = Animator.StringToHash("IsWalking");
-    private int IsChattingHash = Animator.StringToHash("IsChatting");
 
     private Animator animator;
     
@@ -25,7 +20,6 @@ public class CitizenAnimationSetter : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.SetBool(IsChattingHash, citizenController.IsChatting);
             animator.SetFloat(SpeedHash, walker.Speed);
             animator.SetBool(IsWalkingHash, walker.IsMoving);   
         }

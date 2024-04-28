@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1174a26170ae046e2bac4e2c75d23613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  citizenController: {fileID: 3086927628684801019}
   walker: {fileID: 3103095942397822185}
   animatorController: {fileID: 9100000, guid: a0ceb0b6923f62447af7bf91227b7c19, type: 2}
 --- !u!114 &3103095942397822185
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fcbd3aad7e44beea19e297977830397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopDistance: 0.15
   speed: 3
   agent: {fileID: 5987337840702366086}
 --- !u!195 &5987337840702366086
@@ -103,7 +105,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 800
   avoidancePriority: 50
   m_AngularSpeed: 1000
   m_StoppingDistance: 0.2

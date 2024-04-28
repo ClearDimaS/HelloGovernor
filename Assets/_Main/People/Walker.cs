@@ -4,13 +4,15 @@ using UnityEngine.AI;
 
 public class Walker : MonoBehaviour
 {
+    [SerializeField] private float stopDistance = 0.15f;
     [SerializeField] private float speed;
     [SerializeField] private NavMeshAgent agent;
 
     public float Speed => speed;
     private Vector3 target;
     private Vector3 hitTarget;
-    public bool IsMoving => agent.hasPath && agent.velocity.sqrMagnitude != 0f;
+    public bool IsMoving => !isFinished;
+    protected bool isFinished;
     private NavMeshHit hit;
 
     private event Action reachTargetEvent;
@@ -18,15 +20,27 @@ public class Walker : MonoBehaviour
     private void Start()
     {
         agent.speed = speed;
+        agent.stoppingDistance = stopDistance;
     }
 
     private void Update()
     {
-        if (!IsMoving && reachTargetEvent != null)
+        if (!agent.hasPath || HasReached())
+        {
+            SetFinished();   
+        }
+    }
+
+    private void SetFinished()
+    {
+        isFinished = true;
+        agent.velocity = Vector3.zero;
+        agent.isStopped = true;
+        if (reachTargetEvent != null)
         {
             var tmp = reachTargetEvent;
             reachTargetEvent = null;
-            tmp.Invoke();
+            tmp.Invoke();   
         }
     }
 
@@ -47,13 +61,26 @@ public class Walker : MonoBehaviour
     {
         if (NavMesh.SamplePosition(target, out hit, Mathf.Infinity, NavMesh.AllAreas))
         {
-            reachTargetEvent = onReachTarget;
-            this.target = target;
             hitTarget = hit.position;
+            reachTargetEvent = onReachTarget;
+            if (HasReached())
+            {
+                SetFinished();
+                return;
+            }
+
+            agent.isStopped = false;
+            isFinished = false;
+            this.target = target;
             agent.SetDestination(hit.position);   
         }
     }
 
+    protected bool HasReached()
+    {
+        return stopDistance > (transform.position - hitTarget).magnitude;
+    }
+    
     private bool IsSameTarget(Vector3 target1, Vector3 target2)
     {
         return Mathf.Approximately(target1.x, target2.x) && Mathf.Approximately(target1.y, target2.y) &&

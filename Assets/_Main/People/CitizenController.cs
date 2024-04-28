@@ -14,6 +14,7 @@ public class CitizenController : MonoBehaviour
     
     private HouseBuilding house;
 
+    public bool IsChatting { get; private set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
 
@@ -21,26 +22,19 @@ public class CitizenController : MonoBehaviour
     {
         this.house = house;
     }
-    
+
     private void Update()
     {
-        if (!walker.IsMoving && !WishesController.HasAnyWishes())
+        if (house != null && house.IsBroken())
         {
-            var pos = GetRandomPos();
-            if (house != null && house.IsBroken())
+            if (wishesController.HasAnyWish())
             {
-                pos = house.CitizenPlace.position;
+                wishesController.AbortWish();
             }
-            walker.MoveToTarget(pos, null);
+            walker.MoveToTarget(house.CitizenPlace.position, null);
         }
     }
-    
-    public void PlaceRandom()
-    {
-        var pos = GetRandomPos();
-        walker.Place(pos);
-    }
-        
+
     private Vector3 GetRandomPos()
     {
         var pos = environment.mapCenter + new Vector3(
@@ -50,13 +44,29 @@ public class CitizenController : MonoBehaviour
         return pos;
     }
 
+    public void PlaceRandom()
+    {
+        var pos = GetRandomPos();
+        walker.Place(pos);
+    }
+
     public void Place(Vector3 citizenPlacePosition)
     {
         walker.Place(citizenPlacePosition);
     }
 
-    public bool IsChatting()
+    public void SetChatting()
     {
-        return true;
+        IsChatting = true;
+    }
+
+    public void StopChatting()
+    {
+        IsChatting = false;
+    }
+
+    public bool CanAddWishes()
+    {
+        return house == null || !house.IsBroken();
     }
 }

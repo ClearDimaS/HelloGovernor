@@ -20,7 +20,7 @@ public class WishesController : MonoBehaviour
             SetRandomWish();
         }
 
-        if (currentWish != null)
+        if (currentWish != null && citizenController.CanAddWishes())
         {
             if (!currentWish.HasOKGranter())
             {
@@ -31,12 +31,12 @@ public class WishesController : MonoBehaviour
             }
         }
     }
-    
-    public bool HasAnyWishes()
-    {
-        return currentWish = null;
-    }
 
+    public bool HasAnyWish()
+    {
+        return currentWish != null;
+    }
+    
     public void AddProgress(EWish type, float addProgress)
     {
         if (currentWish != null && currentWish.Type == type)
@@ -56,6 +56,18 @@ public class WishesController : MonoBehaviour
         wishChances.Shuffle();
         var wishType = wishChances[0].type;
         currentWish = wishesPool.GetElement();
-        currentWish.Initialize(wishType, citizenController);
+        currentWish.transform.SetParent(transform);
+        currentWish.Initialize(wishType, citizenController, PoolWish);
+    }
+
+    private void PoolWish(Wish wish)
+    {
+        wishesPool.Pool(wish);
+        currentWish = null;
+    }
+
+    public void AbortWish()
+    {
+        currentWish.Abort();
     }
 }

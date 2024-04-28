@@ -2,62 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class WanderWishGranter : WishGranter
-{
-    [Inject] private GameConfig gameConfig;
-    
-    public override EWish Type => EWish.Wander;
-    public override float FullProgressTime => gameConfig.wanderDuration;
-
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return true;
-    }
-
-    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-}
-
-public class ChatWishGranter : WishGranter
-{
-    [Inject] private GameConfig gameConfig;
-    
-    public override EWish Type => EWish.Chat;
-    public override float FullProgressTime => gameConfig.chatDuration;
-    
-    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-    
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return citizen.IsChatting();
-    }
-}
-
 public abstract class WishGranter : MonoBehaviour
 {
     [Inject] private WishGrantersManager grantersManager;
@@ -69,9 +13,13 @@ public abstract class WishGranter : MonoBehaviour
     public abstract float FullProgressTime { get; }
 
     private List<CitizenController> approaching = new ();
+    private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
-    private List<CitizenController> processed = new ();
+    private List<CitizenController> pendingProcessed = new ();
+    protected List<CitizenController> processed = new ();
+    private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
+    protected List<CitizenController> pendingRemove = new ();
 
     private void Awake()
     {
@@ -86,28 +34,55 @@ public abstract class WishGranter : MonoBehaviour
 
     private void Update()
     {
+        // 1. Approqch
         foreach (var citizen in approaching)
         {
-            citizen.Walker.MoveToTarget(GetQueuePlaceFor(citizen), () => AddToQueue(citizen));
+            var queuePlace = GetQueuePlaceFor(citizen);
+            citizen.Walker.MoveToTarget(queuePlace, () => pendingQueue.Add(citizen));
         }
+        foreach (var citizen in pendingQueue)
+        {
+            AddToQueue(citizen);
+        }
+        pendingQueue.Clear();
+        
+        // 2. In queue
         foreach (var citizen in queue)
         {
-            citizen.Walker.MoveToTarget(GetProcessPlaceFor(citizen), () => AddToProcessed(citizen));
+            var processPlace = GetProcessPlaceFor(citizen);
+            citizen.Walker.MoveToTarget(processPlace, () => pendingProcessed.Add(citizen));
         }
+        foreach (var citizen in pendingProcessed)
+        {
+            AddToProcessed(citizen);
+        }
+        pendingProcessed.Clear();
 
+        // 3. Processed
         foreach (var citizen in processed)
         {
             UpdateProcessed(citizen);
             if (citizen.WishesController.IsProgressFull(Type))
             {
-                AddToLeaving(citizen);
+                pendingLeaving.Add(citizen);
             }
         }
+        foreach (var citizen in pendingLeaving)
+        {
+            AddToLeaving(citizen);
+        }
+        pendingLeaving.Clear();
 
+        // 4. Leaving
         foreach (var citizen in leaving)
         {
             var exitPlace = GetExitPlaceFor(citizen);
-            citizen.Walker.MoveToTarget(exitPlace, () => RemoveFromLeaving(citizen));
+            citizen.Walker.MoveToTarget(exitPlace, () => pendingRemove.Add(citizen));
+        }
+
+        foreach (var citizen in pendingRemove)
+        {
+            RemoveFromLeaving(citizen);
         }
 
         OnUpdate();
@@ -128,7 +103,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public bool IsWorking()
     {
-        return upgradable.IsBought;
+        return upgradable == null || upgradable.IsBought;
     }
 
     public bool HasInQueueOrProcessed(CitizenController citizen)
@@ -172,6 +147,7 @@ public abstract class WishGranter : MonoBehaviour
 
     private void AddToLeaving(CitizenController citizen)
     {
+        OnRemoveFromProcessed(citizen);
         processed.Remove(citizen);
         leaving.Add(citizen);
     }
@@ -179,5 +155,19 @@ public abstract class WishGranter : MonoBehaviour
     private void RemoveFromLeaving(CitizenController citizen)
     {
         leaving.Remove(citizen);
+    }
+
+    public void Abort(CitizenController citizen)
+    {
+        approaching.Remove(citizen);
+        queue.Remove(citizen);
+        OnRemoveFromProcessed(citizen);
+        processed.Remove(citizen);
+        leaving.Remove(citizen);
+    }
+
+    protected virtual void OnRemoveFromProcessed(CitizenController citizen)
+    {
+        
     }
 }

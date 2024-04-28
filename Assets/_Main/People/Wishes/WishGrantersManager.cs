@@ -12,6 +12,7 @@ public class WishGrantersManager : MonoBehaviour
         {
             grantersDict[type] = new List<WishGranter>();
         }
+
         grantersDict[type].Add(granter);
     }
     

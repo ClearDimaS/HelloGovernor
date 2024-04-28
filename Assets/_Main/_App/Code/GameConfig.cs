@@ -24,4 +24,5 @@ public class GameConfig : ScriptableObject
     public List<WishProbabilityData> wishChances;
     public float wanderDuration;
     public float chatDuration;
+    public Vector2Int chatGroupSizeMinMax;
 }
