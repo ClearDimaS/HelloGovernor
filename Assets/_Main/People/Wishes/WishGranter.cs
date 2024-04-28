@@ -8,6 +8,26 @@ public class WanderWishGranter : WishGranter
     
     public override EWish Type => EWish.Wander;
     public override float FullProgressTime => gameConfig.wanderDuration;
+
+    protected override bool CanAddProgress(CitizenController citizen)
+    {
+        return true;
+    }
+
+    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
+
+    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
+
+    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
 }
 
 public class ChatWishGranter : WishGranter
@@ -16,6 +36,26 @@ public class ChatWishGranter : WishGranter
     
     public override EWish Type => EWish.Chat;
     public override float FullProgressTime => gameConfig.chatDuration;
+    
+    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
+
+    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
+
+    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
+    {
+        return citizen.transform.position;
+    }
+    
+    protected override bool CanAddProgress(CitizenController citizen)
+    {
+        return citizen.IsChatting();
+    }
 }
 
 public abstract class WishGranter : MonoBehaviour
@@ -57,11 +97,7 @@ public abstract class WishGranter : MonoBehaviour
 
         foreach (var citizen in processed)
         {
-            citizen.WishesController.AddProgress(Type, Time.deltaTime / FullProgressTime);
-        }
-
-        foreach (var citizen in processed)
-        {
+            UpdateProcessed(citizen);
             if (citizen.WishesController.IsProgressFull(Type))
             {
                 AddToLeaving(citizen);
@@ -70,16 +106,24 @@ public abstract class WishGranter : MonoBehaviour
 
         foreach (var citizen in leaving)
         {
-            var exitPlace = GetExitPlace();
+            var exitPlace = GetExitPlaceFor(citizen);
             citizen.Walker.MoveToTarget(exitPlace, () => RemoveFromLeaving(citizen));
         }
 
         OnUpdate();
     }
-
+    
     protected virtual void OnUpdate()
     {
         
+    }
+    
+    protected virtual void UpdateProcessed(CitizenController citizen)
+    {
+        if (CanAddProgress(citizen))
+        {
+            citizen.WishesController.AddProgress(Type, Time.deltaTime / FullProgressTime);   
+        }
     }
 
     public bool IsWorking()
@@ -91,18 +135,20 @@ public abstract class WishGranter : MonoBehaviour
     {
         return approaching.Contains(citizen) || queue.Contains(citizen) || processed.Contains(citizen) || leaving.Contains(citizen);
     }
+
+    protected abstract bool CanAddProgress(CitizenController citizen);
     
-    private Vector3 GetQueuePlaceFor(CitizenController queueCitizen)
+    protected virtual Vector3 GetQueuePlaceFor(CitizenController citizen)
     {
         return processPlaces[0].position;
     }
     
-    private Vector3 GetProcessPlaceFor(CitizenController queueCitizen)
+    protected virtual Vector3 GetProcessPlaceFor(CitizenController citizen)
     {
         return processPlaces[0].position;
     }
     
-    private Vector3 GetExitPlace()
+    protected virtual Vector3 GetExitPlaceFor(CitizenController citizen)
     {
         return exit.position;
     }

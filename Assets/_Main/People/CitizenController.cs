@@ -54,4 +54,9 @@ public class CitizenController : MonoBehaviour
     {
         walker.Place(citizenPlacePosition);
     }
+
+    public bool IsChatting()
+    {
+        return true;
+    }
 }

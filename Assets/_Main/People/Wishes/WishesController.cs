@@ -31,16 +31,7 @@ public class WishesController : MonoBehaviour
             }
         }
     }
-
-    private void SetRandomWish()
-    {
-        var wishChances = gameConfig.wishChances;
-        wishChances.Shuffle();
-        var wishType = wishChances[0].type;
-        currentWish = wishesPool.GetElement();
-        currentWish.Initialize(wishType, citizenController);
-    }
-
+    
     public bool HasAnyWishes()
     {
         return currentWish = null;
@@ -56,6 +47,15 @@ public class WishesController : MonoBehaviour
 
     public bool IsProgressFull(EWish type)
     {
-        return currentWish.IsProgressFull;
+        return currentWish != null && currentWish.Type == type && currentWish.IsProgressFull;
+    }
+    
+    private void SetRandomWish()
+    {
+        var wishChances = gameConfig.wishChances;
+        wishChances.Shuffle();
+        var wishType = wishChances[0].type;
+        currentWish = wishesPool.GetElement();
+        currentWish.Initialize(wishType, citizenController);
     }
 }
