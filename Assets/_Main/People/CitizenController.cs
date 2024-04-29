@@ -11,12 +11,14 @@ public class CitizenController : MonoBehaviour
     
     [SerializeField] private Walker walker;
     [SerializeField] private WishesController wishesController;
+    [SerializeField] private Interactor interactor;
     
     private HouseBuilding house;
 
     public bool IsChatting { get; private set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
+    public Interactor Interactor => interactor;
 
     public void SetHouse(HouseBuilding house)
     {

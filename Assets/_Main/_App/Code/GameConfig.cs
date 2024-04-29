@@ -25,4 +25,7 @@ public class GameConfig : ScriptableObject
     public float wanderDuration;
     public float chatDuration;
     public Vector2Int chatGroupSizeMinMax;
+    public float grantDrinkDuration;
+    public float grantFlowerDuration;
+    public float grantIcecreamDuration;
 }

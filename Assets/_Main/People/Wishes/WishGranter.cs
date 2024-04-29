@@ -69,6 +69,7 @@ public abstract class WishGranter : MonoBehaviour
         }
         foreach (var citizen in pendingLeaving)
         {
+            OnSuccessProcess(citizen);
             AddToLeaving(citizen);
         }
         pendingLeaving.Clear();
@@ -167,6 +168,11 @@ public abstract class WishGranter : MonoBehaviour
     }
 
     protected virtual void OnRemoveFromProcessed(CitizenController citizen)
+    {
+        
+    }
+
+    protected virtual void OnSuccessProcess(CitizenController citizen)
     {
         
     }
