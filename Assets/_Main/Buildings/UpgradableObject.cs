@@ -55,6 +55,12 @@ public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
             Debug.LogWarning($"consumer is null: {moneyConsumer}");
             return null;
         }
+
+        if (data == null)
+        {
+            Debug.LogWarning($"data is null: {moneyConsumer}");
+            return null;
+        }
         data.spentMoney = moneyConsumer.GetSpentAmount();
         return data;
     }
