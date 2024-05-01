@@ -25,7 +25,7 @@ public class Walker : MonoBehaviour
 
     private void Update()
     {
-        if (!agent.hasPath || HasReached())
+        if (HasReached())
         {
             SetFinished();   
         }

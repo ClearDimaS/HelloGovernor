@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum EInteractable
 {
+    None,
     Drink,
     Flowers,
     IceCream
@@ -47,6 +49,18 @@ public class Interactor : MonoBehaviour
             {
                 interactable.go.SetActive(false);
             }
+        }
+    }
+
+    public bool HasItem(EWish type)
+    {
+        var interactableType = type.ToInteractable();
+        switch (interactableType)
+        {
+            case EInteractable.None:
+                return false;
+            default:
+                 return interactables.First(x => x.type == interactableType).go.activeSelf;
         }
     }
 }

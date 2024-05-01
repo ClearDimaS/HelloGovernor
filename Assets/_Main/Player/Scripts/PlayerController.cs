@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer
+public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurrencyHolder
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private PlayerInput playerInput;
@@ -34,5 +34,15 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer
         var dir = delta.normalized;
         rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(dir, Vector3.up), 1f);
         rb.MovePosition(rb.position + delta * Time.fixedDeltaTime * gameConfig.playerSpeed);
+    }
+
+    public void AddCurrency(int amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void MoveCurrencyToMe(CurrencyBehaviour currency)
+    {
+        throw new NotImplementedException();
     }
 }

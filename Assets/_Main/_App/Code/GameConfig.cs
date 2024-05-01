@@ -28,4 +28,7 @@ public class GameConfig : ScriptableObject
     public float grantDrinkDuration;
     public float grantFlowerDuration;
     public float grantIcecreamDuration;
+    public int icecreamReward;
+    public int drinkReward;
+    public int flowerReward;
 }

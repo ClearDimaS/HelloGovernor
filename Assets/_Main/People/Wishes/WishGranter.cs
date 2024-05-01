@@ -176,4 +176,14 @@ public abstract class WishGranter : MonoBehaviour
     {
         
     }
+
+    public virtual bool CanAddOneMore()
+    {
+        return approaching.Count + queue.Count < processPlaces.Length;
+    }
+
+    public bool CanAdd(CitizenController citizenController)
+    {
+        return !citizenController.Interactor.HasItem(Type);
+    }
 }

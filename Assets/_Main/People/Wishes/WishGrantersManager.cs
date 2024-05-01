@@ -16,7 +16,7 @@ public class WishGrantersManager : MonoBehaviour
         grantersDict[type].Add(granter);
     }
     
-    public bool TryGetWorkingGranter(EWish type, out WishGranter granter)
+    public bool TryGetWorkingFreeGranter(EWish type, out WishGranter granter)
     {
         if (!grantersDict.ContainsKey(type) || grantersDict[type].Count == 0)
         {
@@ -26,7 +26,7 @@ public class WishGrantersManager : MonoBehaviour
 
         foreach (var granterCandidate in grantersDict[type])
         {
-            if (granterCandidate.IsWorking())
+            if (granterCandidate.IsWorking() && granterCandidate.CanAddOneMore())
             {
                 granter = granterCandidate;
                 return true;

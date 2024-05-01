@@ -48,4 +48,9 @@ public class WanderWishGranter : WishGranter
             Random.Range(-environment.mapSize.z / 2f, environment.mapSize.z / 2f));
         return pos;
     }
+    
+    public override bool CanAddOneMore()
+    {
+        return true;
+    }
 }

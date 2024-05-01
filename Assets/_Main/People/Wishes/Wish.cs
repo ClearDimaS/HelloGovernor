@@ -17,6 +17,7 @@ public class Wish : MonoBehaviour, IResetable
     
     public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove)
     {
+        progress = 0;
         Type = type;
         this.citizen = citizen;
         walker = citizen.Walker;
@@ -34,11 +35,6 @@ public class Wish : MonoBehaviour, IResetable
         {
             SetWishReadyToRemove();
         }
-
-        if (!granter.HasInQueueOrProcessed(citizen) && progress == 0f)
-        {
-            granter.AddApproaching(citizen);
-        }
     }
     public bool HasOKGranter()
     {
@@ -48,6 +44,7 @@ public class Wish : MonoBehaviour, IResetable
     public void SetGranter(WishGranter granter)
     {
         this.granter = granter;
+        granter.AddApproaching(citizen);
     }
 
     public void OnReset()

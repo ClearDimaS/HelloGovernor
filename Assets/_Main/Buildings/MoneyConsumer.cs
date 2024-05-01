@@ -117,6 +117,11 @@ public class MoneyConsumer : MonoBehaviour
 
     public int GetSpentAmount()
     {
+        if (price == null)
+        {
+            Debug.LogWarning($"price is null at: {transform.name}  {transform.GetInstanceID()}  {transform.parent.name}");
+            return 0;
+        }
         return price.spent;
     }
 }

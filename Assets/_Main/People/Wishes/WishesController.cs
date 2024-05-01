@@ -24,7 +24,7 @@ public class WishesController : MonoBehaviour
         {
             if (!currentWish.HasOKGranter())
             {
-                if (grantersManager.TryGetWorkingGranter(currentWish.Type, out WishGranter granter))
+                if (grantersManager.TryGetWorkingFreeGranter(currentWish.Type, out WishGranter granter))
                 {
                     currentWish.SetGranter(granter);   
                 }
@@ -54,10 +54,15 @@ public class WishesController : MonoBehaviour
     {
         var wishChances = gameConfig.wishChances;
         wishChances.Shuffle();
-        var wishType = wishChances[0].type;
-        currentWish = wishesPool.GetElement();
-        currentWish.transform.SetParent(transform);
-        currentWish.Initialize(wishType, citizenController, PoolWish);
+        var wishType = wishChances[Random.Range(0, wishChances.Count)].type;
+        
+        if (grantersManager.TryGetWorkingFreeGranter(wishType, out WishGranter granter) && granter.CanAdd(citizenController))
+        {
+            currentWish = wishesPool.GetElement();
+            currentWish.transform.SetParent(transform);
+            currentWish.Initialize(wishType, citizenController, PoolWish);
+            currentWish.SetGranter(granter);
+        }
     }
 
     private void PoolWish(Wish wish)

@@ -76,4 +76,9 @@ public class ChatWishGranter : WishGranter
     {
         return citizen.transform.position;
     }
+
+    public override bool CanAddOneMore()
+    {
+        return true;
+    }
 }
