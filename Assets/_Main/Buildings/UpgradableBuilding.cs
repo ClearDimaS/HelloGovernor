@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 public class UpgradableBuilding : UpgradableObject
@@ -46,6 +47,24 @@ public class UpgradableBuilding : UpgradableObject
                 {
                     spawnedGFX.transform.DOScale(1f, 0.15f);
                 });
+            }
+
+            var colliders = spawnedGFX.GetComponentsInChildren<BoxCollider>(true);
+            foreach (var collider in colliders)
+            {
+                var obstacleGO = new GameObject($"{collider.name}_obstacle");
+                obstacleGO.transform.SetParent(collider.transform, false);
+                obstacleGO.transform.localPosition = Vector3.zero;
+                obstacleGO.transform.localRotation = Quaternion.identity;
+                obstacleGO.transform.localScale = Vector3.one;
+                
+                var obstacle = obstacleGO.AddComponent<NavMeshObstacle>();
+                obstacle.shape = NavMeshObstacleShape.Box;
+                obstacle.carving = true;
+                obstacle.carveOnlyStationary = true;
+                obstacle.carvingTimeToStationary = 0.1f;
+                obstacle.size = collider.size;
+                obstacle.center = collider.center;
             }
         }
         else

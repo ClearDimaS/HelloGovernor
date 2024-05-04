@@ -118,12 +118,23 @@ public abstract class WishGranter : MonoBehaviour
     
     protected virtual Vector3 GetQueuePlaceFor(CitizenController citizen)
     {
-        return processPlaces[0].position;
+        var index = queue.IndexOf(citizen);
+        if (index < 0)
+        {
+            index = Mathf.Max(processed.Count - 1, 0);
+        }
+
+        return processPlaces[index % processPlaces.Length].position;
     }
     
     protected virtual Vector3 GetProcessPlaceFor(CitizenController citizen)
     {
-        return processPlaces[0].position;
+        var index = processed.IndexOf(citizen);
+        if (index < 0)
+        {
+            index = Mathf.Max(processed.Count - 1, 0);
+        }
+        return processPlaces[index % processPlaces.Length].position;
     }
     
     protected virtual Vector3 GetExitPlaceFor(CitizenController citizen)
