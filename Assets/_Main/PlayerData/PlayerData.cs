@@ -7,6 +7,7 @@ public class PlayerData
 {
     public DateTime registrationDate = DateTime.Today;
     public int skinIndex;
+    public int money;
 }
 
 public class PlayerDataRepository : Repository<PlayerData>

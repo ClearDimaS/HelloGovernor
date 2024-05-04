@@ -8,6 +8,7 @@ public class WanderWishGranter : WishGranter
     
     public override EWish Type => EWish.Wander;
     public override float FullProgressTime => gameConfig.wanderDuration;
+    public override int Reward => 0;
 
     protected override void UpdateProcessed(CitizenController citizen)
     {

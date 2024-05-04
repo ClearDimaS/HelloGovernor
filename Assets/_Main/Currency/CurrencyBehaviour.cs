@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrencyPool : MonoPool<CurrencyBehaviour>
-{
-    
-}
 public class CurrencyBehaviour : MonoBehaviour, IResetable, IGridPlaceable
 {
     private int amount;
@@ -25,7 +21,8 @@ public class CurrencyBehaviour : MonoBehaviour, IResetable, IGridPlaceable
 
     public void OnReset()
     {
-        
+        transform.SetParent(null);
+        transform.localScale = Vector3.one;
     }
 
     public void OnPool()

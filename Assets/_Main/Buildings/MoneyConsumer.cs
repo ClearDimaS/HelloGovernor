@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
 public interface IMoneySpender
 {
-    
+    public Transform Root { get; }
+    public void Spend(int diff);
+    public int MaxToSpend();
 }
 
 [Serializable]
@@ -27,11 +30,30 @@ public class Price
     {
         return new Price(price, spent);
     }
+
+    public static string ToMoneyString(int money)
+    {
+        if (money > 1000000)
+        {
+            return (money / 1000000).ToString("0.00") + "M";
+        }
+        else if (money > 1000)
+        {
+            return (money / 1000).ToString("0.00") + "K";
+        }
+        else
+        {
+            return money.ToString();
+        }
+    }
 }
 
 public class MoneyConsumer : MonoBehaviour
 {
+    [Inject] private CurrencyPool currencyPool;
     [Inject] private GameConfig gameConfig;
+    
+    [SerializeField] private Transform flyTarget;
     
     private Price price;
     private IMoneySpender spender;
@@ -103,8 +125,20 @@ public class MoneyConsumer : MonoBehaviour
             return;
         }
         currentSpendingTime += Time.deltaTime;
+        
         int maxAllowedCurrentAmount = Mathf.RoundToInt(currentSpendingTime / gameConfig.moneySpendTime * price.price);
-        price.spent += maxAllowedCurrentAmount - currentSpendAmount;
+        maxAllowedCurrentAmount = Mathf.Min(maxAllowedCurrentAmount, spender.MaxToSpend());
+        
+        var diff = maxAllowedCurrentAmount - currentSpendAmount;
+        if (diff > 0)
+        {
+            spender.Spend(diff);
+            var currency = currencyPool.GetElement();
+            currency.transform.position = spender.Root.position;
+            currency.transform.DOMove(flyTarget.position, 1f).SetEase(Ease.OutCubic);
+            currency.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InCubic).OnComplete(() => currencyPool.Pool(currency));
+        }
+        price.spent += diff;
         currentSpendAmount = maxAllowedCurrentAmount;
     }
 

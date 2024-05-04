@@ -3,11 +3,11 @@ using Zenject;
 
 public class IcecreamGranter : WishGranter
 {
-    [SerializeField] private CurrencyStackBehaviour stack;
-    
     [Inject] private GameConfig gameConfig;
     public override EWish Type => EWish.IceCream;
     public override float FullProgressTime => gameConfig.grantIcecreamDuration;
+    public override int Reward => gameConfig.icecreamReward;
+    
     protected override bool CanAddProgress(CitizenController citizen)
     {
         return true;
@@ -17,6 +17,5 @@ public class IcecreamGranter : WishGranter
     {
         base.OnSuccessProcess(citizen);
         citizen.Interactor.ActivateObject(EInteractable.IceCream);
-        stack.AddCurrency(gameConfig.icecreamReward);
     }
 }

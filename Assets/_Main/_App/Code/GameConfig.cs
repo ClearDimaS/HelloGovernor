@@ -31,4 +31,5 @@ public class GameConfig : ScriptableObject
     public int icecreamReward;
     public int drinkReward;
     public int flowerReward;
+    public int moneyInOneModel = 3;
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public interface ISavable
 {
@@ -10,6 +11,8 @@ public interface ISavable
 
 public class SaveManager : Singleton<SaveManager>
 {
+    [Inject] private PlayerDataRepository repository;
+    
     private HashSet<ISavable> savables = new (256);
 
     protected override void OnCreated()
@@ -56,6 +59,7 @@ public class SaveManager : Singleton<SaveManager>
                 throw;
             }
         }
+        repository.SetData(repository.GetData());
     }
 
     public void AddSavable(ISavable savable)

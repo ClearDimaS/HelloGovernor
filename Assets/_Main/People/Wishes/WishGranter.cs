@@ -6,11 +6,13 @@ public abstract class WishGranter : MonoBehaviour
 {
     [Inject] private WishGrantersManager grantersManager;
 
+    [SerializeField] private CurrencyStackBehaviour currencyStack;
     [SerializeField] private Transform[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
     public abstract EWish Type { get; }
     public abstract float FullProgressTime { get; }
+    public abstract int Reward { get; }
 
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
@@ -174,7 +176,10 @@ public abstract class WishGranter : MonoBehaviour
 
     protected virtual void OnSuccessProcess(CitizenController citizen)
     {
-        
+        if (currencyStack != null)
+        {
+            currencyStack.MoveCurrencyToMe(Reward, citizen.transform.position);   
+        }
     }
 
     public virtual bool CanAddOneMore()

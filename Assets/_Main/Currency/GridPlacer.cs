@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public interface IGridPlaceable
@@ -9,25 +11,68 @@ public interface IGridPlaceable
 
 public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
 {
-    private Transform[] places;
-    private List<T> placedObjects = new ();
+    [SerializeField] private BoxCollider sizeCollider;
+    [SerializeField] private Vector3Int counts;
+    [SerializeField] private Transform placesParent;
+    [SerializeField] private List<BoxCollider> places;
+    
+    protected List<T> placedObjects = new ();
 
     public int Count => placedObjects.Count;
+    public int MaxPlaces => places.Count;
+
+    [Button]
+    private void CreatePlaces()
+    {
+        places.Clear();
+        var s = sizeCollider.size;
+        var placeSize = new Vector3(s.x / counts.x, s.y / counts.y, s.z / counts.z);
+        for (int x = 0; x < counts.x; x++)
+        {
+            for (int z = 0; z < counts.z; z++)
+            {
+                for (int y = 0; y < counts.y; y++)
+                {
+                    var newPlaceGO = new GameObject($"{places.Count}");
+                    var place = newPlaceGO.AddComponent<BoxCollider>();
+                    place.size = placeSize;
+                    place.transform.SetParent(placesParent);
+                    place.transform.localPosition = Vector3.Scale(placeSize, new Vector3(x, y, z)) + placeSize / 2f - new Vector3(sizeCollider.size.x, sizeCollider.size.y, sizeCollider.size.z) / 2f;
+                    places.Add(place);
+                }
+            }
+        }
+    }
     
     public bool CanAddOneMore()
     {
-        return placedObjects.Count < places.Length;
+        return placedObjects.Count < places.Count;
     }
     
-    public void Add(T item)
+    public void Add(T item, bool immediate = false)
     {
-        item.Root.SetParent(places[placedObjects.Count]);
+        var place = places[placedObjects.Count];
+        item.Root.SetParent(place.transform, true);
+        if (immediate)
+        {
+            item.Root.localPosition = Vector3.zero;
+            item.Root.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            item.Root.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
+            item.Root.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);   
+        }
         placedObjects.Add(item);
     }
 
 
     public T Remove()
     {
-        return placedObjects[placedObjects.Count - 1];
+        var retVal = placedObjects[placedObjects.Count - 1];
+        placedObjects.RemoveAt(placedObjects.Count - 1);
+        retVal.Root.DOKill();
+        retVal.Root.SetParent(null, true);
+        return retVal;
     }
 }

@@ -11,6 +11,7 @@ public class ChatWishGranter : WishGranter
     
     public override EWish Type => EWish.Chat;
     public override float FullProgressTime => gameConfig.chatDuration;
+    public override int Reward => 0;
 
     protected HashSet<CitizenController> groupedCitizens = new ();
     private List<ChatGroup> activeChatGroups = new ();

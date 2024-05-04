@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class CurrencySingleStackPool : MonoPool<CurrencySingleStackBehaviour>
-{
-    
-}
-
 public class CurrencySingleStackBehaviour : MonoBehaviour, IResetable, ICurrencyHolder
 {
     [Inject] private CurrencySingleStackPool singleStackPool;

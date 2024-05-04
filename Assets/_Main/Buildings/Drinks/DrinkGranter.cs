@@ -8,6 +8,8 @@ public class DrinkGranter : WishGranter
     [Inject] private GameConfig gameConfig;
     public override EWish Type => EWish.Drinks;
     public override float FullProgressTime => gameConfig.grantDrinkDuration;
+    public override int Reward => gameConfig.drinkReward;
+
     protected override bool CanAddProgress(CitizenController citizen)
     {
         return true;

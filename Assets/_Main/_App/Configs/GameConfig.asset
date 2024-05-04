@@ -19,13 +19,13 @@ MonoBehaviour:
   breakTimerMinMax: {x: 15, y: 30}
   repairHouseTime: 1
   wishChances:
-  - type: 4
-    weight: 3
-  - type: 0
-    weight: 3
   - type: 1
     weight: 3
+  - type: 4
+    weight: 3
   - type: 2
+    weight: 3
+  - type: 0
     weight: 3
   - type: 3
     weight: 3
@@ -35,3 +35,7 @@ MonoBehaviour:
   grantDrinkDuration: 5
   grantFlowerDuration: 5
   grantIcecreamDuration: 5
+  icecreamReward: 10
+  drinkReward: 10
+  flowerReward: 10
+  moneyInOneModel: 3
