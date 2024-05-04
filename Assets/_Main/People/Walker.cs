@@ -12,7 +12,7 @@ public class Walker : MonoBehaviour
     private Vector3 target;
     private Vector3 hitTarget;
     public bool IsMoving => !isFinished;
-    protected bool isFinished;
+    protected bool isFinished = true;
     private NavMeshHit hit;
 
     private event Action reachTargetEvent;

@@ -26,12 +26,20 @@ public class RepairAssistant : MonoBehaviour, IRepairer
         {
             RefreshTarget();
         }
+        else
+        {
+            buildingTarget.CanRepair(this, out IRepairable target);
+            walker.MoveToTarget(target.Place.position, null);  
+        }
     }
 
     private void RefreshTarget()
     {
         buildingTarget = housesManager.GetBrokenBuildingForRepair();
-        buildingTarget.CanRepair(this, out IRepairable target);
-        walker.MoveToTarget(target.Place.position, null);
+        if (buildingTarget != null)
+        {
+            buildingTarget.CanRepair(this, out IRepairable target);
+            walker.MoveToTarget(target.Place.position, null);   
+        }
     }
 }

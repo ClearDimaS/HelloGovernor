@@ -28,6 +28,7 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
     public void Initialize(CurrencyStackData data)
     {
         saveData = data;
+
         var amount = saveData.moneyAmount;
         var given = 0;
         for (int i = 0; i < saveData.modelsCount; i++)

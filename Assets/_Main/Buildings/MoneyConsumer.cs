@@ -127,9 +127,9 @@ public class MoneyConsumer : MonoBehaviour
         currentSpendingTime += Time.deltaTime;
         
         int maxAllowedCurrentAmount = Mathf.RoundToInt(currentSpendingTime / gameConfig.moneySpendTime * price.price);
-        maxAllowedCurrentAmount = Mathf.Min(maxAllowedCurrentAmount, spender.MaxToSpend());
-        
+
         var diff = maxAllowedCurrentAmount - currentSpendAmount;
+        diff = Mathf.Min(diff, spender.MaxToSpend());
         if (diff > 0)
         {
             spender.Spend(diff);
