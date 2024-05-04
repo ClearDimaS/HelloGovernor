@@ -25,6 +25,8 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
     [SerializeField] private CurrencyPlacer gridPlacer;
 
     private CurrencyStackData saveData;
+    public int Money => saveData.moneyAmount;
+
     public void Initialize(CurrencyStackData data)
     {
         saveData = data;
@@ -45,7 +47,12 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
             gridPlacer.Add(currency, true);
         }
     }
-    
+
+    private void Update()
+    {
+        saveData.moneyAmount = gridPlacer.GetMoneyAmount();
+    }
+
     public CurrencyStackData GetData()
     {
         saveData.modelsCount = gridPlacer.Count;
@@ -118,6 +125,16 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
     {
         var count = gridPlacer.Count;
         for (int i = 0; i < count; i++)
+        {
+            var currency = gridPlacer.Remove();
+            target.MoveCurrencyToMe(currency);
+        }
+    }
+    
+    public void RemoveOne(ICurrencyHolder target)
+    {
+        var count = gridPlacer.Count;
+        if (count > 0)
         {
             var currency = gridPlacer.Remove();
             target.MoveCurrencyToMe(currency);

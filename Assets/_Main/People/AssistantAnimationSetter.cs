@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CleanerAnimationSetter : MonoBehaviour
+public class AssistantAnimationSetter : MonoBehaviour
 {
     [SerializeField] private Walker walker;
     [SerializeField] private RuntimeAnimatorController animatorController;

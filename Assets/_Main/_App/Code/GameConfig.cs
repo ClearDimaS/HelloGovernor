@@ -32,4 +32,8 @@ public class GameConfig : ScriptableObject
     public int drinkReward;
     public int flowerReward;
     public int moneyInOneModel = 3;
+    
+    public float moneyToGather = 10;
+    public float thiefPause = 10;
+    public int thiefMaxSteal;
 }

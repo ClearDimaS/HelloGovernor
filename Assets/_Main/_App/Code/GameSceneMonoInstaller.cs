@@ -20,5 +20,8 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<ChatGroupsPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencyPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencySingleStackPool>().FromComponentInHierarchy().AsSingle().NonLazy();
+        
+        Container.Bind<ThiefsManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<ThiefsPool>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 }
