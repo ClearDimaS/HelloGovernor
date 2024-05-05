@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public enum EInteractable
 {
@@ -12,55 +13,37 @@ public enum EInteractable
 }
 public class Interactor : MonoBehaviour
 {
-    [Serializable]
-    public class InteractableSerializedData
+    private Animator controller;
+    private List<WishAssistantItem> items = new ();
+    
+    private void Awake()
     {
-        public EInteractable type;
-        public GameObject go;
-    }
-
-    [SerializeField] private List<InteractableSerializedData> interactables;
-
-
-    private void Start()
-    {
-        foreach (var interactable in interactables)
-        {
-            interactable.go.SetActive(false);
-        }
-    }
-
-    public void ActivateObject(EInteractable type)
-    {
-        foreach (var interactable in interactables)
-        {
-            if (interactable.type == type)
-            {
-                interactable.go.SetActive(true);
-            }
-        }
+        controller = GetComponentInChildren<Animator>();
     }
     
-    public void DeactivateObject(EInteractable type)
+    public bool HasItem(EWish type)
     {
-        foreach (var interactable in interactables)
+        switch (type)
         {
-            if (interactable.type == type)
-            {
-                interactable.go.SetActive(false);
-            }
+            case EWish.Chat:
+                return false;
+            case EWish.Wander:
+                return false;
+            default:
+                 return items.Any(x => x.Type == type);
         }
     }
 
-    public bool HasItem(EWish type)
+    public void AddItem(WishAssistantItem item)
     {
-        var interactableType = type.ToInteractable();
-        switch (interactableType)
-        {
-            case EInteractable.None:
-                return false;
-            default:
-                 return interactables.First(x => x.type == interactableType).go.activeSelf;
-        }
+        items.Add(item);
+        item.transform.SetParent(controller.GetBoneTransform(HumanBodyBones.LeftHand));
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+    }
+
+    public void RemoveItem(WishAssistantItem item)
+    {
+        items.Remove(item);
     }
 }

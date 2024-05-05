@@ -16,6 +16,5 @@ public class IcecreamGranter : WishGranter
     protected override void OnSuccessProcess(CitizenController citizen)
     {
         base.OnSuccessProcess(citizen);
-        citizen.Interactor.ActivateObject(EInteractable.IceCream);
     }
 }

@@ -2,11 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class WaiterAssistant : MonoBehaviour, IWishAssistant
 {
-    [SerializeField] private Walker walker;
+    [Inject] private GameConfig config;
     
+    [SerializeField] private Interactor interactor;
+    [SerializeField] private Walker walker;
+    private WishAssistantItemSource itemsSource;
+
+    private bool canTakeItem;
+    private float takeTimer;
+    private WishAssistantItem item;
     private EWish type;
     private WishGranter wishGranter;
     private CitizenController target;
@@ -15,10 +23,21 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant
     {
         wishGranter = GetComponentInParent<WishGranter>();
         type = wishGranter.Type;
+        itemsSource = wishGranter.GetComponentInChildren<WishAssistantItemSource>();
     }
 
     private void Update()
     {
+        if (canTakeItem)
+        {
+            takeTimer += Time.deltaTime;
+            if (takeTimer > config.takeItemTime)
+            {
+                takeTimer = 0f;
+                canTakeItem = false;
+                AddItem(itemsSource.TakeItem());
+            }
+        }
         if (target != null)
         {
             if (target.WishesController.WishAssistant != null && target.WishesController.WishAssistant != this)
@@ -33,7 +52,10 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant
             if (!wishGranter.IsProcessed(target))
             {
                 target.WishesController.SetWishAssistant(null);
+                interactor.RemoveItem(item);
+                target.Interactor.AddItem(item);
                 target = null;
+                item = null;
             }
         }
 
@@ -43,8 +65,25 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant
         }
         if (target != null)
         {
-            walker.MoveToTarget(target.transform.position, AllowAddProgress);
+            if (item == null)
+            {
+                walker.MoveToTarget(itemsSource.TakePlace.position, AllowTakeItem);
+            }
+            else
+            {
+                walker.MoveToTarget(target.transform.position, AllowAddProgress);   
+            }
         }
+    }
+
+    public bool CanServeType(EWish type)
+    {
+        return this.type == type;
+    }
+
+    private void AllowTakeItem()
+    {
+        canTakeItem = true;
     }
 
     private void AllowAddProgress()
@@ -56,9 +95,10 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant
     {
         target = wishGranter.GetProcessedWithoutAssistant();
     }
-
-    public bool CanServeType(EWish type)
+    
+    private void AddItem(WishAssistantItem getElement)
     {
-        return this.type == type;
+        item = getElement;
+        interactor.AddItem(item);
     }
 }

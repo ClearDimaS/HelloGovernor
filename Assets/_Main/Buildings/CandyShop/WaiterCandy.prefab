@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5186151205844757385}
+  - component: {fileID: 5935182639528479759}
   - component: {fileID: 747805115318707944}
   - component: {fileID: 8576185930193879980}
   - component: {fileID: 3103095942397822185}
   - component: {fileID: 5987337840702366086}
   - component: {fileID: 1096553637908219665}
   m_Layer: 7
-  m_Name: WaiterDrinks 1
+  m_Name: WaiterCandy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,6 +39,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5935182639528479759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186151205844757384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba8842c61204a99b683918b19c859bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &747805115318707944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,7 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eedfd7f28fa064cfea2d0660834e9415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactor: {fileID: 5935182639528479759}
   walker: {fileID: 3103095942397822185}
+  itemsSource: {fileID: 0}
 --- !u!114 &8576185930193879980
 MonoBehaviour:
   m_ObjectHideFlags: 0

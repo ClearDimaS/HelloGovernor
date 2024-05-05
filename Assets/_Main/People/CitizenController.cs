@@ -15,10 +15,16 @@ public class CitizenController : MonoBehaviour
     
     private HouseBuilding house;
 
+    public Animator Animator { get; private set; }
     public bool IsChatting { get; private set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
     public Interactor Interactor => interactor;
+
+    private void Awake()
+    {
+        Animator = GetComponentInChildren<Animator>();
+    }
 
     public void SetHouse(HouseBuilding house)
     {

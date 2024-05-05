@@ -36,4 +36,5 @@ public class GameConfig : ScriptableObject
     public float moneyToGather = 10;
     public float thiefPause = 10;
     public int thiefMaxSteal;
+    public float takeItemTime = 3f;
 }
