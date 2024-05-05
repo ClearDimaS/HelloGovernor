@@ -9,7 +9,7 @@ public class FlowerGranter : WishGranter
     
     protected override bool CanAddProgress(CitizenController citizen)
     {
-        return true;
+        return citizen.WishesController.IsGranterAssistantServing(Type);
     }
 
     protected override void OnSuccessProcess(CitizenController citizen)

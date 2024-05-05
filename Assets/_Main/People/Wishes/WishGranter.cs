@@ -195,11 +195,29 @@ public abstract class WishGranter : MonoBehaviour
 
     public virtual bool CanAddOneMore()
     {
-        return approaching.Count + queue.Count < processPlaces.Length;
+        return approaching.Count + queue.Count + processed.Count < processPlaces.Length;
     }
 
     public bool CanAdd(CitizenController citizenController)
     {
         return !citizenController.Interactor.HasItem(Type);
+    }
+
+    public bool IsProcessed(CitizenController target)
+    {
+        return processed.Contains(target);
+    }
+
+    public CitizenController GetProcessedWithoutAssistant()
+    {
+        foreach (var citizen in processed)
+        {
+            if (!citizen.WishesController.IsGranterAssistantServing(Type))
+            {
+                return citizen;
+            }
+        }
+
+        return null;
     }
 }

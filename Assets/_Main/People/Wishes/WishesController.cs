@@ -1,6 +1,14 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+
+public interface IWishAssistant
+{
+    public bool CanServeType(EWish type);
+}
 
 public class WishesController : MonoBehaviour
 {
@@ -10,6 +18,8 @@ public class WishesController : MonoBehaviour
 
     [SerializeField] private CitizenController citizenController;
 
+    private IWishAssistant wishAssistant;
+    public IWishAssistant WishAssistant => wishAssistant;
     private Wish currentWish;
     private Transform target;
 
@@ -74,5 +84,25 @@ public class WishesController : MonoBehaviour
     public void AbortWish()
     {
         currentWish.Abort();
+    }
+
+    public bool IsGranterAssistantServing(EWish type)
+    {
+        switch (type)
+        {
+            case EWish.Drinks:
+                return wishAssistant != null && wishAssistant.CanServeType(type);
+            case EWish.Flowers:
+                return wishAssistant != null && wishAssistant.CanServeType(type);
+            case EWish.IceCream:
+                return wishAssistant != null && wishAssistant.CanServeType(type);
+            default:
+                throw new NotImplementedException($"wish {type} cant be served!");
+        }
+    }
+
+    public void SetWishAssistant(IWishAssistant waiterAssistant)
+    {
+        wishAssistant = waiterAssistant;
     }
 }
