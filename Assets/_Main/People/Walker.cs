@@ -57,13 +57,13 @@ public class Walker : MonoBehaviour
         return IsMoving && IsSameTarget(target, this.target);
     }
 
-    public void MoveToTarget(Vector3 target, Action onReachTarget)
+    public void MoveToTarget(Vector3 target, Action onReachTarget, float radiusOverride = -1f)
     {
         if (NavMesh.SamplePosition(target, out hit, Mathf.Infinity, NavMesh.AllAreas))
         {
             hitTarget = hit.position;
             reachTargetEvent = onReachTarget;
-            if (HasReached())
+            if (HasReached(radiusOverride))
             {
                 SetFinished();
                 return;
@@ -76,9 +76,14 @@ public class Walker : MonoBehaviour
         }
     }
 
-    protected bool HasReached()
+    protected bool HasReached(float radiusOverride = -1f)
     {
-        return stopDistance > (transform.position - hitTarget).magnitude;
+        var stop = stopDistance;
+        if (radiusOverride > 0f)
+        {
+            stop = radiusOverride;
+        }
+        return stop > (transform.position - hitTarget).magnitude;
     }
     
     private bool IsSameTarget(Vector3 target1, Vector3 target2)

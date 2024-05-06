@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -18,6 +19,8 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
     private List<CitizenController> pendingProcessed = new ();
+    private Dictionary<CitizenController, Transform> citizenPlacesDict = new ();
+    private Queue<Transform> freePlaces = new ();
     protected List<CitizenController> processed = new ();
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
@@ -26,6 +29,10 @@ public abstract class WishGranter : MonoBehaviour
     private void Awake()
     {
         grantersManager.AddGranter(this);
+        for (int i = 0; i < processPlaces.Length; i++)
+        {
+            freePlaces.Enqueue(processPlaces[i]);
+        }
         OnAwake();
     }
 
@@ -129,12 +136,17 @@ public abstract class WishGranter : MonoBehaviour
     
     protected virtual Vector3 GetProcessPlaceFor(CitizenController citizen)
     {
-        var index = processed.IndexOf(citizen);
-        if (index < 0)
-        {
-            index = Mathf.Max(processed.Count - 1, 0);
-        }
-        return processPlaces[index % processPlaces.Length].position;
+        return GetProcessRootFor(citizen).position;
+    }
+    
+    protected virtual Quaternion GetProcessRotFor(CitizenController citizen)
+    {
+        return GetProcessRootFor(citizen).rotation;
+    }
+    
+    private Transform GetProcessRootFor(CitizenController citizen)
+    {
+        return citizenPlacesDict[citizen];
     }
     
     protected virtual Vector3 GetExitPlaceFor(CitizenController citizen)
@@ -144,6 +156,10 @@ public abstract class WishGranter : MonoBehaviour
     
     public void AddApproaching(CitizenController citizen)
     {
+        if (freePlaces.Count > 0)
+        {
+            citizenPlacesDict[citizen] = freePlaces.Dequeue();   
+        }
         approaching.Add(citizen);
     }
 
@@ -157,6 +173,10 @@ public abstract class WishGranter : MonoBehaviour
     {
         queue.Remove(citizen);
         processed.Add(citizen);
+        var place = GetProcessPlaceFor(citizen);
+        var rot = GetProcessRotFor(citizen);
+        citizen.transform.DORotateQuaternion(rot, 0.3f);
+        citizen.transform.DOMove(place, 0.3f);
     }
 
     private void AddToLeaving(CitizenController citizen)
@@ -182,7 +202,11 @@ public abstract class WishGranter : MonoBehaviour
 
     protected virtual void OnRemoveFromProcessed(CitizenController citizen)
     {
-        
+        if (citizenPlacesDict.ContainsKey(citizen))
+        {
+            freePlaces.Enqueue(citizenPlacesDict[citizen]);
+            citizenPlacesDict.Remove(citizen);   
+        }
     }
 
     protected virtual void OnSuccessProcess(CitizenController citizen)

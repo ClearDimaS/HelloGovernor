@@ -20,6 +20,12 @@ public class WishesController : MonoBehaviour
 
     private IWishAssistant wishAssistant;
     public IWishAssistant WishAssistant => wishAssistant;
+
+    public bool IsSitting => currentWish != null && (currentWish.Type == EWish.Drinks ||
+                                                    currentWish.Type == EWish.Flowers ||
+                                                    currentWish.Type == EWish.IceCream) && IsProcessingWish;
+    public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
+
     private Wish currentWish;
     private Transform target;
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CitizenAnimationSetter : MonoBehaviour
 {
@@ -9,9 +10,10 @@ public class CitizenAnimationSetter : MonoBehaviour
     [SerializeField] private Walker walker;
     [SerializeField] private RuntimeAnimatorController animatorController;
     
-    private int SpeedHash = Animator.StringToHash("Speed");
-    private int IsWalkingHash = Animator.StringToHash("IsWalking");
-    private int IsChattingHash = Animator.StringToHash("IsChatting");
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
+    private static readonly int IsChattingHash = Animator.StringToHash("IsChatting");
+    private static readonly int IsSitting = Animator.StringToHash("IsSitting");
 
     private Animator animator;
     
@@ -19,6 +21,7 @@ public class CitizenAnimationSetter : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorController;
+        animator.SetFloat("SitRandomSpeedMult", Random.Range(0.5f, 2f));
     }
 
     private void Update()
@@ -28,6 +31,7 @@ public class CitizenAnimationSetter : MonoBehaviour
             animator.SetBool(IsChattingHash, citizenController.IsChatting);
             animator.SetFloat(SpeedHash, walker.Speed);
             animator.SetBool(IsWalkingHash, walker.IsMoving);   
+            animator.SetBool(IsSitting, citizenController.WishesController.IsSitting);
         }
     }
 }

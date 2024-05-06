@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ChatGroup : MonoBehaviour, IResetable
 {
@@ -24,14 +25,18 @@ public class ChatGroup : MonoBehaviour, IResetable
                 {
                     if (other != citizen)
                     {
+                        var point = Vector3.zero;
                         if ((citizen.transform.position - other.transform.position).magnitude < socialDistancing)
                         {
-                            citizen.Walker.MoveToTarget(citizen.transform.position, () => SetChatting(citizen));
+                            point = citizen.transform.position;
                         }
                         else
                         {
-                            citizen.Walker.MoveToTarget(other.transform.position, () => SetChatting(citizen));
+                            point = other.transform.position;
                         }
+
+                        NavMesh.SamplePosition(point, out var hit, 10f, NavMesh.GetAreaFromName("AllowChat"));
+                        citizen.Walker.MoveToTarget(hit.position, () => SetChatting(citizen));
                     }
                 }
             }

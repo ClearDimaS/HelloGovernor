@@ -71,7 +71,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant
             }
             else
             {
-                walker.MoveToTarget(target.transform.position, AllowAddProgress);   
+                walker.MoveToTarget(target.transform.position, AllowAddProgress, 0.8f);   
             }
         }
     }

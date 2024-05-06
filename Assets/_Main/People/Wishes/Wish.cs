@@ -14,7 +14,8 @@ public class Wish : MonoBehaviour, IResetable
     public EWish Type { get; private set; }
     public bool IsReadyToRemove { get; private set; }
     public bool IsProgressFull => progress >= 1f;
-    
+    public WishGranter Granter => granter;
+
     public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove)
     {
         progress = 0;

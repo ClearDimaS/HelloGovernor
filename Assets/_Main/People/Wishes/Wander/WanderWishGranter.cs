@@ -34,13 +34,17 @@ public class WanderWishGranter : WishGranter
     {
         return citizen.transform.position;
     }
-
+    
+    protected override Quaternion GetProcessRotFor(CitizenController citizen)
+    {
+        return citizen.transform.rotation;
+    }
+    
     protected override Vector3 GetExitPlaceFor(CitizenController citizen)
     {
         return citizen.transform.position;
     }
     
-                
     private Vector3 GetRandomPos()
     {
         var pos = environment.mapCenter + new Vector3(
