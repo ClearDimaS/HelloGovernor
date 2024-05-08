@@ -11,6 +11,7 @@ public class WishPlace : MonoBehaviour
         Taken
     }
 
+    [SerializeField] private GameObject timerRoot;
     [SerializeField] private Image fillImage;
     
     private CitizenController wisher;
@@ -21,9 +22,20 @@ public class WishPlace : MonoBehaviour
 
     private void Update()
     {
-        if (fillImage != null)
+        if (fillImage != null && wisher != null && state == EWishPlaceState.Taken)
         {
+            if (!timerRoot.activeSelf)
+            {
+                timerRoot.SetActive(true);   
+            }
             fillImage.fillAmount = progress;   
+        }
+        else
+        {
+            if (timerRoot.activeSelf)
+            {
+                timerRoot.SetActive(false);
+            }
         }
     }
 

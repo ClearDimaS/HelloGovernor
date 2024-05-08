@@ -156,12 +156,20 @@ public abstract class WishGranter : MonoBehaviour
     
     public void AddApproaching(CitizenController citizen)
     {
-        if (freePlaces.Count > 0)
+        if (CanAddOneMore())
         {
-            citizenPlacesDict[citizen] = freePlaces.Dequeue();   
-            citizenPlacesDict[citizen].SetOwner(citizen);
+            if (freePlaces.Count > 0)
+            {
+                citizenPlacesDict[citizen] = freePlaces.Dequeue();   
+                citizenPlacesDict[citizen].SetOwner(citizen);
+            }
+            
+            approaching.Add(citizen);
         }
-        approaching.Add(citizen);
+        else
+        {
+            Debug.LogError($"cant add approaching!  {Type}");   
+        }
     }
 
     private void AddToQueue(CitizenController citizen)
@@ -172,7 +180,10 @@ public abstract class WishGranter : MonoBehaviour
 
     private void AddToProcessed(CitizenController citizen)
     {
-        citizenPlacesDict[citizen].TakePlace(citizen);
+        if (citizenPlacesDict.ContainsKey(citizen))
+        {
+            citizenPlacesDict[citizen].TakePlace(citizen);   
+        }
         queue.Remove(citizen);
         processed.Add(citizen);
         var place = GetProcessPlaceFor(citizen);
@@ -222,7 +233,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public virtual bool CanAddOneMore()
     {
-        return approaching.Count + queue.Count + processed.Count < processPlaces.Length;
+        return freePlaces.Count > 0;
     }
 
     public bool CanAdd(CitizenController citizenController)

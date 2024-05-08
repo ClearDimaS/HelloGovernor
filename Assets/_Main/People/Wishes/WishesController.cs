@@ -25,7 +25,7 @@ public class WishesController : MonoBehaviour
                                                     currentWish.Type == EWish.Flowers ||
                                                     currentWish.Type == EWish.IceCream) && IsProcessingWish;
     public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
-    public float CurrentWishProgress =>  currentWish != null ? -1f : currentWish.Progress;
+    public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
 
     private Wish currentWish;
     private Transform target;
