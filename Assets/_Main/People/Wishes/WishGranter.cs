@@ -8,7 +8,7 @@ public abstract class WishGranter : MonoBehaviour
     [Inject] private WishGrantersManager grantersManager;
 
     [SerializeField] private CurrencyStackBehaviour currencyStack;
-    [SerializeField] private Transform[] processPlaces;
+    [SerializeField] private WishPlace[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
     public abstract EWish Type { get; }
@@ -19,8 +19,8 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
     private List<CitizenController> pendingProcessed = new ();
-    private Dictionary<CitizenController, Transform> citizenPlacesDict = new ();
-    private Queue<Transform> freePlaces = new ();
+    private Dictionary<CitizenController, WishPlace> citizenPlacesDict = new ();
+    private Queue<WishPlace> freePlaces = new ();
     protected List<CitizenController> processed = new ();
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
@@ -131,7 +131,7 @@ public abstract class WishGranter : MonoBehaviour
             index = Mathf.Max(processed.Count - 1, 0);
         }
 
-        return processPlaces[index % processPlaces.Length].position;
+        return processPlaces[index % processPlaces.Length].Position;
     }
     
     protected virtual Vector3 GetProcessPlaceFor(CitizenController citizen)
@@ -146,7 +146,7 @@ public abstract class WishGranter : MonoBehaviour
     
     private Transform GetProcessRootFor(CitizenController citizen)
     {
-        return citizenPlacesDict[citizen];
+        return citizenPlacesDict[citizen].transform;
     }
     
     protected virtual Vector3 GetExitPlaceFor(CitizenController citizen)
@@ -159,6 +159,7 @@ public abstract class WishGranter : MonoBehaviour
         if (freePlaces.Count > 0)
         {
             citizenPlacesDict[citizen] = freePlaces.Dequeue();   
+            citizenPlacesDict[citizen].SetOwner(citizen);
         }
         approaching.Add(citizen);
     }
@@ -171,6 +172,7 @@ public abstract class WishGranter : MonoBehaviour
 
     private void AddToProcessed(CitizenController citizen)
     {
+        citizenPlacesDict[citizen].TakePlace(citizen);
         queue.Remove(citizen);
         processed.Add(citizen);
         var place = GetProcessPlaceFor(citizen);
@@ -204,6 +206,7 @@ public abstract class WishGranter : MonoBehaviour
     {
         if (citizenPlacesDict.ContainsKey(citizen))
         {
+            citizenPlacesDict[citizen].LeavePlace(citizen);
             freePlaces.Enqueue(citizenPlacesDict[citizen]);
             citizenPlacesDict.Remove(citizen);   
         }
