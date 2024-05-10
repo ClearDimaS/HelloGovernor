@@ -23,4 +23,19 @@ public static class WishesExtensions
                 throw new NotImplementedException($"wish type: {type} cant be converted to interactable!");
         }
     }
+    
+    public static ECompasTarget ToCompassTarget(this EWish type)
+    {
+        switch (type)
+        {
+            case EWish.Drinks:
+                return ECompasTarget.Drink;
+            case EWish.Flowers:
+                return ECompasTarget.Flower;
+            case EWish.IceCream:
+                return ECompasTarget.IceCream;
+            default:
+                throw new NotImplementedException($"wish type: {type} cant be converted to interactable!");
+        }
+    }
 }

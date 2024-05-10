@@ -24,5 +24,7 @@ public class GameSceneMonoInstaller : MonoInstaller
         
         Container.Bind<ThiefsManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<ThiefsPool>().FromComponentInHierarchy().AsSingle().NonLazy();
+
+        Container.Bind<CompassManager>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 }

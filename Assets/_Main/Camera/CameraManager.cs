@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour, ICameraManager
 {
     [SerializeField] private Camera camera;
-
+    [field: SerializeField] public Camera UI_Camera { get; private set; }
     public Camera ActiveCamera => _currentCamera;
     public Camera OriginalCamera => camera;
 

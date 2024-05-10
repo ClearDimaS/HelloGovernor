@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 2083138658000415684}
+  <UI_Camera>k__BackingField: {fileID: 2083138658068964857}
 --- !u!1001 &4951801310303146964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -129,6 +130,12 @@ Camera:
 --- !u!4 &2083138658000415685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6363760670035507217, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4951801310303146964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &2083138658068964857 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6363760669664966189, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
     type: 3}
   m_PrefabInstance: {fileID: 4951801310303146964}
   m_PrefabAsset: {fileID: 0}

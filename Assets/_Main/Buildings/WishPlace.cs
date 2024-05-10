@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class WishPlace : MonoBehaviour
 {
@@ -11,14 +12,24 @@ public class WishPlace : MonoBehaviour
         Taken
     }
 
+    [Inject] private CompassManager compassManager;
+
     [SerializeField] private GameObject timerRoot;
     [SerializeField] private Image fillImage;
-    
+
+    private WishGranter granter;
     private CitizenController wisher;
     private EWishPlaceState state;
     public Vector3 Position => transform.position;
 
     private float progress => wisher.WishesController.CurrentWishProgress;
+    private ECompasTarget compasTarget;
+    
+    private void Awake()
+    {
+        granter = GetComponentInParent<WishGranter>();
+        compasTarget = granter.Type.ToCompassTarget();
+    }
 
     private void Update()
     {
@@ -26,7 +37,8 @@ public class WishPlace : MonoBehaviour
         {
             if (!timerRoot.activeSelf)
             {
-                timerRoot.SetActive(true);   
+                timerRoot.SetActive(true);
+                compassManager.AddTarget(transform, compasTarget);
             }
             fillImage.fillAmount = progress;   
         }
@@ -34,6 +46,7 @@ public class WishPlace : MonoBehaviour
         {
             if (timerRoot.activeSelf)
             {
+                compassManager.RemoveTarget(transform, compasTarget);
                 timerRoot.SetActive(false);
             }
         }

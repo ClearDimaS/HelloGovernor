@@ -160,7 +160,7 @@ public abstract class WishGranter : MonoBehaviour
         {
             if (freePlaces.Count > 0)
             {
-                citizenPlacesDict[citizen] = freePlaces.Dequeue();   
+                citizenPlacesDict[citizen] = DequeuePlace();   
                 citizenPlacesDict[citizen].SetOwner(citizen);
             }
             
@@ -218,7 +218,7 @@ public abstract class WishGranter : MonoBehaviour
         if (citizenPlacesDict.ContainsKey(citizen))
         {
             citizenPlacesDict[citizen].LeavePlace(citizen);
-            freePlaces.Enqueue(citizenPlacesDict[citizen]);
+            EnqueuePlace(citizenPlacesDict[citizen]);
             citizenPlacesDict.Remove(citizen);   
         }
     }
@@ -234,6 +234,17 @@ public abstract class WishGranter : MonoBehaviour
     public virtual bool CanAddOneMore()
     {
         return freePlaces.Count > 0;
+    }
+
+    private WishPlace DequeuePlace()
+    {
+        var place = freePlaces.Dequeue();
+        return place;
+    }
+    
+    private void EnqueuePlace(WishPlace place)
+    {
+        freePlaces.Enqueue(place);
     }
 
     public bool CanAdd(CitizenController citizenController)
