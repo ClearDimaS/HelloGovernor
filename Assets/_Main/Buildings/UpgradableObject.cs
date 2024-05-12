@@ -12,10 +12,8 @@ public class UpgradableData
 }
 
 [RequireComponent(typeof(UpgradableSavable))]
-public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
+public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
 {
-    [Inject] private UpgradablePricesManager _upgradablePricesManager;
-    
     [SerializeField] private bool autoGrantLevel1;
     [SerializeField] protected ScaleAnimator[] levels;
     [SerializeField] private MoneyConsumer moneyConsumer;
@@ -42,11 +40,14 @@ public class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
         {
             data.level = 1;
         }
-        levelPrices = _upgradablePricesManager.GetLevelPrices(this);
+
+        levelPrices = GetPrices();
         this.data = data;
         RefreshLevelGFX(true);
         SetPrice();
     }
+
+    protected abstract List<Price> GetPrices();
 
     public UpgradableData GetData()
     {

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,13 +9,24 @@ public class UpgradableBuilding : UpgradableObject
 {
     [Inject] private DiContainer container;
     [Inject] private BuildingsConfig buildingsConfig;
+    [Inject] private UpgradablePricesManager _upgradablePricesManager;
     
     [SerializeField] private Transform boughtRoot;
     [SerializeField] private EBuilding type;
 
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
+
+    public List<Price> GetPricesCopy()
+    {
+        return _upgradablePricesManager.GetLevelPrices(this).Select(x => x.GetCopy()).ToList();
+    }
     
+    protected override List<Price> GetPrices()
+    {
+        return _upgradablePricesManager.GetLevelPrices(this);
+    }
+
     protected override void RefreshLevelGFX(bool instant)
     {
         base.RefreshLevelGFX(instant);
@@ -69,9 +82,9 @@ public class UpgradableBuilding : UpgradableObject
         }
         else
         {
-            if (boughtRoot.gameObject.activeSelf)
+            if (boughtRoot.gameObject.activeSelf != IsBought)
             {
-                boughtRoot.gameObject.SetActive(false);   
+                boughtRoot.gameObject.SetActive(IsBought);   
             }
         }
     }

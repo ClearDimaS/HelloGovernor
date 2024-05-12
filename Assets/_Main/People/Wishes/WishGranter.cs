@@ -5,6 +5,7 @@ using Zenject;
 
 public abstract class WishGranter : MonoBehaviour
 {
+    [Inject] protected WishesConfig wishesConfig;
     [Inject] private WishGrantersManager grantersManager;
 
     [SerializeField] private CurrencyStackBehaviour currencyStack;
@@ -12,8 +13,6 @@ public abstract class WishGranter : MonoBehaviour
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
     public abstract EWish Type { get; }
-    public abstract float FullProgressTime { get; }
-    public abstract int Reward { get; }
 
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
@@ -26,6 +25,9 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
 
+    public float FullProgressTime => wishesConfig.GetGrantDuration(Type);
+    public int Reward => wishesConfig.GetReward(Type);
+    
     private void Awake()
     {
         grantersManager.AddGranter(this);

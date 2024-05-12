@@ -49,6 +49,10 @@ public class UpgradablePricesManager : MonoBehaviour
                 }
             }
 
+            if (prices.Count != upgradableObject.UpgradesCount)
+            {
+                throw new NotImplementedException($"prices for: {upgradableObject.transform.name} is not set correctly!");
+            }
             consumersDict[upgradableObject] = prices;
         }
 
@@ -67,7 +71,9 @@ public class UpgradablePricesManager : MonoBehaviour
             }
         }
         
-        var onSceneUpgradables = FindObjectsOfType<UpgradableObject>(true);
+        var buildings = FindObjectsOfType<UpgradableBuilding>(true);
+        var onSceneUpgradables = buildings;
+        
         foreach (var onScene in onSceneUpgradables)
         {
             var needUpgradesCount = onScene.UpgradesCount;

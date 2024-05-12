@@ -78,7 +78,7 @@ public class BankAssistant : MonoBehaviour, IDataHolder<BankAssistantData>, ICur
     {
         for (int i = 0; i < stacks.Count; i++)
         {
-            if (stacks[i].Money > config.moneyToGather)
+            if (stacks[i].IsFull())
             {
                 target = stacks[i];
             }

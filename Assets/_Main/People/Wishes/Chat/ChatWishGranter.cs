@@ -7,11 +7,8 @@ using Random = UnityEngine.Random;
 public class ChatWishGranter : WishGranter
 {
     [Inject] private ChatGroupsPool groupsPool;
-    [Inject] private GameConfig gameConfig;
     
     public override EWish Type => EWish.Chat;
-    public override float FullProgressTime => gameConfig.chatDuration;
-    public override int Reward => 0;
 
     protected HashSet<CitizenController> groupedCitizens = new ();
     private List<ChatGroup> activeChatGroups = new ();
@@ -33,7 +30,7 @@ public class ChatWishGranter : WishGranter
             if (!groupedCitizens.Contains(citizen))
             {
                 ChatGroup group = groupsPool.GetElement();
-                group.Initialize(Random.Range(gameConfig.chatGroupSizeMinMax.x, gameConfig.chatGroupSizeMinMax.x));
+                group.Initialize(Random.Range(wishesConfig.chatGroupSizeMinMax.x, wishesConfig.chatGroupSizeMinMax.x));
                 activeChatGroups.Add(group);
                 
                 group.Add(citizen);

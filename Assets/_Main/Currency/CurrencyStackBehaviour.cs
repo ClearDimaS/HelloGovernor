@@ -140,4 +140,9 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
             target.MoveCurrencyToMe(currency);
         }
     }
+
+    public bool IsFull()
+    {
+        return !gridPlacer.CanAddOneMore();
+    }
 }

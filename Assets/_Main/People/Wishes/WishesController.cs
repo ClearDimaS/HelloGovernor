@@ -14,7 +14,7 @@ public class WishesController : MonoBehaviour
 {
     [Inject] private WishesPool wishesPool;
     [Inject] private WishGrantersManager grantersManager;
-    [Inject] private GameConfig gameConfig;
+    [Inject] private WishesConfig wishesConfig;
 
     [SerializeField] private CitizenController citizenController;
 
@@ -69,9 +69,7 @@ public class WishesController : MonoBehaviour
     
     private void SetRandomWish()
     {
-        var wishChances = gameConfig.wishChances;
-        wishChances.Shuffle();
-        var wishType = wishChances[Random.Range(0, wishChances.Count)].type;
+        var wishType = wishesConfig.GetRandomWishType();
         
         if (grantersManager.TryGetWorkingFreeGranter(wishType, out WishGranter granter) && granter.CanAdd(citizenController))
         {

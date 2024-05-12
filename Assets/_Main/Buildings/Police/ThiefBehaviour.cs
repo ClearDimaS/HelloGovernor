@@ -102,7 +102,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
     {
         for (int i = 0; i < stacks.Count; i++)
         {
-            if (stacks[i].Money > config.moneyToGather)
+            if (stacks[i].Money > config.moneyToSteal)
             {
                 target = stacks[i];
             }
