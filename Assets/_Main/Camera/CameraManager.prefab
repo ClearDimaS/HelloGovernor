@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9f6767e54ed468fa363fcbecc1127a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetFollower: {fileID: 6381040051136549335}
   camera: {fileID: 2083138658000415684}
   <UI_Camera>k__BackingField: {fileID: 2083138658068964857}
 --- !u!1001 &4951801310303146964
@@ -139,3 +140,15 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 4951801310303146964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6381040051136549335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2032908008495120899, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4951801310303146964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8ab284de1a65c49870e4b81e46134a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

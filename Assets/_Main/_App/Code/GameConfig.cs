@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,6 +16,15 @@ public class GameConfig : ScriptableObject
     [Header("Money")]
     public float moneySpendTime;
     public int moneyInOneModel = 3;
+    
+    [Header("Camera")]
+    public float unlockCameraDelay = 1f;
+    public float unlockCameraTimer = 3f;
+    public float cameraTransitionMaxTime = 1f;
+    public float cameraTransitionSpeed = 10f;
+    public Ease cameraTransitionEase;
+    public Vector2 cameraUnlockXBorders;
+    public Vector2 cameraUnlockYBorders;
     
     [Header("Break house")]
     public Vector2 breakTimerMinMax;

@@ -16,29 +16,16 @@ MonoBehaviour:
   moveForward: {x: 0, y: 0, z: -1}
   moveRight: {x: -1, y: 0, z: 0}
   moneySpendTime: 2
+  moneyInOneModel: 3
+  unlockCameraDelay: 1
+  unlockCameraTimer: 3
+  cameraTransitionMaxTime: 1
+  cameraTransitionSpeed: 10
+  cameraTransitionEase: 9
+  cameraUnlockXBorders: {x: 0.3, y: 0.7}
+  cameraUnlockYBorders: {x: 0.3, y: 0.7}
   breakTimerMinMax: {x: 15, y: 30}
   repairHouseTime: 1
-  wishChances:
-  - type: 1
-    weight: 3
-  - type: 2
-    weight: 3
-  - type: 3
-    weight: 3
-  - type: 0
-    weight: 3
-  - type: 4
-    weight: 3
-  wanderDuration: 10
-  chatDuration: 10
-  chatGroupSizeMinMax: {x: 2, y: 4}
-  grantDrinkDuration: 2
-  grantFlowerDuration: 5
-  grantIcecreamDuration: 3
-  icecreamReward: 10
-  drinkReward: 10
-  flowerReward: 10
-  moneyInOneModel: 3
-  moneyToGather: 10
   thiefPause: 10
   thiefMaxSteal: 10
+  moneyToSteal: 10

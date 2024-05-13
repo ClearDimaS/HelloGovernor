@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -70,7 +71,7 @@ public class ScaleAnimator : MonoBehaviour
                 var mr = mrs[i];
                 mr.transform.localPosition = localPositions[i] + Vector3.up * heightAnimationOffset;
             }
-            StartCoroutine(ShowCoroutine());
+            ShowCoroutine().ToUniTask();
         }
     }
 
@@ -94,7 +95,7 @@ public class ScaleAnimator : MonoBehaviour
         }
         else
         {
-            StartCoroutine(HideCoroutine());
+            HideCoroutine().ToUniTask();
         }
     }
 

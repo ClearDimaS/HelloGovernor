@@ -30,6 +30,7 @@ public class UpgradableBuilding : UpgradableObject
     protected override void RefreshLevelGFX(bool instant)
     {
         base.RefreshLevelGFX(instant);
+
         if (spawnedLevel != data.level && data.level > 0)
         {
             if (!boughtRoot.gameObject.activeSelf)

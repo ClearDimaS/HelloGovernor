@@ -20,11 +20,16 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
 
     private List<Price> levelPrices;
     protected UpgradableData data;
+    protected int allowedLevelToPurchase;
+    protected bool IsAllowedToBuy => Level < allowedLevelToPurchase;
     
     public int LevelsCount => levels.Length;
     public int UpgradesCount => autoGrantLevel1 ? LevelsCount - 1 : LevelsCount;
     public bool IsBought => data.level > 0;
-    
+    public int Level => data != null ? data.level : -1;
+    public Transform BuyPlace => moneyConsumer.transform;
+    public bool AutoGrantLevel1 => autoGrantLevel1;
+
     private void Awake()
     {
         if (moneyConsumer == null)
@@ -97,9 +102,22 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
             var price = new Price(requiredPrice.price, data.spentMoney);
             moneyConsumer.SetPrice(price);   
         }
+        moneyConsumer.gameObject.SetActive(IsAllowedToBuy);
+    }
+
+    public void SetAllowBuy(int allowedLevel, bool instant)
+    {
+        allowedLevelToPurchase = allowedLevel;
+        
+        if (IsAllowedToBuy)
+        {
+            moneyConsumer.gameObject.SetActive(true);
+            moneyConsumer.Show(instant);   
+        }
         else
         {
             moneyConsumer.gameObject.SetActive(false);
+            moneyConsumer.Hide(instant);
         }
     }
 }

@@ -52,7 +52,8 @@ public class MoneyConsumer : MonoBehaviour
 {
     [Inject] private CurrencyPool currencyPool;
     [Inject] private GameConfig gameConfig;
-    
+
+    [SerializeField] private ScaleAnimator scaleAnimator;
     [SerializeField] private Transform flyTarget;
     
     private Price price;
@@ -157,5 +158,15 @@ public class MoneyConsumer : MonoBehaviour
             return 0;
         }
         return price.spent;
+    }
+
+    public void Hide(bool instant)
+    {
+        scaleAnimator.Hide(instant);
+    }
+
+    public void Show(bool instant)
+    {
+        scaleAnimator.Show(instant);
     }
 }
