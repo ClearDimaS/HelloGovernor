@@ -165,8 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4458dc6c9242c4bcf962664d427c65cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compasses:
-  - {fileID: 9158570031637552743}
 --- !u!1 &7844809337284573572
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,15 +720,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8622251606216025424}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9158570031637552743 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 626460821627042615, guid: 2908c4d6518404e72bfc214f14743b07,
-    type: 3}
-  m_PrefabInstance: {fileID: 8622251606216025424}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c02fa6b784e5488abb44b73ffb39bcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

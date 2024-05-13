@@ -33,7 +33,7 @@ public class UpgradablePricesManager : MonoBehaviour
     
     private Queue<MoneyConsumerData> unlockQueue = new ();
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
-
+    
     private void Awake()
     {
         CollectAllConsumers();
@@ -70,15 +70,21 @@ public class UpgradablePricesManager : MonoBehaviour
         }
     }
 
-    private bool IsBought(MoneyConsumerData data)
+    public float GetProgress()
     {
-        return data.upgradable.Level >= data.level;
+        var addOne = IsBought(lastUnlocked) ? 0 : 1;
+        return 1f - (unlockQueue.Count + addOne) / (float)upgradablePriceDatas.Count;
     }
 
     public List<Price> GetLevelPrices(UpgradableObject upgradable)
     {
         var prices = GetLevelPricesInternal(upgradable);
         return prices;
+    }
+    
+    private bool IsBought(MoneyConsumerData data)
+    {
+        return data.upgradable.Level >= data.level;
     }
     
     private void AllowBuy(MoneyConsumerData moneyConsumerData, float delay = -1f)
