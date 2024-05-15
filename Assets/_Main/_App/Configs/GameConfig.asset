@@ -15,7 +15,15 @@ MonoBehaviour:
   playerSpeed: 5
   moveForward: {x: 0, y: 0, z: -1}
   moveRight: {x: -1, y: 0, z: 0}
-  moneySpendTime: 2
+  buyTime: 2
+  moneySpendPause: 0.07
+  moneySpendFlyHeight: 1.5
+  moneyGainFlyHeight: 2
+  moneyFromStackPause: 0.03
+  moneyFlyTime1: 0.5
+  moneyFlyTime2: 0.3
+  moneyFlyEase1: 8
+  moneyFlyEase2: 9
   moneyInOneModel: 3
   unlockCameraDelay: 1
   unlockCameraTimer: 2
@@ -28,4 +36,4 @@ MonoBehaviour:
   repairHouseTime: 1
   thiefPause: 10
   thiefMaxSteal: 10
-  moneyToSteal: 10
+  moneyToSteal: 10000

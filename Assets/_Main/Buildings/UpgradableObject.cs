@@ -39,7 +39,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         moneyConsumer.reachGoalEvent += LevelUp;
     }
 
-    public void Initialize(UpgradableData data)
+    public virtual void Initialize(UpgradableData data)
     {
         if (autoGrantLevel1 && data.level == 0)
         {
@@ -71,7 +71,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         return data;
     }
     
-    private void LevelUp()
+    protected virtual void LevelUp()
     {
         data.spentMoney = 0;
         data.level++;

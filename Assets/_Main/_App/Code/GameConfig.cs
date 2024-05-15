@@ -14,7 +14,15 @@ public class GameConfig : ScriptableObject
     public Vector3 moveRight = Vector3.left;
     
     [Header("Money")]
-    public float moneySpendTime;
+    public float buyTime;
+    public float moneySpendPause;
+    public float moneySpendFlyHeight;
+    public float moneyGainFlyHeight;
+    public float moneyFromStackPause = 0.03f;
+    public float moneyFlyTime1;
+    public float moneyFlyTime2;
+    public Ease moneyFlyEase1;
+    public Ease moneyFlyEase2;
     public int moneyInOneModel = 3;
     
     [Header("Camera")]

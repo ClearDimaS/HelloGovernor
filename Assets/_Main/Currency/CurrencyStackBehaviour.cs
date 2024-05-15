@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -124,10 +125,22 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
     public void Remove(ICurrencyHolder target)
     {
         var count = gridPlacer.Count;
+        var pause = gameConfig.moneyFromStackPause;
         for (int i = 0; i < count; i++)
         {
+            var delay = i * pause;
             var currency = gridPlacer.Remove();
-            target.MoveCurrencyToMe(currency);
+            if (delay > 0f)
+            {
+                UniTask.Delay(TimeSpan.FromSeconds(delay)).ContinueWith(() =>
+                {
+                    target.MoveCurrencyToMe(currency);
+                });
+            }
+            else
+            {
+                target.MoveCurrencyToMe(currency);   
+            }
         }
     }
     

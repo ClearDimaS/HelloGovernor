@@ -27,6 +27,7 @@ public class WishesController : MonoBehaviour
     public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
     public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
 
+    private event Action<bool> wishResultEvent;
     private Wish currentWish;
     private Transform target;
 
@@ -82,6 +83,7 @@ public class WishesController : MonoBehaviour
 
     private void PoolWish(Wish wish)
     {
+        wishResultEvent?.Invoke(currentWish.IsSuccess);
         wishesPool.Pool(wish);
         currentWish = null;
     }
@@ -89,6 +91,7 @@ public class WishesController : MonoBehaviour
     public void AbortWish()
     {
         currentWish.Abort();
+        wishResultEvent?.Invoke(currentWish.IsSuccess);
     }
 
     public bool IsGranterAssistantServing(EWish type)
@@ -109,5 +112,10 @@ public class WishesController : MonoBehaviour
     public void SetWishAssistant(IWishAssistant waiterAssistant)
     {
         wishAssistant = waiterAssistant;
+    }
+
+    public void SubscribeWishesResult(Action<bool> handler)
+    {
+        wishResultEvent += handler;
     }
 }

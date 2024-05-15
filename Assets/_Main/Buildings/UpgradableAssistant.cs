@@ -10,6 +10,12 @@ public class UpgradableAssistant : UpgradableObject
     
     private int spawnedLevel = -2;
 
+    public override void Initialize(UpgradableData data)
+    {
+        this.allowedLevelToPurchase = LevelsCount;
+        base.Initialize(data);
+    }
+
     protected override List<Price> GetPrices()
     {
         if (upgradableBuilding == null)

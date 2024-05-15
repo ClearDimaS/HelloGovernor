@@ -101,7 +101,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     {
         if (!isTransition)
         {
-            targetPlaceHolder.position = currentTarget.target.position;
+            //targetPlaceHolder.position = currentTarget.target.position;
         }
     }
 

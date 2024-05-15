@@ -31,6 +31,10 @@ public class CompassController : MonoBehaviour
     {
         for (var i = 0; i < visibleTargets.Count; i++)
         {
+            if (freeTargetMarkers.Count == 0)
+            {
+                break;
+            }
             var target = visibleTargets[i];
             if (!IsVisible(target))
             {
@@ -45,10 +49,6 @@ public class CompassController : MonoBehaviour
         
         for (var i = 0; i < notVisibleTargets.Count; i++)
         {
-            if (freeTargetMarkers.Count == 0)
-            {
-                break;
-            }
             var target = notVisibleTargets[i];
             if (IsVisible(target))
             {

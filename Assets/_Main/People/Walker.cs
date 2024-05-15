@@ -48,7 +48,7 @@ public class Walker : MonoBehaviour
     {
         if (NavMesh.SamplePosition(target, out hit, Mathf.Infinity, NavMesh.AllAreas)) 
         {
-            transform.position = hit.position;
+            agent.Warp(hit.position);
         }
     }
 

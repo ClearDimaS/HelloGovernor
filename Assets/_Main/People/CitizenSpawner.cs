@@ -43,8 +43,8 @@ public class CitizenSpawner : MonoBehaviour
                 {
                     CitizenController citizen = Spawn();
                     citizensDict[house].Add(citizen);
-                    citizen.Place(house.CitizenPlace.position);
-                    //citizen.PlaceRandom();
+                    //citizen.Place(house.CitizenPlace.position);
+                    citizen.PlaceRandom();
                 }
             }
         }

@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurrencyHolder
 {
@@ -57,21 +58,28 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
 
     public void MoveCurrencyToMe(CurrencyBehaviour currency)
     {
-        var start = currency.transform.position;
-        var end = transform.position;
-        var middle = (start + end) / 2f + Vector3.up * 0.6f;
-        currency.transform.DOMove(middle, 0.3f).SetEase(Ease.InCubic).OnComplete(() =>
+        var startPos = currency.transform.position;
+        var endPos = transform.position;
+        var middlePos = (startPos + endPos) / 2f + Vector3.up * gameConfig.moneyGainFlyHeight;
+        
+        var startRot = currency.transform.rotation;
+        var middleRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
+        var endRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
+
+        currency.transform.DORotateQuaternion(middleRot, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic);
+        currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic).OnComplete(() =>
         {
             var t = 0f;
-            DOTween.To(() => t, x => t = x, 1f, 0.3f).OnUpdate(() =>
+            DOTween.To(() => t, x => t = x, 1f, gameConfig.moneyFlyTime2).OnUpdate(() =>
             {
-                currency.transform.position = Vector3.Lerp(middle, transform.position, t);
-                currency.transform.localScale = Vector3.one * t;
+                currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);
+                currency.transform.position = Vector3.Lerp(middlePos, transform.position, t);
+                currency.transform.localScale = Vector3.one * Mathf.Sqrt(t);
             }).OnComplete(() =>
             {
                 repository.GetData().money += currency.Amount;
                 currencyPool.Pool(currency);
-            });
-        });
+            }).SetEase(gameConfig.moneyFlyEase2);;
+        }).SetEase(gameConfig.moneyFlyEase1);
     }
 }

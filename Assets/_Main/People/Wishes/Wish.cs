@@ -16,6 +16,9 @@ public class Wish : MonoBehaviour, IResetable
     public bool IsProgressFull => progress >= 1f;
     public WishGranter Granter => granter;
     public float Progress => progress;
+    private bool isSuccess;
+
+    public bool IsSuccess => progress >= 1f;
 
     public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove)
     {
@@ -24,6 +27,7 @@ public class Wish : MonoBehaviour, IResetable
         this.citizen = citizen;
         walker = citizen.Walker;
         removeEvent += onRemove;
+        isSuccess = false;
     }
 
     private void Update()
@@ -56,6 +60,7 @@ public class Wish : MonoBehaviour, IResetable
         citizen = null;
         walker = null;
         IsReadyToRemove = false;
+        isSuccess = false;
         removeEvent = null;
     }
 

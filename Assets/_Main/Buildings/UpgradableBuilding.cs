@@ -13,7 +13,8 @@ public class UpgradableBuilding : UpgradableObject
     
     [SerializeField] private Transform boughtRoot;
     [SerializeField] private EBuilding type;
-
+    [SerializeField] private ParticleSystem upgradePS;
+    
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
 
@@ -25,6 +26,12 @@ public class UpgradableBuilding : UpgradableObject
     protected override List<Price> GetPrices()
     {
         return _upgradablePricesManager.GetLevelPrices(this);
+    }
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+        upgradePS.Play();
     }
 
     protected override void RefreshLevelGFX(bool instant)
