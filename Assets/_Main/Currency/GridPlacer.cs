@@ -63,6 +63,10 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
             item.Root.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
             item.Root.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);   
         }
+
+        var itemSize = item.GetWorldSize();
+        var placeSize = place.transform.TransformVector(place.size);
+        item.Root.localScale = new Vector3(placeSize.x /itemSize.x, placeSize.y /itemSize.y, placeSize.z /itemSize.z) ;
         placedObjects.Add(item);
     }
 

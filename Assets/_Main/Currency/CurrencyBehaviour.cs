@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CurrencyBehaviour : MonoBehaviour, IResetable, IGridPlaceable
 {
+    [SerializeField] private Vector3 worldSize;
     private int amount;
 
     public Transform Root => transform;
@@ -32,6 +33,6 @@ public class CurrencyBehaviour : MonoBehaviour, IResetable, IGridPlaceable
 
     public Vector3 GetWorldSize()
     {
-        return Vector3.one;
+        return worldSize;
     }
 }

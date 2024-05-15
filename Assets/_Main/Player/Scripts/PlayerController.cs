@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
         var middleRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
         var endRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
 
+        var startScale = currency.transform.localScale;
         currency.transform.DORotateQuaternion(middleRot, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic);
         currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic).OnComplete(() =>
         {
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);
                 currency.transform.position = Vector3.Lerp(middlePos, transform.position, t);
-                currency.transform.localScale = Vector3.one * Mathf.Sqrt(t);
+                currency.transform.localScale = startScale * Mathf.Sqrt(t);
             }).OnComplete(() =>
             {
                 repository.GetData().money += currency.Amount;
