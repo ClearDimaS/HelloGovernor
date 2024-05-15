@@ -6,6 +6,7 @@ using Zenject;
 
 public interface IItemTaker
 {
+    public bool CanAddItems(EInteractable type);
     public void AddItem(WishAssistantItem takeItem);
 }
 
@@ -55,6 +56,36 @@ public class WishAssistantItemSource : MonoBehaviour
         giveItemToTakersTMP.Clear();
 
         takeProgressImage.fillAmount = progress;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.isTrigger || other.attachedRigidbody == null)
+        {
+            return;
+        }
+
+        var otherRB = other.attachedRigidbody;
+        if (!otherRB.TryGetComponent<IItemTaker>(out var player))
+        {
+            return;
+        }
+        AddTaker(player);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.isTrigger || other.attachedRigidbody == null)
+        {
+            return;
+        }
+
+        var otherRB = other.attachedRigidbody;
+        if (!otherRB.TryGetComponent<IItemTaker>(out var player))
+        {
+            return;
+        }
+        RemoveTaker(player);
     }
 
     private WishAssistantItem TakeItem()

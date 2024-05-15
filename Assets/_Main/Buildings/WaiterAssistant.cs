@@ -14,8 +14,6 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private EWish type;
     private WishGranter wishGranter;
     private CitizenController target;
-
-    private bool CanTakeItem => item == null;
     
     private void Awake()
     {
@@ -68,12 +66,16 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     {
         return this.type == type;
     }
-    
+
+    public bool CanAddItems(EInteractable type)
+    {
+        return item == null;
+    }
+
     public void AddItem(WishAssistantItem getElement)
     {
         item = getElement;
         interactor.AddItem(item);
-        itemsSource.RemoveTaker(this);
     }
     
     private void AllowAddProgressToWisher()
