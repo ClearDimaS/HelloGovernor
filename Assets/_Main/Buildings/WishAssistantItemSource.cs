@@ -51,6 +51,10 @@ public class WishAssistantItemSource : MonoBehaviour
         {
             takerTimers[taker] = 0f;
             taker.AddItem(TakeItem());
+            if (!taker.CanAddItems(wishGranter.Type.ToInteractable()))
+            {
+                RemoveTaker(taker);
+            }
         }
         
         giveItemToTakersTMP.Clear();
@@ -95,7 +99,7 @@ public class WishAssistantItemSource : MonoBehaviour
 
     public void AddTaker(IItemTaker taker)
     {
-        if (!takers.Contains(taker))
+        if (!takers.Contains(taker) && taker.CanAddItems(wishGranter.Type.ToInteractable()))
         {
             takers.Add(taker);
             takerTimers[taker] = 0f;   

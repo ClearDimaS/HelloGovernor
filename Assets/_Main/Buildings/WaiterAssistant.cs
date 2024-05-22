@@ -28,7 +28,6 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         {
             if (target.WishesController.WishAssistant != null && target.WishesController.WishAssistant != this)
             {
-                target.WishesController.SetWishAssistant(null);
                 target = null;
             }
         }
@@ -38,7 +37,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             if (!wishGranter.IsProcessed(target))
             {
                 target.WishesController.SetWishAssistant(null);
-                interactor.RemoveItem(item);
+                interactor.RemoveItem(item.Type);
                 target.Interactor.AddItem(item);
                 target = null;
                 item = null;
@@ -80,7 +79,10 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private void AllowAddProgressToWisher()
     {
-        target.WishesController.SetWishAssistant(this);
+        if (target != null)
+        {
+            target.WishesController.SetWishAssistant(this);   
+        }
     }
 
     private void RefreshTarget()

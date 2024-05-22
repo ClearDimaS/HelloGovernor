@@ -1,61 +1,100 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
 {
-    [Serializable]
-    public class ItemsData
-    {
-        public EInteractable type;
-        public Transform[] places;
-        public GameObject root;
-        [ReadOnly] public List<WishAssistantItem> interactables;
-    }
-
-    [SerializeField] private List<ItemsData> itemDatas;
-
-    private Dictionary<EInteractable, ItemsData> datasDict = new ();
+    private Interactor interactor;
+    private CitizenController client;
 
     private void Awake()
     {
-        datasDict = itemDatas.ToDictionary(x => x.type, x => x);
+        interactor = GetComponent<Interactor>();
     }
 
     private void Update()
     {
-        foreach (var data in itemDatas)
+        if (client != null)
         {
-            var hasItems = data.interactables.Count > 0;
-            if (data.root.activeSelf != hasItems)
+            if (client.WishesController.CurrentWishProgress >= 1f)
             {
-                data.root.SetActive(hasItems);
+                var give = interactor.RemoveItem(client.WishesController.WishType);
+                client.Interactor.AddItem(give);
+                
+                StopServingClient();
             }
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.isTrigger || other.attachedRigidbody == null)
+        {
+            return;
+        }
+
+        var otherRb = other.attachedRigidbody;
+        if (!otherRb.TryGetComponent(out WishPlace place))
+        {
+            return;
+        }
+        if (!place.TryGetWisher(out CitizenController citizen))
+        {
+            return;
+        }
+
+        if (citizen.WishesController.CurrentWishProgress <= 1f && CanServeType(place.Type))
+        {
+            this.client = citizen;
+            client.WishesController.SetWishAssistant(this);   
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.isTrigger || other.attachedRigidbody == null)
+        {
+            return;
+        }
+
+        var otherRb = other.attachedRigidbody;
+        if (!otherRb.TryGetComponent(out WishPlace place))
+        {
+            return;
+        }
+        if (!place.TryGetWisher(out CitizenController citizen))
+        {
+            return;
+        }
+
+        if (this.client == citizen)
+        {
+            StopServingClient();
+        }
+    }
+    
     public bool CanAddItems(EInteractable type)
     {
-        var data = datasDict[type];
-        return data.places.Length > data .interactables.Count;
+        return interactor.HasMorePlaceFor(type);
     }
 
     public void AddItem(WishAssistantItem item)
     {
-        var data = datasDict[item.Type.ToInteractable()];
-        var place = data.places[data.interactables.Count];
-        
-        item.transform.SetParent(place);
-        item.transform.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
-        item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
-        data.interactables.Add(item);
+        interactor.AddItem(item);
     }
 
     public bool CanServeType(EWish type)
     {
-        return datasDict.ContainsKey(type.ToInteractable());
+        return interactor.HasItem(type);
+    }
+
+    private void StopServingClient()
+    {
+        client.WishesController.SetWishAssistant(null);
+        client = null;
     }
 }

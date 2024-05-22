@@ -23,6 +23,8 @@ public class WishPlace : MonoBehaviour
     public Vector3 Position => transform.position;
 
     private float progress => wisher.WishesController.CurrentWishProgress;
+    public EWish Type => granter.Type;
+
     private ECompasTarget compasTarget;
     
     private void Awake()
@@ -71,5 +73,11 @@ public class WishPlace : MonoBehaviour
             this.wisher = null;
             state = EWishPlaceState.Empty;
         }
+    }
+
+    public bool TryGetWisher(out CitizenController outVal)
+    {
+        outVal = this.wisher;
+        return outVal != null;
     }
 }

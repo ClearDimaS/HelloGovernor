@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -13,12 +15,55 @@ public enum EInteractable
 }
 public class Interactor : MonoBehaviour
 {
+    [Serializable]
+    public class ItemsData
+    {
+        public EInteractable type;
+        public Transform[] places;
+        public Transform root;
+        public HumanBodyBones bone;
+        [ReadOnly] public Transform boneTransform;
+        [ReadOnly] public List<WishAssistantItem> interactables;
+    }
+
+    [SerializeField] private List<ItemsData> itemDatas;
     private Animator controller;
-    private List<WishAssistantItem> items = new ();
+
+    private Dictionary<EInteractable, ItemsData> datasDict = new ();
+    private Transform rootsParent;
     
     private void Awake()
     {
         controller = GetComponentInChildren<Animator>();
+        datasDict = itemDatas.ToDictionary(x => x.type, x => x);
+    }
+    
+    private void Update()
+    {
+        foreach (var data in itemDatas)
+        {
+            var hasItems = data.interactables.Count > 0;
+            if (data.root.gameObject.activeSelf != hasItems)
+            {
+                data.root.gameObject.SetActive(hasItems);
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (controller != null)
+        {
+            foreach (var data in itemDatas)
+            {
+                if(data.boneTransform == null)
+                {
+                    data.boneTransform = controller.GetBoneTransform(data.bone);
+                }
+
+                data.root.position = data.boneTransform.position;
+            }
+        }
     }
     
     public bool HasItem(EWish type)
@@ -30,20 +75,36 @@ public class Interactor : MonoBehaviour
             case EWish.Wander:
                 return false;
             default:
-                 return items.Any(x => x.Type == type);
+                return datasDict[type.ToInteractable()].interactables.Count > 0;
         }
     }
 
     public void AddItem(WishAssistantItem item)
     {
-        items.Add(item);
-        item.transform.SetParent(controller.GetBoneTransform(HumanBodyBones.LeftHand));
-        item.transform.localPosition = Vector3.zero;
-        item.transform.localRotation = Quaternion.identity;
+        var data = datasDict[item.Type.ToInteractable()];
+        var place = data.places[data.interactables.Count];
+        datasDict[item.Type.ToInteractable()].interactables.Add(item);
+        
+        item.transform.SetParent(place);
+        item.transform.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
+        item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 
-    public void RemoveItem(WishAssistantItem item)
+    public WishAssistantItem RemoveItem(EWish type)
     {
-        items.Remove(item);
+        var data = datasDict[type.ToInteractable()];
+        var item = data.interactables[0];
+        data.interactables.RemoveAt(0);
+        return item;
+    }
+
+    public bool HasMorePlaceFor(EInteractable type)
+    {
+        return datasDict[type].interactables.Count < datasDict[type].places.Length;
+    }
+
+    public bool HasAnyIKItem()
+    {
+        return HasItem(EWish.Drinks) || HasItem(EWish.IceCream);
     }
 }

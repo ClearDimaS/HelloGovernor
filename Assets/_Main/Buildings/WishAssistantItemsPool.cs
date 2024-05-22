@@ -1,4 +1,4 @@
-public class WishAssistantItemsPool : MonoPoolCollection<WishAssistantItem, EWish>
+public class WishAssistantItemsPool : MonoPoolCollectionMultiple<WishAssistantItem, EWish>
 {
     
 }
