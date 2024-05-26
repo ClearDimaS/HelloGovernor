@@ -89,4 +89,14 @@ public class UpgradableBuilding : UpgradableObject
             }
         }
     }
+
+    public override Sprite GetItemIcon()
+    {
+        return buildingsConfig.GetBuildingData(type).icon;
+    }
+
+    public Sprite GetIconAssistant()
+    {
+        return buildingsConfig.GetBuildingData(type).assistantIcon;
+    }
 }

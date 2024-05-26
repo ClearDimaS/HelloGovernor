@@ -127,4 +127,6 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
             moneyConsumer.Hide(instant);
         }
     }
+
+    public abstract Sprite GetItemIcon();
 }

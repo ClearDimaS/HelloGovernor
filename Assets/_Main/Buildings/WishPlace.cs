@@ -13,10 +13,12 @@ public class WishPlace : MonoBehaviour
     }
 
     [Inject] private CompassManager compassManager;
-
+    [Inject] private WishItemsConfig config;
+        
     [SerializeField] private GameObject timerRoot;
     [SerializeField] private Image fillImage;
-
+    [SerializeField] private Image icon;
+    
     private WishGranter granter;
     private CitizenController wisher;
     private EWishPlaceState state;
@@ -31,6 +33,7 @@ public class WishPlace : MonoBehaviour
     {
         granter = GetComponentInParent<WishGranter>();
         compasTarget = granter.Type.ToCompassTarget();
+        icon.sprite = config.GetIcon(granter.Type);
     }
 
     private void Update()

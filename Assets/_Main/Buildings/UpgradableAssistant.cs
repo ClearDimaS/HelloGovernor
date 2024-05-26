@@ -50,4 +50,9 @@ public class UpgradableAssistant : UpgradableObject
             }
         }
     }
+
+    public override Sprite GetItemIcon()
+    {
+        return upgradableBuilding.GetIconAssistant();
+    }
 }

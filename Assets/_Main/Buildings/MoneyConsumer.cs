@@ -34,9 +34,17 @@ public class Price
 
     public static string ToMoneyString(int money)
     {
+        if (money > 10000000)
+        {
+            return (money / 1000000f).ToString("0.0") + "M";
+        }
         if (money > 1000000)
         {
             return (money / 1000000f).ToString("0.00") + "M";
+        }
+        else if (money > 10000)
+        {
+            return (money / 1000000f).ToString("0.0") + "M";
         }
         else if (money > 1000)
         {
@@ -192,5 +200,14 @@ public class MoneyConsumer : MonoBehaviour
     public void Show(bool instant)
     {
         scaleAnimator.Show(instant);
+    }
+
+    public int GetLeftAmount()
+    {
+        if (price == null)
+        {
+            return 0;
+        }
+        return price.price - price.spent;
     }
 }

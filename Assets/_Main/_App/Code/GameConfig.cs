@@ -19,6 +19,7 @@ public class GameConfig : ScriptableObject
     public float moneySpendFlyHeight;
     public float moneyGainFlyHeight;
     public float moneyFromStackPause = 0.03f;
+    public float moneyFromStackMaxTime = 1.3f;
     public float moneyFlyTime1;
     public float moneyFlyTime2;
     public Ease moneyFlyEase1;

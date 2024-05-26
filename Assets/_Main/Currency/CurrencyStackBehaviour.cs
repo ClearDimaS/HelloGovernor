@@ -22,7 +22,8 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private CurrencyPool currencyPool;
-    
+
+    [SerializeField] private GameObject takeZone;
     [SerializeField] private CurrencyPlacer gridPlacer;
 
     private CurrencyStackData saveData;
@@ -51,6 +52,11 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
 
     private void Update()
     {
+        var hasAny = saveData.moneyAmount > 0;
+        if (takeZone.activeSelf != hasAny)
+        {
+            takeZone.gameObject.SetActive(hasAny);
+        }
         saveData.moneyAmount = gridPlacer.GetMoneyAmount();
     }
 
@@ -126,6 +132,8 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
     {
         var count = gridPlacer.Count;
         var pause = gameConfig.moneyFromStackPause;
+        var time = gameConfig.moneyFromStackMaxTime;
+        pause = Mathf.Min(pause, time / count);
         for (int i = 0; i < count; i++)
         {
             var delay = i * pause;
