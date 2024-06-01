@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RoleIcon : MonoBehaviour
 {
-    private const float BASE_SIZE_FACTOR = 0.01f;
+    private const float BASE_SIZE_FACTOR = 0.5f;
     
     [SerializeField] private SpriteRenderer icon;
     private UpgradableBuilding building;
@@ -23,6 +23,6 @@ public class RoleIcon : MonoBehaviour
         icon.sprite = sprite;
         
         var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;
-        icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR;  
+        icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width;  
     }
 }

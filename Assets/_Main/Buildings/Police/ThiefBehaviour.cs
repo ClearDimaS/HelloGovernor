@@ -29,7 +29,6 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
 
     protected Transform escapePoint;
     protected CurrencyStackBehaviour target;
-    protected List<CurrencyStackBehaviour> stacks = new ();
 
     protected bool isBusted;
     public bool IsStealing => stolenAmount > 0;
@@ -37,7 +36,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
     
     private void Awake()
     {
-        stacks = FindObjectsOfType<CurrencyStackBehaviour>(true).ToList();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +65,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
         {
             if (target == null || target.Money <= 0)
             {
-                RefreshTarget();
+                target = thiefsManager.GetThiefTarget();
             }
             else
             {
@@ -82,7 +81,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
         }
     }
     
-    public void Init(Transform escapePoint)
+    public void Init(CurrencyStackBehaviour stack, Transform escapePoint)
     {
         this.escapePoint = escapePoint;
     }
@@ -94,17 +93,6 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
             if (stolenAmount < config.thiefMaxSteal)
             {
                 target.RemoveOne(this);
-            }
-        }
-    }
-
-    private void RefreshTarget()
-    {
-        for (int i = 0; i < stacks.Count; i++)
-        {
-            if (stacks[i].Money > config.moneyToSteal)
-            {
-                target = stacks[i];
             }
         }
     }

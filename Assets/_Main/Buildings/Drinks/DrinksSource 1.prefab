@@ -1,5 +1,84 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2259587007255752848
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3517315691218846773}
+    m_Modifications:
+    - target: {fileID: 103054, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_Name
+      value: Fruit_Cart_Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406088, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2dae8c793903148b489e5d97135cd7e7, type: 3}
+--- !u!1 &2259587007255716382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 103054, guid: 2dae8c793903148b489e5d97135cd7e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2259587007255752848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &299874437469538909
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259587007255716382}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.3620001, y: 1.1450001, z: 0.86700004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.1420001, z: 0.033}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3250463577737148992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +144,13 @@ PrefabInstance:
     - target: {fileID: 6896494491332753573, guid: ab37988abe54d4ea9842290e5e5879c6,
         type: 3}
       propertyPath: m_Name
-      value: ItemSource
+      value: DrinksSource 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab37988abe54d4ea9842290e5e5879c6, type: 3}
+--- !u!4 &3517315691218846773 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2147078592459177589, guid: ab37988abe54d4ea9842290e5e5879c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3250463577737148992}
+  m_PrefabAsset: {fileID: 0}

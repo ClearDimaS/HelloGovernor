@@ -249,6 +249,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5555012930857674595}
     m_Modifications:
+    - target: {fileID: 2879708439233348658, guid: a17dd17dbd0aa4225a2162954497bd1b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7f641b2b50911448fb18d2e653ddb29f,
+        type: 3}
     - target: {fileID: 5227684126147137873, guid: a17dd17dbd0aa4225a2162954497bd1b,
         type: 3}
       propertyPath: m_RootOrder
@@ -308,6 +314,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoleIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169385406948990356, guid: a17dd17dbd0aa4225a2162954497bd1b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169385406948990356, guid: a17dd17dbd0aa4225a2162954497bd1b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169385406948990356, guid: a17dd17dbd0aa4225a2162954497bd1b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.07
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a17dd17dbd0aa4225a2162954497bd1b, type: 3}

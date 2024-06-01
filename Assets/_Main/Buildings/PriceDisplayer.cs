@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PriceDisplayer : MonoBehaviour
 {
-    private const float BASE_SIZE_FACTOR = 0.01f;
+    private const float BASE_SIZE_FACTOR = 0.5f;
 
     [SerializeField] private float scaleOnChange = 1.1f;
     [SerializeField] private GameObject animateContent;
@@ -32,7 +32,7 @@ public class PriceDisplayer : MonoBehaviour
         itemIcon.sprite = sprite;
         
         var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;
-        itemIcon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR;
+        itemIcon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width;  ;
     }
 
     private void Update()

@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class HouseRepairable : MonoBehaviour, IRepairable
 {
     [Inject] private GameConfig gameConfig;
-    
+
+    [SerializeField] private GameObject[] grxVariants;
     [SerializeField] private ScaleAnimator needRepairContent;
     
     protected IRepairer repairer;
@@ -18,6 +20,15 @@ public class HouseRepairable : MonoBehaviour, IRepairable
     private void Awake()
     {
         needRepairContent.Hide(true);
+    }
+
+    private void OnEnable()
+    {
+        var rand = Random.Range(0, grxVariants.Length);
+        for (int i = 0; i < grxVariants.Length; i++)
+        {
+            grxVariants[i].SetActive(i == rand);
+        }
     }
 
     private void Update()

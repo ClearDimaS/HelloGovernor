@@ -47,10 +47,17 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             return;
         }
 
-        if (citizen.WishesController.CurrentWishProgress <= 1f && CanServeType(place.Type))
+        if (citizen.WishesController.CurrentWishProgress <= 1f)
         {
-            this.client = citizen;
-            client.WishesController.SetWishAssistant(this);   
+            if (CanServeType(place.Type))
+            {
+                this.client = citizen;
+                client.WishesController.SetWishAssistant(this);   
+            }
+            else
+            {
+                place.NotiftyError();
+            }
         }
     }
     

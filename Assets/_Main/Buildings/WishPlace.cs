@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -18,7 +19,10 @@ public class WishPlace : MonoBehaviour
     [SerializeField] private GameObject timerRoot;
     [SerializeField] private Image fillImage;
     [SerializeField] private Image icon;
-    
+    [SerializeField] private Image bgColor;
+    [SerializeField] private Color noItemColor;
+
+    private Color originalColor;
     private WishGranter granter;
     private CitizenController wisher;
     private EWishPlaceState state;
@@ -34,6 +38,7 @@ public class WishPlace : MonoBehaviour
         granter = GetComponentInParent<WishGranter>();
         compasTarget = granter.Type.ToCompassTarget();
         icon.sprite = config.GetIcon(granter.Type);
+        originalColor = bgColor.color;
     }
 
     private void Update()
@@ -82,5 +87,14 @@ public class WishPlace : MonoBehaviour
     {
         outVal = this.wisher;
         return outVal != null;
+    }
+
+    public void NotiftyError()
+    {
+        bgColor.DOKill();
+        bgColor.DOColor(noItemColor, 0.15f).OnComplete(() =>
+        {
+            bgColor.DOColor(originalColor, 0.15f);
+        });
     }
 }
