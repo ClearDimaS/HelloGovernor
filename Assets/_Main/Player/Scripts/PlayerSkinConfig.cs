@@ -6,4 +6,5 @@ public class PlayerSkinConfig : ScriptableObject
 {
     public GameObject[] femaleSkins;
     public GameObject[] maleSkins;
+    public int skinPrice = 400;
 }

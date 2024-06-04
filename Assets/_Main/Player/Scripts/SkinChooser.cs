@@ -16,11 +16,15 @@ public class SkinChooser : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private SwiperCyclicFacade swiper;
 
+    public int SkinIndex { get; private set; }
+    public int CurrentPrice => skinManager.GetPrice(SkinIndex);
+
     private Transform[] skinParents;
     private bool isInit;
 
     private void Start()
     {
+        SkinIndex = playerRepository.GetData().skinIndex;
         cam.enabled = false;
         var panel = uiManager.GetPanel<SkinPreviewPanel>();
         panel.SetSwiper(swiper.Swiper);
@@ -28,6 +32,11 @@ public class SkinChooser : MonoBehaviour
         panel.pointerDownEvent += swiper.MouseDown;
         panel.dragEvent += swiper.Drag;
         panel.pointerUpEvent += swiper.MouseUp;
+    }
+
+    private void Update()
+    {
+        SkinIndex = swiper.ElementIndex % skinManager.SkinCount;;
     }
 
     private void Save()
@@ -66,15 +75,15 @@ public class SkinChooser : MonoBehaviour
     [Button]
     private void MoveLeft()
     {
-        playerRepository.GetData().skinIndex--;
+        SkinIndex--;
         swiper.MoveElements(-1, false);
     }
     
     [Button]
     private void MoveRight()
     {
-        playerRepository.GetData().skinIndex++;
-        playerRepository.GetData().skinIndex %= skinManager.SkinCount;
+        SkinIndex++;
+        SkinIndex %= skinManager.SkinCount;
         swiper.MoveElements(1, false);
     }
 }

@@ -1,15 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
+
 public class SkinPreviewPanel : UI_Panel
 {
-    [SerializeField] private EventTrigger trigger;
+    [Inject] private SkinChooser skinChooser;
+    [Inject] private PlayerDataRepository playerRepository;
+
+    [SerializeField] private TMP_Text priceText;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button buyButton;
+    [SerializeField] private Button selectButton;
+    [SerializeField] private Image selectedImg;
+    [SerializeField] private Image notSelectedImg;
+    [SerializeField] private EventTrigger trigger;
+
     [SerializeField] private SwiperNextPreviousButtons swiperNextPreviousButtons;
 
+    private int lastIndex = -1;
+    private int lastPrice;
+    
     public event Action saveEvent;
     
     public event Action pointerDownEvent;
@@ -19,7 +34,9 @@ public class SkinPreviewPanel : UI_Panel
     protected override void OnAwake()
     {
         base.OnAwake();
+        buyButton.onClick.AddListener(Buy);
         closeButton.onClick.AddListener(Close);
+        selectButton.onClick.AddListener(Select);
         
         var downEntry = new EventTrigger.Entry();
         downEntry.callback.AddListener(_ => pointerDownEvent?.Invoke());
@@ -37,7 +54,64 @@ public class SkinPreviewPanel : UI_Panel
         trigger.triggers.Add(dragEntry);
         trigger.triggers.Add(upEntry);
     }
-    
+
+    private void Update()
+    {
+        if (lastIndex != skinChooser.SkinIndex)
+        {
+            lastIndex = skinChooser.SkinIndex;
+            RefreshState();
+        }
+    }
+
+    private void RefreshState()
+    {
+        var data = playerRepository.GetData();
+        var canBuy = skinChooser.CurrentPrice <= data.money;
+        var isBought = data.boughtSkins.Contains(lastIndex);
+        var isSelected = data.skinIndex == lastIndex;
+
+        buyButton.UpdateState(!isBought);
+        selectButton.UpdateState(isBought);
+        if (isBought)
+        {
+            selectedImg.UpdateState(isSelected);
+            notSelectedImg.UpdateState(!isSelected);
+        }
+        if (buyButton.interactable != canBuy)
+        {
+            buyButton.interactable = canBuy;
+        }
+        if (lastPrice != skinChooser.CurrentPrice)
+        {
+            lastPrice = skinChooser.CurrentPrice;
+            priceText.text = lastPrice.ToString();
+        }
+    }
+
+    private void Buy()
+    {
+        var data = playerRepository.GetData();
+        if (!data.boughtSkins.Contains(skinChooser.SkinIndex) && data.money >= skinChooser.CurrentPrice)
+        {
+            data.money -= skinChooser.CurrentPrice;
+            data.boughtSkins.Add(skinChooser.SkinIndex);
+            playerRepository.SetData(data);
+        }
+        Select();
+    }
+
+    private void Select()
+    {
+        var data = playerRepository.GetData();
+        if (data.boughtSkins.Contains(skinChooser.SkinIndex))
+        {
+            data.skinIndex = skinChooser.SkinIndex;
+            playerRepository.SetData(data);
+            RefreshState();
+        }
+    }
+
     public void SetSwiper(ElementsSwiper swiper)
     {
         swiperNextPreviousButtons.SetSwiper(swiper);

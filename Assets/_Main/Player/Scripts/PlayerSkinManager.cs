@@ -67,4 +67,9 @@ public class PlayerSkinManager : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverride;
         skinIndex = data.skinIndex;
     }
+
+    public int GetPrice(int skinIndex)
+    {
+        return skinConfig.skinPrice;
+    }
 }
