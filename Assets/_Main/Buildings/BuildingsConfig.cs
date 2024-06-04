@@ -14,6 +14,7 @@ public class BuildingLevelData
 public class BuildingData
 {
     public EBuilding type;
+    public string title;
     public Sprite icon;
     public Sprite assistantIcon;
     public List<BuildingLevelData> levels;

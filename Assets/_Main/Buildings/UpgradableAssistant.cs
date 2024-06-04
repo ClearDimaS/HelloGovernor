@@ -55,4 +55,9 @@ public class UpgradableAssistant : UpgradableObject
     {
         return upgradableBuilding.GetIconAssistant();
     }
+    
+    public override string GetTitle()
+    {
+        return $"{upgradableBuilding.GetTitle()} helper";
+    }
 }

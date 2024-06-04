@@ -6,26 +6,57 @@ using Zenject;
 
 public class CityProgressPanel : UI_Panel
 {
+    [Inject] private CameraManager cameraManager;
     [Inject] private UpgradablePricesManager pricesManager;
+    [Inject] private GameConfig gameConfig;
     
     [SerializeField] private Image cityProgressImage;
     [SerializeField] private TMP_Text cityProgressText;
+    
+    [SerializeField] private Image progressImage;
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text titleText;
-    
+    [SerializeField] private Button hintButton;
+
+    private UpgradableObject nextUpgradable;
+    private int spentAmount = -1;
     private float lastProgress = 0f;
 
     private void Start()
     {
         lastProgress = pricesManager.GetProgress();
         ApplyProgress(lastProgress);
+        hintButton.onClick.AddListener(ShowTargetHouse);
+    }
+
+    private void ShowTargetHouse()
+    {
+        cameraManager.SetTarget(pricesManager.GetNextData().BuyPlace, 2f, distanceMult: gameConfig.hintCameraDistanceMult);
     }
 
     private void Update()
     {
+        var next = pricesManager.GetNextData();
+        if (nextUpgradable != next)
+        {
+            nextUpgradable = next;
+            if (nextUpgradable.Level == 0)
+            {
+                titleText.text = $"Buy {nextUpgradable.GetTitle()}";
+            }
+            else
+            {
+                titleText.text = $"Upgrade {nextUpgradable.GetTitle()}";
+            }
+            spentAmount = -1;
+        }
 
-        progressText.text = $"";
-        titleText.text = $"";
+        if (spentAmount != nextUpgradable.SpentAmount)
+        {
+            spentAmount = nextUpgradable.SpentAmount;
+            progressImage.fillAmount = nextUpgradable.SpentAmount/(float)nextUpgradable.Price;
+            progressText.text = $"{nextUpgradable.SpentAmount}/{nextUpgradable.Price}";
+        }
         
         var progress = pricesManager.GetProgress();
         if (progress != lastProgress)

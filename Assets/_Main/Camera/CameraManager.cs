@@ -13,15 +13,17 @@ public class CameraManager : MonoBehaviour, ICameraManager
     {
         public Transform target;
         public float timer;
+        public float distanceMult;
         private Action startCallback;
         public bool HasTimer { get; private set; }
 
-        public CameraTarget(Transform target, float timer, Action startCallback)
+        public CameraTarget(Transform target, float timer, Action startCallback, float distanceMult)
         {
             this.target = target;
             this.timer = timer;
             HasTimer = timer > 0f;
             this.startCallback = startCallback;
+            this.distanceMult = distanceMult;
         }
 
         public void OverrideTimer(float timer)
@@ -51,6 +53,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     private Transform targetPlaceHolder;
     
     private bool isTransition;
+    private Vector3 originalOffset;
     private Transform defaultTarget;
     private CameraTarget currentTarget;
     private Queue<CameraTarget> targetsQueue = new ();
@@ -59,6 +62,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     {
         _currentCamera = camera;
         var targetPlaceHolderGO = new GameObject("Target Placeholder");
+        originalOffset = targetFollower.Offset;
         targetPlaceHolder = targetPlaceHolderGO.transform;
         targetPlaceHolder.SetParent(transform);
         
@@ -110,7 +114,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
         _currentCamera = cam;
     }
 
-    public void SetTarget(Transform target, float timer, float delay = -1f, Action startCallback = null)
+    public void SetTarget(Transform target, float timer, float delay = -1f, Action startCallback = null, float distanceMult = 1f)
     {
         if ((currentTarget.HasTimer && currentTarget.timer > 0f))
         {
@@ -118,11 +122,11 @@ public class CameraManager : MonoBehaviour, ICameraManager
             {
                 currentTarget.OverrideTimer(Mathf.Max(currentTarget.timer, delay));
             }
-            targetsQueue.Enqueue(new CameraTarget(target, timer, startCallback));
+            targetsQueue.Enqueue(new CameraTarget(target, timer, startCallback, distanceMult));
         }
         else
         {
-            var newTarget = new CameraTarget(target, timer, startCallback);
+            var newTarget = new CameraTarget(target, timer, startCallback, distanceMult);
             if (delay > 0f)
             {
                 currentTarget.OverrideTimer(Mathf.Max(currentTarget.timer, delay));
@@ -137,7 +141,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
 
     private void SetDefaultTarget(bool instant)
     {
-        ApplyTarget(new CameraTarget(defaultTarget, -1f, null), instant);
+        ApplyTarget(new CameraTarget(defaultTarget, -1f, null, 1f), instant);
     }
     
     private void ApplyTarget(CameraTarget targetData, bool instant)
@@ -154,11 +158,15 @@ public class CameraManager : MonoBehaviour, ICameraManager
             var moveTime = Mathf.Min(gameConfig.cameraTransitionMaxTime, dist / gameConfig.cameraTransitionSpeed);
             var t = 0f;
             var startPos = targetPlaceHolder.position;
+
+            var startOffset = targetFollower.Offset;
             DOTween.To(() => t, x => t = x, 1f, moveTime).OnUpdate(() =>
             {
+                targetFollower.Offset = Vector3.Lerp(startOffset, originalOffset * targetData.distanceMult, t);
                 targetPlaceHolder.position = Vector3.Lerp(startPos, currentTarget.target.position, t);
             }).OnComplete(() =>
             {
+                targetFollower.Offset = originalOffset * targetData.distanceMult;
                 isTransition = false;
             }).SetEase(gameConfig.cameraTransitionEase);
         }

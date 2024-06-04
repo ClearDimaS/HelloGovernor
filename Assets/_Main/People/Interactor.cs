@@ -84,7 +84,8 @@ public class Interactor : MonoBehaviour
         var data = datasDict[item.Type.ToInteractable()];
         var place = data.places[data.interactables.Count];
         datasDict[item.Type.ToInteractable()].interactables.Add(item);
-        
+
+        item.transform.DOKill();
         item.transform.SetParent(place);
         item.transform.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);

@@ -12,8 +12,10 @@ public class GameConfig : ScriptableObject
     public float playerSpeed = 5f;
     public Vector3 moveForward = Vector3.back;
     public Vector3 moveRight = Vector3.left;
-    
-    [Header("Money")]
+
+    [Header("Money")] 
+    public int startMoney;
+    public float moneySpendDelayAfterInput = 0.3f;
     public float buyTime;
     public float moneySpendPause;
     public float moneySpendFlyHeight;
@@ -25,8 +27,9 @@ public class GameConfig : ScriptableObject
     public Ease moneyFlyEase1;
     public Ease moneyFlyEase2;
     public int moneyInOneModel = 3;
-    
-    [Header("Camera")]
+
+    [Header("Camera")] 
+    public float hintCameraDistanceMult = 0.8f;
     public float unlockCameraDelay = 1f;
     public float unlockCameraTimer = 3f;
     public float cameraTransitionMaxTime = 1f;

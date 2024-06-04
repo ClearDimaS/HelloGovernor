@@ -8,7 +8,8 @@ public class GameSceneMonoInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<WishGrantersManager>().FromComponentInHierarchy().AsSingle().NonLazy();
- 
+
+        Container.Bind<PlayerInput>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerSkinManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<UI_Manager>().FromComponentInHierarchy().AsSingle().NonLazy();

@@ -15,6 +15,7 @@ MonoBehaviour:
   playerSpeed: 5
   moveForward: {x: 0, y: 0, z: -1}
   moveRight: {x: -1, y: 0, z: 0}
+  startMoney: 30
   buyTime: 2
   moneySpendPause: 0.07
   moneySpendFlyHeight: 1.5
@@ -26,6 +27,7 @@ MonoBehaviour:
   moneyFlyEase1: 8
   moneyFlyEase2: 9
   moneyInOneModel: 3
+  hintCameraDistanceMult: 0.8
   unlockCameraDelay: 1
   unlockCameraTimer: 2
   cameraTransitionMaxTime: 1

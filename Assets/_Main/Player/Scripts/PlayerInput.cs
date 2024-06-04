@@ -7,7 +7,8 @@ using Zenject;
 public class PlayerInput : MonoBehaviour
 {
     [Inject] private GameConfig gameConfig;
-    
+
+    private float lastPressTime = 0f;
     public event Action<Vector3> moveEvent;
 
     public float Magnitude => joystickPanel.Magnitude;
@@ -23,6 +24,12 @@ public class PlayerInput : MonoBehaviour
 
     private void OnInput(Vector2 dir)
     {
+        lastPressTime = Time.time;
         moveEvent?.Invoke((dir.y * gameConfig.moveForward + dir.x * gameConfig.moveRight));
+    }
+
+    public bool HasRecentPresser()
+    {
+        return Time.time - lastPressTime < gameConfig.moneySpendDelayAfterInput;
     }
 }

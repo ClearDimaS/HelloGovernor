@@ -59,6 +59,7 @@ public class Price
 
 public class MoneyConsumer : MonoBehaviour
 {
+    [Inject] private PlayerInput playerInput;
     [Inject] private CurrencyPool currencyPool;
     [Inject] private GameConfig gameConfig;
 
@@ -74,7 +75,8 @@ public class MoneyConsumer : MonoBehaviour
     private float lastSpawnCashTime;
 
     public event Action reachGoalEvent;
-    
+    public int Price => price.price;
+
     public void SetPrice(Price price)
     {
         isReached = false;
@@ -135,6 +137,12 @@ public class MoneyConsumer : MonoBehaviour
             }
             return;
         }
+
+        if (playerInput.HasRecentPresser())
+        {
+            return;
+        }
+        
         currentSpendingTime += Time.deltaTime;
         
         int maxAllowedCurrentAmount = Mathf.RoundToInt(currentSpendingTime / gameConfig.buyTime * price.price);

@@ -50,6 +50,7 @@ public class UpgradableBuilding : UpgradableObject
             spawnedGFX = container.InstantiatePrefab(optionPrefab, levels[data.level - 1].transform);
             spawnedGFX.transform.localPosition = Vector3.zero;
             spawnedGFX.transform.localRotation = Quaternion.identity;
+
             if (instant)
             {
                 spawnedGFX.transform.localScale = Vector3.one;
@@ -93,6 +94,11 @@ public class UpgradableBuilding : UpgradableObject
     public override Sprite GetItemIcon()
     {
         return buildingsConfig.GetBuildingData(type).icon;
+    }
+
+    public override string GetTitle()
+    {
+        return buildingsConfig.GetBuildingData(type).title;
     }
 
     public Sprite GetIconAssistant()

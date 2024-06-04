@@ -94,7 +94,9 @@ public class WishAssistantItemSource : MonoBehaviour
 
     private WishAssistantItem TakeItem()
     {
-        return pool.GetElement(wishGranter.Type);
+        var element = pool.GetElement(wishGranter.Type);
+        element.transform.position = transform.position;
+        return element;
     }
 
     public void AddTaker(IItemTaker taker)

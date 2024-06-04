@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -939,7 +939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1085,10 +1085,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af47dcfc66094126a31bd6395c6e9c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceMultOnHint: 0.7
   cityProgressImage: {fileID: 9025892132189587198}
   cityProgressText: {fileID: 4297625787438786925}
-  progressText: {fileID: 0}
-  titleText: {fileID: 0}
+  progressImage: {fileID: 2962288214596779973}
+  progressText: {fileID: 6235244002564139260}
+  titleText: {fileID: 5194703935705095625}
+  hintButton: {fileID: 4155400465752032173}
 --- !u!223 &5009663287472790330
 Canvas:
   m_ObjectHideFlags: 0
@@ -1365,7 +1368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.7011119, b: 0.99607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

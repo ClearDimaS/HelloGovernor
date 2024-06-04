@@ -70,6 +70,11 @@ public class UpgradablePricesManager : MonoBehaviour
         }
     }
 
+    public UpgradableObject GetNextData()
+    {
+        return lastUnlocked.upgradable;
+    }
+    
     public float GetProgress()
     {
         var addOne = IsBought(lastUnlocked) ? 0 : 1;

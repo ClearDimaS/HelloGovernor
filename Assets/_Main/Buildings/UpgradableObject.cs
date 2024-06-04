@@ -29,6 +29,9 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     public int Level => data != null ? data.level : -1;
     public Transform BuyPlace => moneyConsumer.transform;
     public bool AutoGrantLevel1 => autoGrantLevel1;
+    public int Price => moneyConsumer.Price;
+    public int SpentAmount => data.spentMoney;
+    
     private event Action upgradeEvent;
 
     private void Awake()
@@ -38,6 +41,12 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
             moneyConsumer = GetComponentInChildren<MoneyConsumer>();
         }
         moneyConsumer.reachGoalEvent += LevelUp;
+        OnAwake();
+    }
+
+    protected virtual void OnAwake()
+    {
+        
     }
 
     public virtual void Initialize(UpgradableData data)
@@ -129,4 +138,6 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     }
 
     public abstract Sprite GetItemIcon();
+
+    public abstract string GetTitle();
 }
