@@ -10,7 +10,8 @@ public class CityEventsPanel : UI_Panel
     
     [SerializeField] private GameObject robberyRoot;
     [SerializeField] private Image robberyTimerFill;
-
+    [SerializeField] private Gradient timerGradient;
+    
     private float lastProgress = 0f;
 
     private void Start()
@@ -31,6 +32,7 @@ public class CityEventsPanel : UI_Panel
         {
             var progressNormalized = thiefsManager.GetRobberyNormalizedProgress();
             robberyTimerFill.fillAmount = 1f - progressNormalized;
+            robberyTimerFill.color = timerGradient.Evaluate(robberyTimerFill.fillAmount);
         }
     }
 }

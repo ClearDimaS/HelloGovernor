@@ -10,7 +10,9 @@ public class CityProgressPanel : UI_Panel
     
     [SerializeField] private Image cityProgressImage;
     [SerializeField] private TMP_Text cityProgressText;
-
+    [SerializeField] private TMP_Text progressText;
+    [SerializeField] private TMP_Text titleText;
+    
     private float lastProgress = 0f;
 
     private void Start()
@@ -21,6 +23,10 @@ public class CityProgressPanel : UI_Panel
 
     private void Update()
     {
+
+        progressText.text = $"";
+        titleText.text = $"";
+        
         var progress = pricesManager.GetProgress();
         if (progress != lastProgress)
         {

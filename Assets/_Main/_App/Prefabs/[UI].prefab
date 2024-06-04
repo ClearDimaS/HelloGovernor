@@ -76,7 +76,7 @@ Canvas:
   m_GameObject: {fileID: 4889965199037094341}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -365,6 +365,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CityProgressPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 8017070347947579621, guid: 482aa31ecb6cb48b2863ddb59ccef237,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 127.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515136837166632249, guid: 482aa31ecb6cb48b2863ddb59ccef237,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 95.999985
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 482aa31ecb6cb48b2863ddb59ccef237, type: 3}
 --- !u!224 &2914181296977324538 stripped
@@ -501,6 +511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CityEventsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837077291431074749, guid: 35c9c1dedbf524d98a08d2ff2cea240a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 81.399994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35c9c1dedbf524d98a08d2ff2cea240a, type: 3}
@@ -847,6 +862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248224766807395725, guid: 4ef3cb9c6a10c473aa4a014b1c8f75da,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -373.00012
       objectReference: {fileID: 0}
     - target: {fileID: 1248224766807395725, guid: 4ef3cb9c6a10c473aa4a014b1c8f75da,
         type: 3}

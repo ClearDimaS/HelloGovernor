@@ -9,21 +9,23 @@ public class CompassController : MonoBehaviour
     [Inject] private CameraManager cameraManager;
     
     [SerializeField] private RectTransform markersParent;
-    [SerializeField] private RectTransform[] targetMarkers;
-    
+    [SerializeField] private CompasMarker[] targetMarkers;
+
+    [SerializeField] private Sprite icon;
     [field: SerializeField] public ECompasTarget Type { get; private set; }
     
     private List<Transform> notVisibleTargets = new ();
     private List<Transform> visibleTargets = new ();
 
-    private Dictionary<Transform, RectTransform> targetMarkersDict = new ();
-    private Queue<RectTransform> freeTargetMarkers = new ();
+    private Dictionary<Transform, CompasMarker> targetMarkersDict = new ();
+    private Queue<CompasMarker> freeTargetMarkers = new ();
 
     private void Awake()
     {
         foreach (var marker in targetMarkers)
         {
-            freeTargetMarkers.Enqueue(marker);   
+            freeTargetMarkers.Enqueue(marker);
+            marker.SetSprite(icon);
         }
     }
 
@@ -78,11 +80,11 @@ public class CompassController : MonoBehaviour
             
             RectTransformUtility.ScreenPointToLocalPointInRectangle(markersParent, sp, cameraManager.ActiveCamera, out Vector2 lp);
 
-            marker.anchoredPosition = lp;
+            marker.Root.anchoredPosition = lp;
             var direction = (vp - Vector2.one / 2f) * 2f;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             var rot = Quaternion.AngleAxis(angle, Vector3.forward);
-            marker.localRotation = rot;
+            marker.Root.localRotation = rot;
         }
         
         foreach (var marker in freeTargetMarkers)
