@@ -18,19 +18,22 @@ public class WishesController : MonoBehaviour
 
     [SerializeField] private CitizenController citizenController;
 
+    private bool isPaused;
+    private bool isWishOver;
     private IWishAssistant wishAssistant;
+    private Wish currentWish;
+    private Transform target;
+    
+    private event Action<bool> wishResultEvent;
+    
+    public bool IsPaused => isPaused;
     public IWishAssistant WishAssistant => wishAssistant;
-
     public bool IsSitting => currentWish != null && (currentWish.Type == EWish.Drinks ||
                                                     currentWish.Type == EWish.Flowers ||
                                                     currentWish.Type == EWish.IceCream) && IsProcessingWish;
     public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
     public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
     public EWish WishType => currentWish == null ? EWish.Wander : currentWish.Type;
-    
-    private event Action<bool> wishResultEvent;
-    private Wish currentWish;
-    private Transform target;
 
     private void Update()
     {
@@ -71,28 +74,46 @@ public class WishesController : MonoBehaviour
     
     private void SetRandomWish()
     {
+        if (isPaused)
+        {
+            return;
+        }
         var wishType = wishesConfig.GetRandomWishType();
         
         if (grantersManager.TryGetWorkingFreeGranter(wishType, out WishGranter granter) && granter.CanAdd(citizenController))
         {
+            isWishOver = false;
             currentWish = wishesPool.GetElement();
             currentWish.transform.SetParent(transform);
-            currentWish.Initialize(wishType, citizenController, PoolWish);
+            currentWish.Initialize(wishType, citizenController, PoolWish, OnWishResult);
             currentWish.SetGranter(granter);
         }
     }
 
     private void PoolWish(Wish wish)
     {
-        wishResultEvent?.Invoke(currentWish.IsSuccess);
         wishesPool.Pool(wish);
         currentWish = null;
+    }
+    
+    private void OnWishResult(Wish wish)
+    {
+        if (!isWishOver)
+        {
+            isWishOver = true;
+            wishResultEvent?.Invoke(currentWish.IsSuccess);   
+        }
     }
 
     public void AbortWish()
     {
+        var success = currentWish.IsSuccess;
         currentWish.Abort();
-        wishResultEvent?.Invoke(currentWish.IsSuccess);
+        if (!isWishOver)
+        {
+            isWishOver = true;
+            wishResultEvent?.Invoke(success);
+        }
     }
 
     public bool IsGranterAssistantServing(EWish type)
@@ -118,5 +139,16 @@ public class WishesController : MonoBehaviour
     public void SubscribeWishesResult(Action<bool> handler)
     {
         wishResultEvent += handler;
+    }
+
+    public void Pause()
+    {
+        isPaused = true;
+        AbortWish();
+    }
+    
+    public void UnPause()
+    {
+        isPaused = false;
     }
 }

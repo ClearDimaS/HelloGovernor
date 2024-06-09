@@ -36,9 +36,12 @@ public enum EBuilding
 [CreateAssetMenu(menuName = "Configs/Buildings/Buildings Collection", fileName = "Buildings Collection")]
 public class BuildingsConfig : ScriptableObject
 {
+    [SerializeField] private int[] citizenCountsForHouseLevels;
     [SerializeField] private BuildingData[] buildings;
 
     private Dictionary<EBuilding, BuildingData> dict = new ();
+    
+    public int[] CitizenCountsForHouseLevels => citizenCountsForHouseLevels;
     
     public BuildingData GetBuildingData(EBuilding type)
     {

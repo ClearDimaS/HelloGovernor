@@ -14,7 +14,6 @@ public class CitizenSpawner : MonoBehaviour
     [SerializeField] private int baseCount;
 
     private List<CitizenController> citizens = new ();
-    private Dictionary<HouseBuilding, List<CitizenController>> citizensDict = new ();
 
     private void Update()
     {
@@ -31,20 +30,15 @@ public class CitizenSpawner : MonoBehaviour
 
         foreach (var house in housesManager.Houses)
         {
-            if (!citizensDict.ContainsKey(house))
+            var count = house.GetCitizensCount();
+            var capacity = house.GetCitizensCapacity();
+            if (count < capacity)
             {
-                citizensDict[house] = new ();
-            }
-
-            if (citizensDict[house].Count < house.CitizensCount)
-            {
-                var old = citizensDict[house].Count;
-                for (int i = 0; i < house.CitizensCount - old; i++)
+                var old = count;
+                for (int i = 0; i < house.GetCitizensCapacity() - old; i++)
                 {
                     CitizenController citizen = Spawn();
-                    citizensDict[house].Add(citizen);
-                    //citizen.Place(house.CitizenPlace.position);
-                    citizen.PlaceRandom();
+                    house.AddCitizen(citizen);
                 }
             }
         }

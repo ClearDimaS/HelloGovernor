@@ -8,6 +8,7 @@ public class BuildingBase : MonoBehaviour
     [SerializeField] private UpgradableBuilding upgradable;
     
     public bool IsBought => upgradable.IsBought;
+    public int Level => upgradable.Level;
 
     private void Awake()
     {

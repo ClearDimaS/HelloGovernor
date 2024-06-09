@@ -17,8 +17,7 @@ public class WishPlace : MonoBehaviour
     [Inject] private WishItemsConfig config;
         
     [SerializeField] private GameObject timerRoot;
-    [SerializeField] private Image fillImage;
-    [SerializeField] private Image icon;
+    [SerializeField] private TimerBase timer;
     [SerializeField] private Image bgColor;
     [SerializeField] private Color noItemColor;
 
@@ -37,20 +36,20 @@ public class WishPlace : MonoBehaviour
     {
         granter = GetComponentInParent<WishGranter>();
         compasTarget = granter.Type.ToCompassTarget();
-        icon.sprite = config.GetIcon(granter.Type);
+        timer.SetIcon(config.GetIcon(granter.Type));
         originalColor = bgColor.color;
     }
 
     private void Update()
     {
-        if (fillImage != null && wisher != null && state == EWishPlaceState.Taken)
+        if (timer != null && wisher != null && state == EWishPlaceState.Taken)
         {
             if (!timerRoot.activeSelf)
             {
                 timerRoot.SetActive(true);
                 compassManager.AddTarget(transform, compasTarget);
             }
-            fillImage.fillAmount = progress;   
+            timer.SetProgress(progress);   
         }
         else
         {
@@ -92,9 +91,14 @@ public class WishPlace : MonoBehaviour
     public void NotiftyError()
     {
         bgColor.DOKill();
-        bgColor.DOColor(noItemColor, 0.15f).OnComplete(() =>
+        bgColor.transform.DOKill();
+        bgColor.transform.DOScale(1.2f, 0.2f).OnComplete(() =>
         {
-            bgColor.DOColor(originalColor, 0.15f);
+            bgColor.transform.DOScale(1f, 0.2f);
+        });
+        bgColor.DOColor(noItemColor, 0.2f).OnComplete(() =>
+        {
+            bgColor.DOColor(originalColor, 0.2f);
         });
     }
 }

@@ -9,10 +9,12 @@ public class Wish : MonoBehaviour, IResetable
     private WishGranter granter;
 
     private float progress;
+    private event Action<Wish> readyToRemoveEvent;
     private event Action<Wish> removeEvent;
     
     public EWish Type { get; private set; }
     public bool IsReadyToRemove { get; private set; }
+    public bool IsRemoved { get; private set; }
     public bool IsProgressFull => progress >= 1f;
     public WishGranter Granter => granter;
     public float Progress => progress;
@@ -20,14 +22,17 @@ public class Wish : MonoBehaviour, IResetable
 
     public bool IsSuccess => progress >= 1f;
 
-    public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove)
+    public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove, Action<Wish> onReadyToRemove)
     {
         progress = 0;
         Type = type;
         this.citizen = citizen;
         walker = citizen.Walker;
         removeEvent += onRemove;
+        readyToRemoveEvent += onReadyToRemove;
         isSuccess = false;
+        IsRemoved = false;
+        IsReadyToRemove = false;
     }
 
     private void Update()
@@ -37,9 +42,13 @@ public class Wish : MonoBehaviour, IResetable
             return;
         }
 
-        if (progress >= 1f && !granter.HasInQueueOrProcessed(citizen))
+        if (progress >= 1)
         {
             SetWishReadyToRemove();
+        }
+        if (progress >= 1f && !granter.HasInQueueOrProcessed(citizen))
+        {
+            SetRemoved();
         }
     }
     public bool HasOKGranter()
@@ -76,8 +85,11 @@ public class Wish : MonoBehaviour, IResetable
     
     private void SetWishReadyToRemove()
     {
-        IsReadyToRemove = true;
-        SetRemoved();
+        if (!IsReadyToRemove)
+        {
+            IsReadyToRemove = true;
+            readyToRemoveEvent?.Invoke(this);
+        }
     }
 
     public void Abort()
@@ -88,6 +100,10 @@ public class Wish : MonoBehaviour, IResetable
     
     private void SetRemoved()
     {
-        removeEvent?.Invoke(this);
+        if (!IsRemoved)
+        {
+            IsRemoved = true;
+            removeEvent?.Invoke(this);
+        }
     }
 }

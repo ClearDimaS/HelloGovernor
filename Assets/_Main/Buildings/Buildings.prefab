@@ -277,6 +277,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4735246117292851683}
     m_Modifications:
+    - target: {fileID: 834979381498420376, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
+        type: 3}
+      propertyPath: autoGrantLevel1
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4414085816034311281, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_RootOrder
@@ -335,7 +340,7 @@ PrefabInstance:
     - target: {fileID: 4414085816034311294, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_Name
-      value: House
+      value: House (0)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39f02b25a4cdd4c9c971cf98058b4fba, type: 3}

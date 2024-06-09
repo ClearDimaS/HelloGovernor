@@ -194,6 +194,7 @@ public class UpgradablePricesManager : MonoBehaviour
         UpdatePrices();
     }
 
+    [Button]
     private void UpdatePrices()
     {
         for (int i = 0; i < upgradablePriceDatas.Count; i++)

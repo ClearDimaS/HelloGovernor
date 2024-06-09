@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class WishesVFXPlayer : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem pausedVFX;
     [SerializeField] private ParticleSystem[] happyPS;
     
     private WishesController wishesController;
@@ -14,6 +15,23 @@ public class WishesVFXPlayer : MonoBehaviour
     {
         wishesController = GetComponentInParent<WishesController>();
         wishesController.SubscribeWishesResult(PlayWishResultFVX);
+    }
+
+    private void Update()
+    {
+        var pause = wishesController.IsPaused;
+        if (pause != pausedVFX.gameObject.activeSelf)
+        {
+            if (pause)
+            {
+                pausedVFX.gameObject.SetActive(true);
+                pausedVFX.Play();
+            }
+            else
+            {
+                pausedVFX.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void PlayWishResultFVX(bool isSuccess)

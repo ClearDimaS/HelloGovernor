@@ -5,8 +5,10 @@ using Random = UnityEngine.Random;
 
 public class HouseRepairable : MonoBehaviour, IRepairable
 {
+    [Inject] private CompassManager compassManager;
     [Inject] private GameConfig gameConfig;
 
+    [SerializeField] private TimerBase timer;
     [SerializeField] private GameObject[] grxVariants;
     [SerializeField] private ScaleAnimator needRepairContent;
     
@@ -33,6 +35,7 @@ public class HouseRepairable : MonoBehaviour, IRepairable
 
     private void Update()
     {
+        timer.SetProgress(repairProgress);
         if (IsBroken && repairer != null)
         {
             repairProgress += Time.deltaTime / gameConfig.repairHouseTime;
@@ -97,14 +100,18 @@ public class HouseRepairable : MonoBehaviour, IRepairable
     public void Break()
     {
         repairProgress = 0f;
+        timer.SetProgress(0f);
         IsBroken = true;
         needRepairContent.Show(false);
+        compassManager.AddTarget(transform, ECompasTarget.Repair);
     }
 
     private void Repair()
     {
         repairProgress = 0f;
+        timer.SetProgress(0f);
         IsBroken = false;
         needRepairContent.Hide(false);
+        compassManager.RemoveTarget(transform, ECompasTarget.Repair);
     }
 }
