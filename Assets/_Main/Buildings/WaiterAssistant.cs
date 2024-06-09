@@ -38,7 +38,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             {
                 target.WishesController.SetWishAssistant(null);
                 interactor.RemoveItem(item.Type);
-                target.Interactor.AddItem(item);
+                target.AddItem(item);
                 target = null;
                 item = null;
             }

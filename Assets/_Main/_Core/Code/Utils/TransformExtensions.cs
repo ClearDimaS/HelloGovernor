@@ -35,4 +35,12 @@ public static class TransformExtensions
           }
           return components;
      }
+
+     public static Vector3 AxisToRandomDir(this Vector3 axis)
+     {
+          return new Vector3(
+               Random.Range(-1f, 1f) * axis.x,
+               Random.Range(-1f, 1f) * axis.y,
+               Random.Range(-1f, 1f) * axis.z).normalized;
+     }
 }

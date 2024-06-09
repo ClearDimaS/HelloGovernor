@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -87,7 +88,19 @@ public class Interactor : MonoBehaviour
 
         item.transform.DOKill();
         item.transform.SetParent(place);
-        item.transform.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
+        var middle = (item.transform.position + place.position) / 2f;
+        middle.y = place.position.y + 1f;
+        item.transform.DOMove(middle, 0.3f).SetEase(Ease.OutCubic).OnComplete(() =>
+        {
+            item.transform.DOLocalMove(Vector3.zero, 0.15f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                var startScale = item.transform.localScale;
+                item.transform.DOScale(startScale * 1.3f, 0.2f).SetEase(Ease.OutCubic).OnComplete(() =>
+                {
+                    item.transform.DOScale(startScale, 0.2f).SetEase(Ease.InCubic);
+                });
+            }); 
+        });
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 

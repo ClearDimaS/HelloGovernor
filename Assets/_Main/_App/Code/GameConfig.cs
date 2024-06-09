@@ -41,6 +41,7 @@ public class GameConfig : ScriptableObject
     [Header("Break house")]
     public Vector2 breakTimerMinMax;
     public float repairHouseTime;
+    public int repairHouseReward = 10;
 
     [Header("Thief")]
     public float thiefPause = 10;

@@ -23,7 +23,7 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             if (client.WishesController.CurrentWishProgress >= 1f)
             {
                 var give = interactor.RemoveItem(client.WishesController.WishType);
-                client.Interactor.AddItem(give);
+                client.AddItem(give);
                 
                 StopServingClient();
             }

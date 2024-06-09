@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
 
     public void MoveCurrencyToMe(CurrencyBehaviour currency)
     {
+        currency.transform.SetParent(null, true);
         var startPos = currency.transform.position;
         var endPos = transform.position;
         var middlePos = (startPos + endPos) / 2f + Vector3.up * gameConfig.moneyGainFlyHeight;

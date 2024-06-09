@@ -251,7 +251,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public bool CanAdd(CitizenController citizenController)
     {
-        return !citizenController.Interactor.HasItem(Type);
+        return !citizenController.HasItem(Type);
     }
 
     public bool IsProcessed(CitizenController target)

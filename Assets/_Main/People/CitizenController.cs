@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -19,7 +20,6 @@ public class CitizenController : MonoBehaviour
     public bool IsChatting { get; private set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
-    public Interactor Interactor => interactor;
 
     private void Awake()
     {
@@ -76,5 +76,21 @@ public class CitizenController : MonoBehaviour
     public bool CanAddWishes()
     {
         return house == null || !house.IsBroken();
+    }
+
+    public void AddItem(WishAssistantItem item)
+    {
+        interactor.AddItem(item);
+        var type = item.Type;
+        var time = 10f;
+        UniTask.Delay(TimeSpan.FromSeconds(time)).ContinueWith(() =>
+        {
+            interactor.RemoveItem(type);
+        });
+    }
+
+    public bool HasItem(EWish type)
+    {
+        return interactor.HasItem(type);
     }
 }

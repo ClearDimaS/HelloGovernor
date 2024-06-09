@@ -6,9 +6,10 @@ using Random = UnityEngine.Random;
 
 public class WishesVFXPlayer : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem pausedVFX;
+    [SerializeField] private ParticleSystem[] pausedVFXs;
     [SerializeField] private ParticleSystem[] happyPS;
-    
+
+    private bool wasPaused = true;
     private WishesController wishesController;
 
     private void Awake()
@@ -20,16 +21,22 @@ public class WishesVFXPlayer : MonoBehaviour
     private void Update()
     {
         var pause = wishesController.IsPaused;
-        if (pause != pausedVFX.gameObject.activeSelf)
+        if (wasPaused != pause)
         {
-            if (pause)
+            wasPaused = pause;
+            var playIndex = Random.Range(0, pausedVFXs.Length);
+            for (var i = 0; i < pausedVFXs.Length; i++)
             {
-                pausedVFX.gameObject.SetActive(true);
-                pausedVFX.Play();
-            }
-            else
-            {
-                pausedVFX.gameObject.SetActive(false);
+                var pausedVFX = pausedVFXs[i];
+                if (pause && i == playIndex)
+                {
+                    pausedVFX.gameObject.SetActive(true);
+                    pausedVFX.Play();
+                }
+                else
+                {
+                    pausedVFX.gameObject.SetActive(false);  
+                }
             }
         }
     }

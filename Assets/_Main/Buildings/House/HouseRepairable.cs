@@ -5,12 +5,14 @@ using Random = UnityEngine.Random;
 
 public class HouseRepairable : MonoBehaviour, IRepairable
 {
+    [Inject] private CurrencySingleStackPool currencyPool;
     [Inject] private CompassManager compassManager;
     [Inject] private GameConfig gameConfig;
 
     [SerializeField] private TimerBase timer;
     [SerializeField] private GameObject[] grxVariants;
     [SerializeField] private ScaleAnimator needRepairContent;
+    [SerializeField] private ParticleSystem[] donePSs;
     
     protected IRepairer repairer;
 
@@ -30,6 +32,7 @@ public class HouseRepairable : MonoBehaviour, IRepairable
         for (int i = 0; i < grxVariants.Length; i++)
         {
             grxVariants[i].SetActive(i == rand);
+            donePSs[i].gameObject.SetActive(i == rand);
         }
     }
 
@@ -113,5 +116,18 @@ public class HouseRepairable : MonoBehaviour, IRepairable
         IsBroken = false;
         needRepairContent.Hide(false);
         compassManager.RemoveTarget(transform, ECompasTarget.Repair);
+        foreach (var ps in donePSs)
+        {
+            if (ps.gameObject.activeInHierarchy)
+            {
+                ps.Play();       
+            }
+        }
+
+        var reward = gameConfig.repairHouseReward;
+        var currency = currencyPool.GetElement();
+        currency.transform.position = transform.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
+        currency.Initialize(reward);
+        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
 }
