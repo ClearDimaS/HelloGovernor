@@ -18,6 +18,7 @@ public class CityProgressPanel : UI_Panel
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button hintButton;
 
+    private CanvasGroup group;
     private UpgradableObject nextUpgradable;
     private int spentAmount = -1;
     private float lastProgress = 0f;
@@ -27,6 +28,11 @@ public class CityProgressPanel : UI_Panel
         lastProgress = pricesManager.GetProgress();
         ApplyProgress(lastProgress);
         hintButton.onClick.AddListener(ShowTargetHouse);
+        group = GetComponent<CanvasGroup>();
+        if (group == null)
+        {
+            group = gameObject.AddComponent<CanvasGroup>();
+        }
     }
 
     private void ShowTargetHouse()
@@ -37,6 +43,11 @@ public class CityProgressPanel : UI_Panel
     private void Update()
     {
         var next = pricesManager.GetNextData();
+        if (next == null)
+        {
+            group.alpha = 0f;
+            return;
+        }
         if (nextUpgradable != next)
         {
             nextUpgradable = next;

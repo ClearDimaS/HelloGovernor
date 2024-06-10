@@ -32,13 +32,14 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             }
         }
 
-        if (target != null)
+        if (target != null && item != null)
         {
             if (!wishGranter.IsProcessed(target))
             {
+                var removed = item;
                 target.WishesController.SetWishAssistant(null);
-                interactor.RemoveItem(item.Type);
-                target.AddItem(item);
+                interactor.RemoveItem(removed.Type);
+                target.AddItem(removed);
                 target = null;
                 item = null;
             }

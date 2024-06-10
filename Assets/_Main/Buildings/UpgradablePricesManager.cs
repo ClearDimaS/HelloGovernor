@@ -98,10 +98,10 @@ public class UpgradablePricesManager : MonoBehaviour
         var target = moneyConsumerData.upgradable.BuyPlace;
         var sp = cameraManager.ActiveCamera.WorldToViewportPoint(target.position);
 
-        if (sp.x < gameConfig.cameraUnlockXBorders.x ||
-            sp.y < gameConfig.cameraUnlockYBorders.x ||
-            sp.x > gameConfig.cameraUnlockXBorders.y || 
-            sp.y > gameConfig.cameraUnlockYBorders.y)
+        if ((sp.x < gameConfig.cameraUnlockXBorders.x ||
+             sp.y < gameConfig.cameraUnlockYBorders.x ||
+             sp.x > gameConfig.cameraUnlockXBorders.y || 
+             sp.y > gameConfig.cameraUnlockYBorders.y) && gameConfig.showCameraOnUnlock)
         {
             cameraManager.SetTarget(target, gameConfig.unlockCameraTimer, delay, startCallback);
         }
@@ -123,7 +123,12 @@ public class UpgradablePricesManager : MonoBehaviour
     {
         if (!consumersDict.ContainsKey(upgradableObject))
         {
+            var upgradesCount = upgradableObject.UpgradesCount + (upgradableObject.AutoGrantLevel1 ? 1 : 0);
             var prices = new List<Price>();
+            if (upgradableObject.AutoGrantLevel1)
+            {
+                prices.Add(new Price(10, 0));
+            }
             for (int i = 0; i < upgradablePriceDatas.Count; i++)
             {
                 if (upgradablePriceDatas[i].upgradable == upgradableObject)
@@ -132,7 +137,7 @@ public class UpgradablePricesManager : MonoBehaviour
                 }
             }
 
-            if (prices.Count != upgradableObject.UpgradesCount)
+            if (prices.Count != upgradesCount)
             {
                 throw new NotImplementedException($"prices for: {upgradableObject.transform.name} is not set correctly!");
             }

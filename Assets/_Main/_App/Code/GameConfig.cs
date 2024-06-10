@@ -32,6 +32,7 @@ public class GameConfig : ScriptableObject
     public float hintCameraDistanceMult = 0.8f;
     public float unlockCameraDelay = 1f;
     public float unlockCameraTimer = 3f;
+    public bool showCameraOnUnlock;
     public float cameraTransitionMaxTime = 1f;
     public float cameraTransitionSpeed = 10f;
     public Ease cameraTransitionEase;
