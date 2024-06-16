@@ -114,7 +114,7 @@ public class WishesController : MonoBehaviour
     {
         if (!isWishOver)
         {
-            if (currentWish.IsSuccess && wishAssistant == player)
+            if (currentWish.IsSuccess && wishAssistant == player.WishAssistant)
             {
                 SoundManager.Instance.WishDone();
             }

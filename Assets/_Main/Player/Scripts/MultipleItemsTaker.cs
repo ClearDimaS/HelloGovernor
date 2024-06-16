@@ -37,6 +37,11 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             return;
         }
 
+        if (client != null)
+        {
+            return;
+        }
+
         var otherRb = other.attachedRigidbody;
         if (!otherRb.TryGetComponent(out WishPlace place))
         {
@@ -68,6 +73,10 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             return;
         }
 
+        if (client == null)
+        {
+            return;
+        }
         var otherRb = other.attachedRigidbody;
         if (!otherRb.TryGetComponent(out WishPlace place))
         {
@@ -79,7 +88,6 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             {
                 StopServingClient();
             }
-            return;
         }
 
         if (this.client == citizen)

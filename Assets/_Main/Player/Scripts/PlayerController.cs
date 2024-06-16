@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
 
     [SerializeField] private Rigidbody rb;
 
+    public IWishAssistant WishAssistant { get; private set; }
     private int frameRequiredDelta;
 
     private Vector3 delta;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
 
     private void Awake()
     {
+        WishAssistant = GetComponent<IWishAssistant>();
         playerInput.moveEvent += RequireMove;
     }
 

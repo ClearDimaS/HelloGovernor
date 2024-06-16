@@ -44,7 +44,7 @@ public class Price
         }
         else if (money > 10000)
         {
-            return (money / 1000000f).ToString("0.0") + "M";
+            return (money / 10000f).ToString("0.0") + "K";
         }
         else if (money > 1000)
         {
