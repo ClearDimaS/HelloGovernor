@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collection:
   - type: 0
-    grantDuration: 40
+    grantDuration: 7
     reward: 0
     chanceWeight: 1
   - type: 1
@@ -30,7 +30,20 @@ MonoBehaviour:
     reward: 10
     chanceWeight: 1
   - type: 4
-    grantDuration: 20
+    grantDuration: 7
+    reward: 0
+    chanceWeight: 1
+  moneyWishes:
+  - type: 1
+    grantDuration: 0
+    reward: 0
+    chanceWeight: 1
+  - type: 2
+    grantDuration: 0
+    reward: 0
+    chanceWeight: 1
+  - type: 3
+    grantDuration: 0
     reward: 0
     chanceWeight: 1
   chatGroupSizeMinMax: {x: 2, y: 4}

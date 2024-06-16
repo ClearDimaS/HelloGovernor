@@ -63,7 +63,7 @@ public class InteractablesController : MonoBehaviour
     
                 
         var twoBoneIK = handRig.GetComponentInChildren<TwoBoneIKConstraint>();
-        var target = twoBoneIK.data.target;
+        target = twoBoneIK.data.target;
         twoBoneIK.Reset();
         twoBoneIK.data.root = animator.GetBoneTransform(HumanBodyBones.LeftUpperArm);
         twoBoneIK.data.mid = animator.GetBoneTransform(HumanBodyBones.LeftLowerArm);

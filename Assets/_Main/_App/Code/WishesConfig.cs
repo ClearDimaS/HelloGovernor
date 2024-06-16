@@ -15,7 +15,8 @@ public class WishesConfig : TypedCollectionConfig<WishesConfig.WishData, EWish>
         
         public EWish Key => type;
     }
-    
+
+    [SerializeField] private List<WishesConfig.WishData> moneyWishes;
     public Vector2Int chatGroupSizeMinMax;
     
     public float GetGrantDuration(EWish type)
@@ -31,6 +32,11 @@ public class WishesConfig : TypedCollectionConfig<WishesConfig.WishData, EWish>
     public EWish GetRandomWishType()
     {
         return GetRandomElementByWeight(collection).type;
+    }
+    
+    public EWish GetRandomMoneyWishType()
+    {
+        return GetRandomElementByWeight(moneyWishes).type;
     }
     
     private WishData GetRandomElementByWeight(List<WishData> list)

@@ -23,11 +23,24 @@ public class HousesManager : MonoBehaviour
 
     private void Update()
     {
-        breakTimer += Time.deltaTime;
-        if (breakTimer > timeBeforeBreak)
+        var canBreak = false;
+        foreach (var house in houses)
         {
-            BreakBuilding();
-            ReinitBreakTimer();
+            if (house.IsBought && !house.IsBroken())
+            {
+                canBreak = true;
+                break;
+            }
+        }
+
+        if (canBreak)
+        {
+            breakTimer += Time.deltaTime;
+            if (breakTimer > timeBeforeBreak)
+            {
+                BreakBuilding();
+                ReinitBreakTimer();
+            }
         }
     }
 

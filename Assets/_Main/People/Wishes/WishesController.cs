@@ -79,15 +79,28 @@ public class WishesController : MonoBehaviour
         {
             return;
         }
-        var wishType = wishesConfig.GetRandomWishType();
         
-        if (grantersManager.TryGetWorkingFreeGranter(wishType, out WishGranter granter) && granter.CanAdd(citizenController))
+        var moneyWishType = wishesConfig.GetRandomMoneyWishType();
+        if (grantersManager.TryGetWorkingFreeGranter(moneyWishType, out WishGranter granter) && granter.CanAdd(citizenController))
         {
             isWishOver = false;
             currentWish = wishesPool.GetElement();
             currentWish.transform.SetParent(transform);
-            currentWish.Initialize(wishType, citizenController, PoolWish, OnWishResult);
+            currentWish.Initialize(moneyWishType, citizenController, PoolWish, OnWishResult);
             currentWish.SetGranter(granter);
+        }
+        else
+        {
+            var wishType = wishesConfig.GetRandomWishType();
+        
+            if (grantersManager.TryGetWorkingFreeGranter(wishType, out granter) && granter.CanAdd(citizenController))
+            {
+                isWishOver = false;
+                currentWish = wishesPool.GetElement();
+                currentWish.transform.SetParent(transform);
+                currentWish.Initialize(wishType, citizenController, PoolWish, OnWishResult);
+                currentWish.SetGranter(granter);
+            }
         }
     }
 
