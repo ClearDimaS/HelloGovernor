@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Object = UnityEngine.Object;
 
 public class WishPlace : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class WishPlace : MonoBehaviour
     [SerializeField] private TimerBase timer;
     [SerializeField] private Image bgColor;
     [SerializeField] private Color noItemColor;
-
+    [field: SerializeField] public Rigidbody Rb { get; private set; }
+    
     private Color originalColor;
     private WishGranter granter;
     private CitizenController wisher;

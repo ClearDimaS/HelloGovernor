@@ -75,6 +75,10 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
         }
         if (!place.TryGetWisher(out CitizenController citizen))
         {
+            if (place.Rb == otherRb)
+            {
+                StopServingClient();
+            }
             return;
         }
 

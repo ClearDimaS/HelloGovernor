@@ -4,10 +4,11 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurrencyHolder
+public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurrencyHolder, IThiefBuster
 {
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;
+    [Inject] private CurrencySingleStackPool currencyStackPool;
     [Inject] private GameConfig gameConfig;
     [Inject] private PlayerInput playerInput;
 
@@ -84,5 +85,14 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
                 currencyPool.Pool(currency);
             }).SetEase(gameConfig.moneyFlyEase2);;
         }).SetEase(gameConfig.moneyFlyEase1);
+    }
+
+    public void ReturnMoney(int stolenAmount, Transform from)
+    {
+        var reward = stolenAmount;
+        var currency = currencyStackPool.GetElement();
+        currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
+        currency.Initialize(reward);
+        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
 }

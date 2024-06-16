@@ -7,7 +7,8 @@ using Zenject;
 public class CopAssistant : MonoBehaviour, IThiefBuster
 {
     [Inject] private ThiefsManager thiefsManager;
-
+    [Inject] protected PlayerDataRepository repository;
+    
     [SerializeField] private Walker walker;
     
     private PolicestationBuilding policeStation;
@@ -30,5 +31,10 @@ public class CopAssistant : MonoBehaviour, IThiefBuster
         }
 
         walker.MoveToTarget(policeStation.PolicePlace.position, null);
+    }
+
+    public void ReturnMoney(int stolenAmount, Transform transform)
+    {
+        repository.GetData().money += stolenAmount;
     }
 }

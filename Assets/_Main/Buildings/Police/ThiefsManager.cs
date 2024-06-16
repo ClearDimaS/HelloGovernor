@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class ThiefsManager : MonoBehaviour
 {
+    [Inject] protected DayTimeManager dayTimeManager;
     [Inject] protected CameraManager cameraManager;
     [Inject] protected ThiefsPool thiefsPool;
     [Inject] protected GameConfig config;
@@ -17,6 +18,7 @@ public class ThiefsManager : MonoBehaviour
 
     protected ThiefSpawnData lastSpawnData;
     
+    public bool IsActiveStealing => IsStealing && activeThief != null && !activeThief.IsBusted;
     public bool IsStealing => isStealing;
     protected ThiefBehaviour activeThief;
 
@@ -38,7 +40,7 @@ public class ThiefsManager : MonoBehaviour
         if (Time.time - lastStealTime > config.thiefPause)
         {
             var target = GetThiefTarget(false);
-            if (target != null)
+            if (target != null && dayTimeManager.IsLampsEnabled)
             {
                 SpawnThief(target);
             }
@@ -102,5 +104,10 @@ public class ThiefsManager : MonoBehaviour
         }
         
         return (activeThief.transform.position - lastSpawnData.spawn.position).magnitude / (lastSpawnData.spawn.position - lastSpawnData.escape.position).magnitude;
+    }
+
+    public bool HasBusted()
+    {
+        return isStealing && activeThief != null && activeThief.IsBusted;
     }
 }

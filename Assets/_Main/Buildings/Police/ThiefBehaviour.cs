@@ -8,7 +8,7 @@ using Zenject;
 
 public interface IThiefBuster
 {
-    
+    public void ReturnMoney(int stolenAmount, Transform transform);
 }
 
 [Serializable]
@@ -22,7 +22,6 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
 {
     [Inject] protected ThiefsManager thiefsManager;
     [Inject] protected CurrencyPool currencyPool;
-    [Inject] protected PlayerDataRepository repository;
     [Inject] protected GameConfig config;
     
     [SerializeField] protected Walker walker;
@@ -32,6 +31,8 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
 
     protected bool isBusted;
     public bool IsStealing => stolenAmount > 0;
+    public bool IsBusted => isBusted;
+
     protected int stolenAmount;
     
     private void Awake()
@@ -53,7 +54,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
 
         if (stolenAmount > 0)
         {
-            repository.GetData().money += stolenAmount;
+            thiefBuster.ReturnMoney(stolenAmount, transform);
             stolenAmount = 0;
             isBusted = true;
         }

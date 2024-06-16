@@ -18,7 +18,7 @@ public class DayTimePanel : UI_Panel
     
     private void Update()
     {
-        var up = Quaternion.Euler(0, 0, dayTimeManager.GetDaytT() * 360f) * Vector3.up;
+        var up = Quaternion.Euler(0, 0, -dayTimeManager.GetDaytT() * 360f) * Vector3.up;
         dayNightCircle.localRotation = Quaternion.LookRotation(Vector3.forward, up);
         var isNight = dayTimeManager.IsLampsEnabled;
         bg.color = isNight ? bgNight : bgDay;
@@ -32,7 +32,13 @@ public class DayTimePanel : UI_Panel
             {
                 hh -= 12;
             }
-            clockTime.text = $"{hh}:{mm}\n{add}";
+
+            var mmString = mm.ToString();
+            if (mmString.Length < 2)
+            {
+                mmString = "0" + mmString;
+            }
+            clockTime.text = $"{hh}:{mmString}\n{add}";
             lastMM = mm;
         }
     }

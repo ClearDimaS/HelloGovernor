@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f354a8f0cae644f1a065db824a48ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayDuration: 30
+  dayDuration: 600
   startT: 0.5
   dayTimes:
   - startT: 0
@@ -71,3 +71,5 @@ MonoBehaviour:
     sunColor: {r: 0, g: 0.31764707, b: 1, a: 1}
     intensity: 1
     shadows: 0
+  curDuration: 0
+  CycledDatas: []
