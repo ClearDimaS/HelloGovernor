@@ -49,6 +49,11 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         
     }
 
+    private void Update()
+    {
+        data.spentMoney = moneyConsumer.GetSpentAmount();
+    }
+
     public virtual void Initialize(UpgradableData data)
     {
         if (autoGrantLevel1 && data.level == 0)

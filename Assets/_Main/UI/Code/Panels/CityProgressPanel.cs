@@ -12,12 +12,15 @@ public class CityProgressPanel : UI_Panel
     
     [SerializeField] private Image cityProgressImage;
     [SerializeField] private TMP_Text cityProgressText;
-    
+
+    [SerializeField] private RectTransform questRoot;
     [SerializeField] private Image progressImage;
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button hintButton;
+    [SerializeField] private float completionPause = 3f;
 
+    private float completionTime = -4f;
     private CanvasGroup group;
     private UpgradableObject nextUpgradable;
     private int spentAmount = -1;
@@ -42,6 +45,10 @@ public class CityProgressPanel : UI_Panel
 
     private void Update()
     {
+        if (Time.time - completionTime < completionPause)
+        {
+            return;
+        }
         var next = pricesManager.GetNextData();
         if (next == null)
         {
@@ -50,23 +57,52 @@ public class CityProgressPanel : UI_Panel
         }
         if (nextUpgradable != next)
         {
-            nextUpgradable = next;
-            if (nextUpgradable.Level == 0)
+            if (nextUpgradable != null)
             {
-                titleText.text = $"Buy {nextUpgradable.GetTitle()}";
+                completionTime = Time.time;
+                SoundManager.Instance.TaskComplete();
+                
+                questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
+                {
+                    questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
+                    {
+                        questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
+                        {
+                            questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
+                            {
+                                nextUpgradable = null;
+                            });
+                        });
+                    });
+                });
             }
             else
             {
-                titleText.text = $"Upgrade {nextUpgradable.GetTitle()}";
+                nextUpgradable = next;
+                if (nextUpgradable.Level == 0)
+                {
+                    titleText.text = $"Buy {nextUpgradable.GetTitle()}";
+                }
+                else
+                {
+                    titleText.text = $"Upgrade {nextUpgradable.GetTitle()}";
+                }
+                spentAmount = -1;
             }
-            spentAmount = -1;
         }
 
-        if (spentAmount != nextUpgradable.SpentAmount)
+        if (spentAmount < nextUpgradable.SpentAmount)
         {
             spentAmount = nextUpgradable.SpentAmount;
             progressImage.fillAmount = nextUpgradable.SpentAmount/(float)nextUpgradable.Price;
             progressText.text = $"{nextUpgradable.SpentAmount}/{nextUpgradable.Price}";
+        }
+        
+        if (spentAmount > nextUpgradable.SpentAmount)
+        {
+            spentAmount = nextUpgradable.Price;
+            progressImage.fillAmount = 1f;
+            progressText.text = $"{nextUpgradable.Price}/{nextUpgradable.Price}";
         }
         
         var progress = pricesManager.GetProgress();
@@ -84,6 +120,7 @@ public class CityProgressPanel : UI_Panel
             }).OnComplete(() =>
             {
                 var value = end;
+
                 ApplyProgress(value);
                 cityProgressText.transform.DOScale(Vector3.one * 1f, 0.3f);
             });

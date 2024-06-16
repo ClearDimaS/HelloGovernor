@@ -27,11 +27,11 @@ public class WalletPanel : UI_Panel
         {
             lastMoney = repository.GetData().money;
             var money = lastMoney;
-            moneyText.transform.DOScale(Vector3.one * 1.15f, 0.3f).OnComplete(() =>
+            moneyText.transform.DOScale(Vector3.one * 1.3f, 0.3f).OnComplete(() =>
             {
                 moneyText.text = Price.ToMoneyString(money);
-                moneyText.transform.DOScale(Vector3.one, 0.3f);
-            });
+                moneyText.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.InCubic);;
+            }).SetEase(Ease.OutCubic);
         }
     }
 }

@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 public class HouseRepairable : MonoBehaviour, IRepairable
 {
+    [Inject] private PlayerController player;
     [Inject] private CurrencySingleStackPool currencyPool;
     [Inject] private CompassManager compassManager;
     [Inject] private GameConfig gameConfig;
@@ -122,6 +123,11 @@ public class HouseRepairable : MonoBehaviour, IRepairable
             {
                 ps.Play();       
             }
+        }
+
+        if (repairer == player)
+        {
+            SoundManager.Instance.PlayerRepair();
         }
 
         var reward = gameConfig.repairHouseReward;

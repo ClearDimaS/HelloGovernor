@@ -12,6 +12,7 @@ public interface IWishAssistant
 
 public class WishesController : MonoBehaviour
 {
+    [Inject] private PlayerController player;
     [Inject] private WishesPool wishesPool;
     [Inject] private WishGrantersManager grantersManager;
     [Inject] private WishesConfig wishesConfig;
@@ -100,6 +101,10 @@ public class WishesController : MonoBehaviour
     {
         if (!isWishOver)
         {
+            if (currentWish.IsSuccess && wishAssistant == player)
+            {
+                SoundManager.Instance.WishDone();
+            }
             isWishOver = true;
             wishResultEvent?.Invoke(currentWish.IsSuccess);   
         }

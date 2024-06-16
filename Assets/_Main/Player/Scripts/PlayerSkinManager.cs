@@ -9,7 +9,7 @@ public class PlayerSkinManager : MonoBehaviour
 {
     [Inject] private PlayerDataRepository playerDataRepository;
     [Inject] private PlayerSkinConfig skinConfig;
-    
+
     [SerializeField] private Transform gfxRoot;
     [SerializeField] private RuntimeAnimatorController animatorOverride;
     
@@ -66,6 +66,7 @@ public class PlayerSkinManager : MonoBehaviour
         animator = skinGO.GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorOverride;
         skinIndex = data.skinIndex;
+        animator.gameObject.AddComponent<SoundPlayer>().SetClip(SoundManager.Instance.PlayerFootstepsSound);
     }
 
     public int GetPrice(int skinIndex)

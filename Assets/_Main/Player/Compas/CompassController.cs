@@ -7,7 +7,8 @@ using Zenject;
 public class CompassController : MonoBehaviour
 {
     [Inject] private CameraManager cameraManager;
-    
+
+    [SerializeField] private Color color;
     [SerializeField] private RectTransform markersParent;
     [SerializeField] private CompasMarker[] targetMarkers;
 
@@ -26,6 +27,7 @@ public class CompassController : MonoBehaviour
         {
             freeTargetMarkers.Enqueue(marker);
             marker.SetSprite(icon);
+            marker.SetColor(color);
         }
     }
 

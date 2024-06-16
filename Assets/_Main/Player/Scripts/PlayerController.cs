@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurren
         currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic).OnComplete(() =>
         {
             var t = 0f;
+            SoundManager.Instance.PlayerGetMoney();
             DOTween.To(() => t, x => t = x, 1f, gameConfig.moneyFlyTime2).OnUpdate(() =>
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);

@@ -133,6 +133,7 @@ public class MoneyConsumer : MonoBehaviour
             {
                 isReached = true;
                 spender = null;
+                SoundManager.Instance.PlayPurchase();
                 reachGoalEvent?.Invoke();
             }
             return;
@@ -149,8 +150,10 @@ public class MoneyConsumer : MonoBehaviour
 
         var diff = maxAllowedCurrentAmount - currentSpendAmount;
         diff = Mathf.Min(diff, spender.MaxToSpend());
+        diff = Mathf.Min(diff, price.price - GetSpentAmount());
         if (diff > 0)
         {
+            SoundManager.Instance.PlaySpendMoney();
             spender.Spend(diff);
             if ((Time.time - lastSpawnCashTime) > gameConfig.moneySpendPause)
             {

@@ -7,8 +7,10 @@ public class GameSceneMonoInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        Container.Bind<DayTimeManager>().FromComponentInHierarchy().AsSingle().NonLazy();;
         Container.Bind<WishGrantersManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
+        Container.Bind<PlayerController>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerInput>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerSkinManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraManager>().FromComponentInHierarchy().AsSingle().NonLazy();

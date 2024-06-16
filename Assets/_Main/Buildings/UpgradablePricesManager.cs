@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -29,6 +30,7 @@ public class UpgradablePricesManager : MonoBehaviour
     [SerializeField] private int secondPrice;
     [SerializeField] private List<MoneyConsumerData> upgradablePriceDatas;
 
+    private MoneyConsumerData waitingUnlock;
     private MoneyConsumerData lastUnlocked;
     
     private Queue<MoneyConsumerData> unlockQueue = new ();
@@ -64,8 +66,26 @@ public class UpgradablePricesManager : MonoBehaviour
         {
             if (IsBought(lastUnlocked))
             {
-                lastUnlocked = unlockQueue.Dequeue();
-                AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
+                if (waitingUnlock == unlockQueue.Peek())
+                {
+                    return;
+                }
+                
+                if (waitingUnlock != null)
+                {
+                    waitingUnlock = unlockQueue.Peek();
+                    UniTask.Delay(TimeSpan.FromSeconds(1f)).ContinueWith(() =>
+                    {
+                        lastUnlocked = unlockQueue.Dequeue();
+                        AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
+                    });
+                }
+                else
+                {
+                    waitingUnlock = unlockQueue.Peek();
+                    lastUnlocked = unlockQueue.Dequeue();
+                    AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
+                }
             }
         }
     }

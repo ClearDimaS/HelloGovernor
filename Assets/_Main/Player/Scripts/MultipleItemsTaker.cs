@@ -91,6 +91,7 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
 
     public void AddItem(WishAssistantItem item)
     {
+        SoundManager.Instance.PlayerTakeItem();
         interactor.AddItem(item);
     }
 
