@@ -21,7 +21,6 @@ public class WishPlace : CulledBehaviour
     [SerializeField] private TimerBase timer;
     [SerializeField] private Image bgColor;
     [SerializeField] private Color noItemColor;
-    [field: SerializeField] public Rigidbody Rb { get; private set; }
     
     private Color originalColor;
     private WishGranter granter;

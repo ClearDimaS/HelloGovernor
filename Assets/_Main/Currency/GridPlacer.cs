@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,11 +17,24 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
     [SerializeField] private Vector3Int counts;
     [SerializeField] private Transform placesParent;
     [SerializeField] private List<BoxCollider> places;
+    [SerializeField] private List<Transform> placesTransforms;
     
     protected List<T> placedObjects = new ();
 
+    protected Vector3 placeSize;
     public int Count => placedObjects.Count;
-    public int MaxPlaces => places.Count;
+    public int MaxPlaces => placesTransforms.Count;
+
+    private void Awake()
+    {
+        placesTransforms = places.Select(x => x.transform).ToList();
+        placeSize = places[0].size;
+        for (var i = 0; i < places.Count; i++)
+        {
+            var place = places[i];
+            Destroy(place);
+        }
+    }
 
     [Button]
     private void CreatePlaces()
@@ -46,12 +61,12 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
     
     public bool CanAddOneMore()
     {
-        return placedObjects.Count < places.Count;
+        return placedObjects.Count < placesTransforms.Count;
     }
     
     public void Add(T item, bool immediate = false)
     {
-        var place = places[placedObjects.Count];
+        var place = placesTransforms[placedObjects.Count];
         item.Root.SetParent(place.transform, true);
         if (immediate)
         {
@@ -65,8 +80,8 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
         }
 
         var itemSize = item.GetWorldSize();
-        var placeSize = place.transform.TransformVector(place.size);
-        item.Root.localScale = new Vector3(placeSize.x /itemSize.x, placeSize.y /itemSize.y, placeSize.z /itemSize.z) ;
+        var placeSizeWorld = place.transform.TransformVector(placeSize);
+        item.Root.localScale = new Vector3(placeSizeWorld.x /itemSize.x, placeSizeWorld.y /itemSize.y, placeSizeWorld.z /itemSize.z) ;
         placedObjects.Add(item);
     }
 

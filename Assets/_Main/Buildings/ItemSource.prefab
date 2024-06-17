@@ -300,7 +300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2147078592459177589}
   - component: {fileID: 1766122601145893131}
-  - component: {fileID: 2121601405127469034}
   m_Layer: 0
   m_Name: ItemSource
   m_TagString: Untagged
@@ -338,25 +337,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557e17b6e3dd41cc84da962423eaf908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreVisible: 0
+  interactRadius: 1.3
   iconImage: {fileID: 685687440964250638}
   takeProgressImage: {fileID: 4841695693359133084}
   <TakePlace>k__BackingField: {fileID: 4879428862115507101}
---- !u!54 &2121601405127469034
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896494491332753573}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &6998766873643455924
 GameObject:
   m_ObjectHideFlags: 0

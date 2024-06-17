@@ -97,6 +97,10 @@ public class CitizenController : CulledBehaviour
 
     public void AddItem(WishAssistantItem item)
     {
+        if (!interactor.HasMorePlaceFor(item.Type.ToInteractable()))
+        {
+            return;
+        }
         interactor.AddItem(item);
         var type = item.Type;
         var time = 10f;
