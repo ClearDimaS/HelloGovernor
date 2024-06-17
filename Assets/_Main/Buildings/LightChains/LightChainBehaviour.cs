@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class LightChainBehaviour : MonoBehaviour
+public class LightChainBehaviour : CulledBehaviour
 {
     [Inject] private DayTimeManager dayTimeManager;
     
     [SerializeField] private UpgradableObject[] objects;
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject nightContent;
-    private void Update()
+
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         var isEnabled = true;
         foreach (var obj in objects)
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CitizenAnimationSetter : MonoBehaviour
+public class CitizenAnimationSetter : CitizenBehaviour
 {
     [SerializeField] private CitizenController citizenController;
     [SerializeField] private Walker walker;
@@ -24,8 +24,9 @@ public class CitizenAnimationSetter : MonoBehaviour
         animator.SetFloat("SitRandomSpeedMult", Random.Range(0.5f, 2f));
     }
 
-    private void Update()
+    public override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (animator != null)
         {
             animator.SetBool(IsChattingHash, citizenController.IsChatting);

@@ -36,11 +36,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     
     private static void CreateInstance()
     {
-        instance = GameObject.FindObjectOfType<T>();
+        instance = GameObject.FindObjectOfType<T>(true);
         if (instance == null)
         {
             var sceneContext = FindObjectOfType<SceneContext>();
-            var newGO = new GameObject($"[{nameof(T)}]");
+            var newGO = new GameObject($"[{typeof(T).Name}]");
             instance = sceneContext.Container.InstantiateComponent<T>(newGO);
         }
     }

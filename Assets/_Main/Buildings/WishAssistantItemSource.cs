@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public interface IItemTaker
+public interface IItemTaker : IRootProvider
 {
     public bool CanAddItems(EInteractable type);
     public void AddItem(WishAssistantItem takeItem);
 }
 
-public class WishAssistantItemSource : MonoBehaviour
+public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
 {
     [Inject] private WishItemsConfig config;
     [Inject] private WishAssistantItemsPool pool;
@@ -24,14 +24,16 @@ public class WishAssistantItemSource : MonoBehaviour
     private List<IItemTaker> giveItemToTakersTMP = new ();
     private Dictionary<IItemTaker, float> takerTimers = new ();
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         wishGranter = GetComponentInParent<WishGranter>();
         iconImage.sprite = config.GetIcon(wishGranter.Type);
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         var progress = 0f;
 
         foreach (var taker in takers)
@@ -62,34 +64,16 @@ public class WishAssistantItemSource : MonoBehaviour
         takeProgressImage.fillAmount = progress;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnEnter(IItemTaker component)
     {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-
-        var otherRB = other.attachedRigidbody;
-        if (!otherRB.TryGetComponent<IItemTaker>(out var player))
-        {
-            return;
-        }
-        AddTaker(player);
+        base.OnEnter(component);
+        AddTaker(component);
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnLeave(IItemTaker component)
     {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-
-        var otherRB = other.attachedRigidbody;
-        if (!otherRB.TryGetComponent<IItemTaker>(out var player))
-        {
-            return;
-        }
-        RemoveTaker(player);
+        base.OnLeave(component);
+        RemoveTaker(component);
     }
 
     private WishAssistantItem TakeItem()

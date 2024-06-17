@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Walker : MonoBehaviour
+public class Walker : CulledBehaviour
 {
     [SerializeField] private float stopDistance = 0.15f;
     [SerializeField] private float speed;
@@ -23,8 +23,9 @@ public class Walker : MonoBehaviour
         agent.stoppingDistance = stopDistance;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (HasReached())
         {
             SetFinished();   

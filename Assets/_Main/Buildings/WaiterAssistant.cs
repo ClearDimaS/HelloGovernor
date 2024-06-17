@@ -15,6 +15,8 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private WishGranter wishGranter;
     private CitizenController target;
     
+    public Transform Root => transform;
+    
     private void Awake()
     {
         wishGranter = GetComponentInParent<WishGranter>();

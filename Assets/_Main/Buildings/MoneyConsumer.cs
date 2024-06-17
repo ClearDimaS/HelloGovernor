@@ -57,7 +57,7 @@ public class Price
     }
 }
 
-public class MoneyConsumer : MonoBehaviour
+public class MoneyConsumer : SimplePlayerPhysicsBehaviour
 {
     [Inject] private PlayerInput playerInput;
     [Inject] private CurrencyPool currencyPool;
@@ -82,43 +82,26 @@ public class MoneyConsumer : MonoBehaviour
         isReached = false;
         this.price = price;
     }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-        
-        if (other.attachedRigidbody.TryGetComponent(out IMoneySpender moneySpender) == false)
-        {
-            return;
-        }
 
-        SetSpender(moneySpender);
+    protected override void OnEnter(PlayerController component)
+    {
+        base.OnEnter(component);
+        SetSpender(component);
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnLeave(PlayerController component)
     {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-        
-        if (other.attachedRigidbody.TryGetComponent(out IMoneySpender moneySpender) == false)
-        {
-            return;
-        }
-
-        if (spender == moneySpender)
-        {
-            spender = null;
-        }
+        base.OnLeave(component);
+        spender = null;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
-        RefreshSpendMoney();
+        base.OnUpdate(visible);
+        if (visible)
+        {
+            RefreshSpendMoney();
+        }
     }
 
     private void RefreshSpendMoney()

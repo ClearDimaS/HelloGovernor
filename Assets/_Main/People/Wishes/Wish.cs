@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Wish : MonoBehaviour, IResetable
+public class Wish : UpdateableBehaviour, IResetable
 {
     private CitizenController citizen;
     private Walker walker;
@@ -35,8 +35,9 @@ public class Wish : MonoBehaviour, IResetable
         IsReadyToRemove = false;
     }
 
-    private void Update()
+    public override void UpdateCall(float deltaTime)
     {
+        base.UpdateCall(deltaTime);
         if (granter == null)
         {
             return;
@@ -51,6 +52,7 @@ public class Wish : MonoBehaviour, IResetable
             SetRemoved();
         }
     }
+
     public bool HasOKGranter()
     {
         return granter != null && granter.IsWorking();

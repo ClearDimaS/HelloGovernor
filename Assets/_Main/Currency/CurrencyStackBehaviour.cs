@@ -18,7 +18,7 @@ public class CurrencyStackData
     public int moneyAmount;
 }
 
-public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolder<CurrencyStackData>
+public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHolder, IDataHolder<CurrencyStackData>
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private CurrencyPool currencyPool;
@@ -50,8 +50,9 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
         }
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         var hasAny = saveData.moneyAmount > 0;
         if (takeZone.activeSelf != hasAny)
         {
@@ -66,19 +67,11 @@ public class CurrencyStackBehaviour : MonoBehaviour, ICurrencyHolder, IDataHolde
         saveData.moneyAmount = gridPlacer.GetMoneyAmount();
         return saveData;
     }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-        if (!other.attachedRigidbody.TryGetComponent(out PlayerController player))
-        {
-            return;
-        }
 
-        Remove(player);
+    protected override void OnEnter(PlayerController component)
+    {
+        base.OnEnter(component);
+        Remove(component);
     }
 
     public void AddCurrency(int reward)

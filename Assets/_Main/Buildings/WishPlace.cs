@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Zenject;
 using Object = UnityEngine.Object;
 
-public class WishPlace : MonoBehaviour
+public class WishPlace : CulledBehaviour
 {
     public enum EWishPlaceState
     {
@@ -33,17 +33,19 @@ public class WishPlace : MonoBehaviour
     public EWish Type => granter.Type;
 
     private ECompasTarget compasTarget;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         granter = GetComponentInParent<WishGranter>();
         compasTarget = granter.Type.ToCompassTarget();
         timer.SetIcon(config.GetIcon(granter.Type));
         originalColor = bgColor.color;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (timer != null && wisher != null && state == EWishPlaceState.Taken)
         {
             if (!timerRoot.activeSelf)

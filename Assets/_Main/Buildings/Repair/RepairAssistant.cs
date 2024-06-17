@@ -7,7 +7,7 @@ public interface IRepairable
     public Transform Place { get; }
     public bool CanRepair(IRepairer repairAssistant);
 }
-public interface IRepairer
+public interface IRepairer : IRootProvider
 {
 
 }
@@ -20,6 +20,8 @@ public class RepairAssistant : MonoBehaviour, IRepairer
     
     protected HouseBuilding buildingTarget;
 
+    public Transform Root => transform;
+    
     private void Update()
     {
         if (buildingTarget == null || !buildingTarget.CanRepair(this))

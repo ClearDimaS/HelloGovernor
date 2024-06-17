@@ -13,6 +13,8 @@ public class CopAssistant : MonoBehaviour, IThiefBuster
     
     private PolicestationBuilding policeStation;
 
+    public Transform Root => transform;
+
     private void Awake()
     {
         policeStation = GetComponentInParent<PolicestationBuilding>();

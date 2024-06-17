@@ -6,14 +6,23 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class CitizenController : MonoBehaviour
+public abstract class CitizenBehaviour : MonoBehaviour
+{
+    public virtual void OnUpdate(bool visible)
+    {
+
+    }
+}
+
+public class CitizenController : CulledBehaviour
 {
     [Inject] private EnvironmentManager environment;
     
     [SerializeField] private Walker walker;
     [SerializeField] private WishesController wishesController;
     [SerializeField] private Interactor interactor;
-    
+
+    private CitizenBehaviour[] behaviours;
     private HouseBuilding house;
 
     public Animator Animator { get; private set; }
@@ -21,9 +30,11 @@ public class CitizenController : MonoBehaviour
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         Animator = GetComponentInChildren<Animator>();
+        behaviours = GetComponentsInChildren<CitizenBehaviour>();
     }
 
     public void SetHouse(HouseBuilding house)
@@ -31,8 +42,9 @@ public class CitizenController : MonoBehaviour
         this.house = house;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (house != null && house.IsBroken())
         {
             if (wishesController.HasAnyWish())
@@ -40,6 +52,11 @@ public class CitizenController : MonoBehaviour
                 wishesController.AbortWish();
             }
             walker.MoveToTarget(house.CitizenPlace.position, null);
+        }
+
+        foreach (var bhvr in behaviours)
+        {
+            bhvr.OnUpdate(visible);
         }
     }
 

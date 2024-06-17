@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class HouseRepairable : MonoBehaviour, IRepairable
+public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 {
     [Inject] private PlayerController player;
     [Inject] private CurrencySingleStackPool currencyPool;
@@ -21,9 +21,10 @@ public class HouseRepairable : MonoBehaviour, IRepairable
     public bool IsBroken { get; private set; }
     
     public Transform Place => transform;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         needRepairContent.Hide(true);
     }
 
@@ -37,8 +38,9 @@ public class HouseRepairable : MonoBehaviour, IRepairable
         }
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         timer.SetProgress(repairProgress);
         if (IsBroken && repairer != null)
         {
@@ -50,38 +52,20 @@ public class HouseRepairable : MonoBehaviour, IRepairable
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnEnter(IRepairer component)
     {
-        if (other.attachedRigidbody == null || other.isTrigger)
-        {
-            return;
-        }
-
-        if (!other.attachedRigidbody.TryGetComponent(out IRepairer repairer))
-        {
-            return;
-        }
-
+        base.OnEnter(component);
         if (this.repairer != null)
         {
             return;
         }
-        this.repairer = repairer;
+        this.repairer = component;
     }
-    
-    private void OnTriggerExit(Collider other)
+
+    protected override void OnLeave(IRepairer component)
     {
-        if (other.attachedRigidbody == null || other.isTrigger)
-        {
-            return;
-        }
-
-        if (!other.attachedRigidbody.TryGetComponent(out IRepairer repairer))
-        {
-            return;
-        }
-
-        if (this.repairer == repairer)
+        base.OnLeave(component);
+        if (this.repairer == component)
         {
             this.repairer = null;
         }

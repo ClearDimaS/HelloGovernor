@@ -3,20 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FashionBuilding : MonoBehaviour
+public class FashionBuilding : SimplePlayerPhysicsBehaviour
 {
     [SerializeField] private SkinChooser skinChooser;
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
 
-        if(!other.attachedRigidbody.TryGetComponent<PlayerController>(out var player))
-        {
-            return;
-        }
+    protected override void OnEnter(PlayerController component)
+    {
+        base.OnEnter(component);
         skinChooser.Show();
     }
 }

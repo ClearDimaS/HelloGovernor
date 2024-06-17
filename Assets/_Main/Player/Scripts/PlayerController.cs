@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour, IMoneySpender, IRepairer, ICurrencyHolder, IThiefBuster
+public class PlayerController : Singleton<PlayerController>, IMoneySpender, IRepairer, ICurrencyHolder, IThiefBuster
 {
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;

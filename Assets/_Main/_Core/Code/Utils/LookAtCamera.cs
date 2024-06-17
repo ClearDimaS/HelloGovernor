@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class LookAtCamera : CulledBehaviour
 {
-    protected override void OnLateUpdate()
+    protected Camera cam;
+    protected override void OnAwake()
     {
-        base.OnLateUpdate();
-        var cam = Camera.main.transform;
-        transform.rotation = Quaternion.LookRotation(cam.forward, cam.up);
+        base.OnAwake();
+        cam = Camera.main;
+    }
+
+    protected override void OnLateUpdate(bool visible)
+    {
+        base.OnLateUpdate(visible);
+        if (visible)
+        {
+            transform.rotation = Quaternion.LookRotation(cam.transform.forward, cam.transform.up);   
+        }
     }
 }

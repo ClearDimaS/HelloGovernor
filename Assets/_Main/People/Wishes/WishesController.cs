@@ -10,7 +10,7 @@ public interface IWishAssistant
     public bool CanServeType(EWish type);
 }
 
-public class WishesController : MonoBehaviour
+public class WishesController : CitizenBehaviour
 {
     [Inject] private PlayerController player;
     [Inject] private WishesPool wishesPool;
@@ -36,8 +36,9 @@ public class WishesController : MonoBehaviour
     public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
     public EWish WishType => currentWish == null ? EWish.Wander : currentWish.Type;
 
-    private void Update()
+    public override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (currentWish == null)
         {
             SetRandomWish();

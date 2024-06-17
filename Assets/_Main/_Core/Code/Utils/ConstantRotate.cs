@@ -8,9 +8,12 @@ public class ConstantRotate : CulledBehaviour
     [SerializeField] private Vector3 axis = new Vector3(0, 1, 0);
     [SerializeField] private float speed = 10;
 
-    protected override void OnUpdate()
+    protected override void OnUpdate(bool visible)
     {
-        base.OnUpdate();
-        transform.localRotation *= Quaternion.AngleAxis(speed * Time.deltaTime, axis);
+        base.OnUpdate(visible);
+        if (visible)
+        {
+            transform.localRotation *= Quaternion.AngleAxis(speed * Time.deltaTime, axis);   
+        }
     }
 }

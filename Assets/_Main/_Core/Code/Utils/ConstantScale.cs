@@ -16,14 +16,17 @@ public class ConstantScale : CulledBehaviour
         startScale = transform.localScale.x;
     }
 
-    protected override void OnUpdate()
+    protected override void OnUpdate(bool visible)
     {
-        base.OnUpdate();
-        t += Time.deltaTime;
-        if (t > period)
+        base.OnUpdate(visible);
+        if (visible)
         {
-            t -= period;
+            t += Time.deltaTime;
+            if (t > period)
+            {
+                t -= period;
+            }
+            transform.localScale = scaleCurve.Evaluate(t) * Vector3.one * startScale;
         }
-        transform.localScale = scaleCurve.Evaluate(t) * Vector3.one * startScale;
     }
 }

@@ -6,18 +6,23 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
+public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, IWishAssistant
 {
     private Interactor interactor;
     private CitizenController client;
+    private WishPlace takenPlace;
 
-    private void Awake()
+    public Transform Root => transform;
+    
+    protected override void OnAwake()
     {
+        base.OnAwake();
         interactor = GetComponent<Interactor>();
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (client != null)
         {
             if (client.WishesController.CurrentWishProgress >= 1f)
@@ -30,20 +35,10 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnEnter(WishPlace place)
     {
-        if (!other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-
-        if (client != null)
-        {
-            return;
-        }
-
-        var otherRb = other.attachedRigidbody;
-        if (!otherRb.TryGetComponent(out WishPlace place))
+        base.OnEnter(place);
+        if (takenPlace != null)
         {
             return;
         }
@@ -56,6 +51,7 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
         {
             if (CanServeType(place.Type))
             {
+                takenPlace = place;
                 this.client = citizen;
                 client.WishesController.SetWishAssistant(this);   
             }
@@ -65,37 +61,16 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
             }
         }
     }
-    
-    private void OnTriggerExit(Collider other)
+
+    protected override void OnLeave(WishPlace place)
     {
-        if (!other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-
-        if (client == null)
-        {
-            return;
-        }
-        var otherRb = other.attachedRigidbody;
-        if (!otherRb.TryGetComponent(out WishPlace place))
-        {
-            return;
-        }
-        if (!place.TryGetWisher(out CitizenController citizen))
-        {
-            if (place.Rb == otherRb)
-            {
-                StopServingClient();
-            }
-        }
-
-        if (this.client == citizen)
+        base.OnLeave(place);
+        if (takenPlace == place && takenPlace.TryGetWisher(out var wisher))
         {
             StopServingClient();
         }
     }
-    
+
     public bool CanAddItems(EInteractable type)
     {
         return interactor.HasMorePlaceFor(type);
@@ -114,7 +89,9 @@ public class MultipleItemsTaker : MonoBehaviour, IItemTaker, IWishAssistant
 
     private void StopServingClient()
     {
-        client.WishesController.SetWishAssistant(null);
+        takenPlace = null;
+        var tmp = client;
         client = null;
+        tmp.WishesController.SetWishAssistant(null);
     }
 }

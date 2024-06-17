@@ -5,7 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class PriceDisplayer : MonoBehaviour
+public class PriceDisplayer : CulledBehaviour
 {
     private const float BASE_SIZE_FACTOR = 0.5f;
 
@@ -18,9 +18,10 @@ public class PriceDisplayer : MonoBehaviour
     private UpgradableObject upgradableObject;
     private MoneyConsumer moneyConsumer;
     private int lastAmount;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         moneyConsumer = GetComponentInParent<MoneyConsumer>();
         upgradableObject = GetComponentInParent<UpgradableObject>();
     }
@@ -35,19 +36,23 @@ public class PriceDisplayer : MonoBehaviour
         itemIcon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width;  ;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
-        var isUpgrade = upgradableObject.Level > 0;
-        if (upgradeGO.activeSelf != isUpgrade)
+        base.OnUpdate(visible);
+        if (visible)
         {
-            upgradeGO.SetActive(isUpgrade);
-        }
+            var isUpgrade = upgradableObject.Level > 0;
+            if (upgradeGO.activeSelf != isUpgrade)
+            {
+                upgradeGO.SetActive(isUpgrade);
+            }
         
-        var amountLeft = moneyConsumer.GetLeftAmount();
-        if (lastAmount != amountLeft)
-        {
-            RefreshDisplay(amountLeft);
-            lastAmount = amountLeft;
+            var amountLeft = moneyConsumer.GetLeftAmount();
+            if (lastAmount != amountLeft)
+            {
+                RefreshDisplay(amountLeft);
+                lastAmount = amountLeft;
+            }
         }
     }
 

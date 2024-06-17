@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class InteractablesController : MonoBehaviour
+public class InteractablesController : CulledBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject rigPrefab;
@@ -16,28 +16,33 @@ public class InteractablesController : MonoBehaviour
     private Interactor interactor;
     private bool reinit = true;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         interactor = GetComponentInParent<Interactor>();
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
-        if (animator == null)
+        base.OnUpdate(visible);
+        if (visible)
         {
-            var getAnimatorFrom = transform.parent;
-            animator = getAnimatorFrom.GetComponentInChildren<Animator>();
-            reinit = true;
-        }
+            if (animator == null)
+            {
+                var getAnimatorFrom = transform.parent;
+                animator = getAnimatorFrom.GetComponentInChildren<Animator>();
+                reinit = true;
+            }
 
-        if (reinit && animator != null)
-        {
-            InitIK();
-            reinit = false;
-        }
+            if (reinit && animator != null)
+            {
+                InitIK();
+                reinit = false;
+            }
 
-        target.position = root.position;
-        handRig.weight = interactor.HasAnyIKItem() ? 1f : 0f;
+            target.position = root.position;
+            handRig.weight = interactor.HasAnyIKItem() ? 1f : 0f;
+        }
     }
 
     private void InitIK()

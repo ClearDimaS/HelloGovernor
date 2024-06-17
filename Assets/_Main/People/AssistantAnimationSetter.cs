@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class AssistantAnimationSetter : MonoBehaviour
+public class AssistantAnimationSetter : CulledBehaviour
 {
     [SerializeField] private Walker walker;
     [SerializeField] private RuntimeAnimatorController animatorController;
@@ -9,19 +10,24 @@ public class AssistantAnimationSetter : MonoBehaviour
     private int IsWalkingHash = Animator.StringToHash("IsWalking");
 
     private Animator animator;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorController;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
-        if (animator != null)
+        base.OnUpdate(visible);
+        if (visible)
         {
-            animator.SetFloat(SpeedHash, walker.Speed);
-            animator.SetBool(IsWalkingHash, walker.IsMoving);   
+            if (animator != null)
+            {
+                animator.SetFloat(SpeedHash, walker.Speed);
+                animator.SetBool(IsWalkingHash, walker.IsMoving);   
+            }
         }
     }
 }

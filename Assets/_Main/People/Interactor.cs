@@ -14,7 +14,7 @@ public enum EInteractable
     Flowers,
     IceCream
 }
-public class Interactor : MonoBehaviour
+public class Interactor : CulledBehaviour
 {
     [Serializable]
     public class ItemsData
@@ -32,41 +32,50 @@ public class Interactor : MonoBehaviour
 
     private Dictionary<EInteractable, ItemsData> datasDict = new ();
     private Transform rootsParent;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         controller = GetComponentInChildren<Animator>();
         datasDict = itemDatas.ToDictionary(x => x.type, x => x);
     }
-    
-    private void Update()
-    {
-        foreach (var data in itemDatas)
-        {
-            var hasItems = data.interactables.Count > 0;
-            if (data.root.gameObject.activeSelf != hasItems)
-            {
-                data.root.gameObject.SetActive(hasItems);
-            }
-        }
-    }
 
-    private void LateUpdate()
+    protected override void OnUpdate(bool visible)
     {
-        if (controller != null)
+        base.OnUpdate(visible);
+        if (visible)
         {
             foreach (var data in itemDatas)
             {
-                if(data.boneTransform == null)
+                var hasItems = data.interactables.Count > 0;
+                if (data.root.gameObject.activeSelf != hasItems)
                 {
-                    data.boneTransform = controller.GetBoneTransform(data.bone);
+                    data.root.gameObject.SetActive(hasItems);
                 }
-
-                data.root.position = data.boneTransform.position;
             }
         }
     }
-    
+
+    protected override void OnLateUpdate(bool visible)
+    {
+        base.OnLateUpdate(visible);
+        if (visible)
+        {
+            if (controller != null)
+            {
+                foreach (var data in itemDatas)
+                {
+                    if(data.boneTransform == null)
+                    {
+                        data.boneTransform = controller.GetBoneTransform(data.bone);
+                    }
+
+                    data.root.position = data.boneTransform.position;
+                }
+            }
+        }
+    }
+
     public bool HasItem(EWish type)
     {
         switch (type)

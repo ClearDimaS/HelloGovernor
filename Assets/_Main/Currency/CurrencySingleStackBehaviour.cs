@@ -2,19 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class CurrencySingleStackBehaviour : MonoBehaviour, IResetable, ICurrencyHolder
+public class CurrencySingleStackBehaviour : SimplePlayerPhysicsBehaviour, IResetable, ICurrencyHolder
 {
     [Inject] private CurrencySingleStackPool singleStackPool;
     [Inject] private CurrencyPool currencyPool;
 
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float groundLevel = 0.4f;
     [SerializeField] private Transform moneyParent;
 
     private float initTime;
-    private float pickUpDelay = 1f;
+    private bool hasDropped;
     private CurrencyBehaviour currency;
     
     public void Initialize(int amount)
@@ -24,29 +25,14 @@ public class CurrencySingleStackBehaviour : MonoBehaviour, IResetable, ICurrency
         currency.transform.localPosition = Vector3.zero;
         currency.transform.localRotation = Quaternion.identity;
         currency.Init(amount);
-        initTime = Time.time;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnEnter(PlayerController component)
     {
-        if (other.attachedRigidbody == null || other.isTrigger)
+        base.OnEnter(component);
+        if (hasDropped)
         {
-            return;
-        }
-
-        if (other.attachedRigidbody.TryGetComponent(out PlayerController player))
-        {
-            if (Time.time - initTime > pickUpDelay)
-            {
-                Remove(player);   
-            }
-            else
-            {
-                UniTask.Delay(TimeSpan.FromSeconds(pickUpDelay - (Time.time - initTime))).ContinueWith(() =>
-                {
-                    rb.isKinematic = true;
-                });
-            }
+            Remove(component);   
         }
     }
 
@@ -70,7 +56,7 @@ public class CurrencySingleStackBehaviour : MonoBehaviour, IResetable, ICurrency
 
     public void OnReset()
     {
-        
+        hasDropped = true;
     }
 
     public void OnPool()
@@ -80,7 +66,23 @@ public class CurrencySingleStackBehaviour : MonoBehaviour, IResetable, ICurrency
 
     public void AddForce(Vector3 force)
     {
-        rb.isKinematic = false;
-        rb.AddForce(force, ForceMode.VelocityChange);
+        hasDropped = false;
+        var start = transform.position;
+        var end = start + force;
+        end.y = groundLevel;
+        var middle = start + end;
+        middle.y = groundLevel + force.y;
+
+        var velocity = force.magnitude;
+        var timeMiddle = velocity / Physics.gravity.magnitude;
+        var timeEnd = Mathf.Sqrt(2 * (end - middle).magnitude) / Physics.gravity.magnitude;
+        
+        transform.DOMove(middle, timeMiddle).OnComplete(() =>
+        {
+            transform.DOMove(end, timeEnd).OnComplete(() =>
+            {
+                hasDropped = false;
+            }).SetEase(Ease.InCirc);
+        }).SetEase(Ease.OutCirc);
     }
 }

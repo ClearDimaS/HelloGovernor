@@ -6,7 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public interface IThiefBuster
+public interface IThiefBuster : IRootProvider
 {
     public void ReturnMoney(int stolenAmount, Transform transform);
 }
@@ -18,7 +18,7 @@ public class ThiefSpawnData
     public Transform escape;
 }
 
-public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
+public class ThiefBehaviour : SimpleThiefBusterPhysicsBehaviour, ICurrencyHolder, IResetable
 {
     [Inject] protected ThiefsManager thiefsManager;
     [Inject] protected CurrencyPool currencyPool;
@@ -34,24 +34,10 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
     public bool IsBusted => isBusted;
 
     protected int stolenAmount;
-    
-    private void Awake()
+
+    protected override void OnEnter(IThiefBuster thiefBuster)
     {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger || other.attachedRigidbody == null)
-        {
-            return;
-        }
-
-        if (!other.attachedRigidbody.TryGetComponent(out IThiefBuster thiefBuster))
-        {
-            return;
-        }
-
+        base.OnEnter(thiefBuster);
         if (stolenAmount > 0)
         {
             thiefBuster.ReturnMoney(stolenAmount, transform);
@@ -60,8 +46,9 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
         }
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (stolenAmount < config.thiefMaxSteal && !isBusted)
         {
             if (target == null || target.Money <= 0)
@@ -81,7 +68,7 @@ public class ThiefBehaviour : MonoBehaviour, ICurrencyHolder, IResetable
             });
         }
     }
-    
+
     public void Init(CurrencyStackBehaviour stack, Transform escapePoint)
     {
         this.escapePoint = escapePoint;
