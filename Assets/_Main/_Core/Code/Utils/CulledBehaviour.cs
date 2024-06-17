@@ -6,6 +6,10 @@ public abstract class SimplePhysicsBehaviour<T> : SimplePhysicsBehaviourBase<T> 
 {
     protected override bool IsInside(T component)
     {
+        if (!component.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
         var diff = transform.position - component.transform.position;
         diff.y = 0;
         var sqrDist = diff.sqrMagnitude;
@@ -21,6 +25,10 @@ public abstract class SimplePhysicsBehaviourInterface<T> : SimplePhysicsBehaviou
 {
     protected override bool IsInside(T component)
     {
+        if (!component.Root.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
         var diff = transform.position - component.Root.position;
         diff.y = 0;
         var sqrDist = diff.sqrMagnitude;

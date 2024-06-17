@@ -35,7 +35,7 @@ SpriteAtlas:
       m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
@@ -48,7 +48,7 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 010a6e5305fa7004f89c5d317b7b47d4, type: 3}
     - {fileID: 21300000, guid: e15f73246d215fb418ab73bf265c21b1, type: 3}
     - {fileID: 21300000, guid: 7476c4d45864d422ca46986c792c5dc7, type: 3}
-    - {fileID: 21300000, guid: b814980e0157b4081b72fe224d842d63, type: 3}
+    - {fileID: -8121766140965501267, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
     - {fileID: 21300000, guid: ab6db91373811284caeba2e9472fa9c2, type: 3}
     - {fileID: 21300000, guid: 29b0766e836214e06a3d3319bddc8e40, type: 3}
     - {fileID: 21300000, guid: 0b9510d2790829140953392aae2b6679, type: 3}
@@ -60,15 +60,12 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 246a60965217f400b8f768927a270ff7, type: 3}
     - {fileID: 21300000, guid: 94f43f82d46dcdb4db47e75f6c65be01, type: 3}
     - {fileID: 21300000, guid: a6ae458264a4a8e42a10f166c8becc96, type: 3}
-    - {fileID: 21300000, guid: 7eb42870c8080480381fe67ecaf85202, type: 3}
-    - {fileID: -8121766140965501267, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
     - {fileID: -2239278724076068761, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 7eb42870c8080480381fe67ecaf85202, type: 3}
   - {fileID: 21300000, guid: a6ae458264a4a8e42a10f166c8becc96, type: 3}
   - {fileID: 21300000, guid: 94f43f82d46dcdb4db47e75f6c65be01, type: 3}
   - {fileID: 21300000, guid: 0b9510d2790829140953392aae2b6679, type: 3}
@@ -83,12 +80,10 @@ SpriteAtlas:
   - {fileID: -8121766140965501267, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
   - {fileID: -2239278724076068761, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
   - {fileID: 21300000, guid: 5b56d9fa0e8bd6e409ed188db38a692c, type: 3}
-  - {fileID: 21300000, guid: b814980e0157b4081b72fe224d842d63, type: 3}
   - {fileID: 21300000, guid: 29b0766e836214e06a3d3319bddc8e40, type: 3}
   - {fileID: 21300000, guid: b23fb06fb3d3747fb9d3b75c63718a83, type: 3}
   - {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - white_quad
   - NVRoundedCorners
   - NVArrow
   - FeelMMProgressBarCircle
@@ -103,7 +98,6 @@ SpriteAtlas:
   - MMDebugMenuSpritesheet_ButtonBorder
   - MMDebugMenuSpritesheet_Check
   - AllAxis_Outline
-  - white_circle
   - thieft_UI
   - day_icon
   - arrow

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -31,7 +32,8 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     public bool AutoGrantLevel1 => autoGrantLevel1;
     public int Price => moneyConsumer.Price;
     public int SpentAmount => data.spentMoney;
-    
+
+    private bool isPriceSet = false;
     private event Action upgradeEvent;
 
     private void Awake()
@@ -51,6 +53,12 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
 
     private void Update()
     {
+        if (!isPriceSet)
+        {
+            isPriceSet = true;
+            SetPrice();
+            RefreshLevelGFX(true);
+        }
         data.spentMoney = moneyConsumer.GetSpentAmount();
     }
 
@@ -63,8 +71,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
 
         levelPrices = GetPrices();
         this.data = data;
-        RefreshLevelGFX(true);
-        SetPrice();
+        isPriceSet = false;
     }
 
     public void SubscribeUpgrade(Action handler)
@@ -123,17 +130,20 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
             var price = new Price(requiredPrice.price, data.spentMoney);
             moneyConsumer.SetPrice(price);   
         }
+        else
+        {
+            moneyConsumer.SetPrice(new Price(1, 0));   
+        }
         moneyConsumer.gameObject.SetActive(IsAllowedToBuy);
     }
 
     public void SetAllowBuy(int allowedLevel, bool instant)
     {
         allowedLevelToPurchase = allowedLevel;
-        
         if (IsAllowedToBuy)
         {
             moneyConsumer.gameObject.SetActive(true);
-            moneyConsumer.Show(instant);   
+            moneyConsumer.Show(instant);
         }
         else
         {

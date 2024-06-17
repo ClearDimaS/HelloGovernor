@@ -51,7 +51,7 @@ public class ThiefBehaviour : SimpleThiefBusterPhysicsBehaviour, ICurrencyHolder
         base.OnUpdate(visible);
         if (stolenAmount < config.thiefMaxSteal && !isBusted)
         {
-            if (target == null || target.Money <= 0)
+            if (target == null || target.GetMoney() <= 0)
             {
                 target = thiefsManager.GetThiefTarget();
             }

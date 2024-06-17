@@ -49,7 +49,7 @@ public class BankAssistant : MonoBehaviour, IDataHolder<BankAssistantData>, ICur
         }
         else
         {
-            if (target == null || target.Money <= 0)
+            if (target == null || target.GetMoney() <= 0)
             {
                 RefreshTarget();
             }

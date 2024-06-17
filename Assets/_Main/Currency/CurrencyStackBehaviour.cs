@@ -27,7 +27,15 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
     [SerializeField] private CurrencyPlacer gridPlacer;
 
     private CurrencyStackData saveData;
-    public int Money => saveData.moneyAmount;
+
+    public int GetMoney()
+    {
+        if (saveData == null)
+        {
+            return 0;
+        }
+        return saveData.moneyAmount;
+    }
 
     public void Initialize(CurrencyStackData data)
     {

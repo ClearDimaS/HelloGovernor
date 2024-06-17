@@ -51,7 +51,7 @@ public class ThiefsManager : MonoBehaviour
     {
         for (int i = 0; i < stacks.Count; i++)
         {
-            if (stacks[i].Money > config.moneyToSteal)
+            if (stacks[i].GetMoney() > config.moneyToSteal)
             {
                 return stacks[i];
             }
@@ -61,7 +61,7 @@ public class ThiefsManager : MonoBehaviour
         {
             for (int i = 0; i < stacks.Count; i++)
             {
-                if (stacks[i].Money > 0)
+                if (stacks[i].GetMoney() > 0)
                 {
                     return stacks[i];
                 }
