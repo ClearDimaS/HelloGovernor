@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,3 +45,4 @@ public class AM_Manager : Singleton<AM_Manager>
         return @params;
     }
 }
+*/

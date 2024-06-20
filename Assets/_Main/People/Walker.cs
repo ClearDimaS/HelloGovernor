@@ -36,7 +36,10 @@ public class Walker : CulledBehaviour
     {
         isFinished = true;
         agent.velocity = Vector3.zero;
-        agent.isStopped = true;
+        if (agent.isOnNavMesh && agent.enabled)
+        {
+            agent.isStopped = true;   
+        }
         if (reachTargetEvent != null)
         {
             var tmp = reachTargetEvent;

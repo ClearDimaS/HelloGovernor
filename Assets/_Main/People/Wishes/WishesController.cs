@@ -126,12 +126,15 @@ public class WishesController : CitizenBehaviour
 
     public void AbortWish()
     {
-        var success = currentWish.IsSuccess;
-        currentWish.Abort();
-        if (!isWishOver)
+        if (currentWish != null)
         {
-            isWishOver = true;
-            wishResultEvent?.Invoke(success);
+            var success = currentWish.IsSuccess;
+            currentWish.Abort();
+            if (!isWishOver)
+            {
+                isWishOver = true;
+                wishResultEvent?.Invoke(success);
+            }   
         }
     }
 

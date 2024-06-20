@@ -60,6 +60,7 @@ public class UpgradablePricesManager : MonoBehaviour
         }
     }
 
+    private int levelCounter = 0;
     private void Update()
     {
         if (unlockQueue.Count > 0)
@@ -79,12 +80,19 @@ public class UpgradablePricesManager : MonoBehaviour
                         lastUnlocked = unlockQueue.Dequeue();
                         AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     });
+                    
+                    AnalyticsManager.Instance.WinLevel(levelCounter);
+                    levelCounter++;
+                    AnalyticsManager.Instance.StartLevel(levelCounter);
                 }
                 else
                 {
                     waitingUnlock = unlockQueue.Peek();
                     lastUnlocked = unlockQueue.Dequeue();
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
+                    
+                    levelCounter = 1;
+                    AnalyticsManager.Instance.StartLevel(levelCounter);
                 }
             }
         }
