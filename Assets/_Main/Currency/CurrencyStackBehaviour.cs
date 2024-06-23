@@ -43,7 +43,8 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
         var amount = saveData.moneyAmount;
         var given = 0;
-        for (int i = 0; i < saveData.modelsCount; i++)
+        var max = Mathf.Min(saveData.modelsCount, gridPlacer.MaxPlaces);
+        for (int i = 0; i < max; i++)
         {
             var toGive = amount / saveData.modelsCount;
             if (i == saveData.modelsCount - 1)

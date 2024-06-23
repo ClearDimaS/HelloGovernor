@@ -105,6 +105,10 @@ public class UpgradablePricesManager : MonoBehaviour
     
     public float GetProgress()
     {
+        if (lastUnlocked == null)
+        {
+            return 1f;
+        }
         var addOne = IsBought(lastUnlocked) ? 0 : 1;
         return 1f - (unlockQueue.Count + addOne) / (float)upgradablePriceDatas.Count;
     }
