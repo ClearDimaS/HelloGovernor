@@ -96,7 +96,7 @@ public static class BuildPostProcess
             rootDict.values.Remove(EXIST_ON_SUSPEND_KEY);
         }
 
-        var usageValue = "Anonymous level difficulty and play time analytics";
+        var usageValue = "This app uses tracking data to measure the performance of ad campaigns and provide a better user experience";
         rootDict.SetString("NSUserTrackingUsageDescription", usageValue);
         File.WriteAllText(plistPath, plist.WriteToString());
         Debug.Log($"setting usage description: {usageValue } at: {plistPath}");
