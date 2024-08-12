@@ -1,4 +1,14 @@
+using System;
 using UnityEngine;
+
+
+[Serializable]
+public class UpgradableData
+{
+    public int spentMoney;
+    public int level;
+    public int optionIndex;
+}
 
 public class UpgradableSavable : SavableMonoBehaviour<UpgradableData>
 {

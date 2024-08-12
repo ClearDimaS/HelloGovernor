@@ -1,5 +1,5 @@
 using UnityEngine;
-using GameAnalyticsSDK;
+/*using GameAnalyticsSDK;
 
 public class GA_Manager : Singleton<GA_Manager>, IGameAnalyticsATTListener
 {
@@ -44,4 +44,4 @@ public class GA_Manager : Singleton<GA_Manager>, IGameAnalyticsATTListener
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"level {level}");
     }
-}
+}*/

@@ -14,12 +14,10 @@ public class PlayerData
 
 public class PlayerDataRepository : Repository<PlayerData>
 {
-    [Inject] private GameConfig gameConfig;
-
     protected override PlayerData CreateClass()
     {
         var newObject = base.CreateClass();
-        newObject.money = gameConfig.startMoney;
+        newObject.money = 30;
         return newObject;
     }
 }

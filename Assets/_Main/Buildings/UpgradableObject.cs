@@ -4,14 +4,6 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-[Serializable]
-public class UpgradableData
-{
-    public int spentMoney;
-    public int level;
-    public int optionIndex;
-}
-
 [RequireComponent(typeof(UpgradableSavable))]
 public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
 {

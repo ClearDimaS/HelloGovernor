@@ -1,10 +1,25 @@
-/*
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
-//using Facebook.Unity;
+using Io.AppMetrica;
+using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
+
+public static class AppMetricaActivator {
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Activate() {
+        AppMetrica.Activate(new AppMetricaConfig("4c2159fd-9467-40de-ba5f-db03ddc4487c") {
+            FirstActivationAsUpdate = !IsFirstLaunch(),
+            LocationTracking = false
+        });
+        PlayerPrefs.SetInt("app_metrica_launched", 11);
+    }
+
+    private static bool IsFirstLaunch() {
+        return PlayerPrefs.GetInt("app_metrica_launched") != 11;
+    }
+}
 
 public class AM_Manager : Singleton<AM_Manager>
 {
@@ -15,9 +30,10 @@ public class AM_Manager : Singleton<AM_Manager>
     {
         levelStartTime = Time.time;
         var @params = GetCommonParams(level);
-        
-        AppMetrica.Instance.ReportEvent($"level_start", @params);
-        AppMetrica.Instance.SendEventsBuffer();
+
+        var jsonParams = JsonConvert.SerializeObject(@params);
+        AppMetrica.ReportEvent($"level_start", jsonParams);
+        AppMetrica.SendEventsBuffer();
     }
     
     public void TrackLevelSuccess(int level)
@@ -25,8 +41,9 @@ public class AM_Manager : Singleton<AM_Manager>
         var @params = GetCommonParams(level);
         @params["time_spent"] = Mathf.RoundToInt(Time.time - levelStartTime);
         
-        AppMetrica.Instance.ReportEvent($"level_complete", @params);
-        AppMetrica.Instance.SendEventsBuffer();
+        var jsonParams = JsonConvert.SerializeObject(@params);
+        AppMetrica.ReportEvent($"level_complete", jsonParams);
+        AppMetrica.SendEventsBuffer();
     }
     
     public void TrackLevelFail(int level)
@@ -34,7 +51,8 @@ public class AM_Manager : Singleton<AM_Manager>
         var @params = GetCommonParams(level);
         @params["time_spent"] = Mathf.RoundToInt(Time.time - levelStartTime);
         
-        AppMetrica.Instance.ReportEvent($"level_fail", @params);
+        var jsonParams = JsonConvert.SerializeObject(@params);
+        AppMetrica.ReportEvent($"level_fail", jsonParams);
     }
 
     private Dictionary<string, object> GetCommonParams(int level)
@@ -45,4 +63,4 @@ public class AM_Manager : Singleton<AM_Manager>
         return @params;
     }
 }
-*/
+
