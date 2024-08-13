@@ -12,10 +12,32 @@ public class UI_Manager : Singleton<UI_Manager>
     private Dictionary<Type, UI_Panel> panelsDict = new ();
 
     private LinkedList<UI_Element> elementsStack = new ();
-    
+
+    private bool wasMultiTouch;
+    private bool shown = true;
+    private CanvasGroup group;
+
+    private void Update()
+    {
+        if (Input.touchCount >= 4)
+        {
+            if (!wasMultiTouch)
+            {
+                wasMultiTouch = true;
+                shown = !shown;
+                group.alpha = shown ? 1f : 0f;
+            }
+        }
+        else
+        {
+            wasMultiTouch = false;
+        }
+    }
+
     protected override void OnCreated()
     {
         base.OnCreated();
+        group = GetComponent<CanvasGroup>();
         var UIElements = transform.GetComponentsInDirectChildren<UI_Element>();
         
         panelsDict = UIElements.Where(x => x.GetType().IsSubclassOf(typeof(UI_Panel))).Select(x => (UI_Panel)x).
