@@ -130,6 +130,14 @@ class MyEditorScript {
         Debug.Log($"created unity env vars file: {propsPath}");
         Debug.Log($"versions set from env: {PlayerSettings.bundleVersion}  android: {PlayerSettings.Android.bundleVersionCode}   ios: {PlayerSettings.iOS.buildNumber}");
 
+        EditorUserBuildSettings.development = false;
+        build_options &= ~BuildOptions.Development;
+                    
+        EditorUserBuildSettings.connectProfiler = false;
+        EditorUserBuildSettings.allowDebugging = false;
+        build_options &= ~BuildOptions.ConnectWithProfiler;
+        build_options &= ~BuildOptions.AllowDebugging;
+        
         var report = BuildPipeline.BuildPlayer(scenes,target_dir,build_target,build_options);
         var summary = report.summary;
         if (summary.result == BuildResult.Succeeded)
