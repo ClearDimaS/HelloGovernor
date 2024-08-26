@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class JoystickPanel : UI_Panel
 {
@@ -11,6 +13,16 @@ public class JoystickPanel : UI_Panel
     public bool IsMoving => joystick.Vertical != 0f && joystick.Horizontal != 0f;
     
     protected event Action<Vector2> inputEvent;
+
+    private void Start()
+    {
+        joystick.OnPointerDown(new PointerEventData(EventSystem.current));
+
+        UniTask.DelayFrame(1).ContinueWith(() =>
+        {
+            joystick.OnPointerUp(new PointerEventData(EventSystem.current));
+        });
+    }
 
     public void SubscribeInput(Action<Vector2> handler)
     {
