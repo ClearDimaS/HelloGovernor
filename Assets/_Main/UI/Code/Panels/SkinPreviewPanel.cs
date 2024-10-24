@@ -124,15 +124,24 @@ public class SkinPreviewPanel : UI_Panel
         Hide();
     }
 
+    private Vector3 originalPos;
     public override void OnShow()
     {
         base.OnShow();
         UI_Manager.Instance.ClosePanel<JoystickPanel>();
+        originalPos = PlayerController.Instance.transform.position;
+    }
+
+    public override void OnShown()
+    {
+        base.OnShown();
+        PlayerController.Instance.transform.position += new Vector3(1000f, 0, 1000f);
     }
 
     public override void OnHide()
     {
         base.OnHide();
         UI_Manager.Instance.OpenPanel<JoystickPanel>();
+        PlayerController.Instance.transform.position = originalPos + Vector3.forward * 2;
     }
 }
