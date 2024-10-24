@@ -41,9 +41,6 @@ public class SkinChooser : MonoBehaviour
 
     private void Save()
     {
-        var data = playerRepository.GetData();
-        data.skinIndex = swiper.ElementIndex;
-        playerRepository.SetData(playerRepository.GetData());
         Hide();
     }
 

@@ -85,6 +85,7 @@ public class SkinPreviewPanel : UI_Panel
         if (lastPrice != skinChooser.CurrentPrice)
         {
             lastPrice = skinChooser.CurrentPrice;
+            priceText.color = data.money >= lastPrice ? Color.white : Color.red;
             priceText.text = lastPrice.ToString();
         }
     }
@@ -121,5 +122,17 @@ public class SkinPreviewPanel : UI_Panel
     {
         saveEvent?.Invoke();
         Hide();
+    }
+
+    public override void OnShow()
+    {
+        base.OnShow();
+        UI_Manager.Instance.ClosePanel<JoystickPanel>();
+    }
+
+    public override void OnHide()
+    {
+        base.OnHide();
+        UI_Manager.Instance.OpenPanel<JoystickPanel>();
     }
 }
