@@ -95,6 +95,13 @@ public abstract class SimplePhysicsBehaviourBase<T> : CulledBehaviour
                 }
             }
         }
+        else
+        {
+            for (var i = 0; i < components.Count; i++)
+            {
+                isInsideStatuses[i] = 0;
+            }
+        }
     }
 
     protected abstract bool IsInside(T component);
