@@ -36,6 +36,16 @@ public class PlayerController : Singleton<PlayerController>, IMoneySpender, IRep
         playerInput.moveEvent += RequireMove;
     }
 
+    private void Update()
+    {
+        if (Mathf.Abs(transform.position.y) > 0.2f)
+        {
+            var pos = transform.position;
+            pos.y = 0;
+            transform.position = pos;
+        }
+    }
+
     private void RequireMove(Vector3 delta)
     {
         this.delta = delta;

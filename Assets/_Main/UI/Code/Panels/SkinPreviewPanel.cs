@@ -85,6 +85,7 @@ public class SkinPreviewPanel : UI_Panel
         if (lastPrice != skinChooser.CurrentPrice)
         {
             lastPrice = skinChooser.CurrentPrice;
+            priceText.color = data.money >= lastPrice ? Color.white : Color.red;
             priceText.text = lastPrice.ToString();
         }
     }
@@ -121,5 +122,26 @@ public class SkinPreviewPanel : UI_Panel
     {
         saveEvent?.Invoke();
         Hide();
+    }
+
+    private Vector3 originalPos;
+    public override void OnShow()
+    {
+        base.OnShow();
+        UI_Manager.Instance.ClosePanel<JoystickPanel>();
+        originalPos = PlayerController.Instance.transform.position;
+    }
+
+    public override void OnShown()
+    {
+        base.OnShown();
+        PlayerController.Instance.transform.position += new Vector3(1000f, 0, 1000f);
+    }
+
+    public override void OnHide()
+    {
+        base.OnHide();
+        UI_Manager.Instance.OpenPanel<JoystickPanel>();
+        PlayerController.Instance.transform.position = originalPos + Vector3.forward * 2;
     }
 }

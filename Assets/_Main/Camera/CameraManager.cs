@@ -43,7 +43,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     
     [SerializeField] private MMFollowTarget targetFollower;
     [SerializeField] private Camera camera;
-    [field: SerializeField] public Camera UI_Camera { get; private set; }
+    [field: SerializeField] public Camera UI_Camera => camera;
     
     public Camera ActiveCamera => _currentCamera;
     public Camera OriginalCamera => camera;

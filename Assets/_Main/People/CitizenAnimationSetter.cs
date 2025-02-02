@@ -27,7 +27,7 @@ public class CitizenAnimationSetter : CitizenBehaviour
     public override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        if (animator != null)
+        if (visible && animator != null)
         {
             animator.SetBool(IsChattingHash, citizenController.IsChatting);
             animator.SetFloat(SpeedHash, walker.Speed);
