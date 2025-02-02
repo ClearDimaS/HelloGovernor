@@ -10,7 +10,7 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
         //AppMetrica.Instance.RequestTrackingAuthorization (status => {  });
         #if UNITY_IOS
                 if (Unity.Advertisement.IosSupport.ATTrackingStatusBinding.GetAuthorizationTrackingStatus() ==
-                    ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+                    Unity.Advertisement.IosSupport.ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
                 {
                     Unity.Advertisement.IosSupport.ATTrackingStatusBinding.RequestAuthorizationTracking();
                 }
