@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetFollower: {fileID: 6381040051136549335}
   camera: {fileID: 2083138658000415684}
-  <UI_Camera>k__BackingField: {fileID: 0}
 --- !u!1001 &4951801310303146964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63,6 +62,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2032908008495120899, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
         type: 3}
+      propertyPath: Offset.y
+      value: 11.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2032908008495120899, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
+        type: 3}
+      propertyPath: Offset.z
+      value: 8.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2032908008495120899, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
+        type: 3}
       propertyPath: UpdateMode
       value: 2
       objectReference: {fileID: 0}
@@ -74,6 +83,11 @@ PrefabInstance:
     - target: {fileID: 6363760669664966189, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363760670035507214, guid: 8db4a9df16e924861b25a1feaf0cdcc1,
+        type: 3}
+      propertyPath: m_Cameras.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6363760670035507214, guid: 8db4a9df16e924861b25a1feaf0cdcc1,

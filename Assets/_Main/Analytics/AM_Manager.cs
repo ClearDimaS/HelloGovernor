@@ -32,7 +32,7 @@ public class AM_Manager : Singleton<AM_Manager>
         var @params = GetCommonParams(level);
 
         var jsonParams = JsonConvert.SerializeObject(@params);
-        AppMetrica.ReportEvent($"level_start", jsonParams);
+        AppMetrica.ReportEvent($"level_{level}_start", jsonParams);
         AppMetrica.SendEventsBuffer();
     }
     
@@ -42,7 +42,7 @@ public class AM_Manager : Singleton<AM_Manager>
         @params["time_spent"] = Mathf.RoundToInt(Time.time - levelStartTime);
         
         var jsonParams = JsonConvert.SerializeObject(@params);
-        AppMetrica.ReportEvent($"level_complete", jsonParams);
+        AppMetrica.ReportEvent($"level_{level}_complete", jsonParams);
         AppMetrica.SendEventsBuffer();
     }
     
@@ -52,7 +52,7 @@ public class AM_Manager : Singleton<AM_Manager>
         @params["time_spent"] = Mathf.RoundToInt(Time.time - levelStartTime);
         
         var jsonParams = JsonConvert.SerializeObject(@params);
-        AppMetrica.ReportEvent($"level_fail", jsonParams);
+        AppMetrica.ReportEvent($"level_{level}_fail", jsonParams);
     }
 
     private Dictionary<string, object> GetCommonParams(int level)

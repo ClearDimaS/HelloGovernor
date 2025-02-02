@@ -20,6 +20,7 @@ public class WishPlace : CulledBehaviour
     [SerializeField] private GameObject timerRoot;
     [SerializeField] private TimerBase timer;
     [SerializeField] private Image bgColor;
+    [SerializeField] private GameObject placeRoot;
     [SerializeField] private Color noItemColor;
     
     private Color originalColor;
@@ -52,6 +53,11 @@ public class WishPlace : CulledBehaviour
                 timerRoot.SetActive(true);
                 compassManager.AddTarget(transform, compasTarget);
             }
+
+            if (!placeRoot.activeSelf)
+            {
+                placeRoot.SetActive(true);
+            }
             timer.SetProgress(progress);   
         }
         else
@@ -60,6 +66,10 @@ public class WishPlace : CulledBehaviour
             {
                 compassManager.RemoveTarget(transform, compasTarget);
                 timerRoot.SetActive(false);
+            }
+            if (placeRoot.activeSelf)
+            {
+                placeRoot.SetActive(false);
             }
         }
     }
