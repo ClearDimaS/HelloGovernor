@@ -11,7 +11,7 @@ public static class AppMetricaActivator {
     private static void Activate() {
         AppMetrica.Activate(new AppMetricaConfig("4c2159fd-9467-40de-ba5f-db03ddc4487c") {
             FirstActivationAsUpdate = !IsFirstLaunch(),
-            LocationTracking = false
+            LocationTracking = true
         });
         PlayerPrefs.SetInt("app_metrica_launched", 11);
     }
