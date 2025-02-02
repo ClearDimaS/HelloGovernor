@@ -9,7 +9,6 @@ using UnityEngine;
 public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, IWishAssistant
 {
     private Interactor interactor;
-    private List<CitizenController> clients = new ();
     private List<WishPlace> takenPlaces = new ();
 
     public Transform Root => transform;
@@ -23,15 +22,23 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        for (var i = 0; i < clients.Count; i++)
+        for (var i = 0; i < takenPlaces.Count; i++)
         {
-            var client = clients[i];
+            var client = takenPlaces[i].GetWisher();
+            if (client == null)
+            {
+                continue;
+            }
+            else
+            {
+                client.WishesController.SetWishAssistant(this);   
+            }
             if (client.WishesController.CurrentWishProgress >= 1f)
             {
                 var give = interactor.RemoveItem(client.WishesController.WishType);
                 client.AddItem(give);
-
                 StopServingClient(client);
+                i--;
             }
         }
     }
@@ -39,6 +46,11 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
     protected override void OnEnter(WishPlace place)
     {
         base.OnEnter(place);
+        if (!takenPlaces.Contains(place))
+        {
+            takenPlaces.Add(place);
+        }
+        
         if (!place.TryGetWisher(out CitizenController citizen))
         {
             return;
@@ -46,16 +58,7 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
 
         if (citizen.WishesController.CurrentWishProgress <= 1f)
         {
-            if (CanServeType(place.Type))
-            {
-                if (!takenPlaces.Contains(place))
-                {
-                    takenPlaces.Add(place);
-                    clients.Add(citizen);
-                    citizen.WishesController.SetWishAssistant(this);   
-                }
-            }
-            else
+            if (!CanServeType(place.Type))
             {
                 place.NotiftyError();
             }
@@ -65,7 +68,8 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
     protected override void OnLeave(WishPlace place)
     {
         base.OnLeave(place);
-        if (takenPlaces.Remove(place) && place.TryGetWisher(out var wisher) && clients.Contains(wisher))
+        takenPlaces.Remove(place);
+        if (place.TryGetWisher(out var wisher))
         {
             StopServingClient(wisher);
         }
@@ -89,9 +93,6 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
 
     private void StopServingClient(CitizenController client)
     {
-        var tmp = client;
-        client = null;
-        clients.Remove(tmp);
-        tmp.WishesController.SetWishAssistant(null);
+        client.WishesController.SetWishAssistant(null);
     }
 }

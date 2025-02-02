@@ -114,4 +114,9 @@ public class WishPlace : CulledBehaviour
             bgColor.DOColor(originalColor, 0.2f);
         });
     }
+
+    public CitizenController GetWisher()
+    {
+        return wisher;
+    }
 }
