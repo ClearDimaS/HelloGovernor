@@ -101,19 +101,23 @@ public class CompassController : MonoBehaviour
 
     public void AddTarget(Transform target)
     {
-        visibleTargets.Add(target);
+        if (!visibleTargets.Contains(target))
+        {
+            visibleTargets.Add(target);
+        }
     }
 
     public void RemoveTarget(Transform target)
     {
-        visibleTargets.Remove(target);
-        if (notVisibleTargets.Remove(target))
+        if (targetMarkersDict.ContainsKey(target))
         {
             var marker = targetMarkersDict[target];
-            marker.gameObject.SetActive(false);
+            marker.gameObject.SetActive(false);   
             freeTargetMarkers.Enqueue(marker);
             targetMarkersDict.Remove(target);
         }
+        visibleTargets.Remove(target);
+        notVisibleTargets.Remove(target);
     }
 
     private bool IsVisible(Transform target)

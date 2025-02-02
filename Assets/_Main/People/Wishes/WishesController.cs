@@ -41,6 +41,7 @@ public class WishesController : CitizenBehaviour
         base.OnUpdate(visible);
         if (currentWish == null)
         {
+            wishAssistant = null;
             SetRandomWish();
         }
 
@@ -115,7 +116,7 @@ public class WishesController : CitizenBehaviour
     {
         if (!isWishOver)
         {
-            if (currentWish.IsSuccess && wishAssistant == player.WishAssistant)
+            if (currentWish.IsSuccess && wishAssistant == player.WishAssistant && wish.Type != EWish.Chat)
             {
                 SoundManager.Instance.WishDone();
             }

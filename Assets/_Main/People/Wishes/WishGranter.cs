@@ -72,8 +72,9 @@ public abstract class WishGranter : MonoBehaviour
         // 3. Processed
         foreach (var citizen in processed)
         {
+            var wasReady = citizen.WishesController.IsProgressFull(Type);
             UpdateProcessed(citizen);
-            if (citizen.WishesController.IsProgressFull(Type))
+            if (citizen.WishesController.IsProgressFull(Type) && wasReady)
             {
                 pendingLeaving.Add(citizen);
             }
@@ -187,7 +188,10 @@ public abstract class WishGranter : MonoBehaviour
             citizenPlacesDict[citizen].TakePlace(citizen);   
         }
         queue.Remove(citizen);
-        processed.Add(citizen);
+        if (!processed.Contains(citizen))
+        {
+            processed.Add(citizen);   
+        }
         var place = GetProcessPlaceFor(citizen);
         var rot = GetProcessRotFor(citizen);
         citizen.transform.DORotateQuaternion(rot, 0.3f);

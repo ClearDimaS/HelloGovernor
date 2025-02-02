@@ -58,10 +58,9 @@ public class CityProgressPanel : UI_Panel
         }
         if (nextUpgradable != next)
         {
-            compassManager.AddTarget(next.BuyPlace, ECompasTarget.NewPurchase);
             if (nextUpgradable != null)
             {
-                compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);
+                compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);   
                 completionTime = Time.time;
                 SoundManager.Instance.TaskComplete();
                 
@@ -81,6 +80,7 @@ public class CityProgressPanel : UI_Panel
             }
             else
             {
+                compassManager.AddTarget(next.BuyPlace, ECompasTarget.NewPurchase);
                 nextUpgradable = next;
                 if (nextUpgradable.Level == 0)
                 {

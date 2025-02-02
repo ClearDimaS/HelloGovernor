@@ -25,20 +25,18 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         for (var i = 0; i < takenPlaces.Count; i++)
         {
             var client = takenPlaces[i].GetWisher();
-            if (client == null)
+            if (client == null || !CanServeType(takenPlaces[i].Type))
             {
                 continue;
             }
-            else
-            {
-                client.WishesController.SetWishAssistant(this);   
-            }
             if (client.WishesController.CurrentWishProgress >= 1f)
             {
-                var give = interactor.RemoveItem(client.WishesController.WishType);
+                var give = interactor.RemoveItem(takenPlaces[i].Type);
                 client.AddItem(give);
                 StopServingClient(client);
-                i--;
+            }else if(client.WishesController.WishType == takenPlaces[i].Type)
+            {
+                client.WishesController.SetWishAssistant(this);   
             }
         }
     }
@@ -69,7 +67,7 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
     {
         base.OnLeave(place);
         takenPlaces.Remove(place);
-        if (place.TryGetWisher(out var wisher))
+        if (place.TryGetWisher(out var wisher) && wisher.WishesController.WishAssistant == this)
         {
             StopServingClient(wisher);
         }

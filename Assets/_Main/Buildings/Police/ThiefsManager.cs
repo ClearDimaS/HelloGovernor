@@ -11,6 +11,7 @@ public class ThiefsManager : MonoBehaviour
     [Inject] protected CameraManager cameraManager;
     [Inject] protected ThiefsPool thiefsPool;
     [Inject] protected GameConfig config;
+    [Inject] protected CompassManager compassManager;
 
     [SerializeField] protected ThiefSpawnData[] thiefSpawns;
     protected float lastStealTime;
@@ -74,6 +75,7 @@ public class ThiefsManager : MonoBehaviour
     private void SpawnThief(CurrencyStackBehaviour target)
     {
         activeThief = thiefsPool.GetElement();
+        compassManager.AddTarget(activeThief.transform, ECompasTarget.Robbery);
         var spawnData = thiefSpawns[Random.Range(0, thiefSpawns.Length)];
         activeThief.transform.position = spawnData.spawn.position;
         activeThief.Init(target, spawnData.escape);
@@ -87,6 +89,7 @@ public class ThiefsManager : MonoBehaviour
     {
         lastStealTime = Time.time;
         isStealing = false;
+        compassManager.RemoveTarget(activeThief.transform, ECompasTarget.Robbery);
         thiefsPool.Pool(thief);
         activeThief = null;
     }
