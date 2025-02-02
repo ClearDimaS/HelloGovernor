@@ -9,6 +9,7 @@ public class CityProgressPanel : UI_Panel
     [Inject] private CameraManager cameraManager;
     [Inject] private UpgradablePricesManager pricesManager;
     [Inject] private GameConfig gameConfig;
+    [Inject] private CompassManager compassManager;
     
     [SerializeField] private Image cityProgressImage;
     [SerializeField] private TMP_Text cityProgressText;
@@ -57,8 +58,10 @@ public class CityProgressPanel : UI_Panel
         }
         if (nextUpgradable != next)
         {
+            compassManager.AddTarget(next.BuyPlace, ECompasTarget.NewPurchase);
             if (nextUpgradable != null)
             {
+                compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);
                 completionTime = Time.time;
                 SoundManager.Instance.TaskComplete();
                 

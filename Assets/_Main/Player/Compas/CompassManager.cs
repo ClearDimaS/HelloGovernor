@@ -10,7 +10,8 @@ public enum ECompasTarget
     Flower,
     IceCream,
     Robbery,
-    Repair
+    Repair,
+    NewPurchase
 }
 public class CompassManager : MonoBehaviour
 {
