@@ -87,9 +87,9 @@ public class ThiefsManager : MonoBehaviour
 
     public void FinishSteal(ThiefBehaviour thief)
     {
+        compassManager.RemoveTarget(thief.transform, ECompasTarget.Robbery);
         lastStealTime = Time.time;
         isStealing = false;
-        compassManager.RemoveTarget(activeThief.transform, ECompasTarget.Robbery);
         thiefsPool.Pool(thief);
         activeThief = null;
     }
@@ -111,6 +111,11 @@ public class ThiefsManager : MonoBehaviour
 
     public bool HasBusted()
     {
-        return isStealing && activeThief != null && activeThief.IsBusted;
+        return activeThief == null || activeThief.IsBusted;
+    }
+
+    public void StopSteal(ThiefBehaviour thief)
+    {
+        compassManager.RemoveTarget(thief.transform, ECompasTarget.Robbery);
     }
 }

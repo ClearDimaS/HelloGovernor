@@ -41,6 +41,7 @@ public class ThiefBehaviour : SimpleThiefBusterPhysicsBehaviour, ICurrencyHolder
         if (stolenAmount > 0)
         {
             thiefBuster.ReturnMoney(stolenAmount, transform);
+            thiefsManager.StopSteal(this);
             stolenAmount = 0;
             isBusted = true;
         }
