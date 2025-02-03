@@ -118,6 +118,15 @@ public class UpgradablePricesManager : MonoBehaviour
         var prices = GetLevelPricesInternal(upgradable);
         return prices;
     }
+
+    public bool IsCurrentBought()
+    {
+        if (lastUnlocked == null)
+        {
+            return true;
+        }
+        return IsBought(lastUnlocked);
+    }
     
     private bool IsBought(MoneyConsumerData data)
     {
@@ -249,5 +258,10 @@ public class UpgradablePricesManager : MonoBehaviour
                 upgradablePriceDatas[i].price = upgradablePriceDatas[i - 1].price * 2 - upgradablePriceDatas[i - 2].price;
             }
         }
+    }
+
+    public bool IsLast()
+    {
+        return unlockQueue.Count == 0 && IsBought(lastUnlocked);
     }
 }

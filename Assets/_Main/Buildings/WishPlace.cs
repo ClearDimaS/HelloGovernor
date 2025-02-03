@@ -51,7 +51,6 @@ public class WishPlace : CulledBehaviour
             if (!timerRoot.activeSelf)
             {
                 timerRoot.SetActive(true);
-                compassManager.AddTarget(transform, compasTarget);
             }
 
             if (!placeRoot.activeSelf)
@@ -64,7 +63,6 @@ public class WishPlace : CulledBehaviour
         {
             if (timerRoot.activeSelf)
             {
-                compassManager.RemoveTarget(transform, compasTarget);
                 timerRoot.SetActive(false);
             }
             if (placeRoot.activeSelf)

@@ -38,4 +38,9 @@ public static class WishesExtensions
                 throw new NotImplementedException($"wish type: {type} cant be converted to interactable!");
         }
     }
+
+    public static bool IsCompassTarget(this EWish type)
+    {
+        return type == EWish.Drinks || type == EWish.Flowers || type == EWish.IceCream;
+    }
 }

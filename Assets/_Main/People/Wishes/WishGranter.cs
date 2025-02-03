@@ -7,8 +7,10 @@ public abstract class WishGranter : MonoBehaviour
 {
     [Inject] protected WishesConfig wishesConfig;
     [Inject] private WishGrantersManager grantersManager;
+    [Inject] protected CompassManager compassManager;
 
     [SerializeField] private CurrencyStackBehaviour currencyStack;
+    [SerializeField] private Transform[] queuePlaces;
     [SerializeField] private WishPlace[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
@@ -43,13 +45,47 @@ public abstract class WishGranter : MonoBehaviour
         
     }
 
+    protected bool isAdded;
     private void Update()
     {
+        if (Type.IsCompassTarget())
+        {
+            var needCompass = queue.Count + processed.Count > processPlaces.Length;
+            if (!isAdded && needCompass)
+            {
+                isAdded = true;
+                compassManager.AddTarget(processPlaces[0].transform, Type.ToCompassTarget());
+            }
+            else if(isAdded && !needCompass)
+            {
+                isAdded = false;
+                compassManager.RemoveTarget(processPlaces[0].transform, Type.ToCompassTarget());
+            }   
+        }
+        for (int i = 0; i < queue.Count; i++)
+        {
+            if (queuePlaces.Length <= i)
+            {
+                continue;
+            }
+            var citizen = queue[i];
+            var queuePlace = queuePlaces[i];
+            if ((citizen.transform.position - queuePlace.transform.position).magnitude > 0.2f && !citizen.Walker.IsMoving)
+            {
+                citizen.Walker.MoveToTarget(queuePlace.position, () =>
+                {
+                    citizen.transform.DORotateQuaternion(queuePlace.transform.rotation, 0.15f);
+                });   
+            }
+        }
         // 1. Approqch
         foreach (var citizen in approaching)
         {
             var queuePlace = GetQueuePlaceFor(citizen);
-            citizen.Walker.MoveToTarget(queuePlace, () => pendingQueue.Add(citizen));
+            if (!citizen.Walker.IsMoving)
+            {
+                citizen.Walker.MoveToTarget(queuePlace, () => pendingQueue.Add(citizen));
+            }
         }
         foreach (var citizen in pendingQueue)
         {
@@ -58,16 +94,22 @@ public abstract class WishGranter : MonoBehaviour
         pendingQueue.Clear();
         
         // 2. In queue
-        foreach (var citizen in queue)
+        for (int i = 0; i < queue.Count; i++)
         {
-            var processPlace = GetProcessPlaceFor(citizen);
-            citizen.Walker.MoveToTarget(processPlace, () => pendingProcessed.Add(citizen));
+            var citizen = queue[i];
+            if (freePlaces.Count > 0)
+            {
+                citizenPlacesDict[citizen] = DequeuePlace();   
+                citizenPlacesDict[citizen].SetOwner(citizen);
+                var processPlace = GetProcessPlaceFor(citizen);
+                queue.RemoveAt(i);
+                i--;
+                citizen.Walker.MoveToTarget(processPlace, () =>
+                {
+                    AddToProcessed(citizen);
+                });   
+            }
         }
-        foreach (var citizen in pendingProcessed)
-        {
-            AddToProcessed(citizen);
-        }
-        pendingProcessed.Clear();
 
         // 3. Processed
         foreach (var citizen in processed)
@@ -97,6 +139,7 @@ public abstract class WishGranter : MonoBehaviour
         {
             RemoveFromLeaving(citizen);
         }
+        pendingRemove.Clear();
 
         OnUpdate();
     }
@@ -134,6 +177,11 @@ public abstract class WishGranter : MonoBehaviour
             index = Mathf.Max(processed.Count - 1, 0);
         }
 
+        var indexAll = queue.Count + processed.Count + approaching.Count - 1;
+        if (processPlaces.Length <= indexAll && queuePlaces.Length > 0)
+        {
+            return queuePlaces[index % queuePlaces.Length].position;
+        }
         return processPlaces[index % processPlaces.Length].Position;
     }
     
@@ -161,13 +209,10 @@ public abstract class WishGranter : MonoBehaviour
     {
         if (CanAddOneMore())
         {
-            if (freePlaces.Count > 0)
+            if (!approaching.Contains(citizen))
             {
-                citizenPlacesDict[citizen] = DequeuePlace();   
-                citizenPlacesDict[citizen].SetOwner(citizen);
+                approaching.Add(citizen);
             }
-            
-            approaching.Add(citizen);
         }
         else
         {
@@ -177,8 +222,10 @@ public abstract class WishGranter : MonoBehaviour
 
     private void AddToQueue(CitizenController citizen)
     {
-        approaching.Remove(citizen);
-        queue.Add(citizen);
+        if (approaching.Remove(citizen))
+        {
+            queue.Add(citizen);
+        }
     }
 
     private void AddToProcessed(CitizenController citizen)
@@ -187,7 +234,6 @@ public abstract class WishGranter : MonoBehaviour
         {
             citizenPlacesDict[citizen].TakePlace(citizen);   
         }
-        queue.Remove(citizen);
         if (!processed.Contains(citizen))
         {
             processed.Add(citizen);   
@@ -239,7 +285,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public virtual bool CanAddOneMore()
     {
-        return freePlaces.Count > 0;
+        return approaching.Count + queue.Count * processed.Count < queuePlaces.Length + processPlaces.Length;
     }
 
     private WishPlace DequeuePlace()

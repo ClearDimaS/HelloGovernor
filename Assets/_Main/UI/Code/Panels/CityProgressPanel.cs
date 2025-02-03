@@ -51,34 +51,14 @@ public class CityProgressPanel : UI_Panel
             return;
         }
         var next = pricesManager.GetNextData();
-        if (next == null)
+        if (next == null || pricesManager.IsLast())
         {
             group.alpha = 0f;
             return;
         }
-        if (nextUpgradable != next)
+        if (nextUpgradable != next && !pricesManager.IsLast())
         {
-            if (nextUpgradable != null)
-            {
-                compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);   
-                completionTime = Time.time;
-                SoundManager.Instance.TaskComplete();
-                
-                questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
-                {
-                    questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
-                    {
-                        questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
-                        {
-                            questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
-                            {
-                                nextUpgradable = null;
-                            });
-                        });
-                    });
-                });
-            }
-            else
+            if (nextUpgradable == null)
             {
                 compassManager.AddTarget(next.BuyPlace, ECompasTarget.NewPurchase);
                 nextUpgradable = next;
@@ -94,18 +74,42 @@ public class CityProgressPanel : UI_Panel
             }
         }
 
-        if (spentAmount < nextUpgradable.SpentAmount)
+        if (nextUpgradable != null && pricesManager.IsCurrentBought())
         {
-            spentAmount = nextUpgradable.SpentAmount;
-            progressImage.fillAmount = nextUpgradable.SpentAmount/(float)nextUpgradable.Price;
-            progressText.text = $"{nextUpgradable.SpentAmount}/{nextUpgradable.Price}";
+            compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);   
+            completionTime = Time.time;
+            SoundManager.Instance.TaskComplete();
+                
+            questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
+            {
+                questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
+                {
+                    questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
+                    {
+                        questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
+                        {
+                            nextUpgradable = null;
+                        });
+                    });
+                });
+            });
         }
-        
-        if (spentAmount > nextUpgradable.SpentAmount)
+
+        if (nextUpgradable != null)
         {
-            spentAmount = nextUpgradable.Price;
-            progressImage.fillAmount = 1f;
-            progressText.text = $"{nextUpgradable.Price}/{nextUpgradable.Price}";
+            if (spentAmount < nextUpgradable.SpentAmount)
+            {
+                spentAmount = nextUpgradable.SpentAmount;
+                progressImage.fillAmount = nextUpgradable.SpentAmount/(float)nextUpgradable.Price;
+                progressText.text = $"{nextUpgradable.SpentAmount}/{nextUpgradable.Price}";
+            }
+        
+            if (spentAmount > nextUpgradable.SpentAmount)
+            {
+                spentAmount = nextUpgradable.Price;
+                progressImage.fillAmount = 1f;
+                progressText.text = $"{nextUpgradable.Price}/{nextUpgradable.Price}";
+            }   
         }
         
         var progress = pricesManager.GetProgress();
