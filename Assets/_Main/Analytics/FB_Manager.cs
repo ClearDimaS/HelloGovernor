@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,3 +30,4 @@ public class FB_Manager : MonoBehaviour
         }
     }
 }
+*/
