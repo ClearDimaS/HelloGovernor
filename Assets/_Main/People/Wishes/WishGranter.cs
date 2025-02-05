@@ -64,18 +64,25 @@ public abstract class WishGranter : MonoBehaviour
         }
         for (int i = 0; i < queue.Count; i++)
         {
-            if (queuePlaces.Length <= i)
+            if (queuePlaces.Length > 0)
             {
-                continue;
-            }
-            var citizen = queue[i];
-            var queuePlace = queuePlaces[i];
-            if ((citizen.transform.position - queuePlace.transform.position).magnitude > 0.2f && !citizen.Walker.IsMoving)
-            {
-                citizen.Walker.MoveToTarget(queuePlace.position, () =>
+                if (queuePlaces.Length <= i)
                 {
-                    citizen.transform.DORotateQuaternion(queuePlace.transform.rotation, 0.15f);
-                });   
+                    continue;
+                }
+                var citizen = queue[i];
+                var queuePlace = queuePlaces[i];
+                if ((citizen.transform.position - queuePlace.transform.position).magnitude > 0.2f && !citizen.Walker.IsMoving)
+                {
+                    citizen.Walker.MoveToTarget(queuePlace.position, () =>
+                    {
+                        citizen.transform.DORotateQuaternion(queuePlace.transform.rotation, 0.15f);
+                    });   
+                }
+            }
+            else
+            {
+                
             }
         }
         // 1. Approqch
@@ -97,17 +104,26 @@ public abstract class WishGranter : MonoBehaviour
         for (int i = 0; i < queue.Count; i++)
         {
             var citizen = queue[i];
-            if (freePlaces.Count > 0)
+            if (processPlaces.Length > 0)
             {
-                citizenPlacesDict[citizen] = DequeuePlace();   
-                citizenPlacesDict[citizen].SetOwner(citizen);
-                var processPlace = GetProcessPlaceFor(citizen);
+                if (freePlaces.Count > 0)
+                {
+                    citizenPlacesDict[citizen] = DequeuePlace();   
+                    citizenPlacesDict[citizen].SetOwner(citizen);
+                    var processPlace = GetProcessPlaceFor(citizen);
+                    queue.RemoveAt(i);
+                    i--;
+                    citizen.Walker.MoveToTarget(processPlace, () =>
+                    {
+                        AddToProcessed(citizen);
+                    });   
+                }
+            }
+            else
+            {
                 queue.RemoveAt(i);
                 i--;
-                citizen.Walker.MoveToTarget(processPlace, () =>
-                {
-                    AddToProcessed(citizen);
-                });   
+                AddToProcessed(citizen);
             }
         }
 
