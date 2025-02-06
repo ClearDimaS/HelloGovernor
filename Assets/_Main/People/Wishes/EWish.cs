@@ -4,5 +4,6 @@ public enum EWish
     Drinks,
     IceCream,
     Flowers,
-    Chat
+    Chat,
+    PressConference
 }

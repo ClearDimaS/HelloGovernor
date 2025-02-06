@@ -19,13 +19,14 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
-    private List<CitizenController> pendingProcessed = new ();
     private Dictionary<CitizenController, WishPlace> citizenPlacesDict = new ();
     private Queue<WishPlace> freePlaces = new ();
     protected List<CitizenController> processed = new ();
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
+
+    protected WishPlace[] WishPlaces => processPlaces;
 
     public float FullProgressTime => wishesConfig.GetGrantDuration(Type);
     public int Reward => wishesConfig.GetReward(Type);
@@ -173,7 +174,7 @@ public abstract class WishGranter : MonoBehaviour
         }
     }
 
-    public bool IsWorking()
+    public virtual bool IsWorking()
     {
         return upgradable == null || upgradable.IsBought;
     }
