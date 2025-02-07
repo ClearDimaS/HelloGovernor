@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public abstract class OperatableGranter : WishGranter
 {
-    protected OperatablePlace operatablePlace;
+    [SerializeField] protected OperatablePlace operatablePlace;
 
     protected override bool CanAddProgress(CitizenController citizen)
     {
