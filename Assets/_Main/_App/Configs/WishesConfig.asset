@@ -33,6 +33,10 @@ MonoBehaviour:
     grantDuration: 7
     reward: 0
     chanceWeight: 1
+  - type: 5
+    grantDuration: 0
+    reward: 10
+    chanceWeight: 0
   moneyWishes:
   - type: 1
     grantDuration: 0
@@ -43,6 +47,10 @@ MonoBehaviour:
     reward: 0
     chanceWeight: 1
   - type: 3
+    grantDuration: 0
+    reward: 0
+    chanceWeight: 1
+  - type: 5
     grantDuration: 0
     reward: 0
     chanceWeight: 1

@@ -12,7 +12,8 @@ public enum EInteractable
     None,
     Drink,
     Flowers,
-    IceCream
+    IceCream,
+    PressConference
 }
 public class Interactor : CulledBehaviour
 {
@@ -83,6 +84,8 @@ public class Interactor : CulledBehaviour
             case EWish.Chat:
                 return false;
             case EWish.Wander:
+                return false;
+            case EWish.PressConference:
                 return false;
             default:
                 return datasDict[type.ToInteractable()].interactables.Count > 0;

@@ -11,7 +11,8 @@ public enum ECompasTarget
     IceCream,
     Robbery,
     Repair,
-    NewPurchase
+    NewPurchase,
+    PressConference
 }
 public class CompassManager : MonoBehaviour
 {

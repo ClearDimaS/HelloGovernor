@@ -19,6 +19,8 @@ public static class WishesExtensions
                 return EInteractable.Flowers;
             case EWish.IceCream:
                 return EInteractable.IceCream;
+            case EWish.PressConference:
+                return EInteractable.PressConference;
             default:
                 throw new NotImplementedException($"wish type: {type} cant be converted to interactable!");
         }
@@ -34,6 +36,8 @@ public static class WishesExtensions
                 return ECompasTarget.Flower;
             case EWish.IceCream:
                 return ECompasTarget.IceCream;
+            case EWish.PressConference:
+                return ECompasTarget.PressConference;
             default:
                 throw new NotImplementedException($"wish type: {type} cant be converted to interactable!");
         }
