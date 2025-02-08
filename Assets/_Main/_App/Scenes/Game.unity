@@ -428,18 +428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc905ae8166469aa4d097eb477c18e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1565126858 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8824353905609899728, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4735246116039466298}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fc905ae8166469aa4d097eb477c18e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1611465980 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1953536182359735438, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
@@ -697,6 +685,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735246117027292754, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4735246117292851682, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
         type: 3}
       propertyPath: m_Name
@@ -758,7 +781,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5521956184998338102, guid: c4bfdc8ce463840e1b9e2470b28b62b5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7290202746922792323, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
@@ -770,14 +794,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 7695988981304586449, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7510619207990873576, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 839807966175406247, guid: c4bfdc8ce463840e1b9e2470b28b62b5,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -1030,6 +1046,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3227797011038815324, guid: 5a45b84d867794608a6649c6d36409d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4753355820380567850, guid: 5a45b84d867794608a6649c6d36409d4,
         type: 3}
       propertyPath: m_Name
@@ -1515,7 +1536,7 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[16].upgradable
       value: 
-      objectReference: {fileID: 1565126858}
+      objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[17].upgradable
