@@ -30,7 +30,15 @@ public enum EBuilding
     House,
     Police,
     PressConference, 
-    Repair
+    Repair,
+    Baloon,
+    Boat, 
+    Hospital,
+    MagicShop,
+    Market,
+    TownHall,
+    TrainStation,
+    Umbrella
 }
 
 [CreateAssetMenu(menuName = "Configs/Buildings/Buildings Collection", fileName = "Buildings Collection")]
