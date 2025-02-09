@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public interface IWishAssistant
 {
-    public bool CanServeType(WishGranter type);
+    public bool CanServeType(WishGranter granter);
 }
 
 public class WishesController : CitizenBehaviour
@@ -59,17 +59,17 @@ public class WishesController : CitizenBehaviour
         return currentWish != null;
     }
     
-    public void AddProgress(WishGranter type, float addProgress)
+    public void AddProgress(WishGranter granter, float addProgress)
     {
-        if (currentWish != null && currentWish.Type == type.GetType())
+        if (currentWish != null && currentWish.Type == granter.GetType())
         {
             currentWish.AddProgress(addProgress);
         }
     }
 
-    public bool IsProgressFull(WishGranter type)
+    public bool IsProgressFull(WishGranter granter)
     {
-        return currentWish != null && currentWish.Type == type.GetType() && currentWish.IsProgressFull;
+        return currentWish != null && currentWish.Type == granter.GetType() && currentWish.IsProgressFull;
     }
     
     private void SetRandomWish()
@@ -137,9 +137,9 @@ public class WishesController : CitizenBehaviour
         }
     }
 
-    public bool IsGranterAssistantServing(WishGranter type)
+    public bool IsGranterAssistantServing(WishGranter granter)
     {
-        return wishAssistant != null && wishAssistant.CanServeType(type);
+        return wishAssistant != null && wishAssistant.CanServeType(granter);
     }
 
     public void SetWishAssistant(IWishAssistant waiterAssistant)
