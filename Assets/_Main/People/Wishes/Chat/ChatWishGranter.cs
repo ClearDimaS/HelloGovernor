@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 public class ChatWishGranter : WishGranter
 {
     [Inject] private ChatGroupsPool groupsPool;
-    
-    public override EWish Type => EWish.Chat;
 
     protected HashSet<CitizenController> groupedCitizens = new ();
     private List<ChatGroup> activeChatGroups = new ();

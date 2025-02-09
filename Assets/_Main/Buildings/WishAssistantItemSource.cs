@@ -6,7 +6,7 @@ using Zenject;
 
 public interface IItemTaker : IRootProvider
 {
-    public bool CanAddItems(EInteractable type);
+    public bool CanAddItems(WishGranter type);
     public void AddItem(WishAssistantItem takeItem);
 }
 
@@ -28,7 +28,7 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
     {
         base.OnAwake();
         wishGranter = GetComponentInParent<WishGranter>();
-        iconImage.sprite = config.GetIcon(wishGranter.Type);
+        iconImage.sprite = config.GetIcon(wishGranter);
     }
 
     protected override void OnUpdate(bool visible)
@@ -40,7 +40,7 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
         {
             takerTimers[taker] += Time.deltaTime;
             var timer = takerTimers[taker];
-            var duration = config.GetTakeDuration(wishGranter.Type);
+            var duration = config.GetTakeDuration(wishGranter);
             if (timer > duration)
             {
                 giveItemToTakersTMP.Add(taker);
@@ -53,7 +53,7 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
         {
             takerTimers[taker] = 0f;
             taker.AddItem(TakeItem());
-            if (!taker.CanAddItems(wishGranter.Type.ToInteractable()))
+            if (!taker.CanAddItems(wishGranter))
             {
                 RemoveTaker(taker);
             }
@@ -78,14 +78,14 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
 
     private WishAssistantItem TakeItem()
     {
-        var element = pool.GetElement(wishGranter.Type);
+        var element = pool.GetElement(wishGranter);
         element.transform.position = transform.position;
         return element;
     }
 
     public void AddTaker(IItemTaker taker)
     {
-        if (!takers.Contains(taker) && taker.CanAddItems(wishGranter.Type.ToInteractable()))
+        if (!takers.Contains(taker) && taker.CanAddItems(wishGranter))
         {
             takers.Add(taker);
             takerTimers[taker] = 0f;   

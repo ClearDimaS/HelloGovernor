@@ -1,4 +1,4 @@
-public enum EWish
+/*public enum EWish
 {
     Wander,
     Drinks,
@@ -6,4 +6,4 @@ public enum EWish
     Flowers,
     Chat,
     PressConference
-}
+}*/

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class WishesExtensions 
 {
-    public static EInteractable ToInteractable(this EWish type)
+    /*public static EInteractable ToInteractable(this EWish type)
     {
         switch (type)
         {
@@ -46,5 +46,5 @@ public static class WishesExtensions
     public static bool IsCompassTarget(this EWish type)
     {
         return type == EWish.Drinks || type == EWish.Flowers || type == EWish.IceCream;
-    }
+    }*/
 }

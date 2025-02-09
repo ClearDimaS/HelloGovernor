@@ -60,7 +60,6 @@ public class CityProgressPanel : UI_Panel
         {
             if (nextUpgradable == null)
             {
-                compassManager.AddTarget(next.BuyPlace, ECompasTarget.NewPurchase);
                 nextUpgradable = next;
                 if (nextUpgradable.Level == 0)
                 {
@@ -76,7 +75,6 @@ public class CityProgressPanel : UI_Panel
 
         if (nextUpgradable != null && pricesManager.IsCurrentBought())
         {
-            compassManager.RemoveTarget(nextUpgradable.BuyPlace, ECompasTarget.NewPurchase);   
             completionTime = Time.time;
             SoundManager.Instance.TaskComplete();
                 

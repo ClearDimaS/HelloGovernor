@@ -97,7 +97,7 @@ public class CitizenController : CulledBehaviour
 
     public void AddItem(WishAssistantItem item)
     {
-        if (!interactor.HasMorePlaceFor(item.Type.ToInteractable()))
+        if (!interactor.HasMorePlaceFor(item.Type))
         {
             return;
         }
@@ -110,7 +110,7 @@ public class CitizenController : CulledBehaviour
         });
     }
 
-    public bool HasItem(EWish type)
+    public bool HasItem(WishGranter type)
     {
         return interactor.HasItem(type);
     }

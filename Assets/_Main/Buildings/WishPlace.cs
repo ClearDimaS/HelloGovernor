@@ -30,16 +30,13 @@ public class WishPlace : CulledBehaviour
     public Vector3 Position => transform.position;
 
     private float progress => wisher.WishesController.CurrentWishProgress;
-    public EWish Type => granter.Type;
-
-    private ECompasTarget compasTarget;
+    public WishGranter Granter => granter;
 
     protected override void OnAwake()
     {
         base.OnAwake();
         granter = GetComponentInParent<WishGranter>();
-        compasTarget = granter.Type.ToCompassTarget();
-        timer.SetIcon(config.GetIcon(granter.Type));
+        timer.SetIcon(config.GetIcon(granter));
         originalColor = bgColor.color;
     }
 

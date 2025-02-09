@@ -2,25 +2,37 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Configs/WishItemsConfig", fileName = "WishItemsConfig")]
-public class WishItemsConfig : TypedCollectionConfig<WishItemsConfig.WishItemData, EWish>
+public class WishItemsConfig : TypedCollectionConfig<WishItemsConfig.WishItemData, Type>
 {
     [Serializable]
-    public class WishItemData : IKey<EWish>
+    public class WishItemData : IKey<Type>
     {
-        public EWish type;
+        private Type type;
+        public WishGranter wishGranter;
         public Sprite icon;
         public float takeTimer;
-        
-        public EWish Key => type;
+
+        public Type Key
+        {
+            get
+            {
+                if (type == null)
+                {
+                    type = wishGranter.GetType();
+                }
+
+                return type;
+            }
+        } 
     }
     
-    public float GetTakeDuration(EWish type)
+    public float GetTakeDuration(WishGranter type)
     {
-        return GetItem(type).takeTimer;
+        return GetItem(type.GetType()).takeTimer;
     }
     
-    public Sprite GetIcon(EWish type)
+    public Sprite GetIcon(WishGranter type)
     {
-        return GetItem(type).icon;
+        return GetItem(type.GetType()).icon;
     }
 }

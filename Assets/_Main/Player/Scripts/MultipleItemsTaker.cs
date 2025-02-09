@@ -25,16 +25,16 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         for (var i = 0; i < takenPlaces.Count; i++)
         {
             var client = takenPlaces[i].GetWisher();
-            if (client == null || !CanServeType(takenPlaces[i].Type))
+            if (client == null || !CanServeType(takenPlaces[i].Granter))
             {
                 continue;
             }
             if (client.WishesController.CurrentWishProgress >= 1f)
             {
-                var give = interactor.RemoveItem(takenPlaces[i].Type);
+                var give = interactor.RemoveItem(takenPlaces[i].Granter);
                 client.AddItem(give);
                 StopServingClient(client);
-            }else if(client.WishesController.WishType == takenPlaces[i].Type)
+            }else if(client.WishesController.WishGranter == takenPlaces[i].Granter)
             {
                 client.WishesController.SetWishAssistant(this);   
             }
@@ -56,7 +56,7 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
 
         if (citizen.WishesController.CurrentWishProgress <= 1f)
         {
-            if (!CanServeType(place.Type))
+            if (!CanServeType(place.Granter))
             {
                 place.NotiftyError();
             }
@@ -73,7 +73,7 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         }
     }
 
-    public bool CanAddItems(EInteractable type)
+    public bool CanAddItems(WishGranter type)
     {
         return interactor.HasMorePlaceFor(type);
     }
@@ -84,7 +84,7 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         interactor.AddItem(item);
     }
 
-    public bool CanServeType(EWish type)
+    public bool CanServeType(WishGranter type)
     {
         return interactor.HasItem(type);
     }

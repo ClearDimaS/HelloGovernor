@@ -2,11 +2,9 @@ using Zenject;
 
 public class FlowerGranter : WishGranter
 {
-    public override EWish Type => EWish.Flowers;
-    
     protected override bool CanAddProgress(CitizenController citizen)
     {
-        return citizen.WishesController.IsGranterAssistantServing(Type);
+        return citizen.WishesController.IsGranterAssistantServing(this);
     }
 
     protected override void OnSuccessProcess(CitizenController citizen)

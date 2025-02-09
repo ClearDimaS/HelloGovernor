@@ -32,7 +32,6 @@ public class CitizenAnimationSetter : CitizenBehaviour
             animator.SetBool(IsChattingHash, citizenController.IsChatting);
             animator.SetFloat(SpeedHash, walker.Speed);
             animator.SetBool(IsWalkingHash, walker.IsMoving);   
-            animator.SetBool(IsSitting, citizenController.WishesController.IsSitting);
         }
     }
 }

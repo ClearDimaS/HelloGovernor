@@ -11,18 +11,18 @@ public class Wish : UpdateableBehaviour, IResetable
     private float progress;
     private event Action<Wish> readyToRemoveEvent;
     private event Action<Wish> removeEvent;
-    
-    public EWish Type { get; private set; }
+
+    public Type Type { get; private set; }
     public bool IsReadyToRemove { get; private set; }
     public bool IsRemoved { get; private set; }
     public bool IsProgressFull => progress >= 1f;
     public WishGranter Granter => granter;
     public float Progress => progress;
-    private bool isSuccess;
 
     public bool IsSuccess => progress >= 1f;
+    public bool UseSound { get; private set; }
 
-    public void Initialize(EWish type, CitizenController citizen, Action<Wish> onRemove, Action<Wish> onReadyToRemove)
+    public void Initialize(Type type, CitizenController citizen, Action<Wish> onRemove, Action<Wish> onReadyToRemove)
     {
         progress = 0;
         Type = type;
@@ -30,7 +30,6 @@ public class Wish : UpdateableBehaviour, IResetable
         walker = citizen.Walker;
         removeEvent += onRemove;
         readyToRemoveEvent += onReadyToRemove;
-        isSuccess = false;
         IsRemoved = false;
         IsReadyToRemove = false;
     }
@@ -71,7 +70,6 @@ public class Wish : UpdateableBehaviour, IResetable
         citizen = null;
         walker = null;
         IsReadyToRemove = false;
-        isSuccess = false;
         removeEvent = null;
     }
 

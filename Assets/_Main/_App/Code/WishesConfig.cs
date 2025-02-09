@@ -3,40 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Configs/WishesConfig", fileName = "WishConfig")]
-public class WishesConfig : TypedCollectionConfig<WishesConfig.WishData, EWish>
+public class WishesConfig : TypedCollectionConfig<WishesConfig.WishData, Type>
 {
     [Serializable]
-    public class WishData : IKey<EWish>
+    public class WishData : IKey<Type>
     {
-        public EWish type;
+        public WishGranter granter;
+        private Type type;
         public float grantDuration;
         public int reward;
         public float chanceWeight;
-        
-        public EWish Key => type;
+
+        public Type Key
+        {
+            get
+            {
+                if (type == null)
+                {
+                    type = granter.GetType();
+                }
+
+                return type;
+            }
+        }
     }
 
     [SerializeField] private List<WishesConfig.WishData> moneyWishes;
     public Vector2Int chatGroupSizeMinMax;
     
-    public float GetGrantDuration(EWish type)
+    public float GetGrantDuration(WishGranter type)
     {
-        return GetItem(type).grantDuration;
+        return GetItem(type.GetType()).grantDuration;
     }
     
-    public int GetReward(EWish type)
+    public int GetReward(WishGranter type)
     {
-        return GetItem(type).reward;
+        return GetItem(type.GetType()).reward;
     }
 
-    public EWish GetRandomWishType()
+    public Type GetRandomWishType()
     {
-        return GetRandomElementByWeight(collection).type;
+        return GetRandomElementByWeight(collection).Key;
     }
     
-    public EWish GetRandomMoneyWishType()
+    public Type GetRandomMoneyWishType()
     {
-        return GetRandomElementByWeight(moneyWishes).type;
+        return GetRandomElementByWeight(moneyWishes).Key;
     }
     
     private WishData GetRandomElementByWeight(List<WishData> list)

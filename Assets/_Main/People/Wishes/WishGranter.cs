@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -14,8 +15,8 @@ public abstract class WishGranter : MonoBehaviour
     [SerializeField] private WishPlace[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
-    public abstract EWish Type { get; }
-
+    [field: SerializeField] public bool NeedItems { get; set; }
+    
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
@@ -25,12 +26,11 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
-
     protected WishPlace[] WishPlaces => processPlaces;
 
-    public float FullProgressTime => wishesConfig.GetGrantDuration(Type);
-    public int Reward => wishesConfig.GetReward(Type);
-    
+    public float FullProgressTime => wishesConfig.GetGrantDuration(this);
+    public int Reward => wishesConfig.GetReward(this);
+
     private void Awake()
     {
         grantersManager.AddGranter(this);
@@ -46,23 +46,8 @@ public abstract class WishGranter : MonoBehaviour
         
     }
 
-    protected bool isAdded;
     private void Update()
     {
-        if (Type.IsCompassTarget())
-        {
-            var needCompass = queue.Count + processed.Count > processPlaces.Length;
-            if (!isAdded && needCompass)
-            {
-                isAdded = true;
-                compassManager.AddTarget(processPlaces[0].transform, Type.ToCompassTarget());
-            }
-            else if(isAdded && !needCompass)
-            {
-                isAdded = false;
-                compassManager.RemoveTarget(processPlaces[0].transform, Type.ToCompassTarget());
-            }   
-        }
         for (int i = 0; i < queue.Count; i++)
         {
             if (queuePlaces.Length > 0)
@@ -131,9 +116,9 @@ public abstract class WishGranter : MonoBehaviour
         // 3. Processed
         foreach (var citizen in processed)
         {
-            var wasReady = citizen.WishesController.IsProgressFull(Type);
+            var wasReady = citizen.WishesController.IsProgressFull(this);
             UpdateProcessed(citizen);
-            if (citizen.WishesController.IsProgressFull(Type) && wasReady)
+            if (citizen.WishesController.IsProgressFull(this) && wasReady)
             {
                 pendingLeaving.Add(citizen);
             }
@@ -170,7 +155,7 @@ public abstract class WishGranter : MonoBehaviour
     {
         if (CanAddProgress(citizen))
         {
-            citizen.WishesController.AddProgress(Type, Time.deltaTime / FullProgressTime);   
+            citizen.WishesController.AddProgress(this, Time.deltaTime / FullProgressTime);   
         }
     }
 
@@ -233,7 +218,7 @@ public abstract class WishGranter : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"cant add approaching!  {Type}");   
+            Debug.LogError($"cant add approaching!  {this}");   
         }
     }
 
@@ -318,7 +303,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public bool CanAdd(CitizenController citizenController)
     {
-        return !citizenController.HasItem(Type);
+        return !citizenController.HasItem(this);
     }
 
     public bool IsProcessed(CitizenController target)
@@ -330,7 +315,7 @@ public abstract class WishGranter : MonoBehaviour
     {
         foreach (var citizen in processed)
         {
-            if (!citizen.WishesController.IsGranterAssistantServing(Type))
+            if (!citizen.WishesController.IsGranterAssistantServing(this))
             {
                 return citizen;
             }

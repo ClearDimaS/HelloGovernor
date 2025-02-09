@@ -91,7 +91,6 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
         timer.SetProgress(0f);
         IsBroken = true;
         needRepairContent.Show(false);
-        compassManager.AddTarget(transform, ECompasTarget.Repair);
     }
 
     private void Repair()
@@ -100,7 +99,6 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
         timer.SetProgress(0f);
         IsBroken = false;
         needRepairContent.Hide(false);
-        compassManager.RemoveTarget(transform, ECompasTarget.Repair);
         foreach (var ps in donePSs)
         {
             if (ps.gameObject.activeInHierarchy)

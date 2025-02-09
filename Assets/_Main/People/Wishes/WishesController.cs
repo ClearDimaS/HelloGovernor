@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public interface IWishAssistant
 {
-    public bool CanServeType(EWish type);
+    public bool CanServeType(WishGranter type);
 }
 
 public class WishesController : CitizenBehaviour
@@ -29,12 +29,9 @@ public class WishesController : CitizenBehaviour
     
     public bool IsPaused => isPaused;
     public IWishAssistant WishAssistant => wishAssistant;
-    public bool IsSitting => currentWish != null && (currentWish.Type == EWish.Drinks ||
-                                                    currentWish.Type == EWish.Flowers ||
-                                                    currentWish.Type == EWish.IceCream) && IsProcessingWish;
     public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
     public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
-    public EWish WishType => currentWish == null ? EWish.Wander : currentWish.Type;
+    public WishGranter WishGranter => currentWish.Granter;
 
     public override void OnUpdate(bool visible)
     {
@@ -62,17 +59,17 @@ public class WishesController : CitizenBehaviour
         return currentWish != null;
     }
     
-    public void AddProgress(EWish type, float addProgress)
+    public void AddProgress(WishGranter type, float addProgress)
     {
-        if (currentWish != null && currentWish.Type == type)
+        if (currentWish != null && currentWish.Type == type.GetType())
         {
             currentWish.AddProgress(addProgress);
         }
     }
 
-    public bool IsProgressFull(EWish type)
+    public bool IsProgressFull(WishGranter type)
     {
-        return currentWish != null && currentWish.Type == type && currentWish.IsProgressFull;
+        return currentWish != null && currentWish.Type == type.GetType() && currentWish.IsProgressFull;
     }
     
     private void SetRandomWish()
@@ -116,7 +113,8 @@ public class WishesController : CitizenBehaviour
     {
         if (!isWishOver)
         {
-            if (currentWish.IsSuccess && wishAssistant == player.WishAssistant && wish.Type != EWish.Chat)
+            if (currentWish.IsSuccess && 
+                wish.UseSound && wishAssistant == player.WishAssistant)
             {
                 SoundManager.Instance.WishDone();
             }
@@ -139,19 +137,9 @@ public class WishesController : CitizenBehaviour
         }
     }
 
-    public bool IsGranterAssistantServing(EWish type)
+    public bool IsGranterAssistantServing(WishGranter type)
     {
-        switch (type)
-        {
-            case EWish.Drinks:
-                return wishAssistant != null && wishAssistant.CanServeType(type);
-            case EWish.Flowers:
-                return wishAssistant != null && wishAssistant.CanServeType(type);
-            case EWish.IceCream:
-                return wishAssistant != null && wishAssistant.CanServeType(type);
-            default:
-                throw new NotImplementedException($"wish {type} cant be served!");
-        }
+        return wishAssistant != null && wishAssistant.CanServeType(type);
     }
 
     public void SetWishAssistant(IWishAssistant waiterAssistant)

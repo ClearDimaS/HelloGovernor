@@ -1,12 +1,11 @@
+using System;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class WanderWishGranter : WishGranter
 {
     [Inject] private EnvironmentManager environment;
-    [Inject] private GameConfig gameConfig;
-    
-    public override EWish Type => EWish.Wander;
 
     protected override void UpdateProcessed(CitizenController citizen)
     {

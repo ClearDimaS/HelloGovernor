@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WishGrantersManager : MonoBehaviour
 {
-    private Dictionary<EWish, List<WishGranter>> grantersDict = new ();
+    private Dictionary<Type, List<WishGranter>> grantersDict = new ();
 
     public void AddGranter(WishGranter granter)
     {
-        var type = granter.Type;
+        var type = granter.GetType();
         if (!grantersDict.ContainsKey(type))
         {
             grantersDict[type] = new List<WishGranter>();
@@ -16,7 +17,7 @@ public class WishGrantersManager : MonoBehaviour
         grantersDict[type].Add(granter);
     }
     
-    public bool TryGetWorkingFreeGranter(EWish type, out WishGranter granter)
+    public bool TryGetWorkingFreeGranter(Type type, out WishGranter granter)
     {
         if (!grantersDict.ContainsKey(type) || grantersDict[type].Count == 0)
         {

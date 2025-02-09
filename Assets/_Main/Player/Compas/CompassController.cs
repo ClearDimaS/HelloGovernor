@@ -13,7 +13,6 @@ public class CompassController : MonoBehaviour
     [SerializeField] private CompasMarker[] targetMarkers;
 
     [SerializeField] private Sprite icon;
-    [field: SerializeField] public ECompasTarget Type { get; private set; }
     
     private List<Transform> notVisibleTargets = new ();
     private List<Transform> visibleTargets = new ();

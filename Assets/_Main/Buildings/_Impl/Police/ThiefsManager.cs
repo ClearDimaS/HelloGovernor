@@ -75,7 +75,6 @@ public class ThiefsManager : MonoBehaviour
     private void SpawnThief(CurrencyStackBehaviour target)
     {
         activeThief = thiefsPool.GetElement();
-        compassManager.AddTarget(activeThief.transform, ECompasTarget.Robbery);
         var spawnData = thiefSpawns[Random.Range(0, thiefSpawns.Length)];
         activeThief.transform.position = spawnData.spawn.position;
         activeThief.Init(target, spawnData.escape);
@@ -87,7 +86,6 @@ public class ThiefsManager : MonoBehaviour
 
     public void FinishSteal(ThiefBehaviour thief)
     {
-        compassManager.RemoveTarget(thief.transform, ECompasTarget.Robbery);
         lastStealTime = Time.time;
         isStealing = false;
         thiefsPool.Pool(thief);
@@ -116,6 +114,6 @@ public class ThiefsManager : MonoBehaviour
 
     public void StopSteal(ThiefBehaviour thief)
     {
-        compassManager.RemoveTarget(thief.transform, ECompasTarget.Robbery);
+
     }
 }

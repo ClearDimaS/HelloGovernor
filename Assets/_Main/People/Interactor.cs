@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
+/*
 public enum EInteractable
 {
     None,
@@ -14,13 +15,13 @@ public enum EInteractable
     Flowers,
     IceCream,
     PressConference
-}
+}*/
 public class Interactor : CulledBehaviour
 {
     [Serializable]
     public class ItemsData
     {
-        public EInteractable type;
+        public WishGranter type;
         public Transform[] places;
         public Transform root;
         public HumanBodyBones bone;
@@ -31,7 +32,7 @@ public class Interactor : CulledBehaviour
     [SerializeField] private List<ItemsData> itemDatas;
     private Animator controller;
 
-    private Dictionary<EInteractable, ItemsData> datasDict = new ();
+    private Dictionary<WishGranter, ItemsData> datasDict = new ();
     private Transform rootsParent;
 
     protected override void OnAwake()
@@ -77,26 +78,20 @@ public class Interactor : CulledBehaviour
         }
     }
 
-    public bool HasItem(EWish type)
+    public bool HasItem(WishGranter type)
     {
-        switch (type)
+        if (!type.NeedItems)
         {
-            case EWish.Chat:
-                return false;
-            case EWish.Wander:
-                return false;
-            case EWish.PressConference:
-                return false;
-            default:
-                return datasDict[type.ToInteractable()].interactables.Count > 0;
+            return false;
         }
+        return datasDict[type].interactables.Count > 0;
     }
 
     public void AddItem(WishAssistantItem item)
     {
-        var data = datasDict[item.Type.ToInteractable()];
+        var data = datasDict[item.Type];
         var place = data.places[data.interactables.Count];
-        datasDict[item.Type.ToInteractable()].interactables.Add(item);
+        datasDict[item.Type].interactables.Add(item);
 
         item.transform.DOKill();
         item.transform.SetParent(place);
@@ -116,21 +111,36 @@ public class Interactor : CulledBehaviour
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 
-    public WishAssistantItem RemoveItem(EWish type)
+    public WishAssistantItem RemoveItem(WishGranter type)
     {
-        var data = datasDict[type.ToInteractable()];
+        var data = datasDict[type];
         var item = data.interactables[0];
         data.interactables.RemoveAt(0);
         return item;
     }
 
-    public bool HasMorePlaceFor(EInteractable type)
+    public bool HasMorePlaceFor(WishGranter type)
     {
+        if (!type.NeedItems)
+        {
+            return true;
+        }
         return datasDict[type].interactables.Count < datasDict[type].places.Length;
     }
 
     public bool HasAnyIKItem()
     {
-        return HasItem(EWish.Drinks) || HasItem(EWish.IceCream);
+        foreach (var dataPair in datasDict)
+        {
+            foreach (var interactable in dataPair.Value.interactables)
+            {
+                if (interactable.IsIK)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

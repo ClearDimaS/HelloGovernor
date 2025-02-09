@@ -11,7 +11,6 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private WishAssistantItemSource itemsSource;
     
     private WishAssistantItem item;
-    private EWish type;
     private WishGranter wishGranter;
     private CitizenController target;
     
@@ -20,7 +19,6 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private void Awake()
     {
         wishGranter = GetComponentInParent<WishGranter>();
-        type = wishGranter.Type;
         itemsSource = wishGranter.GetComponentInChildren<WishAssistantItemSource>();
     }
 
@@ -64,12 +62,12 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         }
     }
 
-    public bool CanServeType(EWish type)
+    public bool CanServeType(WishGranter type)
     {
-        return this.type == type;
+        return this.wishGranter == type;
     }
 
-    public bool CanAddItems(EInteractable type)
+    public bool CanAddItems(WishGranter type)
     {
         return item == null;
     }
