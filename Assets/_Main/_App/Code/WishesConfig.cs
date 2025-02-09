@@ -46,11 +46,6 @@ public class WishesConfig : TypedCollectionConfig<WishesConfig.WishData, Type>
         return GetRandomElementByWeight(collection).Key;
     }
     
-    public Type GetRandomMoneyWishType()
-    {
-        return GetRandomElementByWeight(moneyWishes).Key;
-    }
-    
     private WishData GetRandomElementByWeight(List<WishData> list)
     {
         float totalWeight = 0f;

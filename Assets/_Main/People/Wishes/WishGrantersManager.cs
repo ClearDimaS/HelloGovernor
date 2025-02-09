@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class WishGrantersManager : MonoBehaviour
 {
+    [Inject] private WishesConfig wishesConfig;
+    
     private Dictionary<Type, List<WishGranter>> grantersDict = new ();
 
     public void AddGranter(WishGranter granter)
@@ -17,24 +20,19 @@ public class WishGrantersManager : MonoBehaviour
         grantersDict[type].Add(granter);
     }
     
-    public bool TryGetWorkingFreeGranter(Type type, out WishGranter granter)
+    public WishGranter TryGetWorkingFreeGranter()
     {
-        if (!grantersDict.ContainsKey(type) || grantersDict[type].Count == 0)
-        {
-            granter = null;
-            return false;
-        }
-
+        WishGranter granter = null;
+        var type = wishesConfig.GetRandomWishType();
         foreach (var granterCandidate in grantersDict[type])
         {
             if (granterCandidate.IsWorking() && granterCandidate.CanAddOneMore())
             {
                 granter = granterCandidate;
-                return true;
-            }
+                break;
+            }   
         }
 
-        granter = null;
-        return false;
+        return granter;
     }
 }

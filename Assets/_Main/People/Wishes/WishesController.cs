@@ -15,7 +15,6 @@ public class WishesController : CitizenBehaviour
     [Inject] private PlayerController player;
     [Inject] private WishesPool wishesPool;
     [Inject] private WishGrantersManager grantersManager;
-    [Inject] private WishesConfig wishesConfig;
 
     [SerializeField] private CitizenController citizenController;
 
@@ -41,17 +40,6 @@ public class WishesController : CitizenBehaviour
             wishAssistant = null;
             SetRandomWish();
         }
-
-        if (currentWish != null && citizenController.CanAddWishes())
-        {
-            if (!currentWish.HasOKGranter())
-            {
-                if (grantersManager.TryGetWorkingFreeGranter(currentWish.Type, out WishGranter granter))
-                {
-                    currentWish.SetGranter(granter);   
-                }
-            }
-        }
     }
 
     public bool HasAnyWish()
@@ -61,7 +49,7 @@ public class WishesController : CitizenBehaviour
     
     public void AddProgress(WishGranter granter, float addProgress)
     {
-        if (currentWish != null && currentWish.Type == granter.GetType())
+        if (currentWish != null && currentWish.Granter == granter)
         {
             currentWish.AddProgress(addProgress);
         }
@@ -69,7 +57,7 @@ public class WishesController : CitizenBehaviour
 
     public bool IsProgressFull(WishGranter granter)
     {
-        return currentWish != null && currentWish.Type == granter.GetType() && currentWish.IsProgressFull;
+        return currentWish != null && currentWish.Granter == granter && currentWish.IsProgressFull;
     }
     
     private void SetRandomWish()
@@ -79,27 +67,14 @@ public class WishesController : CitizenBehaviour
             return;
         }
         
-        var moneyWishType = wishesConfig.GetRandomMoneyWishType();
-        if (grantersManager.TryGetWorkingFreeGranter(moneyWishType, out WishGranter granter) && granter.CanAdd(citizenController))
+        WishGranter granter = grantersManager.TryGetWorkingFreeGranter();
+        if (granter != null)
         {
             isWishOver = false;
             currentWish = wishesPool.GetElement();
             currentWish.transform.SetParent(transform);
-            currentWish.Initialize(moneyWishType, citizenController, PoolWish, OnWishResult);
+            currentWish.Initialize(citizenController, PoolWish, OnWishResult);
             currentWish.SetGranter(granter);
-        }
-        else
-        {
-            var wishType = wishesConfig.GetRandomWishType();
-        
-            if (grantersManager.TryGetWorkingFreeGranter(wishType, out granter) && granter.CanAdd(citizenController))
-            {
-                isWishOver = false;
-                currentWish = wishesPool.GetElement();
-                currentWish.transform.SetParent(transform);
-                currentWish.Initialize(wishType, citizenController, PoolWish, OnWishResult);
-                currentWish.SetGranter(granter);
-            }
         }
     }
 
