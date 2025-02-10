@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleIcon : MonoBehaviour
+public class AssistantRoleIcon : MonoBehaviour
 {
     private const float BASE_SIZE_FACTOR = 0.5f;
     

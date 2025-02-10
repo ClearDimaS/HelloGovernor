@@ -8,4 +8,9 @@ public abstract class OperatableGranter : WishGranter
     {
         return operatablePlace.IsOperated;
     }
+
+    public Sprite GetIconOperator()
+    {
+        return null;
+    }
 }
