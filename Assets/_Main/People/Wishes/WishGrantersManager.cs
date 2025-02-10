@@ -5,7 +5,7 @@ using Zenject;
 
 public class WishGrantersManager : MonoBehaviour
 {
-    [Inject] private WishesConfig wishesConfig;
+    [Inject] private WishesCollectionConfig wishesCollectionConfig;
     
     private Dictionary<Type, List<WishGranter>> grantersDict = new ();
 
@@ -23,7 +23,7 @@ public class WishGrantersManager : MonoBehaviour
     public WishGranter TryGetWorkingFreeGranter()
     {
         WishGranter granter = null;
-        var type = wishesConfig.GetRandomWishType();
+        var type = wishesCollectionConfig.GetRandomWishType();
         foreach (var granterCandidate in grantersDict[type])
         {
             if (granterCandidate.IsWorking() && granterCandidate.CanAddOneMore())

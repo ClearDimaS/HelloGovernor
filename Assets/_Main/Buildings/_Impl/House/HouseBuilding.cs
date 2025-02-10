@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class HouseBuilding : BuildingBase
 {
-    [Inject] private BuildingsConfig buildingsConfig;
+    [Inject] private GameConfig gameConfig;
     [Inject] private HousesManager housesManager;
 
     [SerializeField] private ScaleAnimator brokenRoot;
@@ -100,11 +100,11 @@ public class HouseBuilding : BuildingBase
     public int GetCitizensCapacity()
     {
         var count = 0;
-        for (int i = 0; i < buildingsConfig.CitizenCountsForHouseLevels.Length; i++)
+        for (int i = 0; i < gameConfig.CitizenCountsForHouseLevels.Length; i++)
         {
             if (Level > i)
             {
-                count = buildingsConfig.CitizenCountsForHouseLevels[i];
+                count = gameConfig.CitizenCountsForHouseLevels[i];
             }
         }
         return count;

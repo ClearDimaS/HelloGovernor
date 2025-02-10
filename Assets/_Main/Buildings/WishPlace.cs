@@ -14,9 +14,6 @@ public class WishPlace : CulledBehaviour
         Taken
     }
 
-    [Inject] private CompassManager compassManager;
-    [Inject] private WishItemsConfig config;
-        
     [SerializeField] private GameObject timerRoot;
     [SerializeField] private TimerBase timer;
     [SerializeField] private Image bgColor;
@@ -24,19 +21,19 @@ public class WishPlace : CulledBehaviour
     [SerializeField] private Color noItemColor;
     
     private Color originalColor;
-    private WishGranter granter;
+    private ItemsWishGranter granter;
     private CitizenController wisher;
     private EWishPlaceState state;
     public Vector3 Position => transform.position;
 
     private float progress => wisher.WishesController.CurrentWishProgress;
-    public WishGranter Granter => granter;
+    public ItemsWishGranter Granter => granter;
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        granter = GetComponentInParent<WishGranter>();
-        timer.SetIcon(config.GetIcon(granter));
+        granter = GetComponentInParent<ItemsWishGranter>();
+        timer.SetIcon(granter.GetItemIcon());
         originalColor = bgColor.color;
     }
 

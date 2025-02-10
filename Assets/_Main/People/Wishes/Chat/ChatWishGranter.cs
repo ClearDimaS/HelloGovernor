@@ -28,7 +28,7 @@ public class ChatWishGranter : WishGranter
             if (!groupedCitizens.Contains(citizen))
             {
                 ChatGroup group = groupsPool.GetElement();
-                group.Initialize(Random.Range(wishesConfig.chatGroupSizeMinMax.x, wishesConfig.chatGroupSizeMinMax.x));
+                group.Initialize(Random.Range(wishesCollectionConfig.chatGroupSizeMinMax.x, wishesCollectionConfig.chatGroupSizeMinMax.x));
                 activeChatGroups.Add(group);
                 
                 group.Add(citizen);

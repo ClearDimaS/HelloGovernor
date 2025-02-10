@@ -8,11 +8,11 @@ public class RoleIcon : MonoBehaviour
     private const float BASE_SIZE_FACTOR = 0.5f;
     
     [SerializeField] private SpriteRenderer icon;
-    private UpgradableBuilding building;
+    private ItemsWishGranter building;
 
     private void Awake()
     {
-        building = GetComponentInParent<UpgradableBuilding>(true);
+        building = GetComponentInParent<ItemsWishGranter>(true);
 
         var sprite = icon.sprite;
         if (building != null)

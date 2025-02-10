@@ -29,7 +29,7 @@ public class PriceDisplayer : CulledBehaviour
     private void Start()
     {
         RefreshDisplay(moneyConsumer.GetLeftAmount(), false);
-        var sprite = upgradableObject.GetItemIcon();
+        var sprite = upgradableObject.GetPurchaseIcon();
         itemIcon.sprite = sprite;
         
         var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;

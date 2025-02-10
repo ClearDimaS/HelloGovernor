@@ -5,17 +5,23 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
+
 public class UpgradableBuilding : UpgradableObject
 {
     [Inject] private DiContainer container;
-    [Inject] private BuildingsConfig buildingsConfig;
     [Inject] private UpgradablePricesManager _upgradablePricesManager;
     
     [SerializeField] private Transform boughtRoot;
-    [SerializeField] private EBuilding type;
-    
+
+    private WishGranter wishGranter;
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        wishGranter = GetComponentInParent<WishGranter>();
+    }
 
     public List<Price> GetPricesCopy()
     {
@@ -39,9 +45,9 @@ public class UpgradableBuilding : UpgradableObject
             }
             
             spawnedLevel = data.level;
-            var buildingData = buildingsConfig.GetBuildingData(type);
+            var buildingData = wishGranter.GetBuildingData();
             var level = buildingData.levels[data.level - 1];
-            var optionPrefab = level.options[data.optionIndex];
+            var optionPrefab = level.option;
             if (spawnedGFX != null)
             {
                 Destroy(spawnedGFX);
@@ -91,18 +97,13 @@ public class UpgradableBuilding : UpgradableObject
         }
     }
 
-    public override Sprite GetItemIcon()
+    public override Sprite GetPurchaseIcon()
     {
-        return buildingsConfig.GetBuildingData(type).icon;
+        return wishGranter.GetBuildingData().icon;
     }
 
     public override string GetTitle()
     {
-        return buildingsConfig.GetBuildingData(type).title;
-    }
-
-    public Sprite GetIconAssistant()
-    {
-        return buildingsConfig.GetBuildingData(type).assistantIcon;
+        return wishGranter.GetBuildingData().title;
     }
 }

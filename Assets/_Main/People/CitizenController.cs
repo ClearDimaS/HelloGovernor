@@ -110,8 +110,8 @@ public class CitizenController : CulledBehaviour
         });
     }
 
-    public bool HasItem(WishGranter type)
+    public bool HasItem(WishGranter granter)
     {
-        return interactor.HasItem(type);
+        return interactor.HasItem(granter);
     }
 }

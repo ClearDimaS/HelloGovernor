@@ -5,6 +5,7 @@ public class UpgradableAssistant : UpgradableObject
 {
     [SerializeField] private Transform boughtRoot;
 
+    private ItemsWishGranter itemsWishGranter;
     private UpgradableBuilding upgradableBuilding;
     protected List<Price> pricesCopy;
     
@@ -51,9 +52,13 @@ public class UpgradableAssistant : UpgradableObject
         }
     }
 
-    public override Sprite GetItemIcon()
+    public override Sprite GetPurchaseIcon()
     {
-        return upgradableBuilding.GetIconAssistant();
+        if (itemsWishGranter == null)
+        {
+            itemsWishGranter = GetComponentInParent<ItemsWishGranter>();
+        }
+        return itemsWishGranter.GetIconAssistant();
     }
     
     public override string GetTitle()

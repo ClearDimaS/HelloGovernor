@@ -4,11 +4,31 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
+public abstract class WishGranter<T> : WishGranter where T : WishGranterConfig
+{
+    protected T config;
+    
+    private void Start()
+    {
+        config = wishesCollectionConfig.GetConfig(this) as T;
+        if (config == null)
+        {
+            throw new NotImplementedException($"config of type {typeof(T)} is not added for granter {GetType()}");
+        }
+        OnStart();
+    }
+
+    protected void OnStart()
+    {
+        
+    }
+
+}
+
 public abstract class WishGranter : MonoBehaviour
 {
-    [Inject] protected WishesConfig wishesConfig;
+    [Inject] protected WishesCollectionConfig wishesCollectionConfig;
     [Inject] private WishGrantersManager grantersManager;
-    [Inject] protected CompassManager compassManager;
 
     [SerializeField] private CurrencyStackBehaviour currencyStack;
     [SerializeField] private Transform[] queuePlaces;
@@ -28,8 +48,8 @@ public abstract class WishGranter : MonoBehaviour
     protected List<CitizenController> pendingRemove = new ();
     protected WishPlace[] WishPlaces => processPlaces;
 
-    public float FullProgressTime => wishesConfig.GetGrantDuration(this);
-    public int Reward => wishesConfig.GetReward(this);
+    public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
+    public int Reward => wishesCollectionConfig.GetReward(this);
 
     private void Awake()
     {
@@ -322,5 +342,10 @@ public abstract class WishGranter : MonoBehaviour
         }
 
         return null;
+    }
+
+    public BuildingData GetBuildingData()
+    {
+        return wishesCollectionConfig.GetBuildingData(this);
     }
 }

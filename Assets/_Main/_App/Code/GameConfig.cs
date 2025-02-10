@@ -48,4 +48,7 @@ public class GameConfig : ScriptableObject
     public float thiefPause = 10;
     public int thiefMaxSteal;
     public int moneyToSteal = 10;
+
+    [Header("Houses")] 
+    public int[] CitizenCountsForHouseLevels;
 }

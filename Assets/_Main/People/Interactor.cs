@@ -21,7 +21,7 @@ public class Interactor : CulledBehaviour
     [Serializable]
     public class ItemsData
     {
-        public WishGranter type;
+        public WishGranter granter;
         public Transform[] places;
         public Transform root;
         public HumanBodyBones bone;
@@ -39,7 +39,7 @@ public class Interactor : CulledBehaviour
     {
         base.OnAwake();
         controller = GetComponentInChildren<Animator>();
-        datasDict = itemDatas.ToDictionary(x => x.type, x => x);
+        datasDict = itemDatas.ToDictionary(x => x.granter, x => x);
     }
 
     protected override void OnUpdate(bool visible)
@@ -78,13 +78,13 @@ public class Interactor : CulledBehaviour
         }
     }
 
-    public bool HasItem(WishGranter type)
+    public bool HasItem(WishGranter granter)
     {
-        if (!type.NeedItems)
+        if (!granter.NeedItems)
         {
             return false;
         }
-        return datasDict[type].interactables.Count > 0;
+        return datasDict[granter].interactables.Count > 0;
     }
 
     public void AddItem(WishAssistantItem item)
@@ -111,21 +111,21 @@ public class Interactor : CulledBehaviour
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 
-    public WishAssistantItem RemoveItem(WishGranter type)
+    public WishAssistantItem RemoveItem(WishGranter granter)
     {
-        var data = datasDict[type];
+        var data = datasDict[granter];
         var item = data.interactables[0];
         data.interactables.RemoveAt(0);
         return item;
     }
 
-    public bool HasMorePlaceFor(WishGranter type)
+    public bool HasMorePlaceFor(WishGranter granter)
     {
-        if (!type.NeedItems)
+        if (!granter.NeedItems)
         {
             return true;
         }
-        return datasDict[type].interactables.Count < datasDict[type].places.Length;
+        return datasDict[granter].interactables.Count < datasDict[granter].places.Length;
     }
 
     public bool HasAnyIKItem()

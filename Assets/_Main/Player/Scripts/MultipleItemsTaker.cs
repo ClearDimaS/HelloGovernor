@@ -73,9 +73,9 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         }
     }
 
-    public bool CanAddItems(WishGranter type)
+    public bool CanAddItems(WishGranter granter)
     {
-        return interactor.HasMorePlaceFor(type);
+        return interactor.HasMorePlaceFor(granter);
     }
 
     public void AddItem(WishAssistantItem item)
@@ -84,9 +84,9 @@ public class MultipleItemsTaker : SimpleWishPlacePhysicsBehaviour, IItemTaker, I
         interactor.AddItem(item);
     }
 
-    public bool CanServeType(WishGranter type)
+    public bool CanServeType(WishGranter granter)
     {
-        return interactor.HasItem(type);
+        return interactor.HasItem(granter);
     }
 
     private void StopServingClient(CitizenController client)

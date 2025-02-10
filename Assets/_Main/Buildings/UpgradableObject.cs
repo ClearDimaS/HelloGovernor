@@ -144,7 +144,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         }
     }
 
-    public abstract Sprite GetItemIcon();
+    public abstract Sprite GetPurchaseIcon();
 
     public abstract string GetTitle();
 }

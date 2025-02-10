@@ -6,19 +6,18 @@ using Zenject;
 
 public interface IItemTaker : IRootProvider
 {
-    public bool CanAddItems(WishGranter type);
+    public bool CanAddItems(WishGranter granter);
     public void AddItem(WishAssistantItem takeItem);
 }
 
 public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
 {
-    [Inject] private WishItemsConfig config;
     [Inject] private WishAssistantItemsPool pool;
 
     [SerializeField] private Image iconImage;
     [SerializeField] private Image takeProgressImage;
     [field: SerializeField] public Transform TakePlace { get; private set; }
-    private WishGranter wishGranter;
+    private ItemsWishGranter wishGranter;
 
     private HashSet<IItemTaker> takers = new ();
     private List<IItemTaker> giveItemToTakersTMP = new ();
@@ -27,8 +26,8 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
     protected override void OnAwake()
     {
         base.OnAwake();
-        wishGranter = GetComponentInParent<WishGranter>();
-        iconImage.sprite = config.GetIcon(wishGranter);
+        wishGranter = GetComponentInParent<ItemsWishGranter>();
+        iconImage.sprite = wishGranter.GetItemIcon();
     }
 
     protected override void OnUpdate(bool visible)
@@ -40,7 +39,7 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
         {
             takerTimers[taker] += Time.deltaTime;
             var timer = takerTimers[taker];
-            var duration = config.GetTakeDuration(wishGranter);
+            var duration = wishGranter.GetTakeItemDuration();
             if (timer > duration)
             {
                 giveItemToTakersTMP.Add(taker);
