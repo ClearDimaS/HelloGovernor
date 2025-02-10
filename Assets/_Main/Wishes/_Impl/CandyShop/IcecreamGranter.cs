@@ -1,17 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class IcecreamGranter : WishGranter
+public class IcecreamGranter : ItemsWishGranter
 {
-    [Inject] private GameConfig gameConfig;
-    
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return citizen.WishesController.IsGranterAssistantServing(this);
-    }
 
-    protected override void OnSuccessProcess(CitizenController citizen)
-    {
-        base.OnSuccessProcess(citizen);
-    }
 }

@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public abstract class WishGranter<T> : WishGranter where T : WishGranterConfig
+public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfig where U : ProcessPlace
 {
+    private U[] wishPlacesTyped;
+    
     protected T config;
     
     private void Start()
     {
+        wishPlacesTyped = processPlaces.Select(x => x as U).ToArray();
         config = wishesCollectionConfig.GetConfig(this) as T;
         if (config == null)
         {
@@ -22,7 +26,6 @@ public abstract class WishGranter<T> : WishGranter where T : WishGranterConfig
     {
         
     }
-
 }
 
 public abstract class WishGranter : MonoBehaviour
@@ -32,7 +35,7 @@ public abstract class WishGranter : MonoBehaviour
 
     [SerializeField] private CurrencyStackBehaviour currencyStack;
     [SerializeField] private Transform[] queuePlaces;
-    [SerializeField] private WishPlace[] processPlaces;
+    [SerializeField] protected ProcessPlace[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
     [field: SerializeField] public bool NeedItems { get; set; }
@@ -40,13 +43,12 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
-    private Dictionary<CitizenController, WishPlace> citizenPlacesDict = new ();
-    private Queue<WishPlace> freePlaces = new ();
+    private Dictionary<CitizenController, ProcessPlace> citizenPlacesDict = new ();
+    private Queue<ProcessPlace> freePlaces = new ();
     protected List<CitizenController> processed = new ();
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
-    protected WishPlace[] WishPlaces => processPlaces;
 
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
@@ -252,10 +254,6 @@ public abstract class WishGranter : MonoBehaviour
 
     private void AddToProcessed(CitizenController citizen)
     {
-        if (citizenPlacesDict.ContainsKey(citizen))
-        {
-            citizenPlacesDict[citizen].TakePlace(citizen);   
-        }
         if (!processed.Contains(citizen))
         {
             processed.Add(citizen);   
@@ -310,20 +308,15 @@ public abstract class WishGranter : MonoBehaviour
         return approaching.Count + queue.Count * processed.Count < queuePlaces.Length + processPlaces.Length;
     }
 
-    private WishPlace DequeuePlace()
+    private ProcessPlace DequeuePlace()
     {
         var place = freePlaces.Dequeue();
         return place;
     }
     
-    private void EnqueuePlace(WishPlace place)
+    private void EnqueuePlace(ProcessPlace place)
     {
         freePlaces.Enqueue(place);
-    }
-
-    public bool CanAdd(CitizenController citizenController)
-    {
-        return !citizenController.HasItem(this);
     }
 
     public bool IsProcessed(CitizenController target)

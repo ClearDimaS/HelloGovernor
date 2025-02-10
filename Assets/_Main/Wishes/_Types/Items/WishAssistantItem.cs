@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class WishAssistantItem : MonoBehaviour, IResetable, IKey<WishGranter>
+public class WishAssistantItem : MonoBehaviour, IResetable, IKey<ItemsWishGranter>
 {
-    [field: SerializeField] public WishGranter Type { get; private set; }
-    public WishGranter Key => Type;
+    [field: SerializeField] public ItemsWishGranter Type { get; private set; }
+    public ItemsWishGranter Key => Type;
     public bool IsIK { get; set; }
 
     public void OnReset()

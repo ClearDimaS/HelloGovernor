@@ -6,14 +6,16 @@ using Zenject;
 
 public interface IItemTaker : IRootProvider
 {
-    public bool CanAddItems(WishGranter granter);
+    public bool CanAddItems(ItemsWishGranter granter);
     public void AddItem(WishAssistantItem takeItem);
 }
 
-public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
+public class WishAssistantItemSource : CulledBehaviour
 {
     [Inject] private WishAssistantItemsPool pool;
+    [Inject] private PlayerController player;
 
+    [SerializeField] private float radius = 1f;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image takeProgressImage;
     [field: SerializeField] public Transform TakePlace { get; private set; }
@@ -34,6 +36,20 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
     {
         base.OnUpdate(visible);
         var progress = 0f;
+
+        if (visible)
+        {
+            var diffToPlayer = TakePlace.position - player.transform.position;
+            diffToPlayer.y = 0f;
+            if (diffToPlayer.magnitude < radius)
+            {
+                takers.Add(player);
+            }
+            else
+            {
+                takers.Remove(player);
+            }
+        }
 
         foreach (var taker in takers)
         {
@@ -61,18 +77,6 @@ public class WishAssistantItemSource : SimpleItemsTakerPhysicsBehaviour
         giveItemToTakersTMP.Clear();
 
         takeProgressImage.fillAmount = progress;
-    }
-
-    protected override void OnEnter(IItemTaker component)
-    {
-        base.OnEnter(component);
-        AddTaker(component);
-    }
-
-    protected override void OnLeave(IItemTaker component)
-    {
-        base.OnLeave(component);
-        RemoveTaker(component);
     }
 
     private WishAssistantItem TakeItem()

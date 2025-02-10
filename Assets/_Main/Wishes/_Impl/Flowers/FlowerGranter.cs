@@ -1,14 +1,6 @@
 using Zenject;
 
-public class FlowerGranter : WishGranter
+public class FlowerGranter : ItemsWishGranter
 {
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return citizen.WishesController.IsGranterAssistantServing(this);
-    }
 
-    protected override void OnSuccessProcess(CitizenController citizen)
-    {
-        base.OnSuccessProcess(citizen);
-    }
 }

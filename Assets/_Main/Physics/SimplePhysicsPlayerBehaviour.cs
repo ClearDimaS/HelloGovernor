@@ -12,14 +12,6 @@ public class SimplePlayerPhysicsBehaviour : SimplePhysicsBehaviour<PlayerControl
     }
 }
 
-public class SimpleWishPlacePhysicsBehaviour : SimplePhysicsBehaviour<WishPlace>
-{
-    protected override List<WishPlace> GetComponentsForWork()
-    {
-        return FindObjectsOfType<WishPlace>(true).ToList();
-    }
-}
-
 public class SimpleRepairerPhysicsBehaviour : SimplePhysicsBehaviourInterface<IRepairer>
 {
     protected override List<IRepairer> GetComponentsForWork()
@@ -40,13 +32,4 @@ public class SimpleThiefBusterPhysicsBehaviour : SimplePhysicsBehaviourInterface
     }
 }
 
-public class SimpleItemsTakerPhysicsBehaviour : SimplePhysicsBehaviourInterface<IItemTaker>
-{
-    protected override List<IItemTaker> GetComponentsForWork()
-    {
-        return FindObjectsOfType<WaiterAssistant>(true).Select(x => x as IItemTaker).
-            Concat(new []{(IItemTaker)PlayerController.Instance.GetComponentInChildren<MultipleItemsTaker>(true)}).
-            ToList();
-    }
-}
 

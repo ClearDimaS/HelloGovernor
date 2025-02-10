@@ -9,7 +9,8 @@ public class PlayerController : Singleton<PlayerController>,
     IRepairer, 
     ICurrencyHolder, 
     IThiefBuster,
-    IOperator
+    IOperator, 
+    IItemTaker
 {
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;
@@ -17,6 +18,7 @@ public class PlayerController : Singleton<PlayerController>,
     [Inject] private GameConfig gameConfig;
     [Inject] private PlayerInput playerInput;
 
+    [SerializeField] private Interactor interactor;
     [SerializeField] private Rigidbody rb;
 
     public IWishAssistant WishAssistant { get; private set; }
@@ -111,5 +113,15 @@ public class PlayerController : Singleton<PlayerController>,
         currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
         currency.Initialize(reward);
         currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+    }
+
+    public bool CanAddItems(ItemsWishGranter granter)
+    {
+        return interactor.HasMorePlaceFor(granter);
+    }
+
+    public void AddItem(WishAssistantItem takeItem)
+    {
+        interactor.AddItem(takeItem);
     }
 }

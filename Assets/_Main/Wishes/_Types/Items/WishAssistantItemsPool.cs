@@ -1,4 +1,4 @@
-public class WishAssistantItemsPool : MonoPoolCollectionMultiple<WishAssistantItem, WishGranter>
+public class WishAssistantItemsPool : MonoPoolCollectionMultiple<WishAssistantItem, ItemsWishGranter>
 {
     
 }

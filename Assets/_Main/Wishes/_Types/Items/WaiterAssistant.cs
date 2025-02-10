@@ -67,7 +67,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         return this.wishGranter == granter;
     }
 
-    public bool CanAddItems(WishGranter granter)
+    public bool CanAddItems(ItemsWishGranter granter)
     {
         return item == null;
     }

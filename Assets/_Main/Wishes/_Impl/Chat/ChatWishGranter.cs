@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class ChatWishGranter : WishGranter
+public class ChatWishGranter : UIWishGranter
 {
     [Inject] private ChatGroupsPool groupsPool;
 

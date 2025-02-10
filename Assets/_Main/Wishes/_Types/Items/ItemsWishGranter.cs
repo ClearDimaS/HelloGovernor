@@ -1,7 +1,12 @@
 using UnityEngine;
 
-public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig>
+public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, ItemsProcessPlace>
 {
+    protected override bool CanAddProgress(CitizenController citizen)
+    {
+        return citizen.WishesController.IsGranterAssistantServing(this);
+    }
+    
     public Sprite GetItemIcon()
     {
         return config.GetItemsData().itemIcon;

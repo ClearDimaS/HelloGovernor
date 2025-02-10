@@ -3,9 +3,8 @@ using Zenject;
 
 public class PressConferenceGranter : OperatableGranter
 {
-
     protected override bool CanAddProgress(CitizenController citizen)
     {
-        return WishPlaces.Length == processed.Count && base.CanAddProgress(citizen);
+        return processPlaces.Length == processed.Count && base.CanAddProgress(citizen);
     }
 }

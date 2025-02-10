@@ -21,7 +21,7 @@ public class Interactor : CulledBehaviour
     [Serializable]
     public class ItemsData
     {
-        public WishGranter granter;
+        public ItemsWishGranter granter;
         public Transform[] places;
         public Transform root;
         public HumanBodyBones bone;
@@ -32,7 +32,7 @@ public class Interactor : CulledBehaviour
     [SerializeField] private List<ItemsData> itemDatas;
     private Animator controller;
 
-    private Dictionary<WishGranter, ItemsData> datasDict = new ();
+    private Dictionary<ItemsWishGranter, ItemsData> datasDict = new ();
     private Transform rootsParent;
 
     protected override void OnAwake()
@@ -78,12 +78,8 @@ public class Interactor : CulledBehaviour
         }
     }
 
-    public bool HasItem(WishGranter granter)
+    public bool HasItem(ItemsWishGranter granter)
     {
-        if (!granter.NeedItems)
-        {
-            return false;
-        }
         return datasDict[granter].interactables.Count > 0;
     }
 
@@ -111,7 +107,7 @@ public class Interactor : CulledBehaviour
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 
-    public WishAssistantItem RemoveItem(WishGranter granter)
+    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
     {
         var data = datasDict[granter];
         var item = data.interactables[0];
@@ -119,12 +115,8 @@ public class Interactor : CulledBehaviour
         return item;
     }
 
-    public bool HasMorePlaceFor(WishGranter granter)
+    public bool HasMorePlaceFor(ItemsWishGranter granter)
     {
-        if (!granter.NeedItems)
-        {
-            return true;
-        }
         return datasDict[granter].interactables.Count < datasDict[granter].places.Length;
     }
 

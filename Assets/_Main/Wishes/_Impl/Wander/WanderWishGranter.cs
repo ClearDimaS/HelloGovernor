@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class WanderWishGranter : WishGranter
+public class WanderWishGranter : TimerWishGranter
 {
     [Inject] private EnvironmentManager environment;
 
