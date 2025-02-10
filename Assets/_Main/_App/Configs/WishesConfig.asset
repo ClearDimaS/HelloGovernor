@@ -12,46 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a818bb9341e94dfea2a08d14fc25303c, type: 3}
   m_Name: WishesConfig
   m_EditorClassIdentifier: 
-  collection:
-  - type: 0
-    grantDuration: 7
-    reward: 0
-    chanceWeight: 1
-  - type: 1
-    grantDuration: 3
-    reward: 30
-    chanceWeight: 2
-  - type: 2
-    grantDuration: 3
-    reward: 20
-    chanceWeight: 2
-  - type: 3
-    grantDuration: 3
-    reward: 25
-    chanceWeight: 2
-  - type: 4
-    grantDuration: 7
-    reward: 0
-    chanceWeight: 1
-  - type: 5
-    grantDuration: 0
-    reward: 10
-    chanceWeight: 0
-  moneyWishes:
-  - type: 1
-    grantDuration: 0
-    reward: 0
-    chanceWeight: 1
-  - type: 2
-    grantDuration: 0
-    reward: 0
-    chanceWeight: 1
-  - type: 3
-    grantDuration: 0
-    reward: 0
-    chanceWeight: 1
-  - type: 5
-    grantDuration: 0
-    reward: 0
-    chanceWeight: 1
+  collection: []
   chatGroupSizeMinMax: {x: 2, y: 4}
