@@ -8,6 +8,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
 {
     [SerializeField] private Interactor interactor;
     [SerializeField] private Walker walker;
+    [SerializeField] private float rotSpeed = 360f;
     private WishAssistantItemSource itemsSource;
     
     private WishAssistantItem item;
@@ -36,6 +37,13 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         {
             RefreshTarget();
             walker.MoveToTarget(itemsSource.IdlePlace.position, null);
+            if (!walker.IsMoving)
+            {
+                var diff = itemsSource.TakePlace.position - transform.position;
+                diff.y = 0f;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(diff.normalized, Vector3.up),
+                    rotSpeed * Time.deltaTime);
+            }
         }
         if (target != null)
         {
@@ -51,11 +59,6 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         }
     }
 
-    public bool CanServeType(WishGranter granter)
-    {
-        return this.wishGranter == granter;
-    }
-
     public bool CanAddItems(ItemsWishGranter granter)
     {
         return item == null;
@@ -69,7 +72,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private void AllowAddProgressToWisher()
     {
-        if (target != null && !target.HasAssistant())
+        if (target != null && (!target.HasAssistant() || target.Assistant == this))
         {
             target.SetWishAssistant(this);   
         }
