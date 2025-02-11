@@ -9,24 +9,11 @@ public class WishAssistantItemsPool
     protected WishAssistantItem[] prefabs;
 
     private Queue<WishAssistantItem> spawnedDict = new ();
-    private List<WishAssistantItem> prefabsDict = new ();
 
     public WishAssistantItemsPool(WishAssistantItem[] prefabs, DiContainer container)
     {
         this.prefabs = prefabs;
         this.container = container;
-    }
-
-    protected virtual void OnAwake()
-    {
-        foreach (var prefab in prefabs)
-        {
-            if (prefab == null)
-            {
-                continue;
-            }
-            prefabsDict.Add(prefab);
-        }
     }
 
     public WishAssistantItem GetElement()
@@ -38,8 +25,8 @@ public class WishAssistantItemsPool
         
         if (spawnedDict.Count == 0)
         {
-            var list = prefabsDict;
-            var prefab = list[Random.Range(0, list.Count)];
+            var list = prefabs;
+            var prefab = list[Random.Range(0, list.Length)];
             spawnedDict.Enqueue(container.InstantiatePrefabForComponent<WishAssistantItem>(prefab));
         }
 
