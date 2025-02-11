@@ -2,9 +2,17 @@ using UnityEngine;
 
 public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, ItemsProcessPlace>
 {
-    protected override bool CanAddProgress(CitizenController citizen)
+    public CitizenController GetProcessedWithoutAssistant()
     {
-        return citizen.WishesController.IsGranterAssistantServing(this);
+        foreach (var citizen in processed)
+        {
+            if (!citizen.WishesController.IsGranterAssistantServing(this))
+            {
+                return citizen;
+            }
+        }
+
+        return null;
     }
     
     public Sprite GetItemIcon()

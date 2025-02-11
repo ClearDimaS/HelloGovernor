@@ -17,11 +17,6 @@ public class WanderWishGranter : TimerWishGranter
         }
     }
 
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return true;
-    }
-
     protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
     {
         return citizen.transform.position;

@@ -112,7 +112,7 @@ public class WishesController : CitizenBehaviour
         }
     }
 
-    public bool IsGranterAssistantServing(WishGranter granter)
+    public bool IsGranterAssistantServing(ItemsWishGranter granter)
     {
         return wishAssistant != null && wishAssistant.CanServeType(granter);
     }

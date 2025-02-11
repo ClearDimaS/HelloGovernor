@@ -4,13 +4,13 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
 {
     [SerializeField] protected OperatablePlace operatablePlace;
 
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return operatablePlace.IsOperated;
-    }
-
     public Sprite GetIconOperator()
     {
         return null;
+    }
+
+    public bool IsOperated()
+    {
+        return operatablePlace.IsOperated;
     }
 }

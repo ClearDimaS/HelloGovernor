@@ -54,11 +54,6 @@ public class ChatWishGranter : UIWishGranter
         }
     }
 
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return citizen.IsChatting;
-    }
-    
     protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
     {
         return citizen.transform.position;

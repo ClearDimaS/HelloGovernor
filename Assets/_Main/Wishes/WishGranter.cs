@@ -38,8 +38,7 @@ public abstract class WishGranter : MonoBehaviour
     [SerializeField] protected ProcessPlace[] processPlaces;
     [SerializeField] private Transform exit;
     [SerializeField] private UpgradableObject upgradable;
-    [field: SerializeField] public bool NeedItems { get; set; }
-    
+
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
@@ -191,7 +190,15 @@ public abstract class WishGranter : MonoBehaviour
         return approaching.Contains(citizen) || queue.Contains(citizen) || processed.Contains(citizen) || leaving.Contains(citizen);
     }
 
-    protected abstract bool CanAddProgress(CitizenController citizen);
+    protected virtual bool CanAddProgress(CitizenController citizen)
+    {
+        if (citizenPlacesDict.ContainsKey(citizen))
+        {
+            return citizenPlacesDict[citizen].CanAddProgress(citizen);
+        }
+
+        return false;
+    }
     
     protected virtual Vector3 GetQueuePlaceFor(CitizenController citizen)
     {
@@ -322,19 +329,6 @@ public abstract class WishGranter : MonoBehaviour
     public bool IsProcessed(CitizenController target)
     {
         return processed.Contains(target);
-    }
-
-    public CitizenController GetProcessedWithoutAssistant()
-    {
-        foreach (var citizen in processed)
-        {
-            if (!citizen.WishesController.IsGranterAssistantServing(this))
-            {
-                return citizen;
-            }
-        }
-
-        return null;
     }
 
     public BuildingData GetBuildingData()

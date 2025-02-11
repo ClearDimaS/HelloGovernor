@@ -11,14 +11,14 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private WishAssistantItemSource itemsSource;
     
     private WishAssistantItem item;
-    private WishGranter wishGranter;
+    private ItemsWishGranter wishGranter;
     private CitizenController target;
     
     public Transform Root => transform;
     
     private void Awake()
     {
-        wishGranter = GetComponentInParent<WishGranter>();
+        wishGranter = GetComponentInParent<ItemsWishGranter>();
         itemsSource = wishGranter.GetComponentInChildren<WishAssistantItemSource>();
     }
 

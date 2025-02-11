@@ -5,8 +5,5 @@ using Zenject;
 
 public class DrinkGranter : ItemsWishGranter
 {
-    protected override bool CanAddProgress(CitizenController citizen)
-    {
-        return citizen.WishesController.IsGranterAssistantServing(this);
-    }
+
 }
