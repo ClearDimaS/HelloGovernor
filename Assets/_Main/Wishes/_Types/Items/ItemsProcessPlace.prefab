@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2708154367155661732}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 0.23584907, y: 0.23529412, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemTakePlace>k__BackingField: {fileID: 6815768586965072056}
   takeTimer: {fileID: 2528267132507305389}
+  takeRadius: 1.5
 --- !u!1001 &760022324481895977
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingBase : MonoBehaviour
+public abstract class BuildingBase : MonoBehaviour
 {
     [SerializeField] private UpgradableBuilding upgradable;
     

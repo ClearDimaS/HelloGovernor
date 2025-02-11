@@ -12,17 +12,17 @@ public class UpgradableBuilding : UpgradableObject
     [Inject] private DiContainer container;
     [Inject] private BuildingsCollectionConfig buildingsCollection;
     [Inject] private UpgradablePricesManager _upgradablePricesManager;
-    
+
+    private BuildingBase buildingBase;
     [SerializeField] private Transform boughtRoot;
 
-    private WishGranter wishGranter;
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        wishGranter = GetComponentInParent<WishGranter>();
+        buildingBase = GetComponent<BuildingBase>();
     }
 
     public List<Price> GetPricesCopy()
@@ -47,7 +47,7 @@ public class UpgradableBuilding : UpgradableObject
             }
             
             spawnedLevel = data.level;
-            var buildingData = buildingsCollection.GetBuildingData(this);
+            var buildingData = buildingsCollection.GetBuildingData(buildingBase);
             var level = buildingData.levels[data.level - 1];
             var optionPrefab = level.option;
             if (spawnedGFX != null)
@@ -101,11 +101,11 @@ public class UpgradableBuilding : UpgradableObject
 
     public override Sprite GetPurchaseIcon()
     {
-        return buildingsCollection.GetBuildingData(this).icon;
+        return buildingsCollection.GetBuildingData(buildingBase).icon;
     }
 
     public override string GetTitle()
     {
-        return buildingsCollection.GetBuildingData(this).title;
+        return buildingsCollection.GetBuildingData(buildingBase).title;
     }
 }

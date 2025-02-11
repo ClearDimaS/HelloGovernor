@@ -17,7 +17,15 @@ public class OperatableProcessPlace : ProcessPlace
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        timer.SetProgress(progress);
+        var showTimer = GetOwner() != null;
+        if (showTimer != timer.gameObject.activeSelf)
+        {
+            timer.gameObject.SetActive(showTimer);
+        }
+        if (showTimer)
+        {
+            timer.SetProgress(progress);
+        }
     }
 
     public override bool CanAddProgress(CitizenController citizen)

@@ -891,6 +891,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrinksAssistantConsumer
       objectReference: {fileID: 0}
+    - target: {fileID: 7317539179710872705, guid: fdefd43800d694893b817bf8a089c870,
+        type: 3}
+      propertyPath: itemDatas.Array.data[0].granter
+      value: 
+      objectReference: {fileID: 3013265496511654878}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1035,6 +1040,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3013265496511654878}
+    - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4070567037395091893}
   m_SourcePrefab: {fileID: 100100000, guid: ab3512ad7fea34161b18b52fd2504100, type: 3}
 --- !u!4 &1711646641626850008 stripped
 Transform:
@@ -1078,7 +1087,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9437c92b37c744d50ac7fea3ea0868fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyStack: {fileID: 4373442872418872926}
   queuePlaces:
   - {fileID: 837546884635036281}
   - {fileID: 2401406561797231874}
@@ -1095,6 +1103,20 @@ MonoBehaviour:
   - {fileID: 2209361661293754489}
   exit: {fileID: 3611561897597337743}
   upgradable: {fileID: 1758310734982333902}
+  currencyStack: {fileID: 4373442872418872926}
+--- !u!114 &4070567037395091893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364554746815669544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f7ad450d894342acfe852e7a5f24dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradable: {fileID: 0}
 --- !u!4 &5950321682683008347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,

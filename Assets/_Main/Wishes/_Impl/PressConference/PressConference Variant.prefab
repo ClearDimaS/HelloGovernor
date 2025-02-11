@@ -527,6 +527,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1425394632037643225}
+    - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1818858831030740625}
   m_SourcePrefab: {fileID: 100100000, guid: ab3512ad7fea34161b18b52fd2504100, type: 3}
 --- !u!4 &897913991928978629 stripped
 Transform:
@@ -581,6 +585,19 @@ MonoBehaviour:
   exit: {fileID: 8707150007015362185}
   upgradable: {fileID: 5080909494020951120}
   currencyStack: {fileID: 8649739682565619877}
+--- !u!114 &1818858831030740625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094251354222685366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca17b75022d403fa051b9730cccfc7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradable: {fileID: 0}
 --- !u!4 &8094251354222685369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,

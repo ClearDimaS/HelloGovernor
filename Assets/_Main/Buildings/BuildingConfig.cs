@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 [CreateAssetMenu(menuName = "Configs/Buildings/Building", fileName = "New Building")]
 public class BuildingConfig : ScriptableObject, IKey<Type>
 {
-    [SerializeField] private UpgradableBuilding building;
+    [SerializeField] private BuildingBase building;
     
     public string title;
     public Sprite icon;

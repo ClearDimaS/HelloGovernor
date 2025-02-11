@@ -697,6 +697,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CandyShopAssistantConsumer
       objectReference: {fileID: 0}
+    - target: {fileID: 8479169022582190643, guid: 2ead2c4a0bbbd4cb28006d417c770c5e,
+        type: 3}
+      propertyPath: itemDatas.Array.data[0].granter
+      value: 
+      objectReference: {fileID: 4625852682579522250}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -842,6 +847,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4625852682579522250}
+    - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3423621939799396741}
   m_SourcePrefab: {fileID: 100100000, guid: ab3512ad7fea34161b18b52fd2504100, type: 3}
 --- !u!1 &943245350102879795 stripped
 GameObject:
@@ -861,7 +870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea076071454e417887ccb5c0bf60aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyStack: {fileID: 434016788909206835}
   queuePlaces:
   - {fileID: 2204767301128498384}
   - {fileID: 2615640301312289562}
@@ -874,7 +882,20 @@ MonoBehaviour:
   - {fileID: 7269238838148303502}
   exit: {fileID: 2730897828829680081}
   upgradable: {fileID: 4305615372893449941}
-  <NeedItems>k__BackingField: 0
+  currencyStack: {fileID: 434016788909206835}
+--- !u!114 &3423621939799396741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943245350102879795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4712deb03c772403096b3efadf6e742b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradable: {fileID: 0}
 --- !u!4 &943245350102879804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,

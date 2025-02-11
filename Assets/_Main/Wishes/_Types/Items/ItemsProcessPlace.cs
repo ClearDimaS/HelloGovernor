@@ -27,6 +27,16 @@ public class ItemsProcessPlace : ProcessPlace
     {
         base.OnUpdate(visible);
         takeTimer.SetProgress(progress);
+        var showGFX = GetOwner() != null;
+        if (showGFX != ItemTakePlace.gameObject.activeSelf)
+        {
+            ItemTakePlace.gameObject.SetActive(showGFX);
+        }
+        var showTimer = progress > 0f;
+        if (takeTimer.gameObject.activeSelf != showTimer)
+        {
+            takeTimer.gameObject.SetActive(showTimer);
+        }
         if (visible && wishAssistant == null && player.HasItems(itemsWishGranter))
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;

@@ -435,6 +435,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowersAssistantConsumer
       objectReference: {fileID: 0}
+    - target: {fileID: 9040299086929015297, guid: 2385444ab6ebb4a508654018980f4596,
+        type: 3}
+      propertyPath: itemDatas.Array.data[0].granter
+      value: 
+      objectReference: {fileID: 7780261612312495710}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -755,6 +760,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7780261612312495710}
+    - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9000612881463764057}
   m_SourcePrefab: {fileID: 100100000, guid: ab3512ad7fea34161b18b52fd2504100, type: 3}
 --- !u!4 &223057773283386223 stripped
 Transform:
@@ -798,7 +807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10a8c7ce120249289476b40fd9d455e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyStack: {fileID: 5724849644326985084}
   queuePlaces:
   - {fileID: 7126564119556077949}
   - {fileID: 7874702183292909548}
@@ -812,6 +820,20 @@ MonoBehaviour:
   - {fileID: 4339313830425448836}
   exit: {fileID: 4360632264913496921}
   upgradable: {fileID: 918257262650868857}
+  currencyStack: {fileID: 5724849644326985084}
+--- !u!114 &9000612881463764057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4209111822711121055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cdf2fe11f35431f83d8504fde8f0c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradable: {fileID: 0}
 --- !u!4 &5065215164391527660 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
