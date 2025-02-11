@@ -13,4 +13,9 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
     {
         return operatablePlace.IsOperated;
     }
+    
+    protected override void OnLeave(CitizenController citizen)
+    {
+
+    }
 }

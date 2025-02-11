@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 
 public interface IWishAssistant
 {
-    public bool CanServeType(WishGranter granter);
+    public WishAssistantItem RemoveItem(ItemsWishGranter granter);
+    public bool HasItems(ItemsWishGranter itemsWishGranter);
 }
 
 public class WishesController : CitizenBehaviour
@@ -20,14 +21,12 @@ public class WishesController : CitizenBehaviour
 
     private bool isPaused;
     private bool isWishOver;
-    private IWishAssistant wishAssistant;
     private Wish currentWish;
     private Transform target;
     
     private event Action<bool> wishResultEvent;
     
     public bool IsPaused => isPaused;
-    public IWishAssistant WishAssistant => wishAssistant;
     public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
     public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
     public WishGranter WishGranter => currentWish.Granter;
@@ -37,7 +36,6 @@ public class WishesController : CitizenBehaviour
         base.OnUpdate(visible);
         if (currentWish == null)
         {
-            wishAssistant = null;
             SetRandomWish();
         }
     }
@@ -89,7 +87,7 @@ public class WishesController : CitizenBehaviour
         if (!isWishOver)
         {
             if (currentWish.IsSuccess && 
-                wish.UseSound && wishAssistant == player.WishAssistant)
+                wish.UseSound)
             {
                 SoundManager.Instance.WishDone();
             }
@@ -110,16 +108,6 @@ public class WishesController : CitizenBehaviour
                 wishResultEvent?.Invoke(success);
             }   
         }
-    }
-
-    public bool IsGranterAssistantServing(ItemsWishGranter granter)
-    {
-        return wishAssistant != null && wishAssistant.CanServeType(granter);
-    }
-
-    public void SetWishAssistant(IWishAssistant waiterAssistant)
-    {
-        wishAssistant = waiterAssistant;
     }
 
     public void SubscribeWishesResult(Action<bool> handler)

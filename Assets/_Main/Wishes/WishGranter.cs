@@ -7,7 +7,7 @@ using Zenject;
 
 public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfig where U : ProcessPlace
 {
-    private U[] wishPlacesTyped;
+    protected U[] wishPlacesTyped;
     
     protected T config;
     
@@ -137,9 +137,8 @@ public abstract class WishGranter : MonoBehaviour
         // 3. Processed
         foreach (var citizen in processed)
         {
-            var wasReady = citizen.WishesController.IsProgressFull(this);
             UpdateProcessed(citizen);
-            if (citizen.WishesController.IsProgressFull(this) && wasReady)
+            if (citizen.WishesController.IsProgressFull(this))
             {
                 pendingLeaving.Add(citizen);
             }
@@ -176,9 +175,15 @@ public abstract class WishGranter : MonoBehaviour
     {
         if (CanAddProgress(citizen))
         {
-            citizen.WishesController.AddProgress(this, Time.deltaTime / FullProgressTime);   
+            citizen.WishesController.AddProgress(this, Time.deltaTime / FullProgressTime);
+            if (citizen.WishesController.IsProgressFull(this))
+            {
+                OnLeave(citizen);
+            }
         }
     }
+
+    protected abstract void OnLeave(CitizenController citizen);
 
     public virtual bool IsWorking()
     {
@@ -220,7 +225,7 @@ public abstract class WishGranter : MonoBehaviour
     {
         return GetProcessRootFor(citizen).position;
     }
-    
+
     protected virtual Quaternion GetProcessRotFor(CitizenController citizen)
     {
         return GetProcessRootFor(citizen).rotation;

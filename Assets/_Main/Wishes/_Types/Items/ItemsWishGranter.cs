@@ -2,17 +2,30 @@ using UnityEngine;
 
 public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, ItemsProcessPlace>
 {
-    public CitizenController GetProcessedWithoutAssistant()
+    public ItemsProcessPlace GetProcessedWithoutAssistant()
     {
-        foreach (var citizen in processed)
+        foreach (var place in wishPlacesTyped)
         {
-            if (!citizen.WishesController.IsGranterAssistantServing(this))
+            if (!place.HasAssistant())
             {
-                return citizen;
+                return place;
             }
         }
 
         return null;
+    }
+    
+    protected override void OnLeave(CitizenController citizen)
+    {
+        foreach (var wishPlace in wishPlacesTyped)
+        {
+            if (wishPlace.GetOwner() == citizen)
+            {
+                var item = wishPlace.RemoveItem();
+                citizen.AddItem(item);
+                break;
+            }
+        }
     }
     
     public Sprite GetItemIcon()

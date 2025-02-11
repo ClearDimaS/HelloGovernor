@@ -10,7 +10,8 @@ public class PlayerController : Singleton<PlayerController>,
     ICurrencyHolder, 
     IThiefBuster,
     IOperator, 
-    IItemTaker
+    IItemTaker,
+    IWishAssistant
 {
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;
@@ -123,5 +124,15 @@ public class PlayerController : Singleton<PlayerController>,
     public void AddItem(WishAssistantItem takeItem)
     {
         interactor.AddItem(takeItem);
+    }
+
+    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
+    {
+        return interactor.RemoveItem(granter);
+    }
+    
+    public bool HasItems(ItemsWishGranter granter)
+    {
+        return interactor.HasItem(granter);
     }
 }

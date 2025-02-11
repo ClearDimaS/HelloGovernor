@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3653135397589310002}
   - component: {fileID: 6678607422693752179}
   - component: {fileID: 8850249571493373931}
-  - component: {fileID: 5891161145917219298}
   - component: {fileID: 2034568369727287653}
   - component: {fileID: 2931607949898103547}
   m_Layer: 9
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b77b88cb7948bd931fcaee7d7e93a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactor: {fileID: 0}
   rb: {fileID: 2931607949898103547}
 --- !u!114 &8850249571493373931
 MonoBehaviour:
@@ -126,20 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01abec0d72444cd8547dcab35b2846e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5891161145917219298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6330541117859915597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d63f1b2b2d24149bf123a8442f0c0fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ignoreVisible: 0
-  interactRadius: 2
 --- !u!114 &2034568369727287653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDatas:
-  - type: 1
+  - granter: {fileID: 3013265496511654878, guid: dcb439df5f3f64b48b95bb609438905e,
+      type: 3}
     places:
     - {fileID: 5959283192045006843}
     - {fileID: 2434173200886026526}
@@ -163,7 +150,8 @@ MonoBehaviour:
     bone: 17
     boneTransform: {fileID: 0}
     interactables: []
-  - type: 2
+  - granter: {fileID: 7780261612312495710, guid: 4c07c858f17824e989bdfc43e08cf005,
+      type: 3}
     places:
     - {fileID: 900908692971272304}
     - {fileID: 7543577144299575784}
@@ -173,7 +161,8 @@ MonoBehaviour:
     bone: 17
     boneTransform: {fileID: 0}
     interactables: []
-  - type: 3
+  - granter: {fileID: 4625852682579522250, guid: 35143d3ada9274059a84fcfae01e8047,
+      type: 3}
     places:
     - {fileID: 1837566204193888651}
     - {fileID: 8275108072389023967}

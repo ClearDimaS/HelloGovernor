@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8a16b914c44750b35632f22e9e3b92, type: 3}
+  m_Name: PressConferenceGranter
+  m_EditorClassIdentifier: 
+  granter: {fileID: 1425394632037643225, guid: eb8733aa1329348a59a0e3cbc978b6c7, type: 3}
+  grantDuration: 1
+  reward: 100
+  chanceWeight: 1
+  buildingData:
+    title: Arena
+    icon: {fileID: -122496617620796665, guid: fe42c8b526e77e54ab91d0590272d9e8, type: 3}
+    levels:
+    - option: {fileID: 7157111886354250660, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+  wishProcessorPanel: {fileID: 0}

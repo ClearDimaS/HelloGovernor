@@ -7,15 +7,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-/*
-public enum EInteractable
-{
-    None,
-    Drink,
-    Flowers,
-    IceCream,
-    PressConference
-}*/
 public class Interactor : CulledBehaviour
 {
     [Serializable]
@@ -32,14 +23,14 @@ public class Interactor : CulledBehaviour
     [SerializeField] private List<ItemsData> itemDatas;
     private Animator controller;
 
-    private Dictionary<ItemsWishGranter, ItemsData> datasDict = new ();
+    private Dictionary<Type, ItemsData> datasDict = new ();
     private Transform rootsParent;
 
     protected override void OnAwake()
     {
         base.OnAwake();
         controller = GetComponentInChildren<Animator>();
-        datasDict = itemDatas.ToDictionary(x => x.granter, x => x);
+        datasDict = itemDatas.ToDictionary(x => x.granter.GetType(), x => x);
     }
 
     protected override void OnUpdate(bool visible)
@@ -80,14 +71,14 @@ public class Interactor : CulledBehaviour
 
     public bool HasItem(ItemsWishGranter granter)
     {
-        return datasDict[granter].interactables.Count > 0;
+        return datasDict[granter.GetType()].interactables.Count > 0;
     }
 
     public void AddItem(WishAssistantItem item)
     {
-        var data = datasDict[item.Type];
+        var data = datasDict[item.Type.GetType()];
         var place = data.places[data.interactables.Count];
-        datasDict[item.Type].interactables.Add(item);
+        datasDict[item.Type.GetType()].interactables.Add(item);
 
         item.transform.DOKill();
         item.transform.SetParent(place);
@@ -109,7 +100,7 @@ public class Interactor : CulledBehaviour
 
     public WishAssistantItem RemoveItem(ItemsWishGranter granter)
     {
-        var data = datasDict[granter];
+        var data = datasDict[granter.GetType()];
         var item = data.interactables[0];
         data.interactables.RemoveAt(0);
         return item;
@@ -117,7 +108,7 @@ public class Interactor : CulledBehaviour
 
     public bool HasMorePlaceFor(ItemsWishGranter granter)
     {
-        return datasDict[granter].interactables.Count < datasDict[granter].places.Length;
+        return datasDict[granter.GetType()].interactables.Count < datasDict[granter.GetType()].places.Length;
     }
 
     public bool HasAnyIKItem()

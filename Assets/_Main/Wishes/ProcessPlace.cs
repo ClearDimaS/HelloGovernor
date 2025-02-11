@@ -45,6 +45,11 @@ public abstract class ProcessPlace : CulledBehaviour
         processed = citizen;
     }
     
+    public CitizenController GetOwner()
+    {
+        return processed;
+    }
+    
     public void LeavePlace(CitizenController citizen)
     {
         if (processed != citizen)

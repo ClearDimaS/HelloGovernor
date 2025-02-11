@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Configs/Wishes/WishGranter", fileName = "WishConfig")]
+//[CreateAssetMenu(menuName = "Configs/Wishes/WishGranter", fileName = "WishConfig")]
 public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
 {
     public WishGranter granter;

@@ -12,7 +12,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private WishAssistantItem item;
     private ItemsWishGranter wishGranter;
-    private CitizenController target;
+    private ItemsProcessPlace target;
     
     public Transform Root => transform;
     
@@ -26,22 +26,9 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     {
         if (target != null)
         {
-            if (target.WishesController.WishAssistant != null && target.WishesController.WishAssistant != this)
+            if (target.HasAssistant() && target.Assistant != this)
             {
                 target = null;
-            }
-        }
-
-        if (target != null && item != null)
-        {
-            if (!wishGranter.IsProcessed(target))
-            {
-                var removed = item;
-                target.WishesController.SetWishAssistant(null);
-                interactor.RemoveItem(removed.Type);
-                target.AddItem(removed);
-                target = null;
-                item = null;
             }
         }
 
@@ -53,11 +40,12 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         {
             if (item == null)
             {
+                target.RemoveAssistant(this);
                 walker.MoveToTarget(itemsSource.TakePlace.position, StartTakeItem);
             }
             else
             {
-                walker.MoveToTarget(target.transform.position, AllowAddProgressToWisher, 0.8f);   
+                walker.MoveToTarget(target.ItemTakePlace.position, AllowAddProgressToWisher, 0.8f);   
             }
         }
     }
@@ -80,15 +68,32 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private void AllowAddProgressToWisher()
     {
-        if (target != null)
+        if (target != null && !target.HasAssistant())
         {
-            target.WishesController.SetWishAssistant(this);   
+            target.SetWishAssistant(this);   
+        }
+        else
+        {
+            target = null;
         }
     }
 
     private void RefreshTarget()
     {
         target = wishGranter.GetProcessedWithoutAssistant();
+    }
+    
+    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
+    {
+        var removed = item;
+        interactor.RemoveItem(removed.Type);
+        item = null;
+        return removed;
+    }
+
+    public bool HasItems(ItemsWishGranter granter)
+    {
+        return item != null;
     }
     
     private void StartTakeItem()
