@@ -35,6 +35,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         if (target == null)
         {
             RefreshTarget();
+            walker.MoveToTarget(itemsSource.IdlePlace.position, null);
         }
         if (target != null)
         {

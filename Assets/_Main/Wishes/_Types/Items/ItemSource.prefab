@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &572520200172814384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6105807442347283756}
+  m_Layer: 0
+  m_Name: IdlePlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6105807442347283756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572520200172814384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.18, y: 0, z: 0.42}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2147078592459177589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &876327350069806817
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +351,7 @@ Transform:
   m_Children:
   - {fileID: 2531914532613682504}
   - {fileID: 4773324186911543441}
+  - {fileID: 6105807442347283756}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1766122601145893131
@@ -338,6 +370,7 @@ MonoBehaviour:
   iconImage: {fileID: 685687440964250638}
   takeProgressImage: {fileID: 4841695693359133084}
   <TakePlace>k__BackingField: {fileID: 2531914532613682504}
+  <IdlePlace>k__BackingField: {fileID: 6105807442347283756}
 --- !u!1 &6998766873643455924
 GameObject:
   m_ObjectHideFlags: 0

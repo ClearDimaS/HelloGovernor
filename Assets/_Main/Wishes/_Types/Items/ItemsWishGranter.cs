@@ -6,7 +6,7 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     {
         foreach (var place in wishPlacesTyped)
         {
-            if (!place.HasAssistant())
+            if (!place.HasAssistant() && place.GetOwner() != null)
             {
                 return place;
             }

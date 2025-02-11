@@ -19,6 +19,7 @@ public class WishAssistantItemSource : CulledBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private Image takeProgressImage;
     [field: SerializeField] public Transform TakePlace { get; private set; }
+    [field: SerializeField] public Transform IdlePlace { get; private set; }
     private ItemsWishGranter wishGranter;
 
     private HashSet<IItemTaker> takers = new ();
