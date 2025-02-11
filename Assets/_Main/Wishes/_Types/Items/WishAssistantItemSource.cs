@@ -36,6 +36,7 @@ public class WishAssistantItemSource : CulledBehaviour
     {
         iconImage.sprite = wishGranter.GetItemIcon();
         pool = new WishAssistantItemsPool(wishGranter.GetPrefabs(), container);
+        takerTimers[player] = 0;
     }
 
     protected override void OnUpdate(bool visible)
@@ -47,7 +48,7 @@ public class WishAssistantItemSource : CulledBehaviour
         {
             var diffToPlayer = TakePlace.position - player.transform.position;
             diffToPlayer.y = 0f;
-            if (diffToPlayer.magnitude < radius)
+            if (diffToPlayer.magnitude < radius && player.CanAddItems(wishGranter))
             {
                 takers.Add(player);
             }
@@ -104,6 +105,6 @@ public class WishAssistantItemSource : CulledBehaviour
     public void RemoveTaker(IItemTaker taker)
     {
         takers.Remove(taker);
-        takerTimers.Remove(taker);
+        takerTimers[taker] = 0f;   
     }
 }
