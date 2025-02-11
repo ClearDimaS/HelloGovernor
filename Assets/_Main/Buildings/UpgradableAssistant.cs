@@ -56,7 +56,7 @@ public class UpgradableAssistant : UpgradableObject
     {
         if (itemsWishGranter == null)
         {
-            itemsWishGranter = GetComponentInParent<ItemsWishGranter>();
+            itemsWishGranter = GetComponentInParent<ItemsWishGranter>(true);
         }
         return itemsWishGranter.GetIconAssistant();
     }

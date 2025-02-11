@@ -45,11 +45,6 @@ public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, T
         throw new InvalidOperationException("Failed to select an element based on weight.");
     }
 
-    public BuildingData GetBuildingData(WishGranter wishGranter)
-    {
-        return GetItem(wishGranter.GetType()).buildingData;
-    }
-
     public WishGranterConfig GetConfig(WishGranter granter)
     {
         return GetItem(granter.GetType());

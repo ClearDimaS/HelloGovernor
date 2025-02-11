@@ -19,7 +19,7 @@ public class ItemsProcessPlace : ProcessPlace
 
     private void Start()
     {
-        itemsWishGranter = GetComponentInParent<ItemsWishGranter>();
+        itemsWishGranter = GetComponentInParent<ItemsWishGranter>(true);
         takeTimer.SetIcon(itemsWishGranter.GetItemIcon());
     }
 

@@ -42,4 +42,9 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     {
         return config.GetItemsData().assistantIcon;
     }
+
+    public WishAssistantItem[] GetPrefabs()
+    {
+        return config.GetItemsData().prefabs;
+    }
 }

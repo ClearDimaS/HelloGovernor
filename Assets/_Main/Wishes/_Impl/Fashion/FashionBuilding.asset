@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04dfaa8480943b68da0783a71dade25, type: 3}
+  m_Name: FashionBuilding
+  m_EditorClassIdentifier: 
+  building: {fileID: 8266840917388100902, guid: e275e18593953496c8148892095796f0,
+    type: 3}
+  title: Fasion
+  icon: {fileID: 21300000, guid: b23fb06fb3d3747fb9d3b75c63718a83, type: 3}
+  levels:
+  - option: {fileID: 7970183054500634690, guid: 0936ef0a115ee4de9a1ae4b8521c2fb6,
+      type: 3}

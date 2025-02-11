@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -9,6 +10,7 @@ using Zenject;
 public class UpgradableBuilding : UpgradableObject
 {
     [Inject] private DiContainer container;
+    [Inject] private BuildingsCollectionConfig buildingsCollection;
     [Inject] private UpgradablePricesManager _upgradablePricesManager;
     
     [SerializeField] private Transform boughtRoot;
@@ -45,7 +47,7 @@ public class UpgradableBuilding : UpgradableObject
             }
             
             spawnedLevel = data.level;
-            var buildingData = wishGranter.GetBuildingData();
+            var buildingData = buildingsCollection.GetBuildingData(this);
             var level = buildingData.levels[data.level - 1];
             var optionPrefab = level.option;
             if (spawnedGFX != null)
@@ -99,11 +101,11 @@ public class UpgradableBuilding : UpgradableObject
 
     public override Sprite GetPurchaseIcon()
     {
-        return wishGranter.GetBuildingData().icon;
+        return buildingsCollection.GetBuildingData(this).icon;
     }
 
     public override string GetTitle()
     {
-        return wishGranter.GetBuildingData().title;
+        return buildingsCollection.GetBuildingData(this).title;
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04dfaa8480943b68da0783a71dade25, type: 3}
+  m_Name: Hospital Building
+  m_EditorClassIdentifier: 
+  building: {fileID: 7051691173991306996, guid: 48e2a083fd30943f991d056d0c11d1e0,
+    type: 3}
+  title: Hospital
+  icon: {fileID: 21300000, guid: b1f5c76fc06e2453298cfe0effe6cd8c, type: 3}
+  levels:
+  - option: {fileID: 2030961714236128625, guid: 805ed8472bde0455e88a637a63ed2216,
+      type: 3}

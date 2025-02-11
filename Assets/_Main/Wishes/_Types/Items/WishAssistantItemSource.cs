@@ -12,7 +12,7 @@ public interface IItemTaker : IRootProvider
 
 public class WishAssistantItemSource : CulledBehaviour
 {
-    [Inject] private WishAssistantItemsPool pool;
+    [Inject] private DiContainer container;
     [Inject] private PlayerController player;
 
     [SerializeField] private float radius = 1f;
@@ -24,12 +24,18 @@ public class WishAssistantItemSource : CulledBehaviour
     private HashSet<IItemTaker> takers = new ();
     private List<IItemTaker> giveItemToTakersTMP = new ();
     private Dictionary<IItemTaker, float> takerTimers = new ();
-
+    private WishAssistantItemsPool pool;
+    
     protected override void OnAwake()
     {
         base.OnAwake();
-        wishGranter = GetComponentInParent<ItemsWishGranter>();
+        wishGranter = GetComponentInParent<ItemsWishGranter>(true);
+    }
+
+    private void Start()
+    {
         iconImage.sprite = wishGranter.GetItemIcon();
+        pool = new WishAssistantItemsPool(wishGranter.GetPrefabs(), container);
     }
 
     protected override void OnUpdate(bool visible)
@@ -81,7 +87,7 @@ public class WishAssistantItemSource : CulledBehaviour
 
     private WishAssistantItem TakeItem()
     {
-        var element = pool.GetElement(wishGranter);
+        var element = pool.GetElement();
         element.transform.position = transform.position;
         return element;
     }

@@ -1,7 +1,7 @@
 using System.Collections;
 using Zenject;
 
-public class PressConferenceGranter : OperatableGranter
+public class PressConferenceGranter : UIWishGranter
 {
     protected override bool CanAddProgress(CitizenController citizen)
     {

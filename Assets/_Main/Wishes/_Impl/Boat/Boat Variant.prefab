@@ -168,8 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9d2e249fcda4b0e9dda1f3c7f7c16f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradable: {fileID: 0}
+  upgradable: {fileID: 4525816281521608238}
   policePlace: {fileID: 0}
+--- !u!114 &4525816281521608238 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6533214046412964063, guid: ab3512ad7fea34161b18b52fd2504100,
+    type: 3}
+  m_PrefabInstance: {fileID: 7233993086103181041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583610973171742408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc905ae8166469aa4d097eb477c18e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8375536054870378171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,

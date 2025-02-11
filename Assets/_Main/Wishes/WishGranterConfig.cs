@@ -9,7 +9,6 @@ public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
     public int reward;
     public float chanceWeight;
 
-    public BuildingData buildingData;
     private Type type;
     public Type Key
     {

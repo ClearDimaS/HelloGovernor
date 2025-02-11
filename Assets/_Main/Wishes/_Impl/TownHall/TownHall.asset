@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04dfaa8480943b68da0783a71dade25, type: 3}
+  m_Name: TownHall
+  m_EditorClassIdentifier: 
+  building: {fileID: 819254169116940984, guid: d8c01cbfed1294ec1a38707286d260e9, type: 3}
+  title: TownHall
+  icon: {fileID: 21300000, guid: b1f5c76fc06e2453298cfe0effe6cd8c, type: 3}
+  levels:
+  - option: {fileID: 1509567631813660540, guid: 90046facd5a1b4e4db7d2a38bd67c66a,
+      type: 3}

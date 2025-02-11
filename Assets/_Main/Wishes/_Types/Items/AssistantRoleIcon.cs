@@ -13,16 +13,18 @@ public class AssistantRoleIcon : MonoBehaviour
     private void Awake()
     {
         building = GetComponentInParent<ItemsWishGranter>(true);
+    }
 
+    private void Start()
+    {
         var sprite = icon.sprite;
         if (building != null)
         {
             sprite = building.GetIconAssistant();
         }
-        
         icon.sprite = sprite;
         
         var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;
-        icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width;  
+        icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width; 
     }
 }

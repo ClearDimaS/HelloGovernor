@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -10,34 +11,30 @@ public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfi
     protected U[] wishPlacesTyped;
     
     protected T config;
-    
-    private void Start()
+
+    protected override void OnConstruct()
     {
+        base.OnConstruct();
         wishPlacesTyped = processPlaces.Select(x => x as U).ToArray();
         config = wishesCollectionConfig.GetConfig(this) as T;
         if (config == null)
         {
             throw new NotImplementedException($"config of type {typeof(T)} is not added for granter {GetType()}");
         }
-        OnStart();
-    }
-
-    protected void OnStart()
-    {
-        
     }
 }
 
 public abstract class WishGranter : MonoBehaviour
 {
-    [Inject] protected WishesCollectionConfig wishesCollectionConfig;
-    [Inject] private WishGrantersManager grantersManager;
-
-    [SerializeField] private CurrencyStackBehaviour currencyStack;
+    [Header("Optional Places")]
     [SerializeField] private Transform[] queuePlaces;
     [SerializeField] protected ProcessPlace[] processPlaces;
-    [SerializeField] private Transform exit;
-    [SerializeField] private UpgradableObject upgradable;
+
+    //optional, crunchy 
+    [Header("Optional Buildings")]
+    [SerializeField, PropertyOrder(9999)] private Transform exit;    
+    [SerializeField, PropertyOrder(9999)] private UpgradableObject upgradable;
+    [SerializeField, PropertyOrder(9999)] private CurrencyStackBehaviour currencyStack;
 
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
@@ -52,6 +49,21 @@ public abstract class WishGranter : MonoBehaviour
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
 
+    protected WishesCollectionConfig wishesCollectionConfig;
+    private WishGrantersManager grantersManager;
+    
+    [Inject]
+    protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
+    {
+        this.wishesCollectionConfig = wishesCollectionConfig;
+        this.grantersManager = grantersManager;
+        OnConstruct();
+    }
+
+    protected virtual void OnConstruct()
+    {
+        
+    }
     private void Awake()
     {
         grantersManager.AddGranter(this);
@@ -238,6 +250,10 @@ public abstract class WishGranter : MonoBehaviour
     
     protected virtual Vector3 GetExitPlaceFor(CitizenController citizen)
     {
+        if (exit == null)
+        {
+            return citizen.transform.position;
+        }
         return exit.position;
     }
     
@@ -313,6 +329,10 @@ public abstract class WishGranter : MonoBehaviour
         {
             currencyStack.MoveCurrencyToMe(Reward, citizen.transform.position);   
         }
+        else
+        {
+            Debug.Log($"should spawn single currency");
+        }
     }
 
     public virtual bool CanAddOneMore()
@@ -334,10 +354,5 @@ public abstract class WishGranter : MonoBehaviour
     public bool IsProcessed(CitizenController target)
     {
         return processed.Contains(target);
-    }
-
-    public BuildingData GetBuildingData()
-    {
-        return wishesCollectionConfig.GetBuildingData(this);
     }
 }

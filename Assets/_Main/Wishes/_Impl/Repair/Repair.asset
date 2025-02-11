@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04dfaa8480943b68da0783a71dade25, type: 3}
+  m_Name: Repair
+  m_EditorClassIdentifier: 
+  building: {fileID: 1379877367321465849, guid: 9496b4a65ebfa4b19aee91457d9b9665,
+    type: 3}
+  title: Repair
+  icon: {fileID: 21300000, guid: b1f5c76fc06e2453298cfe0effe6cd8c, type: 3}
+  levels:
+  - option: {fileID: 716073413619425978, guid: 144727e5d56624ef89e9eb538ddec135, type: 3}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04dfaa8480943b68da0783a71dade25, type: 3}
+  m_Name: BaloonBuilding
+  m_EditorClassIdentifier: 
+  building: {fileID: 2743067458705949020, guid: 1fadc80b04b064575af2bb67958769f2,
+    type: 3}
+  title: Baloon
+  icon: {fileID: 21300012, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+  levels:
+  - option: {fileID: 5439475662375362683, guid: c26fbe815ff4b464284d30ea73992d67,
+      type: 3}
