@@ -19,5 +19,5 @@ public class ItemsConfigData
     
     public Sprite itemIcon;
     public float itemTakeTime;
-    public WishAssistantItem[] prefabs;
+    public GenericCitizenItem[] prefabs;
 }

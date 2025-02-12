@@ -41,7 +41,7 @@ public class InteractablesController : CulledBehaviour
             }
 
             target.position = root.position;
-            handRig.weight = interactor.HasAnyIKItem() ? 1f : 0f;
+            handRig.weight = interactor.HasAnyItem() ? 1f : 0f;
         }
     }
 

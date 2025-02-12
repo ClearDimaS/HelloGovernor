@@ -9,9 +9,9 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     [SerializeField] private Interactor interactor;
     [SerializeField] private Walker walker;
     [SerializeField] private float rotSpeed = 360f;
-    private WishAssistantItemSource itemsSource;
+    private GenericCitizenItemSource itemsSource;
     
-    private WishAssistantItem item;
+    private GenericCitizenItem item;
     private ItemsWishGranter wishGranter;
     private ItemsProcessPlace target;
     
@@ -20,7 +20,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private void Awake()
     {
         wishGranter = GetComponentInParent<ItemsWishGranter>();
-        itemsSource = wishGranter.GetComponentInChildren<WishAssistantItemSource>();
+        itemsSource = wishGranter.GetComponentInChildren<GenericCitizenItemSource>();
     }
 
     private void Update()
@@ -56,6 +56,11 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             {
                 walker.MoveToTarget(target.ItemTakePlace.position, AllowAddProgressToWisher, 0.8f);   
             }
+
+            if (target.GetOwner() == null)
+            {
+                target = null;
+            }
         }
     }
 
@@ -64,7 +69,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         return item == null;
     }
 
-    public void AddItem(WishAssistantItem getElement)
+    public void AddItem(GenericCitizenItem getElement)
     {
         item = getElement;
         interactor.AddItem(item);
@@ -87,15 +92,15 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         target = wishGranter.GetProcessedWithoutAssistant();
     }
     
-    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
+    public GenericCitizenItem RemoveItem()
     {
         var removed = item;
-        interactor.RemoveItem(removed.Type);
+        interactor.RemoveItem();
         item = null;
         return removed;
     }
 
-    public bool HasItems(ItemsWishGranter granter)
+    public bool HasAnyItems()
     {
         return item != null;
     }

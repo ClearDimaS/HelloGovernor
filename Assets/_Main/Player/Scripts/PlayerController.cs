@@ -121,18 +121,23 @@ public class PlayerController : Singleton<PlayerController>,
         return interactor.HasMorePlaceFor(granter);
     }
 
-    public void AddItem(WishAssistantItem takeItem)
+    public void AddItem(GenericCitizenItem takeItem)
     {
         interactor.AddItem(takeItem);
     }
 
-    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
+    public GenericCitizenItem RemoveItem()
     {
-        return interactor.RemoveItem(granter);
+        return interactor.RemoveItem() as GenericCitizenItem;
     }
     
-    public bool HasItems(ItemsWishGranter granter)
+    public bool HasAnyItems()
     {
-        return interactor.HasItem(granter);
+        return interactor.HasAnyItem();
+    }
+
+    public bool HasItemOfType(GenericCitizenItem prefab)
+    {
+        return interactor.HasItemOfType(prefab.GetData().key);
     }
 }

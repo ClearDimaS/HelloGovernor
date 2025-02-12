@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine;
 using Zenject;
 
-public class WishAssistantItemsPool
+public class GenericItemsPool
 {
     private DiContainer container;
-    protected WishAssistantItem[] prefabs;
+    protected GenericCitizenItem[] prefabs;
 
-    private Queue<WishAssistantItem> spawnedDict = new ();
+    private Queue<GenericCitizenItem> spawnedDict = new ();
 
-    public WishAssistantItemsPool(WishAssistantItem[] prefabs, DiContainer container)
+    public GenericItemsPool(GenericCitizenItem[] prefabs, DiContainer container)
     {
         this.prefabs = prefabs;
         this.container = container;
     }
 
-    public WishAssistantItem GetElement()
+    public GenericCitizenItem GetElement()
     {
         if (spawnedDict == null)
         {
@@ -26,17 +25,18 @@ public class WishAssistantItemsPool
         if (spawnedDict.Count == 0)
         {
             var list = prefabs;
-            var prefab = list[Random.Range(0, list.Length)];
-            spawnedDict.Enqueue(container.InstantiatePrefabForComponent<WishAssistantItem>(prefab));
+            var prefab = list[UnityEngine.Random.Range(0, list.Length)];
+            spawnedDict.Enqueue(container.InstantiatePrefabForComponent<GenericCitizenItem>(prefab));
         }
 
         var element = spawnedDict.Dequeue();
         element.OnReset();
         element.gameObject.SetActive(true);
+        element.SetPool(this);
         return element;
     }
 
-    public virtual void Pool(WishAssistantItem element)
+    public virtual void Pool(GenericCitizenItem element)
     {
         element.transform.DOKill();
         spawnedDict.Enqueue(element);

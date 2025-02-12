@@ -95,23 +95,19 @@ public class CitizenController : CulledBehaviour
         return house == null || !house.IsBroken();
     }
 
-    public void AddItem(WishAssistantItem item)
+    public void AddItem(CitizenItem item)
     {
-        if (!interactor.HasMorePlaceFor(item.Type))
-        {
-            return;
-        }
         interactor.AddItem(item);
-        var type = item.Type;
         var time = 10f;
         UniTask.Delay(TimeSpan.FromSeconds(time)).ContinueWith(() =>
         {
-            interactor.RemoveItem(type);
+            interactor.RemoveItem();
+            item.PoolPlease();
         });
     }
 
     public bool HasItem(ItemsWishGranter granter)
     {
-        return interactor.HasItem(granter);
+        return interactor.HasAnyItem();
     }
 }

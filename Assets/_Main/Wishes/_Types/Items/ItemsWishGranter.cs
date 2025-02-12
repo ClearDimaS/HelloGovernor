@@ -43,7 +43,7 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
         return config.GetItemsData().assistantIcon;
     }
 
-    public WishAssistantItem[] GetPrefabs()
+    public GenericCitizenItem[] GetPrefabs()
     {
         return config.GetItemsData().prefabs;
     }

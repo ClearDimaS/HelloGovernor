@@ -5,81 +5,38 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class Interactor : CulledBehaviour
 {
-    [Serializable]
-    public class ItemsData
-    {
-        public ItemsWishGranter granter;
-        public Transform[] places;
-        public Transform root;
-        public HumanBodyBones bone;
-        [ReadOnly] public Transform boneTransform;
-        [ReadOnly] public List<WishAssistantItem> interactables;
-    }
-
-    [SerializeField] private List<ItemsData> itemDatas;
-    private Animator controller;
-
-    private Dictionary<Type, ItemsData> datasDict = new ();
-    private Transform rootsParent;
-
+    [HideInInspector] public List<CitizenItem> interactables = new ();
+    private Animator animator;
+    private Dictionary<string, ItemsPlacesData> placesDict = new ();
+    
     protected override void OnAwake()
     {
         base.OnAwake();
-        controller = GetComponentInChildren<Animator>();
-        datasDict = itemDatas.ToDictionary(x => x.granter.GetType(), x => x);
+        animator = GetComponentInChildren<Animator>();
     }
 
-    protected override void OnUpdate(bool visible)
+    public bool HasAnyItem()
     {
-        base.OnUpdate(visible);
-        if (visible)
+        return interactables.Count > 0;
+    }
+
+    public void AddItem(CitizenItem item)
+    {
+        var data = item.GetData();
+        if (!placesDict.ContainsKey(data.key))
         {
-            foreach (var data in itemDatas)
-            {
-                var hasItems = data.interactables.Count > 0;
-                if (data.root.gameObject.activeSelf != hasItems)
-                {
-                    data.root.gameObject.SetActive(hasItems);
-                }
-            }
+            placesDict[data.key] = item.CreatePlaces(animator);
         }
-    }
 
-    protected override void OnLateUpdate(bool visible)
-    {
-        base.OnLateUpdate(visible);
-        if (visible)
-        {
-            if (controller != null)
-            {
-                foreach (var data in itemDatas)
-                {
-                    if(data.boneTransform == null)
-                    {
-                        data.boneTransform = controller.GetBoneTransform(data.bone);
-                    }
-
-                    data.root.position = data.boneTransform.position;
-                }
-            }
-        }
-    }
-
-    public bool HasItem(ItemsWishGranter granter)
-    {
-        return datasDict[granter.GetType()].interactables.Count > 0;
-    }
-
-    public void AddItem(WishAssistantItem item)
-    {
-        var data = datasDict[item.Type.GetType()];
-        var place = data.places[data.interactables.Count];
-        datasDict[item.Type.GetType()].interactables.Add(item);
-
+        interactables.Add(item);
+        
+        var place = placesDict[data.key].GetPlace(interactables.Count);
+        
         item.transform.DOKill();
         item.transform.SetParent(place);
         var middle = (item.transform.position + place.position) / 2f;
@@ -98,32 +55,26 @@ public class Interactor : CulledBehaviour
         item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
     }
 
-    public WishAssistantItem RemoveItem(ItemsWishGranter granter)
+    public CitizenItem RemoveItem()
     {
-        var data = datasDict[granter.GetType()];
-        var item = data.interactables[0];
-        data.interactables.RemoveAt(0);
-        return item;
+        if (interactables.Count > 0)
+        {
+            var items = interactables;
+            var item = items[^1];
+            items.RemoveAt(items.Count-1);
+            return item;
+        }
+
+        return null;
     }
 
     public bool HasMorePlaceFor(ItemsWishGranter granter)
     {
-        return datasDict[granter.GetType()].interactables.Count < datasDict[granter.GetType()].places.Length;
+        return interactables.Count < 1;
     }
 
-    public bool HasAnyIKItem()
+    public bool HasItemOfType(string key)
     {
-        foreach (var dataPair in datasDict)
-        {
-            foreach (var interactable in dataPair.Value.interactables)
-            {
-                if (interactable.IsIK)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return interactables.Count > 0 && interactables[0].GetData().key == key;
     }
 }

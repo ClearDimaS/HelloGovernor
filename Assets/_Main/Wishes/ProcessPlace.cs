@@ -56,6 +56,8 @@ public abstract class ProcessPlace : CulledBehaviour
         {
             throw new NotImplementedException("leaving place which doesnt belong to me");
         }
+
+        progress = 0f;
         processed = null;
     }
 }

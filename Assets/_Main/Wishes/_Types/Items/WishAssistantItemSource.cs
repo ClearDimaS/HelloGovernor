@@ -7,10 +7,10 @@ using Zenject;
 public interface IItemTaker : IRootProvider
 {
     public bool CanAddItems(ItemsWishGranter granter);
-    public void AddItem(WishAssistantItem takeItem);
+    public void AddItem(GenericCitizenItem takeItem);
 }
 
-public class WishAssistantItemSource : CulledBehaviour
+public class GenericCitizenItemSource : CulledBehaviour
 {
     [Inject] private DiContainer container;
     [Inject] private PlayerController player;
@@ -25,7 +25,7 @@ public class WishAssistantItemSource : CulledBehaviour
     private HashSet<IItemTaker> takers = new ();
     private List<IItemTaker> giveItemToTakersTMP = new ();
     private Dictionary<IItemTaker, float> takerTimers = new ();
-    private WishAssistantItemsPool pool;
+    private GenericItemsPool pool;
     
     protected override void OnAwake()
     {
@@ -36,7 +36,7 @@ public class WishAssistantItemSource : CulledBehaviour
     private void Start()
     {
         iconImage.sprite = wishGranter.GetItemIcon();
-        pool = new WishAssistantItemsPool(wishGranter.GetPrefabs(), container);
+        pool = new GenericItemsPool(wishGranter.GetPrefabs(), container);
         takerTimers[player] = 0;
     }
 
@@ -87,7 +87,7 @@ public class WishAssistantItemSource : CulledBehaviour
         takeProgressImage.fillAmount = progress;
     }
 
-    private WishAssistantItem TakeItem()
+    private GenericCitizenItem TakeItem()
     {
         var element = pool.GetElement();
         element.transform.position = transform.position;

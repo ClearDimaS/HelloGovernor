@@ -13,6 +13,7 @@ public class ItemsProcessPlace : ProcessPlace
     
     private ItemsWishGranter itemsWishGranter;
     private IWishAssistant wishAssistant;
+    private static bool isOnPlayer;
 
     public override float ProcessTime => itemsWishGranter.FullProgressTime;
     public IWishAssistant Assistant => wishAssistant;
@@ -32,18 +33,32 @@ public class ItemsProcessPlace : ProcessPlace
         {
             ItemTakePlace.gameObject.SetActive(showGFX);
         }
-        var showTimer = progress > 0f;
+        var showTimer = progress >= 0f && progress < 1f && GetOwner() != null;
         if (takeTimer.gameObject.activeSelf != showTimer)
         {
             takeTimer.gameObject.SetActive(showTimer);
         }
-        if (visible && wishAssistant == null && player.HasItems(itemsWishGranter))
+        if (visible && wishAssistant == null && !isOnPlayer && player.HasItemOfType(itemsWishGranter.GetPrefabs()[0]))
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
             playerDiff.y = 0f;
             if (playerDiff.magnitude < takeRadius)
             {
+                isOnPlayer = true;
                 SetWishAssistant(player);
+            }
+        }
+        else
+        {
+            if (isOnPlayer && wishAssistant == player)
+            {
+                var playerDiff = player.transform.position - ItemTakePlace.position;
+                playerDiff.y = 0f;
+                if (playerDiff.magnitude > takeRadius || GetOwner() == null)
+                {
+                    RemoveAssistant(player);
+                    isOnPlayer = false;
+                }
             }
         }
     }
@@ -63,7 +78,7 @@ public class ItemsProcessPlace : ProcessPlace
     
     public override bool CanAddProgress(CitizenController citizen)
     {
-        return wishAssistant != null && wishAssistant.HasItems(itemsWishGranter);
+        return wishAssistant != null && wishAssistant.HasAnyItems();
     }
 
     public bool HasAssistant()
@@ -71,8 +86,8 @@ public class ItemsProcessPlace : ProcessPlace
         return wishAssistant != null;
     }
 
-    public WishAssistantItem RemoveItem()
+    public GenericCitizenItem RemoveItem()
     {
-        return wishAssistant.RemoveItem(itemsWishGranter);
+        return wishAssistant.RemoveItem();
     }
 }

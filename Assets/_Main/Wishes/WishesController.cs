@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public interface IWishAssistant
 {
-    public WishAssistantItem RemoveItem(ItemsWishGranter granter);
-    public bool HasItems(ItemsWishGranter itemsWishGranter);
+    public GenericCitizenItem RemoveItem();
+    public bool HasAnyItems();
 }
 
 public class WishesController : CitizenBehaviour
