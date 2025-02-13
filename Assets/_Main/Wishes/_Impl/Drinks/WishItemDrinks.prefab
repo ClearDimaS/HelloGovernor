@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7111351236688503583}
-  - component: {fileID: 2969373326384500077}
+  - component: {fileID: 3942798764334154734}
   m_Layer: 0
   m_Name: WishItemDrinks
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2969373326384500077
+--- !u!114 &3942798764334154734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 610591441372677732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c494c079434494794063f215ddc3769, type: 3}
+  m_Script: {fileID: 11500000, guid: 760c215fee16491d8803eca9f1751a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: {fileID: 3013265496511654878, guid: dcb439df5f3f64b48b95bb609438905e,
-    type: 3}
+  itemsData: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}

@@ -1,14 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-
-public interface IItemTaker : IRootProvider
-{
-    public bool CanAddItems(ItemsWishGranter granter);
-    public void AddItem(GenericCitizenItem takeItem);
-}
 
 public class GenericCitizenItemSource : CulledBehaviour
 {

@@ -16,21 +16,15 @@ MonoBehaviour:
   grantDuration: 1.5
   reward: 10
   chanceWeight: 1
-  buildingData:
-    title: Cafe
-    icon: {fileID: 21300000, guid: f23ceb120585d437a92c9702cf7cbe41, type: 3}
-    levels:
-    - option: {fileID: 632450830194650502, guid: ebcadb0fe85a340aaa1aaac25750694f,
-        type: 3}
   itemsData:
     assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
     itemIcon: {fileID: 21300000, guid: 2156d241ca992407f9a927dd1e0c0e26, type: 3}
     itemTakeTime: 0.3
-    prefabs:
-    - {fileID: 4793156415251832267, guid: 12909516ce6bc49c990e0d08530a3240, type: 3}
-    - {fileID: 4793156415251832267, guid: 3949489eaaec54af1844656179f801dc, type: 3}
-    - {fileID: 4793156415251832267, guid: e740e36443a424e798c94dd173c77704, type: 3}
-    - {fileID: 4793156415251832267, guid: 19404e3fc4626457abacb9ced4e31f0f, type: 3}
-    - {fileID: 4793156415251832267, guid: 9e541b1fc74ec403480aff3c4ae66b31, type: 3}
-    - {fileID: 4793156415251832267, guid: 77b807d9d2f2f43a9922e6ad386c3aca, type: 3}
-    - {fileID: 4793156415251832267, guid: c79a20ed8f6c54c459fcb878ec2cc12f, type: 3}
+    _prefabs:
+    - {fileID: 6703117137150464840, guid: 12909516ce6bc49c990e0d08530a3240, type: 3}
+    - {fileID: 6703117137150464840, guid: 3949489eaaec54af1844656179f801dc, type: 3}
+    - {fileID: 6703117137150464840, guid: e740e36443a424e798c94dd173c77704, type: 3}
+    - {fileID: 6703117137150464840, guid: 19404e3fc4626457abacb9ced4e31f0f, type: 3}
+    - {fileID: 6703117137150464840, guid: 9e541b1fc74ec403480aff3c4ae66b31, type: 3}
+    - {fileID: 6703117137150464840, guid: 77b807d9d2f2f43a9922e6ad386c3aca, type: 3}
+    - {fileID: 6703117137150464840, guid: c79a20ed8f6c54c459fcb878ec2cc12f, type: 3}

@@ -16,20 +16,14 @@ MonoBehaviour:
   grantDuration: 1.5
   reward: 10
   chanceWeight: 1
-  buildingData:
-    title: Flower Shop
-    icon: {fileID: 21300000, guid: 44b62929ee11646d7825da386cd24cc9, type: 3}
-    levels:
-    - option: {fileID: 5726408852462568320, guid: 05c6c6a40d4e94d428ec23c28ca57029,
-        type: 3}
   itemsData:
     assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
     itemIcon: {fileID: 21300000, guid: 44b62929ee11646d7825da386cd24cc9, type: 3}
     itemTakeTime: 0.3
-    prefabs:
-    - {fileID: 7020947888248885958, guid: 42efee0091d644b569a29749d963cd15, type: 3}
-    - {fileID: 7020947888248885958, guid: 8ebca2ae151af49beb562c528b84d9fc, type: 3}
-    - {fileID: 7020947888248885958, guid: e6fae77add27e408085564674818828f, type: 3}
-    - {fileID: 7020947888248885958, guid: d59f2bc29b83d451d9bdb83c33027c11, type: 3}
-    - {fileID: 7020947888248885958, guid: cbc84c5c7f1c04c39b9d881b0749a1ec, type: 3}
-    - {fileID: 7020947888248885958, guid: c50e2fe8275d549f7a552d59f2476439, type: 3}
+    _prefabs:
+    - {fileID: 5976418611851592270, guid: 42efee0091d644b569a29749d963cd15, type: 3}
+    - {fileID: 5976418611851592270, guid: 8ebca2ae151af49beb562c528b84d9fc, type: 3}
+    - {fileID: 5976418611851592270, guid: e6fae77add27e408085564674818828f, type: 3}
+    - {fileID: 5976418611851592270, guid: d59f2bc29b83d451d9bdb83c33027c11, type: 3}
+    - {fileID: 5976418611851592270, guid: cbc84c5c7f1c04c39b9d881b0749a1ec, type: 3}
+    - {fileID: 5976418611851592270, guid: c50e2fe8275d549f7a552d59f2476439, type: 3}

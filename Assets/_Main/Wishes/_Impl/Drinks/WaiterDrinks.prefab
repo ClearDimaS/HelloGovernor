@@ -51,15 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba8842c61204a99b683918b19c859bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDatas:
-  - granter: {fileID: 3013265496511654878, guid: dcb439df5f3f64b48b95bb609438905e,
-      type: 3}
+  places:
+  - data: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}
     places:
     - {fileID: 8424703755827442765}
-    root: {fileID: 5705822006504468891}
-    bone: 17
-    boneTransform: {fileID: 0}
-    interactables: []
+    rootLocalPlace: {x: 0.4, y: 1.5, z: 0}
+  interactables: []
 --- !u!114 &747805115318707944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactor: {fileID: 4121195155873071493}
   walker: {fileID: 3103095942397822185}
+  rotSpeed: 360
 --- !u!114 &8576185930193879980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,12 +560,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e048f099dd94dc7a7757b1ea61a058, type: 3}
---- !u!4 &5705822006504468891 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3901284691475328726, guid: 59e048f099dd94dc7a7757b1ea61a058,
-    type: 3}
-  m_PrefabInstance: {fileID: 8722068554645528397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6072238810839617426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3265090098306207967, guid: 59e048f099dd94dc7a7757b1ea61a058,

@@ -27,12 +27,16 @@ public abstract class ProcessPlace : CulledBehaviour
 
     public abstract bool CanAddProgress(CitizenController citizen);
 
-    public override void UpdateCall(float deltaTime)
+    protected override void OnUpdate(bool visible)
     {
-        base.UpdateCall(deltaTime);
+        base.OnUpdate(visible);
         if (processed != null && CanAddProgress(processed))
         {
-            progress += deltaTime/Mathf.Max(ProcessTime, 0.001f);
+            progress += Time.deltaTime / Mathf.Max(ProcessTime, 0.001f);
+        }
+        else
+        {
+            progress = 0f;
         }
     }
 

@@ -6,7 +6,12 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
 
     public Sprite GetIconOperator()
     {
-        return null;
+        return config.operatorIcon;
+    }
+    
+    public Sprite GetIconTimer()
+    {
+        return config.timerIcon;
     }
 
     public bool IsOperated()
@@ -17,5 +22,10 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
     protected override void OnLeave(CitizenController citizen)
     {
 
+    }
+
+    public OperatablePlace GetOperatedPlace()
+    {
+        return operatablePlace;
     }
 }

@@ -19,5 +19,6 @@ public class ItemsConfigData
     
     public Sprite itemIcon;
     public float itemTakeTime;
-    public GenericCitizenItem[] prefabs;
+    [SerializeField] private GenericCitizenItem[] _prefabs;
+    public GenericCitizenItem[] prefabs => _prefabs;
 }

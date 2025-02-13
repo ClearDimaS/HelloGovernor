@@ -253,31 +253,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba8842c61204a99b683918b19c859bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDatas:
-  - granter: {fileID: 3013265496511654878, guid: dcb439df5f3f64b48b95bb609438905e,
-      type: 3}
+  places:
+  - data: {fileID: 11400000, guid: 44b9dd197767b4542b3a6f094eb60a39, type: 2}
     places:
     - {fileID: 3357648918786263260}
-    root: {fileID: 7241317589962174885}
-    bone: 17
-    boneTransform: {fileID: 0}
-    interactables: []
-  - granter: {fileID: 7780261612312495710, guid: 4c07c858f17824e989bdfc43e08cf005,
-      type: 3}
-    places:
-    - {fileID: 8896374692007767346}
-    root: {fileID: 4879575171657201473}
-    bone: 17
-    boneTransform: {fileID: 0}
-    interactables: []
-  - granter: {fileID: 4625852682579522250, guid: 35143d3ada9274059a84fcfae01e8047,
-      type: 3}
-    places:
-    - {fileID: 7139744421001568935}
-    root: {fileID: 4424843323893798253}
-    bone: 17
-    boneTransform: {fileID: 0}
-    interactables: []
+    rootLocalPlace: {x: 0.3, y: 1.4, z: 0}
+  interactables: []
 --- !u!114 &3103095942397822185
 MonoBehaviour:
   m_ObjectHideFlags: 0

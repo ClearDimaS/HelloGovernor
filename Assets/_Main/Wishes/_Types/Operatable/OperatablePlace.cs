@@ -36,4 +36,14 @@ public class OperatablePlace : CulledBehaviour
             }
         }
     }
+
+    public Quaternion GetTargetRotation()
+    {
+        return operatedPlace.rotation;
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        return operatedPlace.position;
+    }
 }
