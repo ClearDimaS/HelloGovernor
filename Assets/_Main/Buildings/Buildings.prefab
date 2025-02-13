@@ -77,10 +77,10 @@ Transform:
   - {fileID: 3299960080556852815}
   - {fileID: 5521956184998338105}
   - {fileID: 3299960081386107824}
-  - {fileID: 9004669179065967826}
-  - {fileID: 9004669178654919435}
   - {fileID: 9004669178191897001}
   - {fileID: 9004669177965970318}
+  - {fileID: 9004669179065967826}
+  - {fileID: 9004669178654919435}
   - {fileID: 3299960081675787367}
   - {fileID: 3299960080682180667}
   - {fileID: 3299960081480776719}
@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 834979381498420376, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: autoGrantLevel1
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4414085816034311281, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
@@ -1838,7 +1838,7 @@ PrefabInstance:
     - target: {fileID: 4414085816034311294, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_Name
-      value: House (3)
+      value: House (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1929,7 +1929,7 @@ PrefabInstance:
     - target: {fileID: 4414085816034311294, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_Name
-      value: House (4)
+      value: House (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2099,7 +2099,7 @@ PrefabInstance:
     - target: {fileID: 4414085816034311294, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_Name
-      value: House (1)
+      value: House (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2190,7 +2190,7 @@ PrefabInstance:
     - target: {fileID: 4414085816034311294, guid: 39f02b25a4cdd4c9c971cf98058b4fba,
         type: 3}
       propertyPath: m_Name
-      value: House (2)
+      value: House (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2312,6 +2312,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4735246117292851683}
     m_Modifications:
+    - target: {fileID: 6292781317936020671, guid: 19093a0d97d304adaa5eec5549041577,
+        type: 3}
+      propertyPath: autoGrantLevel1
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7026734445665705046, guid: 19093a0d97d304adaa5eec5549041577,
         type: 3}
       propertyPath: m_RootOrder
