@@ -8,7 +8,6 @@ public class PlayerController : Singleton<PlayerController>,
     IMoneySpender, 
     IRepairer, 
     ICurrencyHolder, 
-    IThiefBuster,
     IOperator, 
     IItemTaker,
     IWishAssistant

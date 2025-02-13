@@ -22,14 +22,4 @@ public class SimpleRepairerPhysicsBehaviour : SimplePhysicsBehaviourInterface<IR
     }
 }
 
-public class SimpleThiefBusterPhysicsBehaviour : SimplePhysicsBehaviourInterface<IThiefBuster>
-{
-    protected override List<IThiefBuster> GetComponentsForWork()
-    {
-        return FindObjectsOfType<CopAssistant>(true).Select(x => x as IThiefBuster).
-            Concat(new []{(IThiefBuster)PlayerController.Instance}).
-            ToList();
-    }
-}
-
 
