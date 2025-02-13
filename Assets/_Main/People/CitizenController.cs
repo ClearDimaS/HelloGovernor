@@ -37,23 +37,9 @@ public class CitizenController : CulledBehaviour
         behaviours = GetComponentsInChildren<CitizenBehaviour>();
     }
 
-    public void SetHouse(HouseBuilding house)
-    {
-        this.house = house;
-    }
-
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        if (house != null && house.IsBroken())
-        {
-            if (wishesController.HasAnyWish())
-            {
-                wishesController.AbortWish();
-            }
-            walker.MoveToTarget(house.CitizenPlace.position, null);
-        }
-
         foreach (var bhvr in behaviours)
         {
             bhvr.OnUpdate(visible);
@@ -90,11 +76,6 @@ public class CitizenController : CulledBehaviour
         IsChatting = false;
     }
 
-    public bool CanAddWishes()
-    {
-        return house == null || !house.IsBroken();
-    }
-
     public void AddItem(CitizenItem item)
     {
         interactor.AddItem(item);
@@ -104,10 +85,5 @@ public class CitizenController : CulledBehaviour
             interactor.RemoveItem();
             item.PoolPlease();
         });
-    }
-
-    public bool HasItem(ItemsWishGranter granter)
-    {
-        return interactor.HasAnyItem();
     }
 }

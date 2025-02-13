@@ -72,7 +72,8 @@ public class Interactor : CulledBehaviour
 
     public Transform GetPlace(int i)
     {
-        throw new NotImplementedException();
+        var data = placesDict[interactables[0].GetData()];
+        return data.places[i % data.places.Length];
     }
 
     public Vector3 GetItemsRootLocalPlace()
