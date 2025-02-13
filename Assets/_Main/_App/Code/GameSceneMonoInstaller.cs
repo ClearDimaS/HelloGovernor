@@ -7,7 +7,7 @@ public class GameSceneMonoInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<DayTimeManager>().FromComponentInHierarchy().AsSingle().NonLazy();;
+        Container.Bind<DayTimeManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<WishGrantersManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.Bind<PlayerController>().FromComponentInHierarchy().AsSingle().NonLazy();
@@ -20,7 +20,6 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<UpgradablePricesManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         
         Container.Bind<WishesPool>().FromComponentInHierarchy().AsSingle().NonLazy();
-        Container.Bind<ChatGroupsPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencyPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencySingleStackPool>().FromComponentInHierarchy().AsSingle().NonLazy();
 

@@ -285,11 +285,17 @@ public abstract class WishGranter : MonoBehaviour
         if (!processed.Contains(citizen))
         {
             processed.Add(citizen);   
+            OnAddToProcessed(citizen);
         }
         var place = GetProcessPlaceFor(citizen);
         var rot = GetProcessRotFor(citizen);
         citizen.transform.DORotateQuaternion(rot, 0.3f);
         citizen.transform.DOMove(place, 0.3f);
+    }
+
+    protected virtual void OnAddToProcessed(CitizenController citizen)
+    {
+        
     }
 
     private void AddToLeaving(CitizenController citizen)

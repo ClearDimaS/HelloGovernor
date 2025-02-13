@@ -26,7 +26,7 @@ public class CitizenController : CulledBehaviour
     private HouseBuilding house;
 
     public Animator Animator { get; private set; }
-    public bool IsChatting { get; private set; }
+    public bool IsChatting { get; set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
 
@@ -48,11 +48,7 @@ public class CitizenController : CulledBehaviour
 
     private Vector3 GetRandomPos()
     {
-        var pos = environment.mapCenter + new Vector3(
-            Random.Range(-environment.mapSize.x / 2f, environment.mapSize.x / 2f),
-            0,
-            Random.Range(-environment.mapSize.z / 2f, environment.mapSize.z / 2f));
-        return pos;
+        return environment.GetRandomUnlockedPosition(0f);
     }
 
     public void PlaceRandom()
@@ -64,16 +60,6 @@ public class CitizenController : CulledBehaviour
     public void Place(Vector3 citizenPlacePosition)
     {
         walker.Place(citizenPlacePosition);
-    }
-
-    public void SetChatting()
-    {
-        IsChatting = true;
-    }
-
-    public void StopChatting()
-    {
-        IsChatting = false;
     }
 
     public void AddItem(CitizenItem item)

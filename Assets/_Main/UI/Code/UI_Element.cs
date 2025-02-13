@@ -8,6 +8,7 @@ public abstract class UI_Element : MonoBehaviour
     public event Action showEvent;
     public event Action shownEvent;
 
+    private bool isShown;
     private bool isInit;
     private void Awake()
     {
@@ -33,6 +34,7 @@ public abstract class UI_Element : MonoBehaviour
 
     public void Show()
     {
+        isShown = true;
         Init();
         gameObject.SetActive(true);
         OnShow();
@@ -49,6 +51,7 @@ public abstract class UI_Element : MonoBehaviour
 
     public void Hide()
     {
+        isShown = false;
         OnHide();
         if (animator == null)
         {
@@ -58,6 +61,11 @@ public abstract class UI_Element : MonoBehaviour
         {
             animator.AnimateBack(OnHidden);
         }
+    }
+    
+    public bool IsShown()
+    {
+        return isShown;
     }
 
     public void SetOrder(int order)

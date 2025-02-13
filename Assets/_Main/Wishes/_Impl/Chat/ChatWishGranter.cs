@@ -5,77 +5,47 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class ChatWishGranter : UIWishGranter
+public class ChatWishGranter : UIWishGranter<ChatUI_Panel>
 {
-    [Inject] private ChatGroupsPool groupsPool;
+    [Inject] protected EnvironmentManager environment;
 
-    protected HashSet<CitizenController> groupedCitizens = new ();
-    private List<ChatGroup> activeChatGroups = new ();
+    [SerializeField] private float radius = 2f;
 
-    protected override void UpdateProcessed(CitizenController citizen)
+    protected override void OnStart()
     {
-        base.UpdateProcessed(citizen);
-        if (!groupedCitizens.Contains(citizen))
-        {
-            foreach (var group in activeChatGroups)
-            {
-                if (group.CanAdd(citizen))
-                {
-                    group.Add(citizen);
-                    groupedCitizens.Add(citizen);
-                }
-            }
-            
-            if (!groupedCitizens.Contains(citizen))
-            {
-                ChatGroup group = groupsPool.GetElement();
-                group.Initialize(Random.Range(wishesCollectionConfig.chatGroupSizeMinMax.x, wishesCollectionConfig.chatGroupSizeMinMax.x));
-                activeChatGroups.Add(group);
-                
-                group.Add(citizen);
-                groupedCitizens.Add(citizen);
-            }
-        }
+        base.OnStart();
+        Reshuffle();
+    }
+
+    protected override void OnAddToProcessed(CitizenController citizen)
+    {
+        base.OnAddToProcessed(citizen);
+        citizen.IsChatting = true;
     }
 
     protected override void OnRemoveFromProcessed(CitizenController citizen)
     {
         base.OnRemoveFromProcessed(citizen);
-        if (groupedCitizens.Contains(citizen))
+        citizen.IsChatting = false;
+    }
+
+    protected override void OnResetActivation()
+    {
+        base.OnResetActivation();
+        Reshuffle();
+    }
+
+    private void Reshuffle()
+    {
+        var middle = environment.GetRandomUnlockedPosition(radius);
+        for (var i = 0; i < processPlaces.Length; i++)
         {
-            groupedCitizens.Remove(citizen);
-            var group = activeChatGroups.First(x => x.HasCitizen(citizen));
-            group.Remove(citizen);
-            if (!group.HasAnyone())
-            {
-                activeChatGroups.Remove(group);
-                groupsPool.Pool(group);
-            }
+            var processPlace = processPlaces[i];
+            processPlace.transform.position = middle + 
+                                              Quaternion.AngleAxis(i/(float)processPlaces.Length * 360f, Vector3.up) * 
+                                              Vector3.right * radius;
+            processPlace.transform.rotation = Quaternion.LookRotation((middle - processPlace.Position).normalized, Vector3.up);
         }
-    }
-
-    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Quaternion GetProcessRotFor(CitizenController citizen)
-    {
-        return citizen.transform.rotation;
-    }
-
-    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    public override bool CanAddOneMore()
-    {
-        return true;
+        activationPlace.transform.position = middle;
     }
 }
