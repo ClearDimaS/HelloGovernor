@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[Serializable]
-public class ItemsData
+[CreateAssetMenu(menuName = "Items/New Item")]
+public class ItemConfigData : ScriptableObject
 {
     public string key = "";
-    public Vector3[] itemLocalPlaces;
-    public HumanBodyBones bone;
-    public Vector3 rootLocalPlace;
 }
 
 [Serializable]
 public class ItemsPlacesData
 {
     public Transform[] places;
-    
+
     public Transform GetPlace(int index)
     {
         return places[index];
@@ -25,7 +22,7 @@ public class ItemsPlacesData
 
 public class GenericCitizenItem : CitizenItem, IResetable
 {
-    [SerializeField] private ItemsData itemsData;
+    [SerializeField] private ItemConfigData itemsData;
     
     private GenericItemsPool pool;
 
@@ -39,14 +36,9 @@ public class GenericCitizenItem : CitizenItem, IResetable
 
     }
 
-    public override ItemsData GetData()
+    public override ItemConfigData GetData()
     {
         return itemsData;
-    }
-
-    public override ItemsPlacesData CreatePlaces(Animator animator)
-    {
-        return new ItemsPlacesData();
     }
 
     public override void PoolPlease()

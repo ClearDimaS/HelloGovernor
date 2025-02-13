@@ -8,16 +8,24 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
+[Serializable]
+public class ItemPlacesData
+{
+    public ItemConfigData data;
+    public Transform[] places;
+    public Vector3 rootLocalPlace;
+}
 public class Interactor : CulledBehaviour
 {
+    [SerializeField] private ItemPlacesData[] places;
     [HideInInspector] public List<CitizenItem> interactables = new ();
-    private Animator animator;
-    private Dictionary<string, ItemsPlacesData> placesDict = new ();
-    
+
+    private Dictionary<ItemConfigData, ItemPlacesData> placesDict;
+
     protected override void OnAwake()
     {
         base.OnAwake();
-        animator = GetComponentInChildren<Animator>();
+        placesDict = places.ToDictionary(x => x.data, x => x);
     }
 
     public bool HasAnyItem()
@@ -27,32 +35,16 @@ public class Interactor : CulledBehaviour
 
     public void AddItem(CitizenItem item)
     {
-        var data = item.GetData();
-        if (!placesDict.ContainsKey(data.key))
+        if (interactables.Count > 0 && interactables[0].GetData().key != item.GetData().key)
         {
-            placesDict[data.key] = item.CreatePlaces(animator);
-        }
-
-        interactables.Add(item);
-        
-        var place = placesDict[data.key].GetPlace(interactables.Count);
-        
-        item.transform.DOKill();
-        item.transform.SetParent(place);
-        var middle = (item.transform.position + place.position) / 2f;
-        middle.y = place.position.y + 1f;
-        item.transform.DOMove(middle, 0.3f).SetEase(Ease.OutCubic).OnComplete(() =>
-        {
-            item.transform.DOLocalMove(Vector3.zero, 0.15f).SetEase(Ease.InCubic).OnComplete(() =>
+            var count = interactables.Count;
+            for (int i = 0; i < count; i++)
             {
-                var startScale = item.transform.localScale;
-                item.transform.DOScale(startScale * 1.3f, 0.2f).SetEase(Ease.OutCubic).OnComplete(() =>
-                {
-                    item.transform.DOScale(startScale, 0.2f).SetEase(Ease.InCubic);
-                });
-            }); 
-        });
-        item.transform.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
+                RemoveItem();
+                item.PoolPlease();
+            }
+        }
+        interactables.Add(item);
     }
 
     public CitizenItem RemoveItem()
@@ -70,11 +62,28 @@ public class Interactor : CulledBehaviour
 
     public bool HasMorePlaceFor(ItemsWishGranter granter)
     {
-        return interactables.Count < 1;
+        return interactables.Count == 0 || interactables.Count < placesDict[interactables[0].GetData()].places.Length;
     }
 
     public bool HasItemOfType(string key)
     {
         return interactables.Count > 0 && interactables[0].GetData().key == key;
+    }
+
+    public Transform GetPlace(int i)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Vector3 GetItemsRootLocalPlace()
+    {
+        if (interactables.Count == 0)
+        {
+            return Vector3.zero;
+        }
+        else
+        {
+            return placesDict[interactables[0].GetData()].rootLocalPlace;
+        }
     }
 }
