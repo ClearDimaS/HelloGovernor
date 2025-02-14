@@ -46,14 +46,18 @@ public class CitizenController : CulledBehaviour
         }
     }
 
-    private Vector3 GetRandomPos()
-    {
-        return environment.GetRandomUnlockedPosition(0f);
-    }
-
     public void PlaceRandom()
     {
-        var pos = GetRandomPos();
+        if (!environment.IsReady)
+        {
+            UniTask.WaitUntil(() => environment.IsReady).ContinueWith(() =>
+            {
+                var pos = environment.GetRandomUnlockedPosition(0f);
+                walker.Place(pos);
+            });
+            return;
+        }
+        var pos = environment.GetRandomUnlockedPosition(0f);
         walker.Place(pos);
     }
 

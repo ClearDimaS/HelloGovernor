@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -37,6 +38,14 @@ public class ChatWishGranter : UIWishGranter<ChatUI_Panel>
 
     private void Reshuffle()
     {
+        if (!environment.IsReady)
+        {
+            UniTask.WaitUntil(() => environment.IsReady).ContinueWith(() =>
+            {
+                Reshuffle();
+            });
+            return;
+        }
         var middle = environment.GetRandomUnlockedPosition(radius);
         for (var i = 0; i < processPlaces.Length; i++)
         {

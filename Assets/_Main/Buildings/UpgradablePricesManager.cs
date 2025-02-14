@@ -35,6 +35,8 @@ public class UpgradablePricesManager : MonoBehaviour
     
     private Queue<MoneyConsumerData> unlockQueue = new ();
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
+
+    private List<UpgradableBuilding> bought = new();
     
     private void Awake()
     {
@@ -91,6 +93,10 @@ public class UpgradablePricesManager : MonoBehaviour
                 {
                     waitingUnlock = unlockQueue.Peek();
                     lastUnlocked = unlockQueue.Dequeue();
+                    if (lastUnlocked.upgradable is UpgradableBuilding building && !bought.Contains(building))
+                    {
+                        bought.Add(building);
+                    }
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
                     levelCounter = 1;
@@ -267,5 +273,10 @@ public class UpgradablePricesManager : MonoBehaviour
     public bool IsLast()
     {
         return unlockQueue.Count == 0 && IsBought(lastUnlocked);
+    }
+
+    public List<UpgradableBuilding> GetBoughtBuildings()
+    {
+        return bought;
     }
 }

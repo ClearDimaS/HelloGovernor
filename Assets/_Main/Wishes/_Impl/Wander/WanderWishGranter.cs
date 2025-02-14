@@ -39,15 +39,11 @@ public class WanderWishGranter : TimerWishGranter
     
     private Vector3 GetRandomPos()
     {
-        var pos = environment.mapCenter + new Vector3(
-            Random.Range(-environment.mapSize.x / 2f, environment.mapSize.x / 2f),
-            0,
-            Random.Range(-environment.mapSize.z / 2f, environment.mapSize.z / 2f));
-        return pos;
+        return environment.GetRandomUnlockedPosition(0f);
     }
     
     public override bool CanAddOneMore()
     {
-        return true;
+        return environment.IsReady;
     }
 }

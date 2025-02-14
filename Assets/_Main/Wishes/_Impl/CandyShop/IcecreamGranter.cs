@@ -5,7 +5,8 @@ using Zenject;
 public class IcecreamGranter : OperatableGranter
 {
     [Inject] protected DiContainer container;
-    
+
+    [SerializeField] protected Transform giveItemFrom;
     [SerializeField] protected GenericCitizenItem[] itemPrefabs;
     protected GenericItemsPool pool;
 
@@ -19,6 +20,7 @@ public class IcecreamGranter : OperatableGranter
         base.OnLeave(citizen);
         var element = pool.GetElement();
         element.SetPool(pool);
+        element.transform.position = giveItemFrom.position;
         citizen.AddItem(element);
     }
 }
