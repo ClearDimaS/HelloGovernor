@@ -29,6 +29,13 @@ public class UpgradableBuilding : UpgradableObject
     private BuildingBase buildingBase;
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
+    public Vector3 Center => transform.position;
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        buildingBase = GetComponent<BuildingBase>();
+    }
 
     private void OnDrawGizmos()
     {
@@ -37,7 +44,7 @@ public class UpgradableBuilding : UpgradableObject
         Gizmos.color = color;
         foreach (var side in allowedSides)
         {
-            Gizmos.DrawCube(side.Center + transform.position + new Vector3(0, 0.1f, 0), side.Size);
+            Gizmos.DrawCube(side.Center + Center + new Vector3(0, 0.1f, 0), side.Size);
         }
     }
 
@@ -46,79 +53,9 @@ public class UpgradableBuilding : UpgradableObject
         var randIndex = Random.Range(0, allowedSides.Length);
         var side = allowedSides[randIndex];
         var t = Random.Range(0, 1f);
-        var pos = transform.position + Vector3.Lerp(side.min, side.max, t);
+        var pos = Center + Vector3.Lerp(side.min, side.max, t);
         NavMesh.SamplePosition(pos, out var hit, 10f, -1);
         return hit.position;
-    }
-
-    [Button]
-    private void SetupMinMaxes(float min = 3, float max = 9)
-    {
-        allowedSides = new []
-        {
-            GetMinMax(0, min, max),
-            GetMinMax(1, min, max),
-            GetMinMax(2, min, max),
-            GetMinMax(3, min, max)
-        };
-    }
-    private MinMaxData GetMinMax(int rand, float minS, float maxS)
-    {
-        var min = new Vector3(minS, 0, minS);
-        var max = new Vector3(maxS, 0, maxS);
-        var minMax = new MinMaxData();
-        switch (rand)
-        {
-            case 0: // right
-                minMax.min = new Vector3(MinX(false), 0, MinZ(true));
-                minMax.max = new Vector3(MaxX(false), 0, MaxZ(false));
-                break;
-            case 1: // up
-                minMax.min = new Vector3(MaxX(true), 0, MinZ(false));
-                minMax.max = new Vector3(MinX(false), 0, MaxZ(false));
-                break;
-            case 2: // left
-                minMax.min = new Vector3(MaxX(true), 0, MaxZ(true));
-                minMax.max = new Vector3(MinX(true), 0, MinZ(false));
-                break;
-            case 3: // bottom
-                minMax.min = new Vector3(MinX(true), 0, MaxZ(true));
-                minMax.max = new Vector3(MaxX(false), 0, MinZ(true));
-                break;
-            default:
-                break;
-        }
-
-        float MinX(bool minus)
-        {
-            return minus ? -min.x : min.x;
-        }
-        float MaxX(bool minus)
-        {
-            return minus ? -max.x : max.x;
-        }
-        float MinZ(bool minus)
-        {
-            return minus ? -min.z : min.z;
-        }
-        float MaxZ(bool minus)
-        {
-            return minus ? -max.z : max.z;
-        }
-
-        minMax.min = new Vector3(Mathf.Clamp(minMax.min.x, minMaxX.x, minMaxX.y),
-            0, 
-            Mathf.Clamp(minMax.min.z, minMaxZ.x, minMaxZ.y));
-        minMax.max = new Vector3(Mathf.Clamp(minMax.max.x, minMaxX.x, minMaxX.y),
-            0, 
-            Mathf.Clamp(minMax.max.z, minMaxZ.x, minMaxZ.y));
-        return minMax;
-    }
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        buildingBase = GetComponent<BuildingBase>();
     }
 
     public List<Price> GetPricesCopy()
@@ -203,5 +140,75 @@ public class UpgradableBuilding : UpgradableObject
     public override string GetTitle()
     {
         return buildingsCollection.GetBuildingData(buildingBase).title;
+    }
+
+    
+    [Button]
+    private void SetupMinMaxes(float min = 3, float max = 9)
+    {
+        allowedSides = new []
+        {
+            GetMinMax(0, min, max),
+            GetMinMax(1, min, max),
+            GetMinMax(2, min, max),
+            GetMinMax(3, min, max)
+        };
+    }
+    private MinMaxData GetMinMax(int rand, float minS, float maxS)
+    {
+        var min = new Vector3(minS, 0, minS);
+        var max = new Vector3(maxS, 0, maxS);
+        var minMax = new MinMaxData();
+        switch (rand)
+        {
+            case 0: // right
+                minMax.min = new Vector3(MinX(false), 0, MinZ(true));
+                minMax.max = new Vector3(MaxX(false), 0, MaxZ(false));
+                break;
+            case 1: // up
+                minMax.min = new Vector3(MaxX(true), 0, MinZ(false));
+                minMax.max = new Vector3(MinX(false), 0, MaxZ(false));
+                break;
+            case 2: // left
+                minMax.min = new Vector3(MaxX(true), 0, MaxZ(true));
+                minMax.max = new Vector3(MinX(true), 0, MinZ(false));
+                break;
+            case 3: // bottom
+                minMax.min = new Vector3(MinX(true), 0, MaxZ(true));
+                minMax.max = new Vector3(MaxX(false), 0, MinZ(true));
+                break;
+            default:
+                break;
+        }
+
+        float MinX(bool minus)
+        {
+            return minus ? -min.x : min.x;
+        }
+        float MaxX(bool minus)
+        {
+            return minus ? -max.x : max.x;
+        }
+        float MinZ(bool minus)
+        {
+            return minus ? -min.z : min.z;
+        }
+        float MaxZ(bool minus)
+        {
+            return minus ? -max.z : max.z;
+        }
+
+        minMax.min = new Vector3(Mathf.Clamp(minMax.min.x, minMaxX.x, minMaxX.y),
+            0, 
+            Mathf.Clamp(minMax.min.z, minMaxZ.x, minMaxZ.y));
+        minMax.max = new Vector3(Mathf.Clamp(minMax.max.x, minMaxX.x, minMaxX.y),
+            0, 
+            Mathf.Clamp(minMax.max.z, minMaxZ.x, minMaxZ.y));
+        return minMax;
+    }
+
+    public MinMaxData[] GetCorners()
+    {
+        return allowedSides;
     }
 }

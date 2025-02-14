@@ -37,7 +37,8 @@ public class UpgradablePricesManager : MonoBehaviour
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
 
     private List<UpgradableBuilding> bought = new();
-    
+    public int BoughtCount => bought.Count;
+
     private void Awake()
     {
         CollectAllConsumers();
