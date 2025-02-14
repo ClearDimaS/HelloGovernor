@@ -54,6 +54,10 @@ public class UpgradablePricesManager : MonoBehaviour
         while (IsBought(lastUnlocked) && unlockQueue.Count > 0)
         {
             lastUnlocked = unlockQueue.Dequeue();
+            if (lastUnlocked.upgradable is UpgradableBuilding building && !bought.Contains(building))
+            {
+                bought.Add(building);
+            }
         }
 
         if (!IsBought(lastUnlocked))

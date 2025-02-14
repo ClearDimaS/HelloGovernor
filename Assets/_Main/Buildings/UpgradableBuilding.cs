@@ -46,7 +46,9 @@ public class UpgradableBuilding : UpgradableObject
         var randIndex = Random.Range(0, allowedSides.Length);
         var side = allowedSides[randIndex];
         var t = Random.Range(0, 1f);
-        return transform.position + Vector3.Lerp(side.min, side.max, t);
+        var pos = transform.position + Vector3.Lerp(side.min, side.max, t);
+        NavMesh.SamplePosition(pos, out var hit, 10f, -1);
+        return hit.position;
     }
 
     [Button]
