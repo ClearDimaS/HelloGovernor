@@ -45,7 +45,11 @@ public class PressConferenceConfig : ScriptableObject
             else
             {
                 // For the last sentence, add it as is (with the dot)
-                result.Add(sentence + ".");
+                if (!sentence.EndsWith("."))
+                {
+                    sentence += ".";
+                }
+                result.Add(sentence);
             }
         }
 
