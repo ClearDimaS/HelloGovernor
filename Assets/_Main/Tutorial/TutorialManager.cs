@@ -6,12 +6,28 @@ using Zenject;
 
 public class TutorialManager : Singleton<TutorialManager>
 {
-    [Inject] private PlayerDataRepository playerRepository;
-    private bool isShown;
+    [Inject] private UpgradablePricesManager pricesManager;
 
-    public void TryRunTutorial()
+    [SerializeField] private GameObject tutorialArrow;
+
+    private void Update()
     {
-        StopAllCoroutines();
-        var playerData = playerRepository.GetData();
+        var data = pricesManager.GetNextData();
+        var show = data != null;
+        if (show)
+        {
+            if (!tutorialArrow.activeSelf)
+            {
+                tutorialArrow.SetActive(true);
+            }
+            tutorialArrow.transform.position = data.BuyPlace.position;   
+        }
+        else
+        {
+            if (tutorialArrow.activeSelf)
+            {
+                tutorialArrow.SetActive(false);
+            }
+        }
     }
 }

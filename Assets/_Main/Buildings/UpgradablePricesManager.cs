@@ -38,6 +38,7 @@ public class UpgradablePricesManager : MonoBehaviour
 
     private List<UpgradableBuilding> available = new();
     public int AvailableCount => available.Count;
+    private bool allowNext = true;
 
     private void Awake()
     {
@@ -77,7 +78,7 @@ public class UpgradablePricesManager : MonoBehaviour
     {
         if (unlockQueue.Count > 0)
         {
-            if (IsBought(lastUnlocked))
+            if (IsBought(lastUnlocked) && allowNext)
             {
                 if (waitingUnlock == unlockQueue.Peek())
                 {
@@ -90,6 +91,11 @@ public class UpgradablePricesManager : MonoBehaviour
                     UniTask.Delay(TimeSpan.FromSeconds(1f)).ContinueWith(() =>
                     {
                         lastUnlocked = unlockQueue.Dequeue();
+                        allowNext = false;
+                        if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
+                        {
+                            available.Add(building);
+                        }
                         AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     });
                     
@@ -107,6 +113,7 @@ public class UpgradablePricesManager : MonoBehaviour
                     {
                         available.Add(building);
                     }
+                    allowNext = false;
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
                     levelCounter = 1;
@@ -139,9 +146,9 @@ public class UpgradablePricesManager : MonoBehaviour
         return prices;
     }
 
-    public bool IsCurrentBought()
+    public bool IsCurrentBought(UpgradableObject upgradableObject)
     {
-        if (lastUnlocked == null)
+        if (lastUnlocked == null || lastUnlocked.upgradable != upgradableObject)
         {
             return true;
         }
@@ -288,5 +295,10 @@ public class UpgradablePricesManager : MonoBehaviour
     public List<UpgradableBuilding> GetAvailableBuildings()
     {
         return available;
+    }
+
+    public void AllowNext()
+    {
+        allowNext = true;
     }
 }
