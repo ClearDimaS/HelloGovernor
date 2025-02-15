@@ -41,8 +41,12 @@ public class InteractablesController : CulledBehaviour
                 reinit = false;
             }
 
-            PlaceInteractables();
+            PlaceInteractables(false);
             RefreshRig();
+        }
+        else
+        {
+            PlaceInteractables(true);
         }
     }
 
@@ -67,7 +71,7 @@ public class InteractablesController : CulledBehaviour
         }
     }
 
-    private void PlaceInteractables()
+    private void PlaceInteractables(bool immediate)
     {
         var interactables = interactor.interactables;
         for (var i = 0; i < interactables.Count; i++)
@@ -77,6 +81,14 @@ public class InteractablesController : CulledBehaviour
             var place = interactor.GetPlace(i);
             if (item.transform.parent != place)
             {
+                if (immediate)
+                {
+                    item.transform.DOKill();
+                    item.transform.SetParent(place);
+                    item.transform.localRotation = Quaternion.identity;
+                    item.transform.localPosition = Vector3.zero;
+                    continue;
+                }
                 item.transform.DOKill();
                 item.transform.SetParent(place);
                 var middle = (item.transform.position + place.position) / 2f;

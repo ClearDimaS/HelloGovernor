@@ -22,10 +22,12 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private CurrencyPool currencyPool;
+    [Inject] private CurrencySingleStackPool currencySinglePool;
 
     [SerializeField] private GameObject takeZone;
     [SerializeField] private CurrencyPlacer gridPlacer;
 
+    private static CurrencyStackBehaviour instance;
     private CurrencyStackData saveData;
 
     public int GetMoney()
@@ -39,6 +41,10 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
     public void Initialize(CurrencyStackData data)
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         saveData = data;
 
         var amount = saveData.moneyAmount;
@@ -167,5 +173,14 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
     public bool IsFull()
     {
         return !gridPlacer.CanAddOneMore();
+    }
+
+    public static void SpawnSingleCurrency(int count)
+    {
+        var reward = count;
+        var currency = instance.currencySinglePool.GetElement();
+        currency.transform.position = instance.transform.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
+        currency.Initialize(reward);
+        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
 }

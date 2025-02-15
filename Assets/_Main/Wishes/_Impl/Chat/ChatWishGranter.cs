@@ -11,7 +11,11 @@ public class ChatWishGranter : UIWishGranter<ChatUI_Panel>
     [Inject] protected EnvironmentManager environment;
 
     [SerializeField] private float radius = 2f;
+    [SerializeField] private float timeOut = 10f;
+    protected float startTime = -1;
 
+    protected bool IsTimeOut => processed.Count > 0 && Time.time - startTime < timeOut;
+    
     protected override void OnStart()
     {
         base.OnStart();
@@ -21,7 +25,21 @@ public class ChatWishGranter : UIWishGranter<ChatUI_Panel>
     protected override void OnAddToProcessed(CitizenController citizen)
     {
         base.OnAddToProcessed(citizen);
+        if (processed.Count == 1)
+        {
+            startTime = Time.time;
+        }
         citizen.IsChatting = true;
+    }
+
+    public override bool CanAddOneMore()
+    {
+        return base.CanAddOneMore() && (!IsTimeOut);
+    }
+
+    protected override bool CanShowActivation_Internal()
+    {
+        return base.CanShowActivation_Internal() || IsTimeOut;
     }
 
     protected override void OnRemoveFromProcessed(CitizenController citizen)

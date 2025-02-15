@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -6,6 +7,18 @@ using Random = UnityEngine.Random;
 public class WanderWishGranter : TimerWishGranter
 {
     [Inject] private EnvironmentManager environment;
+
+    protected int lastReshuffleIndex;
+    private void Start()
+    {
+        Reshuffle();
+    }
+
+    protected override void OnRemoveFromProcessed(CitizenController citizen)
+    {
+        base.OnRemoveFromProcessed(citizen);
+        Reshuffle(lastReshuffleIndex++);
+    }
 
     protected override void UpdateProcessed(CitizenController citizen)
     {
@@ -16,34 +29,32 @@ public class WanderWishGranter : TimerWishGranter
             citizen.Walker.MoveToTarget(pos, null);
         }
     }
-
-    protected override Vector3 GetQueuePlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-
-    protected override Vector3 GetProcessPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
-    
-    protected override Quaternion GetProcessRotFor(CitizenController citizen)
-    {
-        return citizen.transform.rotation;
-    }
-    
-    protected override Vector3 GetExitPlaceFor(CitizenController citizen)
-    {
-        return citizen.transform.position;
-    }
     
     private Vector3 GetRandomPos()
     {
         return environment.GetRandomUnlockedPosition(0f);
     }
     
-    public override bool CanAddOneMore()
+    private void Reshuffle(int index=-1)
     {
-        return environment.IsReady;
+        if (!environment.IsReady)
+        {
+            UniTask.WaitUntil(() => environment.IsReady).ContinueWith(() =>
+            {
+                Reshuffle();
+            });
+            return;
+        }
+        
+        for (var i = 0; i < processPlaces.Length; i++)
+        {
+            if (index != -1 && index != i)
+            {
+                continue;
+            }
+            var processPlace = processPlaces[i];
+            processPlace.transform.position = environment.GetRandomUnlockedPosition(0);
+            processPlace.transform.rotation = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up);
+        }
     }
 }

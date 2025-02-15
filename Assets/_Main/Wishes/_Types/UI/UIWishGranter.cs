@@ -70,11 +70,16 @@ public abstract class UIWishGranter<T> : WishGranter<UIWishGranterConfig, UIProc
         return base.CanAddOneMore() && !isStarted && !isFinished;
     }
 
-    protected virtual bool CanShowActivation()
+    private bool CanShowActivation()
     {
-        return processed.Count == processPlaces.Length && !isStarted && !isFinished;
+        return CanShowActivation_Internal() && !isStarted && !isFinished;
     }
 
+    protected virtual bool CanShowActivation_Internal()
+    {
+        return processed.Count == processPlaces.Length;
+    }
+    
     protected override bool CanAddProgress(CitizenController citizen)
     {
         return base.CanAddProgress(citizen) && isStarted && isFinished;

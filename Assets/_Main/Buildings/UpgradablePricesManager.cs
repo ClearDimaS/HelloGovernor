@@ -36,8 +36,8 @@ public class UpgradablePricesManager : MonoBehaviour
     private Queue<MoneyConsumerData> unlockQueue = new ();
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
 
-    private List<UpgradableBuilding> bought = new();
-    public int BoughtCount => bought.Count;
+    private List<UpgradableBuilding> available = new();
+    public int AvailableCount => available.Count;
 
     private void Awake()
     {
@@ -52,12 +52,17 @@ public class UpgradablePricesManager : MonoBehaviour
             unlockQueue.Enqueue(data);
         }
         lastUnlocked = unlockQueue.Dequeue();
+        if (lastUnlocked.upgradable is UpgradableBuilding building1 && !available.Contains(building1))
+        {
+            available.Add(building1);
+        }
+    
         while (IsBought(lastUnlocked) && unlockQueue.Count > 0)
         {
             lastUnlocked = unlockQueue.Dequeue();
-            if (lastUnlocked.upgradable is UpgradableBuilding building && !bought.Contains(building))
+            if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
             {
-                bought.Add(building);
+                available.Add(building);
             }
         }
 
@@ -98,9 +103,9 @@ public class UpgradablePricesManager : MonoBehaviour
                 {
                     waitingUnlock = unlockQueue.Peek();
                     lastUnlocked = unlockQueue.Dequeue();
-                    if (lastUnlocked.upgradable is UpgradableBuilding building && !bought.Contains(building))
+                    if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
                     {
-                        bought.Add(building);
+                        available.Add(building);
                     }
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
@@ -280,8 +285,8 @@ public class UpgradablePricesManager : MonoBehaviour
         return unlockQueue.Count == 0 && IsBought(lastUnlocked);
     }
 
-    public List<UpgradableBuilding> GetBoughtBuildings()
+    public List<UpgradableBuilding> GetAvailableBuildings()
     {
-        return bought;
+        return available;
     }
 }

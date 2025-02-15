@@ -18,9 +18,9 @@ public class FenceBuilder : MonoBehaviour
 
     private void Update()
     {
-        if (lastBought != upgradableManager.BoughtCount)
+        if (lastBought != upgradableManager.AvailableCount)
         {
-            lastBought = upgradableManager.BoughtCount;
+            lastBought = upgradableManager.AvailableCount;
             BuildFence();
         }
     }
@@ -28,7 +28,7 @@ public class FenceBuilder : MonoBehaviour
     [Button]
     private void BuildFence()
     {
-        var boughtBuildings = upgradableManager.GetBoughtBuildings();
+        var boughtBuildings = upgradableManager.GetAvailableBuildings();
         var bounds = new Bounds();
         bounds.center = boughtBuildings[0].Center;
         bounds.size = Vector3.zero;

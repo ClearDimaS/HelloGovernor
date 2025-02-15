@@ -335,9 +335,9 @@ public abstract class WishGranter : MonoBehaviour
         {
             currencyStack.MoveCurrencyToMe(Reward, citizen.transform.position);   
         }
-        else
+        else if(Reward > 0)
         {
-            Debug.Log($"should spawn single currency");
+            CurrencyStackBehaviour.SpawnSingleCurrency(Reward);
         }
     }
 

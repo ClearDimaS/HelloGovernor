@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 {
     [Inject] private PlayerController player;
-    [Inject] private CurrencySingleStackPool currencyPool;
     [Inject] private CompassManager compassManager;
     [Inject] private GameConfig gameConfig;
 
@@ -112,10 +111,6 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
             SoundManager.Instance.PlayerRepair();
         }
 
-        var reward = gameConfig.repairHouseReward;
-        var currency = currencyPool.GetElement();
-        currency.transform.position = transform.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
-        currency.Initialize(reward);
-        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+        CurrencyStackBehaviour.SpawnSingleCurrency(gameConfig.repairHouseReward);
     }
 }
