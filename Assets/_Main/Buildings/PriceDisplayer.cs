@@ -11,9 +11,10 @@ public class PriceDisplayer : CulledBehaviour
 
     [SerializeField] private float scaleOnChange = 1.1f;
     [SerializeField] private GameObject animateContent;
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TextMesh text;
     [SerializeField] private SpriteRenderer itemIcon;
     [SerializeField] private GameObject upgradeGO;
+    [SerializeField] private GameObject addGO;
     
     private UpgradableObject upgradableObject;
     private MoneyConsumer moneyConsumer;
@@ -45,6 +46,10 @@ public class PriceDisplayer : CulledBehaviour
             if (upgradeGO.activeSelf != isUpgrade)
             {
                 upgradeGO.SetActive(isUpgrade);
+            }
+            if (addGO.activeSelf == isUpgrade)
+            {
+                addGO.SetActive(!isUpgrade);
             }
         
             var amountLeft = moneyConsumer.GetLeftAmount();
