@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 3934782028407715623}
   - component: {fileID: 6138200081491574333}
   m_Layer: 5
-  m_Name: BG (1)
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,8 +754,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 48}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: -163.79504, y: 39}
+  m_SizeDelta: {x: 78.4099, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3934782028407715623
 CanvasRenderer:
@@ -928,6 +928,7 @@ MonoBehaviour:
   - {fileID: 6083860331436309556}
   - {fileID: 8412070284065123381}
   - {fileID: 3301114557705734854}
+  iconImage: {fileID: 6138200081491574333}
   progressImage: {fileID: 2962288214596779973}
   progressText: {fileID: 6235244002564139260}
   titleText: {fileID: 5194703935705095625}
@@ -1302,8 +1303,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8, y: -2.8}
-  m_SizeDelta: {x: 268.4, y: 37.9}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 239.5, y: 86.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9155597703110293312
 CanvasRenderer:
@@ -1361,7 +1362,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.55
+  m_fontSize: 47.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
