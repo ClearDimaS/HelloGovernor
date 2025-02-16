@@ -8,6 +8,8 @@ public class OperatablePlace : CulledBehaviour
     [Inject] protected PlayerController player;
     [SerializeField] protected Transform operatedPlace;
     [SerializeField] protected float radius = 1f;
+    [SerializeField] public OperatableFillPlace fillPlace;
+    
     protected List<IOperator> operators = new ();
     
     public bool IsOperated { get; set; }
@@ -15,25 +17,41 @@ public class OperatablePlace : CulledBehaviour
     private void Start()
     {
         operators.Add(player);
+        if (fillPlace != null)
+        {
+            fillPlace.Add(player);
+        }
     }
 
     public void AddOperator(IOperator @operator)
     {
         operators.Add(@operator);
+        if (fillPlace != null)
+        {
+            fillPlace.Add(@operator);
+        }
     }
 
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        IsOperated = false;
-        foreach (var @operator in operators)
+        var show = fillPlace == null || !fillPlace.IsEmpty;
+        if (show != operatedPlace.gameObject.activeSelf)
         {
-            var diff = @operator.Root.position - operatedPlace.position;
-            diff.y = 0f;
-            if (diff.sqrMagnitude < radius * radius)
+            operatedPlace.gameObject.SetActive(show);
+        }
+        IsOperated = false;
+        if (show)
+        {
+            foreach (var @operator in operators)
             {
-                IsOperated = true;
-            }
+                var diff = @operator.Root.position - operatedPlace.position;
+                diff.y = 0f;
+                if (diff.sqrMagnitude < radius * radius)
+                {
+                    IsOperated = true;
+                }
+            }   
         }
     }
 
@@ -44,11 +62,19 @@ public class OperatablePlace : CulledBehaviour
 
     public Vector3 GetTargetPosition()
     {
+        if (fillPlace != null && fillPlace.IsEmpty)
+        {
+            return fillPlace.GetPlace().position;
+        }
         return operatedPlace.position;
     }
     
     public Transform GetTargetPlaceTransform()
     {
+        if (fillPlace != null && fillPlace.CanFill)
+        {
+            return fillPlace.GetPlace();
+        }
         return operatedPlace;
     }
 }
