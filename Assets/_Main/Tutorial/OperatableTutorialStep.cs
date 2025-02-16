@@ -45,4 +45,9 @@ public class OperatableTutorialStep : TutorialStep
     {
         return $"Serve {Mathf.RoundToInt(targetServeCount)} people";
     }
+
+    public override Sprite GetTutorialIcon()
+    {
+        return operatable.GetIconOperator();
+    }
 }

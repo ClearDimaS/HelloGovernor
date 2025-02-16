@@ -83,4 +83,6 @@ public abstract class TutorialStep
     {
         return _key;
     }
+
+    public abstract Sprite GetTutorialIcon();
 }

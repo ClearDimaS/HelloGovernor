@@ -1,9 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
+public class ProgressMarker
+{
+    public Sprite sprite;
+    public int orderNumber;
+    public int tutorIndex;
+
+    public ProgressMarker(Sprite sprite, int orderNumber, int tutorIndex)
+    {
+        this.sprite = sprite;
+        this.orderNumber = orderNumber;
+        this.tutorIndex = tutorIndex;
+    }
+}
 public class TutorialManager : Singleton<TutorialManager>
 {
     [Inject] private GameConfig gameConfig;
@@ -13,6 +27,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     [SerializeField] private GameObject tutorialArrow;
 
+    private List<ProgressMarker> progressMarkers = new();
     private List<TutorialStep> tutorialSteps;
     private int curStepIndex = 0;
     
@@ -34,6 +49,19 @@ public class TutorialManager : Singleton<TutorialManager>
         if (curStepIndex < tutorialSteps.Count)
         {
             RefreshArrowTarget(tutorialSteps[curStepIndex]);   
+        }
+        
+        var index = 1;
+        var tutorIndex = 0;
+        foreach (var tutorialStep in tutorialSteps)
+        {
+            if (tutorialStep is BuildingTutorialStep buidlingStep && buidlingStep.LevelIndex == 0)
+            {
+                progressMarkers.Add(new ProgressMarker(buidlingStep.GetTutorialIcon(), index, tutorIndex));
+                index++;   
+            }
+
+            tutorIndex++;
         }
     }
     
@@ -137,5 +165,23 @@ public class TutorialManager : Singleton<TutorialManager>
         }
         var camTarget = step.GetCameraTarget();
         cameraManager.SetTarget(camTarget, 2f, distanceMult: gameConfig.hintCameraDistanceMult, startCallback:callback);  
+    }
+
+    public ProgressMarker GetProgressMarker(int add = 0)
+    {
+        var cntr = 0;
+        for (int i = 0; i < progressMarkers.Count; i++)
+        {
+            if (progressMarkers[i].tutorIndex >= curStepIndex)
+            {
+                if (cntr >= add)
+                {
+                    return progressMarkers[i]; 
+                }
+                cntr++;
+            }
+        }
+
+        return null;
     }
 }

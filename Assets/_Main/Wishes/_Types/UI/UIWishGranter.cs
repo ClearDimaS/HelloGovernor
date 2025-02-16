@@ -4,7 +4,6 @@ using Zenject;
 
 public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcessPlace>
 {
-    [SerializeField] protected string tutorialTitle;
     [SerializeField] protected UIWishActivationPlace activationPlace;
 
     protected UI_Panel panel;
@@ -99,6 +98,11 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 
     public string GetTutorialTitle()
     {
-        return tutorialTitle;
+        return config.tutorialTitle;
+    }
+
+    public Sprite GetTutorialIcon()
+    {
+        return config.tutorialIcon;
     }
 }

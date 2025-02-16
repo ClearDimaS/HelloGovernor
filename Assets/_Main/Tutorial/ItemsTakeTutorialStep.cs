@@ -46,4 +46,9 @@ public class ItemsTakeTutorialStep : TutorialStep
     {
         return $"Take {Mathf.RoundToInt(targetItemsCount)} items";
     }
+
+    public override Sprite GetTutorialIcon()
+    {
+        return itemsGranter.GetItemIcon();
+    }
 }

@@ -44,4 +44,9 @@ public class UIGranterTutorialStep : TutorialStep
     {
         return $"{uiGranter.GetTutorialTitle()}";
     }
+
+    public override Sprite GetTutorialIcon()
+    {
+        return uiGranter.GetTutorialIcon();
+    }
 }

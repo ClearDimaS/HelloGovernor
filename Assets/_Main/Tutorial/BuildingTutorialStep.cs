@@ -7,6 +7,7 @@ public class BuildingTutorialStep : TutorialStep
     protected int levelIndex;
     protected int price;
     protected int typeIndex;
+    public int LevelIndex => levelIndex;
     
     public BuildingTutorialStep(UpgradableBuilding building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
     {
@@ -66,5 +67,10 @@ public class BuildingTutorialStep : TutorialStep
         {
             return $"Upgrade {building.GetTitle()}";
         }
+    }
+
+    public override Sprite GetTutorialIcon()
+    {
+        return building.GetPurchaseIcon();
     }
 }
