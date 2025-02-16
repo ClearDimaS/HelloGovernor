@@ -7,8 +7,10 @@ using Zenject;
 
 public class CacheManager
 {
-    private PlayerPrefsListIntRepository boughtColors = new ("boughtColors");
-    private PlayerPrefsListIntRepository boughtUltimates = new("boughtUltimates");
+    private PlayerPrefsListIntRepository boughtSkins = new ("boughtSkins");
+    private PlayerPrefsListStringRepository completedTutorials = new ("completedTutorials");
+    private PlayerPrefsIntRepository money = new("money");
+    private PlayerPrefsIntRepository skinIndex = new("skin");
     
     private PlayerPrefsIntRepository vibrations = new("vibrations");
     private PlayerPrefsIntRepository sound = new("sound");
@@ -17,13 +19,9 @@ public class CacheManager
     [Inject]
     public CacheManager()
     {
-        if (!boughtColors.Get().list.Contains(0))
+        if (!boughtSkins.Get().list.Contains(0))
         {
-            boughtColors.Set(new List<int>(){0});
-        }
-        if (!boughtUltimates.Get().list.Contains(0))
-        {
-            boughtUltimates.Set(new List<int>(){0});
+            boughtSkins.Set(new List<int>(){0});
         }
 
         if (PlayerPrefs.GetInt("IsInit", -1) == -1)
@@ -66,6 +64,30 @@ public class CacheManager
             }
         }
         set => registration.Set(value.ToString(CultureInfo.InvariantCulture));
+    }
+
+    public int Money
+    {
+        get => money.Get();
+        set => money.Set(value);
+    }
+    
+    public int SkinIndex
+    {
+        get => skinIndex.Get();
+        set => skinIndex.Set(value);
+    }
+
+    public List<int> BoughtSkins
+    {
+        get => boughtSkins.Get().list;
+        set => boughtSkins.Set(value);
+    }
+
+    public List<string> CompletedTutorials
+    {
+        get => completedTutorials.Get().list;
+        set => completedTutorials.Set(value);
     }
 }
 
@@ -129,6 +151,54 @@ public class ListIntHolder
 public class ListBoolHolder
 {
     public List<bool> list = new ();
+}
+
+[Serializable]
+public class ListStringHolder
+{
+    public List<string> list = new ();
+}
+
+public class PlayerPrefsListStringRepository : PlayerPrefsRepository<ListStringHolder>
+{
+    private ListStringHolder cache;
+    public PlayerPrefsListStringRepository(string key) : base(key) { }
+
+    public void Set(List<string> valueList)
+    {
+        if (cache == null)
+        {
+            cache = Get();
+        }
+        cache.list = valueList;
+        PlayerPrefs.SetString(key, JsonUtility.ToJson(cache));
+        PlayerPrefs.Save();
+    }
+    
+    public override void Set(ListStringHolder value)
+    {
+        cache = value;
+        PlayerPrefs.SetString(key, JsonUtility.ToJson(value));
+        PlayerPrefs.Save();
+    }
+
+    public override ListStringHolder Get()
+    {
+        if (cache == null)
+        {
+            var valueString =  PlayerPrefs.GetString(key, "");
+            if (string.IsNullOrEmpty(valueString))
+            {
+                cache = new ListStringHolder();
+            }
+            else
+            {
+                cache = JsonUtility.FromJson<ListStringHolder>(valueString);
+            }
+        }
+
+        return cache;
+    }
 }
 
 public class PlayerPrefsListIntRepository : PlayerPrefsRepository<ListIntHolder>

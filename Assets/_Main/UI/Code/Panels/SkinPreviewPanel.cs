@@ -67,7 +67,7 @@ public class SkinPreviewPanel : UI_Panel
     private void RefreshState()
     {
         var canBuy = skinChooser.CurrentPrice <= playerRepository.Money;
-        var isBought = playerRepository.BoughtSkins.Contains(lastIndex);
+        var isBought = playerRepository.IsSkinBought(lastIndex);
         var isSelected = playerRepository.SkinIndex == lastIndex;
 
         buyButton.UpdateState(!isBought);
@@ -91,17 +91,17 @@ public class SkinPreviewPanel : UI_Panel
 
     private void Buy()
     {
-        if (!playerRepository.BoughtSkins.Contains(skinChooser.SkinIndex) && playerRepository.Money >= skinChooser.CurrentPrice)
+        if (!playerRepository.IsSkinBought(skinChooser.SkinIndex) && playerRepository.Money >= skinChooser.CurrentPrice)
         {
             playerRepository.Money -= skinChooser.CurrentPrice;
-            playerRepository.BoughtSkins.Add(skinChooser.SkinIndex);
+            playerRepository.SetSkinBought(skinChooser.SkinIndex);
         }
         Select();
     }
 
     private void Select()
     {
-        if (playerRepository.BoughtSkins.Contains(skinChooser.SkinIndex))
+        if (playerRepository.IsSkinBought(skinChooser.SkinIndex))
         {
             playerRepository.SkinIndex = skinChooser.SkinIndex;
             RefreshState();

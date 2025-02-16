@@ -3,33 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using Zenject;
 
-[Serializable]
-public class PlayerData
-{
-    public DateTime registrationDate = DateTime.Today;
-    public int skinIndex;
-    public int money;
-    public List<int> boughtSkins = new () { 0 };
-    public List<string> completedTutorials = new();
-}
-
 public class PlayerDataRepository
 {
     [Inject] private CacheManager cacheManager;
 
 
-    public int Money { get; set; }
-    public int SkinIndex { get; set; }
-    public List<int> BoughtSkins { get; set; }
-
-    public bool IsTutorialCompleted(string getKey)
+    public int Money
     {
-        throw new NotImplementedException();
+        get => cacheManager.Money;
+        set => cacheManager.Money = value;
+    }
+    public int SkinIndex 
+    {
+        get => cacheManager.SkinIndex;
+        set => cacheManager.SkinIndex = value;
     }
 
-    public void SetTutorialCompleted(string getKey)
+    public bool IsSkinBought(int skin)
     {
-        throw new NotImplementedException();
+        return cacheManager.BoughtSkins.Contains(skin);
+    }
+    
+    public void SetSkinBought(int skin)
+    {
+        cacheManager.BoughtSkins.Add(skin);
+        cacheManager.BoughtSkins = cacheManager.BoughtSkins;
+    }
+
+    public bool IsTutorialCompleted(string key)
+    {
+        return cacheManager.CompletedTutorials.Contains(key);
+    }
+
+    public void SetTutorialCompleted(string key)
+    {
+        cacheManager.CompletedTutorials.Add(key);
+        cacheManager.CompletedTutorials = cacheManager.CompletedTutorials;
     }
 
     public void SaveAll()
