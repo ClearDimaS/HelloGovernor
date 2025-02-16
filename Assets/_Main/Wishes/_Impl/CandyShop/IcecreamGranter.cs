@@ -26,7 +26,7 @@ public class IcecreamGranter : OperatableGranter
         {
             var element = pool.GetElement();
             element.SetPool(pool);
-            element.transform.position = operatablePlace.fillPlace.transform.position + Vector3.up;
+            element.transform.position = operatablePlace.fillPlace.GetPlace().position + Vector3.up;
             element.transform.DOMove(itemPlaces[itemsQueue.Count % itemPlaces.Length].position, 0.3f)
                 .SetEase(Ease.InCubic);
             itemsQueue.Push(element);
