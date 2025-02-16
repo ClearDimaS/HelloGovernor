@@ -27,7 +27,6 @@ public class GenericCitizenItem : CitizenItem, IResetable
     public override void PoolPlease()
     {
         var poolTmp = pool;
-        pool = null;
         poolTmp.Pool(this);
     }
 
