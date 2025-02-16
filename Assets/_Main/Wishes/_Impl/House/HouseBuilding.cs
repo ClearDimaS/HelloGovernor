@@ -10,34 +10,18 @@ public class HouseBuilding : BuildingBase
     [Inject] private GameConfig gameConfig;
     [Inject] private HousesManager housesManager;
 
-    [SerializeField] private ScaleAnimator brokenRoot;
     [SerializeField] private List<BoxCollider> houseTerritotry;
-    [SerializeField] private List<HouseRepairable> repairables;
     [field: SerializeField] public Transform CitizenPlace { get; private set; }
 
     private List<CitizenController> houseOccupants = new ();
 
+    private List<HouseRepairable> repairables = new ();
     private bool isBroken;
 
     protected override void OnAwake()
     {
         base.OnAwake();
         housesManager.Add(this);
-        brokenRoot.Hide(true);
-    }
-
-    protected override void OnUpdate()
-    {
-        base.OnUpdate();
-        if (isBroken != IsBroken())
-        {
-            isBroken = IsBroken();
-            brokenRoot.Hide(false);
-            foreach (var occupant in houseOccupants)
-            {
-                occupant.WishesController.UnPause();
-            }
-        }
     }
 
     public bool CanRepair(IRepairer repairer, out IRepairable target)
@@ -54,40 +38,15 @@ public class HouseBuilding : BuildingBase
         target = null;
         return false;
     }
+
+    public void AddRepairable(HouseRepairable repairable)
+    {
+        repairables.Add(repairable);
+    }
     
     public bool CanRepair(IRepairer repairer)
     {
         return CanRepair(repairer, out IRepairable target);
-    }
-
-    public void Break()
-    {
-        isBroken = true;
-        foreach (var repairable in repairables)
-        {
-            repairable.Break();
-        }
-
-        foreach (var occupant in houseOccupants)
-        {
-            var pos = GetRandomPositionOnHouseTerritory();
-            occupant.WishesController.Pause();
-            occupant.Walker.MoveToTarget(pos, null);
-        }
-        brokenRoot.Show(false);
-    }
-
-    public bool IsBroken()
-    {
-        foreach (var repairable in repairables)
-        {
-            if (repairable.IsBroken)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public void AddCitizen(CitizenController citizen)

@@ -115,7 +115,7 @@ public class WishesController : CitizenBehaviour
         wishResultEvent += handler;
     }
 
-    public void Pause()
+    /*public void Pause()
     {
         isPaused = true;
         AbortWish();
@@ -124,5 +124,5 @@ public class WishesController : CitizenBehaviour
     public void UnPause()
     {
         isPaused = false;
-    }
+    }*/
 }

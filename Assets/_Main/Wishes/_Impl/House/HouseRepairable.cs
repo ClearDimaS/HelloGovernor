@@ -6,16 +6,21 @@ using Random = UnityEngine.Random;
 public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 {
     [Inject] private PlayerController player;
-    [Inject] private CompassManager compassManager;
     [Inject] private GameConfig gameConfig;
 
+    [SerializeField] private int levelIndex;
     [SerializeField] private TimerBase timer;
-    [SerializeField] private GameObject[] grxVariants;
+    [SerializeField] private GameObject[] gfxVariants;
     [SerializeField] private ScaleAnimator needRepairContent;
+    [SerializeField] private ScaleAnimator levelContent;
     [SerializeField] private ParticleSystem[] donePSs;
     
     protected IRepairer repairer;
 
+    protected float breakTimer;
+    protected float lastBreakTime;
+    protected HouseBuilding houseBuilding;
+    protected bool isAdded;
     protected float repairProgress = 0f;
     public bool IsBroken { get; private set; }
     
@@ -25,28 +30,60 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
     {
         base.OnAwake();
         needRepairContent.Hide(true);
+        houseBuilding = GetComponentInParent<HouseBuilding>();
     }
 
     private void OnEnable()
     {
-        var rand = Random.Range(0, grxVariants.Length);
-        for (int i = 0; i < grxVariants.Length; i++)
+        var rand = Random.Range(0, gfxVariants.Length);
+        for (int i = 0; i < gfxVariants.Length; i++)
         {
-            grxVariants[i].SetActive(i == rand);
+            gfxVariants[i].SetActive(i == rand);
             donePSs[i].gameObject.SetActive(i == rand);
+        }
+    }
+
+    private void Start()
+    {
+        breakTimer = Random.Range(gameConfig.breakTimerMinMax.x, gameConfig.breakTimerMinMax.y);
+        if (houseBuilding.Level > levelIndex)
+        {
+            levelContent.Show(true);
+        }
+        else
+        {
+            levelContent.Hide(true);   
         }
     }
 
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        timer.SetProgress(repairProgress);
-        if (IsBroken && repairer != null)
+        if (!isAdded && houseBuilding.Level > levelIndex)
         {
-            repairProgress += Time.deltaTime / gameConfig.repairHouseTime;
-            if (repairProgress >= 1f)
+            levelContent.Show(false);
+            houseBuilding.AddRepairable(this);
+            isAdded = true;
+            lastBreakTime = Time.time;
+        }
+
+        if (isAdded)
+        {
+            if (IsBroken)
             {
-                Repair();
+                timer.SetProgress(repairProgress);
+                if (repairer != null)
+                {
+                    repairProgress += Time.deltaTime / gameConfig.repairHouseTime;
+                    if (repairProgress >= 1f)
+                    {
+                        Repair();
+                    }
+                }     
+            }
+            else if (Time.time - lastBreakTime > breakTimer)
+            {
+                Break();
             }
         }
     }

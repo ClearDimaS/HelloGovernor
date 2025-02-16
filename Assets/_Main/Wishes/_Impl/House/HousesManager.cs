@@ -7,42 +7,9 @@ using Random = UnityEngine.Random;
 
 public class HousesManager : MonoBehaviour
 {
-    [Inject] private GameConfig gameConfig;
-    
-    private float timeBeforeBreak = 0f;
-    private float breakTimer;
     private List<HouseBuilding> houses = new ();
     
     public IEnumerable<HouseBuilding> Houses => houses;
-    private Vector2 breakTimerMinMax => gameConfig.breakTimerMinMax;
-
-    private void Start()
-    {
-        ReinitBreakTimer();
-    }
-
-    private void Update()
-    {
-        var canBreak = false;
-        foreach (var house in houses)
-        {
-            if (house.IsBought && !house.IsBroken())
-            {
-                canBreak = true;
-                break;
-            }
-        }
-
-        if (canBreak)
-        {
-            breakTimer += Time.deltaTime;
-            if (breakTimer > timeBeforeBreak)
-            {
-                BreakBuilding();
-                ReinitBreakTimer();
-            }
-        }
-    }
 
     public void Add(HouseBuilding houseBuilding)
     {
@@ -60,24 +27,5 @@ public class HousesManager : MonoBehaviour
         }
 
         return null;
-    }
-    
-    private void BreakBuilding()
-    {
-        houses.Shuffle();
-        foreach (var house in houses)
-        {
-            if (!house.IsBroken() && house.IsBought)
-            {
-                house.Break();
-                break;
-            }
-        }
-    }
-    
-    private void ReinitBreakTimer()
-    {
-        breakTimer = 0f;
-        timeBeforeBreak = Random.Range(breakTimerMinMax.x, breakTimerMinMax.y);
     }
 }
