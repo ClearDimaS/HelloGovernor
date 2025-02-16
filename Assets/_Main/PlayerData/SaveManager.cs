@@ -59,7 +59,8 @@ public class SaveManager : Singleton<SaveManager>
                 throw;
             }
         }
-        repository.SetData(repository.GetData());
+
+        repository.SaveAll();
     }
 
     public void AddSavable(ISavable savable)

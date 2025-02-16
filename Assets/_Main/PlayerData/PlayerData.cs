@@ -13,12 +13,27 @@ public class PlayerData
     public List<string> completedTutorials = new();
 }
 
-public class PlayerDataRepository : Repository<PlayerData>
+public class PlayerDataRepository
 {
-    protected override PlayerData CreateClass()
+    [Inject] private CacheManager cacheManager;
+
+
+    public int Money { get; set; }
+    public int SkinIndex { get; set; }
+    public List<int> BoughtSkins { get; set; }
+
+    public bool IsTutorialCompleted(string getKey)
     {
-        var newObject = base.CreateClass();
-        newObject.money = 30;
-        return newObject;
+        throw new NotImplementedException();
+    }
+
+    public void SetTutorialCompleted(string getKey)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveAll()
+    {
+
     }
 }

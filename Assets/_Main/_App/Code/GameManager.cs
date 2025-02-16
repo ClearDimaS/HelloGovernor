@@ -34,8 +34,6 @@ public class GameManager : Singleton<GameManager>
     [Button]
     private void LoadLevel()
     {
-        var playerData = repository.GetData();
-        repository.SetData(playerData);
         LaunchLobby();
     }
 }

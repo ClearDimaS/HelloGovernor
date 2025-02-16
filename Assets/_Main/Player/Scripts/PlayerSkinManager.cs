@@ -30,7 +30,7 @@ public class PlayerSkinManager : MonoBehaviour
 
     private void Update()
     {
-        if (playerDataRepository.GetData().skinIndex != skinIndex)
+        if (playerDataRepository.SkinIndex != skinIndex)
         {
             if (skinGO != null)
             {
@@ -60,12 +60,11 @@ public class PlayerSkinManager : MonoBehaviour
 
     private void SpawnSkin()
     {
-        var data = playerDataRepository.GetData();
-        var modedIndex = data.skinIndex % skins.Length;
+        var modedIndex = playerDataRepository.SkinIndex % skins.Length;
         skinGO = Instantiate(skins[modedIndex].prefab, gfxRoot);
         animator = skinGO.GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorOverride;
-        skinIndex = data.skinIndex;
+        skinIndex = playerDataRepository.SkinIndex;
         animator.gameObject.AddComponent<SoundPlayer>().SetClip(SoundManager.Instance.PlayerFootstepsSound);
     }
 

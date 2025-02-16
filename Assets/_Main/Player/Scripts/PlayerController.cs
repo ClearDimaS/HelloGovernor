@@ -29,12 +29,12 @@ public class PlayerController : Singleton<PlayerController>,
     public Transform Root => transform;
     public void Spend(int diff)
     {
-        repository.GetData().money -= diff;
+        repository.Money -= diff;
     }
 
     public int MaxToSpend()
     {
-        return repository.GetData().money;
+        return repository.Money;
     }
 
     private void Awake()
@@ -100,7 +100,7 @@ public class PlayerController : Singleton<PlayerController>,
                 currency.transform.localScale = startScale * Mathf.Sqrt(t);
             }).OnComplete(() =>
             {
-                repository.GetData().money += currency.Amount;
+                repository.Money += currency.Amount;
                 currencyPool.Pool(currency);
             }).SetEase(gameConfig.moneyFlyEase2);;
         }).SetEase(gameConfig.moneyFlyEase1);

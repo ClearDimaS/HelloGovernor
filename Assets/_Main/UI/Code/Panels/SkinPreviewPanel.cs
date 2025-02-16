@@ -66,10 +66,9 @@ public class SkinPreviewPanel : UI_Panel
 
     private void RefreshState()
     {
-        var data = playerRepository.GetData();
-        var canBuy = skinChooser.CurrentPrice <= data.money;
-        var isBought = data.boughtSkins.Contains(lastIndex);
-        var isSelected = data.skinIndex == lastIndex;
+        var canBuy = skinChooser.CurrentPrice <= playerRepository.Money;
+        var isBought = playerRepository.BoughtSkins.Contains(lastIndex);
+        var isSelected = playerRepository.SkinIndex == lastIndex;
 
         buyButton.UpdateState(!isBought);
         selectButton.UpdateState(isBought);
@@ -85,30 +84,26 @@ public class SkinPreviewPanel : UI_Panel
         if (lastPrice != skinChooser.CurrentPrice)
         {
             lastPrice = skinChooser.CurrentPrice;
-            priceText.color = data.money >= lastPrice ? Color.white : Color.red;
+            priceText.color = playerRepository.Money >= lastPrice ? Color.white : Color.red;
             priceText.text = lastPrice.ToString();
         }
     }
 
     private void Buy()
     {
-        var data = playerRepository.GetData();
-        if (!data.boughtSkins.Contains(skinChooser.SkinIndex) && data.money >= skinChooser.CurrentPrice)
+        if (!playerRepository.BoughtSkins.Contains(skinChooser.SkinIndex) && playerRepository.Money >= skinChooser.CurrentPrice)
         {
-            data.money -= skinChooser.CurrentPrice;
-            data.boughtSkins.Add(skinChooser.SkinIndex);
-            playerRepository.SetData(data);
+            playerRepository.Money -= skinChooser.CurrentPrice;
+            playerRepository.BoughtSkins.Add(skinChooser.SkinIndex);
         }
         Select();
     }
 
     private void Select()
     {
-        var data = playerRepository.GetData();
-        if (data.boughtSkins.Contains(skinChooser.SkinIndex))
+        if (playerRepository.BoughtSkins.Contains(skinChooser.SkinIndex))
         {
-            data.skinIndex = skinChooser.SkinIndex;
-            playerRepository.SetData(data);
+            playerRepository.SkinIndex = skinChooser.SkinIndex;
             RefreshState();
         }
     }

@@ -8,7 +8,8 @@ public class ProjectMonoInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
         Container.Bind<PlayerDataRepository>().AsSingle().NonLazy();
-        Container.Bind<LocalCacheManager>().AsSingle().NonLazy();
+        Container.Bind<CacheManager>().FromNew().AsSingle().NonLazy();
     }
 }

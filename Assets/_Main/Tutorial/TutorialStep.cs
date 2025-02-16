@@ -69,16 +69,14 @@ public abstract class TutorialStep
 
     public void SaveAsCompleted()
     {
-        if (!playerRepository.GetData().completedTutorials.Contains(GetKey()))
+        if (!playerRepository.IsTutorialCompleted(GetKey()))
         {
-            var data = playerRepository.GetData();
-            data.completedTutorials.Add(GetKey());
-            playerRepository.SetData(data);
+            playerRepository.SetTutorialCompleted(GetKey());
         }
     }
     public bool IsCompleted()
     {
-        return progress >= 1f || playerRepository.GetData().completedTutorials.Contains(GetKey());
+        return progress >= 1f || playerRepository.IsTutorialCompleted(GetKey());
     }
 
     private string GetKey()

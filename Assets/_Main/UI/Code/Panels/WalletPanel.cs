@@ -17,15 +17,15 @@ public class WalletPanel : UI_Panel
 
     private void Start()
     {
-        lastMoney = repository.GetData().money;
+        lastMoney = repository.Money;
         moneyText.text = Price.ToMoneyString(lastMoney);
     }
 
     private void Update()
     {
-        if (repository.GetData().money != lastMoney)
+        if (repository.Money != lastMoney)
         {
-            lastMoney = repository.GetData().money;
+            lastMoney = repository.Money;
             var money = lastMoney;
             moneyText.transform.DOScale(Vector3.one * 1.3f, 0.3f).OnComplete(() =>
             {

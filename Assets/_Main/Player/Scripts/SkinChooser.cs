@@ -24,7 +24,7 @@ public class SkinChooser : MonoBehaviour
 
     private void Start()
     {
-        SkinIndex = playerRepository.GetData().skinIndex;
+        SkinIndex = playerRepository.SkinIndex;
         cam.enabled = false;
         var panel = uiManager.GetPanel<SkinPreviewPanel>();
         panel.SetSwiper(swiper.Swiper);
@@ -54,7 +54,7 @@ public class SkinChooser : MonoBehaviour
             UniTask.WaitUntil(() => skinManager.Prefabs != null).ContinueWith(() =>
             {
                 swiper.SetLayer(LayerMask.NameToLayer("SkinPreview"));
-                swiper.Initialize(skinManager.Prefabs, playerRepository.GetData().skinIndex);
+                swiper.Initialize(skinManager.Prefabs, playerRepository.SkinIndex);
             });
         }
         uiManager.OpenPanel<SkinPreviewPanel>();

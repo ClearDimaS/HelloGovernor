@@ -70,7 +70,7 @@ public class BankAssistant : MonoBehaviour, IDataHolder<BankAssistantData>, ICur
 
     private void AddMoneyToPlayer()
     {
-        repository.GetData().money += saveData.money;
+        repository.Money += saveData.money;
         saveData.money = 0;
     }
 
