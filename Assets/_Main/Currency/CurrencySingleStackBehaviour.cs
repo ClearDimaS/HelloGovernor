@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 public class CurrencySingleStackBehaviour : SimplePlayerPhysicsBehaviour, IResetable, ICurrencyHolder
@@ -70,12 +71,17 @@ public class CurrencySingleStackBehaviour : SimplePlayerPhysicsBehaviour, IReset
         var start = transform.position;
         var end = start + force;
         end.y = groundLevel;
+        var isHit = NavMesh.SamplePosition(end, out var hit, 10f, -1);
+        if (isHit)
+        {
+            end = hit.position + Vector3.up * 0.6f;
+        }
         var middle = (start + end) / 2f;
         middle.y = groundLevel + force.y;
 
         var velocity = force.magnitude;
-        var timeMiddle = 0.4f;
-        var timeEnd = Mathf.Sqrt(2 * (end - middle).magnitude / Physics.gravity.magnitude);
+        var timeMiddle = 0.3f;
+        var timeEnd = Mathf.Sqrt((end - middle).magnitude / Physics.gravity.magnitude);
         
         transform.DOMove(middle, timeMiddle).OnComplete(() =>
         {

@@ -24,6 +24,7 @@ public class PlayerController : Singleton<PlayerController>,
     public IWishAssistant WishAssistant { get; private set; }
     private int frameRequiredDelta;
 
+    private Vector3 spawnPlace;
     private Vector3 delta;
     
     public Transform Root => transform;
@@ -43,13 +44,17 @@ public class PlayerController : Singleton<PlayerController>,
         playerInput.moveEvent += RequireMove;
     }
 
+    private void Start()
+    {
+        spawnPlace = transform.position;
+    }
+
     private void Update()
     {
-        if (Mathf.Abs(transform.position.y) > 0.2f)
+        if (transform.position.y < -2f)
         {
-            var pos = transform.position;
-            pos.y = 0;
-            transform.position = pos;
+            transform.position = spawnPlace;
+            rb.velocity = Vector3.zero;
         }
     }
 

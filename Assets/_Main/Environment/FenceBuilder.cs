@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 public class FenceBuilder : MonoBehaviour
@@ -46,29 +47,45 @@ public class FenceBuilder : MonoBehaviour
         var min = bounds.min;
         var max = bounds.max;
         var rot = Quaternion.LookRotation(Vector3.right, Vector3.up);
-        for (float x = min.x; x < max.x; x+=fenceSize.x)
+        Vector3 prevPos = new Vector3(0, -99, 0);
+        var y = -1f;
+        var add = fenceSize.x;
+        for (float x = min.x; x < max.x; x+=add)
         {
-            var pos = new Vector3(x, 0, max.z);
-            PlaceFence(pos, rot);
+            var pos = new Vector3(x, y, max.z);
+            prevPos = PlaceFence(pos, prevPos, rot);
+            y = prevPos.y;
         }
         rot = Quaternion.LookRotation(Vector3.back, Vector3.up);
-        for (float z = max.z; z > min.z; z-=fenceSize.x)
+        prevPos = new Vector3(0, -99, 0);
+        for (float z = max.z; z > min.z; z-=add)
         {
-            var pos = new Vector3(max.x, 0, z);
-            PlaceFence(pos, rot);
+            var pos = new Vector3(max.x, y, z);
+            prevPos = PlaceFence(pos, prevPos, rot);
+            y = prevPos.y;
         }
         rot = Quaternion.LookRotation(Vector3.left, Vector3.up);
-        for (float x = max.x; x > min.x; x-=fenceSize.x)
+        prevPos = new Vector3(0, -99, 0);
+        for (float x = max.x; x > min.x; x-=add)
         {
-            var pos = new Vector3(x, 0, min.z);
-            PlaceFence(pos, rot);
+            var pos = new Vector3(x, y, min.z);
+            prevPos = PlaceFence(pos, prevPos, rot);
+            y = prevPos.y;
         }
         rot = Quaternion.LookRotation(Vector3.forward, Vector3.up);
-        for (float z = min.z; z < max.z; z+=fenceSize.x)
+        prevPos = new Vector3(0, -99, 0);
+        for (float z = min.z; z < max.z; z+=add)
         {
-            var pos = new Vector3(min.x, 0, z);
-            PlaceFence(pos, rot);
+            var pos = new Vector3(min.x, y, z);
+            prevPos = PlaceFence(pos, prevPos, rot);
+            y = prevPos.y;
         }
+    }
+
+    private Vector3 PlaceFence(Vector3 pos, Vector3 prevPos, Quaternion rot)
+    {
+        prevPos = PlaceFenceTile(pos, prevPos, rot);
+        return prevPos;
     }
 
     private void HideFence()
@@ -81,7 +98,7 @@ public class FenceBuilder : MonoBehaviour
         activeFenceIndex = 0;
     }
 
-    private void PlaceFence(Vector3 pos, Quaternion rot)
+    private Vector3 PlaceFenceTile(Vector3 pos, Vector3 prevPos, Quaternion rot)
     {
         if (spawnedFenceParts.Count <= activeFenceIndex)
         {
@@ -92,8 +109,17 @@ public class FenceBuilder : MonoBehaviour
         {
             spawnedFenceParts[activeFenceIndex].gameObject.SetActive(true);
         }
+
+        var isHit = NavMesh.SamplePosition(pos, out var hit, 10f, -1);
+        pos.y = hit.position.y;
+        if (Mathf.Abs(prevPos.y - hit.position.y) > 0.1f && prevPos.y > -30f && activeFenceIndex > 0)
+        {
+            var prevRot = Quaternion.LookRotation((pos - prevPos).normalized);
+            spawnedFenceParts[activeFenceIndex-1].transform.rotation = prevRot;
+        }
         spawnedFenceParts[activeFenceIndex].transform.position = pos;
         spawnedFenceParts[activeFenceIndex].transform.rotation = rot;
         activeFenceIndex++;
+        return pos;
     }
 }
