@@ -11,7 +11,8 @@ public class OperatablePlace : CulledBehaviour
     [SerializeField] public OperatableFillPlace fillPlace;
     
     protected List<IOperator> operators = new ();
-    
+
+    public int GetFillCount => fillPlace == null ? 0 : fillPlace.CurrentCount;
     public bool IsOperated { get; set; }
 
     private void Start()

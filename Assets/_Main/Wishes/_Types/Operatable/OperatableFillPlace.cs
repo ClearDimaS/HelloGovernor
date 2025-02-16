@@ -12,6 +12,7 @@ public class OperatableFillPlace : CulledBehaviour
     
     public bool CanFill => currentCount < Max;
     public bool IsEmpty => currentCount == 0;
+    public int CurrentCount => currentCount;
 
     protected OperatableGranter granter;
     protected float fillProgress;
