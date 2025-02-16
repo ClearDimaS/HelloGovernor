@@ -46,6 +46,9 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
 
+    public bool IsCooldown { get; private set; }
+    public float CoolDownStartTime { get; protected set; }
+    public float CoolDown => wishesCollectionConfig.GetCooldown(this);
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
 
@@ -81,6 +84,15 @@ public abstract class WishGranter : MonoBehaviour
 
     private void Update()
     {
+        if (IsCooldown && processed.Count == 0 && CoolDownStartTime < 0)
+        {
+            CoolDownStartTime = Time.time;
+        }
+        if (IsCooldown && Time.time - CoolDownStartTime > CoolDown)
+        {
+            IsCooldown = false;
+        }
+        
         for (int i = 0; i < queue.Count; i++)
         {
             if (queuePlaces.Length > 0)
@@ -270,6 +282,13 @@ public abstract class WishGranter : MonoBehaviour
         {
             Debug.LogError($"cant add approaching!  {this}");   
         }
+        if (approaching.Count + queue.Count + processed.Count == processPlaces.Length)
+        {
+            if (!IsCooldown && CoolDown > 0f)
+            {
+                IsCooldown = true;
+            }
+        }
     }
 
     private void AddToQueue(CitizenController citizen)
@@ -343,7 +362,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public virtual bool CanAddOneMore()
     {
-        return approaching.Count + queue.Count * processed.Count < queuePlaces.Length + processPlaces.Length;
+        return approaching.Count + queue.Count + processed.Count < queuePlaces.Length + processPlaces.Length && !IsCooldown;
     }
 
     private ProcessPlace DequeuePlace()

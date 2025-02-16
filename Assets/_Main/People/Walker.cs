@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Debug = fbg.Debug;
 
 public class Walker : CulledBehaviour
 {
@@ -21,6 +22,11 @@ public class Walker : CulledBehaviour
     {
         agent.speed = speed;
         agent.stoppingDistance = stopDistance;
+    }
+
+    private void OnDisable()
+    {
+        isFinished = true;
     }
 
     protected override void OnUpdate(bool visible)

@@ -7,8 +7,8 @@ using Zenject;
 public class CityProgressPanel : UI_Panel
 {
     [Inject] private CameraManager cameraManager;
-    [Inject] private UpgradablePricesManager pricesManager;
     [Inject] private GameConfig gameConfig;
+    [Inject] private TutorialManager tutorialManager;
 
     [SerializeField] private RectTransform questRoot;
     [SerializeField] private Image progressImage;
@@ -19,14 +19,11 @@ public class CityProgressPanel : UI_Panel
 
     private float completionTime = -4f;
     private CanvasGroup group;
-    private UpgradableObject nextUpgradable;
-    private int spentAmount = -1;
-    private float lastProgress = 0f;
+    private TutorialStep lastStep;
 
     private void Start()
     {
-        lastProgress = pricesManager.GetProgress();
-        hintButton.onClick.AddListener(ShowTargetHouse);
+        hintButton.onClick.AddListener(ShowTarget);
         group = GetComponent<CanvasGroup>();
         if (group == null)
         {
@@ -34,9 +31,14 @@ public class CityProgressPanel : UI_Panel
         }
     }
 
-    private void ShowTargetHouse()
+    private void ShowTarget()
     {
-        cameraManager.SetTarget(pricesManager.GetNextData().BuyPlace, 2f, distanceMult: gameConfig.hintCameraDistanceMult);
+        var target = tutorialManager.GetTargetPlace();
+        if (target == null)
+        {
+            return;
+        }
+        cameraManager.SetTarget(target, 2f, distanceMult: gameConfig.hintCameraDistanceMult);
     }
 
     private void Update()
@@ -45,67 +47,17 @@ public class CityProgressPanel : UI_Panel
         {
             return;
         }
-        var next = pricesManager.GetNextData();
-        if (next == null || pricesManager.IsLast())
-        {
-            group.alpha = 0f;
-            return;
-        }
-        Debug.Log($"next: {next}  / {nextUpgradable}");
-        if (nextUpgradable != next)
-        {
-            if (nextUpgradable == null)
-            {
-                nextUpgradable = next;
-                if (nextUpgradable.Level == 0)
-                {
-                    titleText.text = $"Buy {nextUpgradable.GetTitle()}";
-                }
-                else
-                {
-                    titleText.text = $"Upgrade {nextUpgradable.GetTitle()}";
-                }
-                spentAmount = -1;
-            }
-        }
 
-        if (nextUpgradable != null && pricesManager.IsCurrentBought(nextUpgradable))
+        var step = tutorialManager.GetCurrentStep();
+        if (step != lastStep)
         {
-            pricesManager.AllowNext();
-            completionTime = Time.time;
-            SoundManager.Instance.TaskComplete();
-                
-            questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
-            {
-                questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
-                {
-                    questRoot.transform.DOScale(Vector3.one * 1.3f, completionPause / 5f).OnComplete(() =>
-                    {
-                        questRoot.transform.DOScale(Vector3.one, completionPause / 5f).OnComplete(() =>
-                        {
-                            nextUpgradable = null;
-                            spentAmount = -1;
-                        });
-                    });
-                });
-            });
+            lastStep = step;
+            titleText.text = $"Upgrade {step.GetTitle()}";
         }
-
-        if (nextUpgradable != null)
+        if (lastStep != null)
         {
-            if (spentAmount < nextUpgradable.SpentAmount)
-            {
-                spentAmount = nextUpgradable.SpentAmount;
-                progressImage.fillAmount = nextUpgradable.SpentAmount/(float)nextUpgradable.Price;
-                progressText.text = $"{nextUpgradable.SpentAmount}/{nextUpgradable.Price}";
-            }
-        
-            if (spentAmount > nextUpgradable.SpentAmount)
-            {
-                spentAmount = nextUpgradable.Price;
-                progressImage.fillAmount = 1f;
-                progressText.text = $"{nextUpgradable.Price}/{nextUpgradable.Price}";
-            }   
+            progressImage.fillAmount = lastStep.GetProgress();
+            progressText.text = lastStep.GetProgressText();
         }
     }
 }

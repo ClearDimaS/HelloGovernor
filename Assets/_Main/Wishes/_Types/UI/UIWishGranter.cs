@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public abstract class UIWishGranter<T> : WishGranter<UIWishGranterConfig, UIProcessPlace> where T : UI_Panel
+public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcessPlace>
 {
     [Inject] protected UI_Manager uiManager;
     
@@ -14,9 +14,11 @@ public abstract class UIWishGranter<T> : WishGranter<UIWishGranterConfig, UIProc
     
     private void Start()
     {
-        panel = uiManager.GetPanel<T>();
+        panel = GetPanel();
         OnStart();
     }
+
+    protected abstract UI_Panel GetPanel();
 
     protected virtual void OnStart()
     {

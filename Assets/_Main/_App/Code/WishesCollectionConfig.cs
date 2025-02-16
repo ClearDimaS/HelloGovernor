@@ -49,4 +49,9 @@ public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, T
     {
         return GetItem(granter.GetType());
     }
+
+    public float GetCooldown(WishGranter granter)
+    {
+        return GetItem(granter.GetType()).coolDown;
+    }
 }

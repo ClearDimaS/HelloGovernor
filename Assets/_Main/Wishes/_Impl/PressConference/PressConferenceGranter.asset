@@ -16,10 +16,4 @@ MonoBehaviour:
   grantDuration: 1
   reward: 100
   chanceWeight: 1
-  buildingData:
-    title: Arena
-    icon: {fileID: -122496617620796665, guid: fe42c8b526e77e54ab91d0590272d9e8, type: 3}
-    levels:
-    - option: {fileID: 7157111886354250660, guid: df7039d62f66b4326adaa7ef35dbdda0,
-        type: 3}
-  wishProcessorPanel: {fileID: 0}
+  coolDown: 180

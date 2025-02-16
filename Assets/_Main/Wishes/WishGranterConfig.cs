@@ -8,8 +8,10 @@ public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
     public float grantDuration;
     public int reward;
     public float chanceWeight;
-
+    public float coolDown = -1;
+    
     private Type type;
+
     public Type Key
     {
         get

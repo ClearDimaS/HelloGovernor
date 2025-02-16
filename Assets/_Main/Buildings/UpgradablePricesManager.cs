@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -300,5 +301,10 @@ public class UpgradablePricesManager : MonoBehaviour
     public void AllowNext()
     {
         allowNext = true;
+    }
+
+    public List<MoneyConsumerData> GetPurchaseSequence()
+    {
+        return upgradablePriceDatas;
     }
 }
