@@ -45,6 +45,7 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 
     private void Start()
     {
+        needRepairContent.Hide(true);
         breakTimer = Random.Range(gameConfig.breakTimerMinMax.x, gameConfig.breakTimerMinMax.y);
         if (houseBuilding.Level > levelIndex)
         {
@@ -65,6 +66,7 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
             houseBuilding.AddRepairable(this);
             isAdded = true;
             lastBreakTime = Time.time;
+            breakTimer = Random.Range(gameConfig.breakTimerMinMax.x, gameConfig.breakTimerMinMax.y);
         }
 
         if (isAdded)
@@ -123,6 +125,8 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
     
     public void Break()
     {
+        lastBreakTime = Time.time;
+        breakTimer = Random.Range(gameConfig.breakTimerMinMax.x, gameConfig.breakTimerMinMax.y);
         repairProgress = 0f;
         timer.SetProgress(0f);
         IsBroken = true;

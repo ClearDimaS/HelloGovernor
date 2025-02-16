@@ -17,7 +17,7 @@ public class CacheManager
     private PlayerPrefsStringRepository registration = new("registration");
 
     [Inject]
-    public CacheManager()
+    public CacheManager(GameConfig gameConfig)
     {
         if (!boughtSkins.Get().list.Contains(0))
         {
@@ -26,6 +26,7 @@ public class CacheManager
 
         if (PlayerPrefs.GetInt("IsInit", -1) == -1)
         {
+            money.Set(gameConfig.startMoney);
             PlayerPrefs.SetInt("IsInit", 1);
             PlayerPrefs.Save();
         }
