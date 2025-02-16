@@ -47,19 +47,23 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 curStep.SaveAsCompleted();
                 curStepIndex++;
+                if (curStepIndex < tutorialSteps.Count)
+                {
+                    var newStep = tutorialSteps[curStepIndex];
+                    ShowTargetPlace(callback: () =>
+                    {
+                        if (newStep is BuildingTutorialStep)
+                        {
+                            pricesManager.AllowNext();
+                        }
+                    });   
+                    RefreshArrowTarget(newStep); 
+                }
             }
 
             if (curStepIndex < tutorialSteps.Count)
             {
-                var newStep = tutorialSteps[curStepIndex];
-                ShowTargetPlace(callback: () =>
-                {
-                    if (newStep is BuildingTutorialStep)
-                    {
-                        pricesManager.AllowNext();
-                    }
-                });
-                RefreshArrowTarget(newStep);   
+                RefreshArrowTarget(GetCurrentStep());   
             }
         }
     }
