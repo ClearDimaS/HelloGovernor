@@ -111,6 +111,6 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
             SoundManager.Instance.PlayerRepair();
         }
 
-        CurrencyStackBehaviour.SpawnSingleCurrency(gameConfig.repairHouseReward);
+        CurrencyStackBehaviour.SpawnSingleCurrency(gameConfig.repairHouseReward, transform.position);
     }
 }

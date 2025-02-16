@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using Zenject;
 
 public class TutorialManager : Singleton<TutorialManager>
 {
+    [Inject] private GameConfig gameConfig;
+    [Inject] private CameraManager cameraManager;
+    [Inject] private PlayerDataRepository playerRepository;
     [Inject] private UpgradablePricesManager pricesManager;
 
     [SerializeField] private GameObject tutorialArrow;
@@ -21,6 +25,10 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 curStepIndex++;
             }
+            else
+            {
+                break;
+            }
         }
 
         if (curStepIndex < tutorialSteps.Count)
@@ -34,22 +42,26 @@ public class TutorialManager : Singleton<TutorialManager>
         if (curStepIndex >= 0 && curStepIndex < tutorialSteps.Count)
         {
             var curStep = tutorialSteps[curStepIndex];
+            curStep.UpdateProgress();
             if (curStep.IsCompleted())
             {
+                curStep.SaveAsCompleted();
                 curStepIndex++;
             }
 
             if (curStepIndex < tutorialSteps.Count)
             {
-                var newStep = tutorialSteps[curStepIndex];   
+                var newStep = tutorialSteps[curStepIndex];
+                ShowTargetPlace(callback: () =>
+                {
+                    if (newStep is BuildingTutorialStep)
+                    {
+                        pricesManager.AllowNext();
+                    }
+                });
                 RefreshArrowTarget(newStep);   
             }
         }
-    }
-
-    public Transform GetTargetPlace()
-    {
-        return GetCurrentStep().GetCameraTarget();
     }
 
     public TutorialStep GetCurrentStep()
@@ -89,7 +101,7 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             if (purchasable.upgradable is UpgradableBuilding building)
             {
-                tutorialSteps.Add(new BuildingTutorialStep(building));
+                tutorialSteps.Add(new BuildingTutorialStep(building, purchasable.level-1, purchasable.thisTypeIndex, playerRepository));
             }
 
             var granter = purchasable.upgradable.GetComponent<WishGranter>();
@@ -97,17 +109,29 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 if (granter is OperatableGranter operatable)
                 {
-                    tutorialSteps.Add(new OperatableTutorialStep(operatable));
+                    tutorialSteps.Add(new OperatableTutorialStep(operatable, playerRepository));
                 }else
                 if (granter is ItemsWishGranter itemsGranter)
                 {
-                    tutorialSteps.Add(new ItemsTutorialStep(itemsGranter));
+                    tutorialSteps.Add(new ItemsTakeTutorialStep(itemsGranter, playerRepository));
+                    tutorialSteps.Add(new ItemsUseTutorialStep(itemsGranter, playerRepository));
                 }else
                 if (granter is UIWishGranter uiGranter)
                 {
-                    tutorialSteps.Add(new UIGranterTutorialStep(uiGranter));
+                    tutorialSteps.Add(new UIGranterTutorialStep(uiGranter, playerRepository));
                 }
             }
         }
+    }
+
+    public void ShowTargetPlace(Action callback)
+    {
+        var step = GetCurrentStep();
+        if (step == null)
+        {
+            return;
+        }
+        var camTarget = step.GetCameraTarget();
+        cameraManager.SetTarget(camTarget, 2f, distanceMult: gameConfig.hintCameraDistanceMult, startCallback:callback);  
     }
 }

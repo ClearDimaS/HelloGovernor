@@ -4,14 +4,14 @@ using Zenject;
 
 public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcessPlace>
 {
-    [Inject] protected UI_Manager uiManager;
-    
+    [SerializeField] protected string tutorialTitle;
     [SerializeField] protected UIWishActivationPlace activationPlace;
 
     protected UI_Panel panel;
     protected bool isStarted;
     protected bool isFinished;
-    
+    public bool WasCompletedAtLeastOnce { get; set; }
+
     private void Start()
     {
         panel = GetPanel();
@@ -48,7 +48,7 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 
     protected virtual void OnResetActivation()
     {
-    
+        WasCompletedAtLeastOnce = true;
     }
 
     protected virtual void OnActivate()
@@ -90,5 +90,15 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
     protected override void OnLeave(CitizenController citizen)
     {
         
+    }
+
+    public Transform GetPlayerPlace()
+    {
+        return activationPlace.transform;
+    }
+
+    public string GetTutorialTitle()
+    {
+        return tutorialTitle;
     }
 }

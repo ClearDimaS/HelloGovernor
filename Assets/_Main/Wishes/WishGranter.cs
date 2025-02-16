@@ -356,7 +356,7 @@ public abstract class WishGranter : MonoBehaviour
         }
         else if(Reward > 0)
         {
-            CurrencyStackBehaviour.SpawnSingleCurrency(Reward);
+            CurrencyStackBehaviour.SpawnSingleCurrency(Reward, citizen.transform.position);
         }
     }
 

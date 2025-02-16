@@ -46,4 +46,9 @@ public class OperatablePlace : CulledBehaviour
     {
         return operatedPlace.position;
     }
+    
+    public Transform GetTargetPlaceTransform()
+    {
+        return operatedPlace;
+    }
 }

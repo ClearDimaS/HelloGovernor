@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfig, OperatableProcessPlace>
 {
     [SerializeField] protected OperatablePlace operatablePlace;
+    public int ServedCounter { get; set; }
 
     public Sprite GetIconOperator()
     {
@@ -21,7 +22,7 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
     
     protected override void OnLeave(CitizenController citizen)
     {
-
+        ServedCounter++;
     }
 
     public OperatablePlace GetOperatedPlace()

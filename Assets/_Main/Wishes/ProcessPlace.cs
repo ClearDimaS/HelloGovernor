@@ -64,4 +64,9 @@ public abstract class ProcessPlace : CulledBehaviour
         progress = 0f;
         processed = null;
     }
+
+    public Transform GetTargetTransform()
+    {
+        return transform;
+    }
 }

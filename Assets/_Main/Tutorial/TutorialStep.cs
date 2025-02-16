@@ -1,12 +1,36 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public abstract class TutorialStep
 {
+    [Inject] protected PlayerDataRepository playerRepository;
+
+    protected float lastProgress = -1;
     private float progress = -1;
     private string title;
     protected string progressText;
-    
+
+    protected string _key
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_keyCache))
+            {
+                _keyCache = CreateKey();
+            }
+
+            return _keyCache;
+        }
+    }
+    protected string _keyCache;
+    public TutorialStep(PlayerDataRepository playerRepository)
+    {
+        this.playerRepository = playerRepository;
+    }
+
+    protected abstract string CreateKey();
+
     public string GetTitle()
     {
         if (string.IsNullOrEmpty(title))
@@ -18,12 +42,20 @@ public abstract class TutorialStep
 
     public string GetProgressText()
     {
-        if (progress != GetProgress())
+        if (lastProgress != GetProgress())
         {
+            lastProgress = GetProgress();
             progressText = CreateProgressText();
         }
         return progressText;
     }
+
+    public void UpdateProgress()
+    {
+        UpdateProgress_Internal();
+        progress = GetProgress();
+    }
+    protected abstract void UpdateProgress_Internal();
     
     public abstract float GetProgress();
     
@@ -35,8 +67,22 @@ public abstract class TutorialStep
     
     protected abstract string CreateTitle();
 
+    public void SaveAsCompleted()
+    {
+        if (!playerRepository.GetData().completedTutorials.Contains(GetKey()))
+        {
+            var data = playerRepository.GetData();
+            data.completedTutorials.Add(GetKey());
+            playerRepository.SetData(data);
+        }
+    }
     public bool IsCompleted()
     {
-        return progress >= 1f || ;
+        return progress >= 1f || playerRepository.GetData().completedTutorials.Contains(GetKey());
+    }
+
+    private string GetKey()
+    {
+        return _key;
     }
 }

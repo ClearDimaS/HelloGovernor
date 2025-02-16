@@ -10,6 +10,7 @@ public class PlayerData
     public int skinIndex;
     public int money;
     public List<int> boughtSkins = new () { 0 };
+    public List<string> completedTutorials = new();
 }
 
 public class PlayerDataRepository : Repository<PlayerData>

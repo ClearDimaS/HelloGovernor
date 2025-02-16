@@ -13,6 +13,8 @@ public class GenericCitizenItemSource : CulledBehaviour
     [SerializeField] private Image takeProgressImage;
     [field: SerializeField] public Transform TakePlace { get; private set; }
     [field: SerializeField] public Transform IdlePlace { get; private set; }
+    public int TakesCount { get; protected set; }
+
     private ItemsWishGranter wishGranter;
 
     private HashSet<IItemTaker> takers = new ();
@@ -69,6 +71,10 @@ public class GenericCitizenItemSource : CulledBehaviour
         {
             takerTimers[taker] = 0f;
             taker.AddItem(TakeItem());
+            if (taker is PlayerController)
+            {
+                TakesCount++;
+            }
             if (!taker.CanAddItems(wishGranter))
             {
                 RemoveTaker(taker);

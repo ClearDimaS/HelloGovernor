@@ -33,12 +33,7 @@ public class CityProgressPanel : UI_Panel
 
     private void ShowTarget()
     {
-        var target = tutorialManager.GetTargetPlace();
-        if (target == null)
-        {
-            return;
-        }
-        cameraManager.SetTarget(target, 2f, distanceMult: gameConfig.hintCameraDistanceMult);
+        tutorialManager.ShowTargetPlace(null);
     }
 
     private void Update()
@@ -52,7 +47,7 @@ public class CityProgressPanel : UI_Panel
         if (step != lastStep)
         {
             lastStep = step;
-            titleText.text = $"Upgrade {step.GetTitle()}";
+            titleText.text = step.GetTitle();
         }
         if (lastStep != null)
         {

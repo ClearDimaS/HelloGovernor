@@ -12,6 +12,7 @@ public class MoneyConsumerData
 {
     [ReadOnly] public int level;
     public int price;
+    public int thisTypeIndex;
     public UpgradableObject upgradable;
 
     public MoneyConsumerData(int price, UpgradableObject upgradable, int level)
@@ -283,8 +284,18 @@ public class UpgradablePricesManager : MonoBehaviour
             }
             else
             {
-                upgradablePriceDatas[i].price = upgradablePriceDatas[i - 1].price * 2 - upgradablePriceDatas[i - 2].price;
+                upgradablePriceDatas[i].price = upgradablePriceDatas[i - 1].price + upgradablePriceDatas[Mathf.Clamp(i - 3, 0, 99999)].price;
             }
+            
+            var set = new HashSet<UpgradableObject>();
+            for (int j = 0; j < i; j++)
+            {
+                if (upgradablePriceDatas[i].upgradable != upgradablePriceDatas[j].upgradable)
+                {
+                    set.Add(upgradablePriceDatas[j].upgradable);
+                };
+            }
+            upgradablePriceDatas[i].thisTypeIndex = set.Count;
         }
     }
 

@@ -38,6 +38,11 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         OnAwake();
     }
 
+    public int GetPriceForLevel(int level)
+    {
+        return levelPrices[level].price;
+    }
+
     protected virtual void OnAwake()
     {
         

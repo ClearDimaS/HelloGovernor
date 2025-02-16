@@ -6,16 +6,22 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class ChatWishGranter : UIWishGranter<ChatUI_Panel>
+public class ChatWishGranter : UIWishGranter
 {
     [Inject] protected EnvironmentManager environment;
-
+    [Inject] protected UI_Manager uiManager;
+    
     [SerializeField] private float radius = 2f;
     [SerializeField] private float timeOut = 10f;
     protected float startTime = -1;
 
     protected bool IsTimeOut => processed.Count > 0 && Time.time - startTime < timeOut;
     
+    protected override UI_Panel GetPanel()
+    {
+        return uiManager.GetPanel<ChatUI_Panel>();
+    }
+
     protected override void OnStart()
     {
         base.OnStart();

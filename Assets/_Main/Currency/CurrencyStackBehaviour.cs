@@ -175,11 +175,11 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         return !gridPlacer.CanAddOneMore();
     }
 
-    public static void SpawnSingleCurrency(int count)
+    public static void SpawnSingleCurrency(int count, Vector3 pos)
     {
         var reward = count;
         var currency = instance.currencySinglePool.GetElement();
-        currency.transform.position = instance.transform.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
+        currency.transform.position = pos + Vector3.up;
         currency.Initialize(reward);
         currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
