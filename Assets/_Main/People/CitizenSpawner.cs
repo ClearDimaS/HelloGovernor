@@ -9,7 +9,8 @@ public class CitizenSpawner : MonoBehaviour
 {
     [Inject] private DiContainer container;
     [Inject] private HousesManager housesManager;
-
+    [Inject] private UpgradablePricesManager pricesManager;
+    
     [SerializeField] private CitizenController[] citizenPrefabs;
     [SerializeField] private int baseCount;
 
@@ -22,7 +23,14 @@ public class CitizenSpawner : MonoBehaviour
 
     private void SpawnNew()
     {
-        for (int i = citizens.Count; i < baseCount; i++)
+        var citizensCount = baseCount;
+        var boughtBuildings = pricesManager.GetBoughtGranters();
+        foreach (var bought in boughtBuildings)
+        {
+            citizensCount += bought.GetCitizensCount();
+        }
+        
+        for (int i = citizens.Count; i < citizensCount; i++)
         {
             var citizen = Spawn();
             citizen.PlaceRandom();

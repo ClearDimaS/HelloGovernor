@@ -39,6 +39,7 @@ public class UpgradablePricesManager : MonoBehaviour
     private Dictionary<UpgradableObject, List<Price>> consumersDict = new ();
 
     private List<UpgradableBuilding> available = new();
+    private HashSet<WishGranter> bought = new();
     public int AvailableCount => available.Count;
     private bool allowNext = true;
 
@@ -59,13 +60,23 @@ public class UpgradablePricesManager : MonoBehaviour
         {
             available.Add(building1);
         }
-    
+
+        bought = GetComponentsInChildren<WishGranter>().Where(x => x.GetComponent<UpgradableBuilding>() == null).ToHashSet();
         while (IsBought(lastUnlocked) && unlockQueue.Count > 0)
         {
             lastUnlocked = unlockQueue.Dequeue();
-            if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
+            if (lastUnlocked.upgradable is UpgradableBuilding building)
             {
-                available.Add(building);
+                if (!available.Contains(building))
+                {
+                    available.Add(building);   
+                }
+
+                var granter = building.GetComponent<WishGranter>();
+                if (granter != null)
+                {
+                    bought.Add(granter);
+                }
             }
         }
 
@@ -92,6 +103,17 @@ public class UpgradablePricesManager : MonoBehaviour
                     waitingUnlock = unlockQueue.Peek();
                     UniTask.Delay(TimeSpan.FromSeconds(1f)).ContinueWith(() =>
                     {
+                        if (lastUnlocked != null)
+                        {
+                            if (lastUnlocked.upgradable is UpgradableBuilding building1)
+                            {
+                                var granter = building1.GetComponent<WishGranter>();
+                                if (granter != null)
+                                {
+                                    bought.Add(granter);
+                                }  
+                            }
+                        }
                         lastUnlocked = unlockQueue.Dequeue();
                         allowNext = false;
                         if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
@@ -307,6 +329,11 @@ public class UpgradablePricesManager : MonoBehaviour
     public List<UpgradableBuilding> GetAvailableBuildings()
     {
         return available;
+    }
+    
+    public HashSet<WishGranter> GetBoughtGranters()
+    {
+        return bought;
     }
 
     public void AllowNext()

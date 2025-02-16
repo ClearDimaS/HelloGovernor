@@ -40,8 +40,11 @@ public class Interactor : CulledBehaviour
             var count = interactables.Count;
             for (int i = 0; i < count; i++)
             {
-                RemoveItem();
-                item.PoolPlease();
+                var oldItem = RemoveItem();
+                if (oldItem != null)
+                {
+                    oldItem.PoolPlease();
+                }
             }
         }
         interactables.Add(item);
@@ -54,6 +57,18 @@ public class Interactor : CulledBehaviour
             var items = interactables;
             var item = items[^1];
             items.RemoveAt(items.Count-1);
+            return item;
+        }
+
+        return null;
+    }
+    
+    public CitizenItem RemoveItem(CitizenItem item)
+    {
+        if (interactables.Count > 0)
+        {
+            var items = interactables;
+            items.Remove(item);
             return item;
         }
 

@@ -380,4 +380,9 @@ public abstract class WishGranter : MonoBehaviour
     {
         return processed.Contains(target);
     }
+
+    public int GetCitizensCount()
+    {
+        return processPlaces.Length + queuePlaces.Length;
+    }
 }
