@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,7 @@ public class IcecreamGranter : OperatableGranter
     [SerializeField] protected GenericCitizenItem[] itemPrefabs;
     protected GenericItemsPool pool;
     [SerializeField] protected Transform[] itemPlaces;
-    private Queue<GenericCitizenItem> itemsQueue = new ();
+    private Stack<GenericCitizenItem> itemsQueue = new ();
 
     private void Start()
     {
@@ -25,8 +26,10 @@ public class IcecreamGranter : OperatableGranter
         {
             var element = pool.GetElement();
             element.SetPool(pool);
-            element.transform.position = itemPlaces[itemsQueue.Count%itemPlaces.Length].position;
-            itemsQueue.Enqueue(element);
+            element.transform.position = operatablePlace.fillPlace.transform.position + Vector3.up;
+            element.transform.DOMove(itemPlaces[itemsQueue.Count % itemPlaces.Length].position, 0.3f)
+                .SetEase(Ease.InCubic);
+            itemsQueue.Push(element);
         }
     }
 
@@ -36,15 +39,16 @@ public class IcecreamGranter : OperatableGranter
         GenericCitizenItem item;
         if (itemsQueue.Count > 0)
         {
-            item = itemsQueue.Dequeue();
+            item = itemsQueue.Pop();
+            item.transform.DOKill();
         }
         else
         {
             var element = pool.GetElement();
             element.SetPool(pool);
             item = element;
+            item.transform.position = giveItemFrom.position;
         }
-        item.transform.position = giveItemFrom.position;
         citizen.AddItem(item);
     }
 }
