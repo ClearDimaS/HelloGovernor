@@ -46,6 +46,7 @@ public class ScaleAnimator : MonoBehaviour
         localScales = mrs.Select(x => x.transform.localScale).ToArray();
     }
     
+    [Button]
     public void Show(bool instant)
     {
         if (state == 1)
@@ -75,6 +76,7 @@ public class ScaleAnimator : MonoBehaviour
         }
     }
 
+    [Button]
     public void Hide(bool instant)
     {
         if (state == 0)
