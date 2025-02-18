@@ -19,4 +19,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 800e627e149c84510828c013d77dfbd4, type: 2}
   - {fileID: 11400000, guid: 238dbbebd492746928910421750e06ad, type: 2}
   - {fileID: 11400000, guid: 072b56ee7f88545f1b6bba9087999b3a, type: 2}
+  - {fileID: 11400000, guid: a286d51733aaf443bb0f55a10933a7ac, type: 2}
   chatGroupSizeMinMax: {x: 2, y: 4}
+  breakTimerMinMax: {x: 60, y: 300}
+  repairHouseTime: 1.5
+  repairHouseReward: 20
+  CitizenCountsForHouseLevels: 060000000c00000012000000
+  bankRewardMinMaxPositive: {x: 20, y: 100}
+  bankRewardMinMaxNegative: {x: 10, y: 50}
+  bankNegativeProbability: 1

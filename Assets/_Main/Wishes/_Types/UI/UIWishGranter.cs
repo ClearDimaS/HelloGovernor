@@ -6,6 +6,7 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 {
     [SerializeField] protected UIWishActivationPlace activationPlace;
 
+    protected virtual bool CanAddToStarted { get; }
     protected UI_Panel panel;
     protected bool isStarted;
     protected bool isFinished;
@@ -68,7 +69,7 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 
     public override bool CanAddOneMore()
     {
-        return base.CanAddOneMore() && !isStarted && !isFinished;
+        return base.CanAddOneMore() && ((!isStarted && !isFinished) || CanAddToStarted);
     }
 
     private bool CanShowActivation()

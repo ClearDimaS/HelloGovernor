@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 {
     [Inject] private PlayerController player;
-    [Inject] private GameConfig gameConfig;
+    [Inject] private WishesCollectionConfig gameConfig;
 
     [SerializeField] private int levelIndex;
     [SerializeField] private TimerBase timer;

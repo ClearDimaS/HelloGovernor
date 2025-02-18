@@ -40,6 +40,11 @@ public abstract class ProcessPlace : CulledBehaviour
         }
     }
 
+    public void SetComplete()
+    {
+        progress = 1f;
+    }
+
     public void SetOwner(CitizenController citizen)
     {
         if (processed != null)

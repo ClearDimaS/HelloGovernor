@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class BankWishTimer : MonoBehaviour
@@ -7,14 +9,20 @@ public class BankWishTimer : MonoBehaviour
     [SerializeField] private float scaleTime = 0.1f;
     [SerializeField] private float scale = 1.15f;
 
-    [SerializeField] private TextMesh textSS;
-    [SerializeField] private TextMesh textMM;
+    [SerializeField] private TMP_Text textSS;
+    [SerializeField] private TMP_Text textMM;
 
     private Dictionary<int, string> timeStrings = new();
 
-    private int lastTime = 0;
-    protected int lastSS;
-    private int lastMM;
+    private int lastTime = -1;
+    protected int lastSS = -1;
+    private int lastMM = -1;
+
+    private void OnEnable()
+    {
+        lastSS = -1;
+        lastMM = -1;
+    }
 
     public void SetTimeLeft(int time)
     {

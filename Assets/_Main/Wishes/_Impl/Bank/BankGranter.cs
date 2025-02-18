@@ -5,8 +5,15 @@ using Zenject;
 
 public class BankGranter : UIWishGranter
 {
+    [Inject] protected WishesCollectionConfig gameConfig;
+    
     [SerializeField] protected float gameDuration = 30f;
+
+    protected override bool CanAddToStarted => true;
     protected BankGame game;
+    protected float lastAnswerTime;
+    protected float minPause = 0.2f;
+    
     protected override UI_Panel GetPanel()
     {
         return UI_Manager.Instance.GetPanel<BankWishPanel>();
@@ -15,7 +22,27 @@ public class BankGranter : UIWishGranter
     protected override void OnActivate()
     {
         base.OnActivate();
-        game = new BankGame(gameDuration);
-        (panel as BankWishPanel).Init(game);
+        game = new BankGame(gameDuration, gameConfig, GiveReward);
+        (panel as BankWishPanel).Init(game, () =>
+            {
+                processPlaces[0].SetComplete();
+                var owner = processPlaces[0].GetOwner();
+                if (owner != null)
+                {
+                    lastAnswerTime = Time.time;
+                    owner.WishesController.AddProgress(this, 1);
+                }
+            },
+            () =>
+            {
+                return (Time.time - lastAnswerTime > minPause) && 
+                       processPlaces[0].GetOwner() != null && 
+                       !processPlaces[0].GetOwner().Walker.IsMoving;
+            });
+    }
+
+    private void GiveReward(int count)
+    {
+        AddMoney(count);
     }
 }

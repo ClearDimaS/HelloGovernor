@@ -2,12 +2,18 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BankOptionUIElement : MonoBehaviour
 {
-    [SerializeField] private TMP_Text optionText;
+    [SerializeField] private TMP_Text optionTextArg1;
+    [SerializeField] private TMP_Text optionTextOp;
+    [SerializeField] private TMP_Text optionTextArg2;
     [SerializeField] private Button optionButton;
 
+    [SerializeField] private Color color1;
+    [SerializeField] private Color color2;
+    
     private Action onSelect;
     private BankOption option;
     
@@ -16,20 +22,30 @@ public class BankOptionUIElement : MonoBehaviour
         optionButton.onClick.AddListener(SelectOption);
     }
 
-    public void Init(BankOption option, Action onSelect)
+    public void Init(BankOption option, Action onSelect, bool isPositive)
     {
         this.option = option;
-        optionText.text = CreateText(option);
+        optionTextArg1.text = option.x.ToString();
+        optionTextOp.text = GetOpText(option);
+        optionTextArg2.text = option.y.ToString();
+        SetColor(isPositive ? color1 : color2);
+        
         this.onSelect = onSelect;
+    }
+
+    private void SetColor(Color color)
+    {
+        optionTextArg1.color = color;
+        optionTextOp.color = color;
+        optionTextArg2.color = color;
     }
 
     private void SelectOption()
     {
-        option.Select();
         onSelect?.Invoke();
     }
 
-    private string CreateText(BankOption option)
+    private string GetOpText(BankOption option)
     {
         var x = option.x;
         var y = option.y;
@@ -38,13 +54,13 @@ public class BankOptionUIElement : MonoBehaviour
         switch (type)
         {
             case EBankOption.Add:
-                return $"{x}+{y}";
+                return "+";
             case EBankOption.Subtract:
-                return $"{x}-{y}";
+                return "-";
             case EBankOption.Multiply:
-                return $"{x}*{y}";
+                return "*";
             case EBankOption.Divide:
-                return $"{x}/{y}";
+                return "%";
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -38,17 +38,4 @@ public class GameConfig : ScriptableObject
     public Ease cameraTransitionEase;
     public Vector2 cameraUnlockXBorders;
     public Vector2 cameraUnlockYBorders;
-    
-    [Header("Break house")]
-    public Vector2 breakTimerMinMax;
-    public float repairHouseTime;
-    public int repairHouseReward = 10;
-
-    [Header("Thief")]
-    public float thiefPause = 10;
-    public int thiefMaxSteal;
-    public int moneyToSteal = 10;
-
-    [Header("Houses")] 
-    public int[] CitizenCountsForHouseLevels;
 }

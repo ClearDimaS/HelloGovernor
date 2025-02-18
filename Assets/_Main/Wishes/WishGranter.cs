@@ -54,7 +54,7 @@ public abstract class WishGranter : MonoBehaviour
 
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
-    
+
     [Inject]
     protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
     {
@@ -384,5 +384,10 @@ public abstract class WishGranter : MonoBehaviour
     public int GetCitizensCount()
     {
         return processPlaces.Length + queuePlaces.Length;
+    }
+    
+    protected void AddMoney(int count)
+    {
+        currencyStack.AddCurrency(count);
     }
 }

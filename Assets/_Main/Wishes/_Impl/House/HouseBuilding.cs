@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class HouseBuilding : BuildingBase
 {
-    [Inject] private GameConfig gameConfig;
+    [Inject] private WishesCollectionConfig gameConfig;
     [Inject] private HousesManager housesManager;
 
     [SerializeField] private List<BoxCollider> houseTerritotry;

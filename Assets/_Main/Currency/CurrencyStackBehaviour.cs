@@ -97,6 +97,10 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             currency.Init(reward);
             gridPlacer.Add(currency);
         }
+        else
+        {
+            gridPlacer.GetLast().AddAmount(reward);
+        }
     }
 
     public void MoveCurrencyToMe(int amount, Vector3 worldStart)

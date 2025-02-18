@@ -7,6 +7,17 @@ using UnityEngine;
 public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, Type>
 {
     public Vector2Int chatGroupSizeMinMax;
+    [Header("Break house")]
+    public Vector2 breakTimerMinMax;
+    public float repairHouseTime;
+    public int repairHouseReward = 10;
+
+    [Header("Houses")] 
+    public int[] CitizenCountsForHouseLevels;
+    [Header("Bank")]
+    public Vector2Int bankRewardMinMaxPositive;
+    public Vector2Int bankRewardMinMaxNegative;
+    [Range(0, 1f)] public float bankNegativeProbability;
     
     public float GetGrantDuration(WishGranter granter)
     {

@@ -11,11 +11,15 @@ public class BankGame
     public bool IsRunning => Time.time - startTime < duration;
     protected float startTime;
     protected float duration;
+    protected WishesCollectionConfig gameConfig;
+    private Action<int> onComplete;
     
-    public BankGame(float duration)
+    public BankGame(float duration, WishesCollectionConfig gameConfig, Action<int> onComplete)
     {
         startTime = Time.time;
         this.duration = duration;
+        this.gameConfig = gameConfig;
+        this.onComplete = onComplete;
     }
 
     public float GetTimeLeft()
@@ -40,7 +44,23 @@ public class BankGame
 
     private BankOption CreateRandomVariant(bool allowNegative)
     {
-        throw new NotImplementedException();
+        var isNegative = false;
+        if (allowNegative)
+        {
+            isNegative = Random.Range(0, 1f) < gameConfig.bankNegativeProbability;
+        }
+
+        var minMax = isNegative ? gameConfig.bankRewardMinMaxNegative : gameConfig.bankRewardMinMaxPositive;
+        var newReward = Random.Range(Mathf.Abs(minMax.x), Mathf.Abs(minMax.y));
+        if (isNegative)
+        {
+            newReward = -newReward;
+        }
+
+        var typeInt = Random.Range(0, 4);
+        var type = (EBankOption)typeInt;
+        var option = BankOption.CreateFromType(type, newReward);
+        return option;
     }
 
     public void SetSelected(BankOption data)
@@ -51,5 +71,12 @@ public class BankGame
             curVariant1 = null;
             reward += data.GetReward();   
         }
+    }
+
+    public void Complete()
+    {
+        var reward = GetReward();
+        reward = Mathf.Max(0, reward);
+        onComplete?.Invoke(reward);
     }
 }
