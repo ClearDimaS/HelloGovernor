@@ -84,7 +84,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 010b82bc895978049b69aaf4b855d7ab, type: 3}
+  - {fileID: 2100000, guid: 33ca82a2a48564da4a602e771160f97f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,7 +114,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2755957219822939589}
-  m_Text: 123
+  m_Text: +123 $
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -124,7 +124,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 010b82bc895978049b69aaf4b855d7ab, type: 3}
+  m_Font: {fileID: 12800000, guid: 33ca82a2a48564da4a602e771160f97f, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -274,21 +274,21 @@ MonoBehaviour:
     - {fileID: 8275108072389023967}
     - {fileID: 370081538161570031}
     - {fileID: 1699775361596615548}
-    rootLocalPlace: {x: 0.3, y: 1.5, z: 0}
+    rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
   - data: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}
     places:
     - {fileID: 5959283192045006843}
     - {fileID: 2434173200886026526}
     - {fileID: 6400162258042154825}
     - {fileID: 6037319586123077116}
-    rootLocalPlace: {x: 0.3, y: 1.5, z: 0}
+    rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
   - data: {fileID: 11400000, guid: ebfbaedb316dd4eeaa7ffa4d21aa77b5, type: 2}
     places:
     - {fileID: 900908692971272304}
     - {fileID: 7543577144299575784}
     - {fileID: 5935413253603462932}
     - {fileID: 3626751768994093619}
-    rootLocalPlace: {x: 0.3, y: 1.5, z: 0}
+    rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
   interactables: []
 --- !u!54 &2931607949898103547
 Rigidbody:
