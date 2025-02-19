@@ -91,11 +91,22 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
     public void AddCurrency(int reward)
     {
+        var models = Mathf.Clamp(reward / gameConfig.moneyInOneModel, 1, gameConfig.moneyRewardMaxModels);
         if (gridPlacer.CanAddOneMore())
         {
-            var currency = currencyPool.GetElement();
-            currency.Init(reward);
-            gridPlacer.Add(currency);
+            for (int i = 0; i < models; i++)
+            {
+                var currency = currencyPool.GetElement();
+                if (i == 0)
+                {
+                    currency.Init(reward);
+                }
+                gridPlacer.Add(currency);
+                if (!gridPlacer.CanAddOneMore())
+                {
+                    break;
+                }
+            }
         }
         else
         {

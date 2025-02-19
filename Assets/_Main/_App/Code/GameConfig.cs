@@ -27,7 +27,7 @@ public class GameConfig : ScriptableObject
     public Ease moneyFlyEase1;
     public Ease moneyFlyEase2;
     public int moneyInOneModel = 3;
-
+    public int moneyRewardMaxModels = 10;
     [Header("Camera")] 
     public float hintCameraDistanceMult = 0.8f;
     public float unlockCameraDelay = 1f;
