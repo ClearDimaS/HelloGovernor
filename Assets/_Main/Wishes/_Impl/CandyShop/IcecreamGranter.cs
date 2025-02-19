@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class IcecreamGranter : OperatableGranter
+public class OperatableWithItems : OperatableGranter
 {
     [Inject] protected DiContainer container;
 
@@ -51,4 +51,8 @@ public class IcecreamGranter : OperatableGranter
         }
         citizen.AddItem(item);
     }
+}
+public class IcecreamGranter : OperatableWithItems
+{
+   
 }
