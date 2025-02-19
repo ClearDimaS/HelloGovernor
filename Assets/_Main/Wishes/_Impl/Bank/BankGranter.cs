@@ -6,8 +6,6 @@ using Zenject;
 public class BankGranter : UIWishGranter
 {
     [Inject] protected WishesCollectionConfig gameConfig;
-    
-    [SerializeField] protected float gameDuration = 30f;
 
     protected override bool CanAddToStarted => true;
     protected BankGame game;
@@ -22,7 +20,7 @@ public class BankGranter : UIWishGranter
     protected override void OnActivate()
     {
         base.OnActivate();
-        game = new BankGame(gameDuration, gameConfig, GiveReward);
+        game = new BankGame(timer, gameConfig, GiveReward);
         (panel as BankWishPanel).Init(game, () =>
             {
                 processPlaces[0].SetComplete();

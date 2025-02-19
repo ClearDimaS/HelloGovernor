@@ -16,8 +16,8 @@ public class CooldownTimerBehaviour : CulledBehaviour
 
     protected int lastTimeLeft = -1;
 
-    protected int lastSS;
-    private int lastMM;
+    protected int lastSS = -1;
+    private int lastMM = -1;
     
     private void Start()
     {
@@ -32,11 +32,10 @@ public class CooldownTimerBehaviour : CulledBehaviour
     {
         if (visible)
         {
-            var showTimer = wishGranter.CoolDownStartTime > 0f && wishGranter.IsCooldown;
+            var showTimer = wishGranter.IsCooldown;
             if (showTimer)
             {
-                var timeSinceStartTimer = Time.time - wishGranter.CoolDownStartTime;
-                var timeLeft = Mathf.RoundToInt(wishGranter.CoolDown - timeSinceStartTimer);
+                var timeLeft = Mathf.RoundToInt(wishGranter.CoolDownTimeLeft);
                 if (lastTimeLeft != timeLeft)
                 {
                     lastTimeLeft = timeLeft;

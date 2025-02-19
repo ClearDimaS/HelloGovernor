@@ -8,24 +8,22 @@ public class BankGame
 
     private BankOption curVariant1;
     private BankOption curVariant2;
-    public bool IsRunning => Time.time - startTime < duration;
-    protected float startTime;
-    protected float duration;
+    public bool IsRunning => timer.GameTimeLeft > 0f;
+
+    protected WishGranterTimer timer;
     protected WishesCollectionConfig gameConfig;
     private Action<int> onComplete;
     
-    public BankGame(float duration, WishesCollectionConfig gameConfig, Action<int> onComplete)
+    public BankGame(WishGranterTimer timer, WishesCollectionConfig gameConfig, Action<int> onComplete)
     {
-        startTime = Time.time;
-        this.duration = duration;
+        this.timer = timer;
         this.gameConfig = gameConfig;
         this.onComplete = onComplete;
     }
 
     public float GetTimeLeft()
     {
-        var timeSpent = Time.time - startTime;
-        return duration - timeSpent;
+        return timer.GameTimeLeft;
     }
     
     public int GetReward()

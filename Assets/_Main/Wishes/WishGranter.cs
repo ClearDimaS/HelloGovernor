@@ -46,14 +46,16 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
 
-    public bool IsCooldown { get; private set; }
-    public float CoolDownStartTime { get; protected set; }
-    public float CoolDown => wishesCollectionConfig.GetCooldown(this);
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
+    public float CoolDown => timer.CoolDownTime;
+    public float CoolDownTimeLeft => timer.CoolDownTimeLeft;
+    public bool IsCooldown => timer.IsCooldown;
+    public int ProcessedCounter { get; private set; }
 
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
+    protected WishGranterTimer timer;
 
     [Inject]
     protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
@@ -61,6 +63,7 @@ public abstract class WishGranter : MonoBehaviour
         this.wishesCollectionConfig = wishesCollectionConfig;
         this.grantersManager = grantersManager;
         OnConstruct();
+        timer = this.wishesCollectionConfig.GetTimer(this);
     }
 
     protected virtual void OnConstruct()
@@ -82,17 +85,23 @@ public abstract class WishGranter : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        OnStart();
+    }
+
+    protected virtual void OnStart()
+    {
+        
+    }
+
     private void Update()
     {
-        if (IsCooldown && processed.Count == 0 && CoolDownStartTime < 0)
+        if (timer.CanCooldown)
         {
-            CoolDownStartTime = Time.time;
+            timer.OnUpdate();
         }
-        if (IsCooldown && Time.time - CoolDownStartTime > CoolDown)
-        {
-            IsCooldown = false;
-        }
-        
+
         for (int i = 0; i < queue.Count; i++)
         {
             if (queuePlaces.Length > 0)
@@ -202,6 +211,7 @@ public abstract class WishGranter : MonoBehaviour
             citizen.WishesController.AddProgress(this, Time.deltaTime / FullProgressTime);
             if (citizen.WishesController.IsProgressFull(this))
             {
+                ProcessedCounter++;
                 OnLeave(citizen);
             }
         }
@@ -209,6 +219,11 @@ public abstract class WishGranter : MonoBehaviour
 
     protected abstract void OnLeave(CitizenController citizen);
 
+    public bool HasAnyone()
+    {
+        return processed.Count + queue.Count + approaching.Count == 0;
+    }
+    
     public virtual bool IsWorking()
     {
         return upgradable == null || upgradable.IsBought;
@@ -281,13 +296,6 @@ public abstract class WishGranter : MonoBehaviour
         else
         {
             Debug.LogError($"cant add approaching!  {this}");   
-        }
-        if (approaching.Count + queue.Count + processed.Count == processPlaces.Length)
-        {
-            if (!IsCooldown && CoolDown > 0f)
-            {
-                IsCooldown = true;
-            }
         }
     }
 
@@ -362,7 +370,7 @@ public abstract class WishGranter : MonoBehaviour
 
     public virtual bool CanAddOneMore()
     {
-        return approaching.Count + queue.Count + processed.Count < queuePlaces.Length + processPlaces.Length && !IsCooldown;
+        return approaching.Count + queue.Count + processed.Count < queuePlaces.Length + processPlaces.Length && timer.CanAddMore();
     }
 
     private ProcessPlace DequeuePlace()

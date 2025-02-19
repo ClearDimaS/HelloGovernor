@@ -12,18 +12,13 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
     protected bool isFinished;
     public bool WasCompletedAtLeastOnce { get; set; }
 
-    private void Start()
+    protected override void OnStart()
     {
         panel = GetPanel();
-        OnStart();
+        base.OnStart();
     }
 
     protected abstract UI_Panel GetPanel();
-
-    protected virtual void OnStart()
-    {
-        
-    }
 
     protected override void OnUpdate()
     {
