@@ -36,12 +36,11 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
             {
                 var item = wishPlace.RemoveItem();
                 citizen.AddItem(item);
+                if (wishPlace.Assistant == player)
+                {
+                    PlayerUseCounts++;
+                }
                 break;
-            }
-
-            if (wishPlace.Assistant == player)
-            {
-                PlayerUseCounts++;
             }
         }
     }

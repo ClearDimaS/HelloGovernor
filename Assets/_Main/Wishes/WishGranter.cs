@@ -156,6 +156,7 @@ public abstract class WishGranter : MonoBehaviour
                     citizen.Walker.MoveToTarget(processPlace, () =>
                     {
                         AddToProcessed(citizen);
+                        citizenPlacesDict[citizen].SetAtPlace(citizen);
                     });   
                 }
             }

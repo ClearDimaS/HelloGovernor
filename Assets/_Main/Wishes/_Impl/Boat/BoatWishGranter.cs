@@ -15,7 +15,7 @@ public class BoatWishGranter : OperatableWithItems
             allGatherTime = Time.time;
         }
 
-        if (Time.time - allGatherTime > config.grantDuration)
+        if (allHere && Time.time - allGatherTime > config.grantDuration)
         {
             foreach (var processPlace in processPlaces)
             {
