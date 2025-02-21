@@ -4,13 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Configs/Wishes/OrderGranter", fileName = "OrderGranterConfig")]
 public class OrderWishGranterConfig : WishGranterConfig
 {
-    [SerializeField] private OrderItemsConfigData itemsData;
+    [SerializeField] private OrderItemsConfigData[] itemDatas;
     public Sprite assistantIcon;
     public float itemTakeTime;
+    public Sprite icon;
 
-    public OrderItemsConfigData GetItemsData()
+    public OrderItemsConfigData[] GetItemDatas()
     {
-        return itemsData;
+        return itemDatas;
     }
 }
 

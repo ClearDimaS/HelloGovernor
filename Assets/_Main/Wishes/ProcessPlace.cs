@@ -23,6 +23,7 @@ public abstract class ProcessPlace : CulledBehaviour
     
     private CitizenController processed;
     public Vector3 Position => transform.position;
+    protected CitizenController Processed => processed;
     
     public abstract float ProcessTime { get; }
     protected float progress;

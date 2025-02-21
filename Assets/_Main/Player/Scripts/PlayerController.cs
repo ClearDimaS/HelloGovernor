@@ -120,9 +120,9 @@ public class PlayerController : Singleton<PlayerController>,
         currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
 
-    public bool CanAddItems(ItemsWishGranter granter)
+    public bool CanAddItems()
     {
-        return interactor.HasMorePlaceFor(granter);
+        return interactor.HasMorePlaceFor();
     }
 
     public void AddItem(GenericCitizenItem takeItem)

@@ -2,6 +2,6 @@ using System;
 
 public interface IItemTaker : IRootProvider
 {
-    public bool CanAddItems(ItemsWishGranter granter);
+    public bool CanAddItems();
     public void AddItem(GenericCitizenItem takeItem);
 }

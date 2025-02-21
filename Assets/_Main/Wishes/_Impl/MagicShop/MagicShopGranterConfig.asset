@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502f1fc72fcd41b3974aa1681a75b23c, type: 3}
   m_Name: MagicShopGranterConfig
   m_EditorClassIdentifier: 
-  granter: {fileID: 0}
-  grantDuration: 0
-  reward: 0
-  chanceWeight: 0
+  granter: {fileID: 3227494351629266801, guid: 22d5cea1e34a740e08c7ae620b1ba41e, type: 3}
+  grantDuration: 1
+  reward: 10
+  chanceWeight: 1
   timerType: 0
   cooldown: 0
   gameDuration: 0
-  itemsData:
-    key: 
-    itemIcon: {fileID: 0}
-    _prefab: {fileID: 0}
-  assistantIcon: {fileID: 0}
-  itemTakeTime: 0
+  itemDatas:
+  - key: fire
+    itemIcon: {fileID: 21300000, guid: 3089bc9c6e35e4d94a510e57248dd925, type: 3}
+    _prefab: {fileID: 5025634179846368537, guid: d40145aaef16b495da02b6d742fcab27,
+      type: 3}
+  assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
+  itemTakeTime: 1
+  icon: {fileID: 21300000, guid: 9638f350ee98e3c44abdfd1eff6bf569, type: 3}

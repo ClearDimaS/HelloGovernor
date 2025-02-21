@@ -1,17 +1,24 @@
-using System;
 using UnityEngine;
 using Zenject;
-
-public class OrderProcessPlace : ProcessPlace
-{
-    public override float ProcessTime { get; }
-    public override bool CanAddProgress(CitizenController citizen)
-    {
-        throw new NotImplementedException();
-    }
-}
+using Random = UnityEngine.Random;
 
 public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, OrderProcessPlace>
 {
+    public int PlayerUseCounts { get; protected set; }
 
+    protected override void OnLeave(CitizenController citizen)
+    {
+        PlayerUseCounts++;
+    }
+
+    public OrderItemsConfigData GetRandomItem()
+    {
+        var items = config.GetItemDatas();
+        return items[Random.Range(0, items.Length)];
+    }
+
+    public float GetTakeItemDuration()
+    {
+        return config.itemTakeTime;
+    }
 }

@@ -75,7 +75,7 @@ public class Interactor : CulledBehaviour
         return null;
     }
 
-    public bool HasMorePlaceFor(ItemsWishGranter granter)
+    public bool HasMorePlaceFor()
     {
         return interactables.Count == 0 || interactables.Count < placesDict[interactables[0].GetData()].places.Length;
     }

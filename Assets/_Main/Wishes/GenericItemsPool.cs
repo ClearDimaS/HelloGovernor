@@ -9,7 +9,7 @@ public class GenericItemsPool
 
     private Queue<GenericCitizenItem> spawnedDict = new ();
 
-    public GenericItemsPool(GenericCitizenItem[] prefabs, DiContainer container)
+    public GenericItemsPool(DiContainer container, params GenericCitizenItem[] prefabs)
     {
         this.prefabs = prefabs;
         this.container = container;

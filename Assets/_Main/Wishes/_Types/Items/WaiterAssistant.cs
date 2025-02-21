@@ -64,7 +64,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         }
     }
 
-    public bool CanAddItems(ItemsWishGranter granter)
+    public bool CanAddItems()
     {
         return item == null;
     }

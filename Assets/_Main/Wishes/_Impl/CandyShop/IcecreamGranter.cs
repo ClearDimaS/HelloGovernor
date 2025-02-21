@@ -16,7 +16,7 @@ public class OperatableWithItems : OperatableGranter
 
     private void Start()
     {
-        pool = new GenericItemsPool(itemPrefabs, container);
+        pool = new GenericItemsPool(container, itemPrefabs);
     }
 
     protected override void OnUpdate()

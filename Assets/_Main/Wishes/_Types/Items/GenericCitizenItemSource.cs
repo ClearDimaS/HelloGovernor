@@ -15,23 +15,39 @@ public class GenericCitizenItemSource : CulledBehaviour
     [field: SerializeField] public Transform IdlePlace { get; private set; }
     public int TakesCount { get; protected set; }
 
-    private ItemsWishGranter wishGranter;
-
     private HashSet<IItemTaker> takers = new ();
     private List<IItemTaker> giveItemToTakersTMP = new ();
     private Dictionary<IItemTaker, float> takerTimers = new ();
     private GenericItemsPool pool;
     
+    [SerializeField] protected Sprite icon;
+    [SerializeField] protected GenericCitizenItem[] prefabs;
+    [SerializeField] private float takeDuration;
+    
     protected override void OnAwake()
     {
         base.OnAwake();
-        wishGranter = GetComponentInParent<ItemsWishGranter>(true);
+        var itemsGranter = GetComponentInParent<ItemsWishGranter>(true);
+        if (itemsGranter != null)
+        {
+            icon = itemsGranter.GetItemIcon();
+            prefabs = itemsGranter.GetPrefabs();
+            takeDuration = itemsGranter.GetTakeItemDuration();
+        }
+        else
+        {
+            var orderGranter = GetComponentInParent<OrderWishGranter>(true);
+            if (orderGranter != null)
+            {
+                takeDuration = orderGranter.GetTakeItemDuration();   
+            }
+        }
     }
 
     private void Start()
     {
-        iconImage.sprite = wishGranter.GetItemIcon();
-        pool = new GenericItemsPool(wishGranter.GetPrefabs(), container);
+        iconImage.sprite = icon;
+        pool = new GenericItemsPool(container, prefabs);
         takerTimers[player] = 0;
     }
 
@@ -44,7 +60,7 @@ public class GenericCitizenItemSource : CulledBehaviour
         {
             var diffToPlayer = TakePlace.position - player.transform.position;
             diffToPlayer.y = 0f;
-            if (diffToPlayer.magnitude < radius && player.CanAddItems(wishGranter))
+            if (diffToPlayer.magnitude < radius && player.CanAddItems())
             {
                 takers.Add(player);
             }
@@ -58,7 +74,7 @@ public class GenericCitizenItemSource : CulledBehaviour
         {
             takerTimers[taker] += Time.deltaTime;
             var timer = takerTimers[taker];
-            var duration = wishGranter.GetTakeItemDuration();
+            var duration = takeDuration;
             if (timer > duration)
             {
                 giveItemToTakersTMP.Add(taker);
@@ -75,7 +91,7 @@ public class GenericCitizenItemSource : CulledBehaviour
             {
                 TakesCount++;
             }
-            if (!taker.CanAddItems(wishGranter))
+            if (!taker.CanAddItems())
             {
                 RemoveTaker(taker);
             }
@@ -95,7 +111,7 @@ public class GenericCitizenItemSource : CulledBehaviour
 
     public void AddTaker(IItemTaker taker)
     {
-        if (!takers.Contains(taker) && taker.CanAddItems(wishGranter))
+        if (!takers.Contains(taker) && taker.CanAddItems())
         {
             takers.Add(taker);
             takerTimers[taker] = 0f;   
