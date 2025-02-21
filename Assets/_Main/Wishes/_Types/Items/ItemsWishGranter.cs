@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, ItemsProcessPlace>
+public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, ItemsProcessPlace>, IItemsUserWishGranter
 {
     [Inject] protected PlayerController player;
     

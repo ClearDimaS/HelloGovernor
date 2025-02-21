@@ -3,31 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
-public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
+public interface IItemsUserProcessPlace
+{
+    Transform GetItemSpendPlace();
+    Transform GetItemTakePlace();
+    
+    CitizenController GetOwner();
+    
+
+    IItemTaker Assistant { get; set; }
+    void SetWishAssistant(ItemsWaiterAssistant itemsWaiterAssistant);
+    void RemoveAssistant(ItemsWaiterAssistant itemsWaiterAssistant);
+    GenericCitizenItemSource GetItemSource();
+}
+
+public interface IItemsUserWishGranter
+{
+    IItemsUserProcessPlace GetProcessedWithoutAssistant();
+    Transform GetIdlePlace();
+    Transform GetFirstProcessPlace();
+}
+
+
+public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
 {
     [SerializeField] private Interactor interactor;
     [SerializeField] private Walker walker;
     [SerializeField] private float rotSpeed = 360f;
-    private GenericCitizenItemSource itemsSource;
-    
+
     private GenericCitizenItem item;
-    private ItemsWishGranter wishGranter;
-    private ItemsProcessPlace target;
+    private IItemsUserWishGranter wishGranter;
+    private IItemsUserProcessPlace target;
     
     public Transform Root => transform;
     
     private void Awake()
     {
-        wishGranter = GetComponentInParent<ItemsWishGranter>();
-        itemsSource = wishGranter.GetComponentInChildren<GenericCitizenItemSource>();
+        wishGranter = GetComponentInParent<IItemsUserWishGranter>();
     }
 
     private void Update()
     {
         if (target != null)
         {
-            if (target.HasAssistant() && target.Assistant != this)
+            if (target.Assistant != null && target.Assistant != this)
             {
                 target = null;
             }
@@ -36,10 +57,10 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         if (target == null)
         {
             RefreshTarget();
-            walker.MoveToTarget(itemsSource.IdlePlace.position, null);
+            walker.MoveToTarget(wishGranter.GetIdlePlace().position, null);
             if (!walker.IsMoving)
             {
-                var diff = itemsSource.TakePlace.position - transform.position;
+                var diff = wishGranter.GetFirstProcessPlace().position - transform.position;
                 diff.y = 0f;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(diff.normalized, Vector3.up),
                     rotSpeed * Time.deltaTime);
@@ -50,11 +71,12 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             if (item == null)
             {
                 target.RemoveAssistant(this);
-                walker.MoveToTarget(itemsSource.TakePlace.position, StartTakeItem);
+                var source = target.GetItemSource();
+                walker.MoveToTarget(target.GetItemTakePlace().position, () => source.AddTaker(this));
             }
             else
             {
-                walker.MoveToTarget(target.ItemTakePlace.position, AllowAddProgressToWisher, 0.8f);   
+                walker.MoveToTarget(target.GetItemSpendPlace().position, AllowAddProgressToWisher, 0.8f);   
             }
 
             if (target.GetOwner() == null)
@@ -77,7 +99,7 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private void AllowAddProgressToWisher()
     {
-        if (target != null && (!target.HasAssistant() || target.Assistant == this))
+        if (target != null && (target.Assistant == null))
         {
             target.SetWishAssistant(this);   
         }
@@ -103,10 +125,5 @@ public class WaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     public bool HasAnyItems()
     {
         return item != null;
-    }
-    
-    private void StartTakeItem()
-    {
-        itemsSource.AddTaker(this);
     }
 }

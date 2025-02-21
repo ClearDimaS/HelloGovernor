@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, OrderProcessPlace>
+public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, OrderProcessPlace>, IItemsUserWishGranter
 {
     public int PlayerUseCounts { get; protected set; }
 

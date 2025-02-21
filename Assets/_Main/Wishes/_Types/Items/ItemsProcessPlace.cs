@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-public class ItemsProcessPlace : ProcessPlace
+public class ItemsProcessPlace : ProcessPlace, IItemsUserProcessPlace
 {
     [Inject] private PlayerController player;
     
@@ -68,6 +68,16 @@ public class ItemsProcessPlace : ProcessPlace
         wishAssistant = waiterAssistant;
     }
     
+    public bool HasAssistant()
+    {
+        return wishAssistant != null;
+    }
+
+    public GenericCitizenItem RemoveItem()
+    {
+        return wishAssistant.RemoveItem();
+    }
+    
     public void RemoveAssistant(IWishAssistant assistant)
     {
         if (assistant == wishAssistant)
@@ -79,15 +89,5 @@ public class ItemsProcessPlace : ProcessPlace
     public override bool CanAddProgress(CitizenController citizen)
     {
         return wishAssistant != null && wishAssistant.HasAnyItems();
-    }
-
-    public bool HasAssistant()
-    {
-        return wishAssistant != null;
-    }
-
-    public GenericCitizenItem RemoveItem()
-    {
-        return wishAssistant.RemoveItem();
     }
 }

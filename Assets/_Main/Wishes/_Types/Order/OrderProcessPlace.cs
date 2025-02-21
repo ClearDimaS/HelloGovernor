@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrderProcessPlace : ProcessPlace
+public class OrderProcessPlace : ProcessPlace, IItemsUserProcessPlace
 {
     [SerializeField] private Transform itemTakePlace;
     [SerializeField] private OrderWishDisplayer[] displayers;
@@ -9,6 +9,7 @@ public class OrderProcessPlace : ProcessPlace
     private OrderWishGranter wishGranter;
     protected List<GenericCitizenItem> items = new ();
     protected OrderData orderData;
+    protected List<IItemTaker> itemTakers = new ();
 
     public override float ProcessTime => wishGranter.FullProgressTime;
 
@@ -18,6 +19,15 @@ public class OrderProcessPlace : ProcessPlace
         base.OnAwake();
         orderData = new OrderData();
         CreateNewOrder();
+    }
+
+    protected override void OnUpdate(bool visible)
+    {
+        base.OnUpdate(visible);
+        foreach (var taker in itemTakers)
+        {
+            
+        }
     }
 
     public override bool CanAddProgress(CitizenController citizen)
