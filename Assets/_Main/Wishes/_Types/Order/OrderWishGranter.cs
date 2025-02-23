@@ -17,8 +17,25 @@ public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, Ord
         return items[Random.Range(0, items.Length)];
     }
 
+    public float ProcessPlaceUserTime { get; set; }
+    
     public float GetTakeItemDuration()
     {
         return config.itemTakeTime;
+    }
+
+    public ItemsUserProcessPlace GetProcessedWithoutAssistant()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Transform GetIdlePlace()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Transform GetFirstProcessPlace()
+    {
+        throw new System.NotImplementedException();
     }
 }

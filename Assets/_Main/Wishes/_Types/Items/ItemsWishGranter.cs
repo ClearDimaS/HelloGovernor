@@ -9,13 +9,24 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     public int TakesCount => itemSource == null ? 0 : itemSource.TakesCount;
     public int PlayerUseCounts { get; protected set; }
 
+    public float ProcessPlaceUserTime { get; set; }
+    public Transform GetIdlePlace()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Transform GetFirstProcessPlace()
+    {
+        throw new System.NotImplementedException();
+    }
+    
     protected override void OnAwake()
     {
         base.OnAwake();
         itemSource = GetComponentInChildren<GenericCitizenItemSource>();
     }
 
-    public ItemsProcessPlace GetProcessedWithoutAssistant()
+    public ItemsUserProcessPlace GetProcessedWithoutAssistant()
     {
         foreach (var place in wishPlacesTyped)
         {
@@ -27,7 +38,7 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
 
         return null;
     }
-    
+
     protected override void OnLeave(CitizenController citizen)
     {
         foreach (var wishPlace in wishPlacesTyped)

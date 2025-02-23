@@ -1,29 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
-
-public interface IItemsUserProcessPlace
-{
-    Transform GetItemSpendPlace();
-    Transform GetItemTakePlace();
-    
-    CitizenController GetOwner();
-    
-
-    IItemTaker Assistant { get; set; }
-    void SetWishAssistant(ItemsWaiterAssistant itemsWaiterAssistant);
-    void RemoveAssistant(ItemsWaiterAssistant itemsWaiterAssistant);
-    GenericCitizenItemSource GetItemSource();
-}
 
 public interface IItemsUserWishGranter
 {
-    IItemsUserProcessPlace GetProcessedWithoutAssistant();
+    ItemsUserProcessPlace GetProcessedWithoutAssistant();
     Transform GetIdlePlace();
     Transform GetFirstProcessPlace();
+    float ProcessPlaceUserTime { get; set; }
 }
 
 
@@ -35,7 +20,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
 
     private GenericCitizenItem item;
     private IItemsUserWishGranter wishGranter;
-    private IItemsUserProcessPlace target;
+    private ItemsUserProcessPlace target;
     
     public Transform Root => transform;
     
