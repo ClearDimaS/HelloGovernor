@@ -7,8 +7,8 @@ public interface IItemsUserWishGranter
 {
     ItemsUserProcessPlace GetProcessedWithoutAssistant();
     Transform GetIdlePlace();
-    Transform GetFirstProcessPlace();
-    float ProcessPlaceUserTime { get; set; }
+    Transform GetPlaceToLookAt();
+    float ProcessPlaceUserTime { get; }
 }
 
 
@@ -45,7 +45,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
             walker.MoveToTarget(wishGranter.GetIdlePlace().position, null);
             if (!walker.IsMoving)
             {
-                var diff = wishGranter.GetFirstProcessPlace().position - transform.position;
+                var diff = wishGranter.GetPlaceToLookAt().position - transform.position;
                 diff.y = 0f;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(diff.normalized, Vector3.up),
                     rotSpeed * Time.deltaTime);

@@ -123,4 +123,17 @@ public class GenericCitizenItemSource : CulledBehaviour
         takers.Remove(taker);
         takerTimers[taker] = 0f;   
     }
+
+    public bool HasPrefab(GenericCitizenItem prefab)
+    {
+        foreach (var p in prefabs)
+        {
+            if (p == prefab)
+            {
+                return true;
+            }  
+        }
+
+        return false;
+    }
 }

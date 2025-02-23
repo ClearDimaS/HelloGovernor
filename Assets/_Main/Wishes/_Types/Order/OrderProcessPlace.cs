@@ -3,33 +3,30 @@ using UnityEngine;
 
 public class OrderProcessPlace : ItemsUserProcessPlace
 {
-    public bool IsAtPlace()
-    {
-        throw new System.NotImplementedException();
-    }
+    private OrderWishGranter granter;
+
+    protected OrderItemsConfigData itemsConfigData;
     
-    protected override GenericCitizenItem GetItemPrefab()
+    protected override void OnAwake()
     {
-        throw new System.NotImplementedException();
+        base.OnAwake();
+        granter = GetComponentInParent<OrderWishGranter>();
+        itemsConfigData = granter.GetRandomItem();
     }
 
     protected override Sprite GetItemIcon()
     {
-        throw new System.NotImplementedException();
+        return itemsConfigData.itemIcon;
     }
 
     public override GenericCitizenItemSource GetItemSource()
     {
-        throw new System.NotImplementedException();
+        return granter.GetItemSourceFor(itemsConfigData);
     }
 
-    public override Transform GetItemTakePlace()
+    public override void LeavePlace(CitizenController citizen)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override Transform GetItemSpendPlace()
-    {
-        throw new System.NotImplementedException();
+        base.LeavePlace(citizen);
+        itemsConfigData = granter.GetRandomItem();
     }
 }

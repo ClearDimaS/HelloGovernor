@@ -161,6 +161,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6179324833912408497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5692197745510606427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547639458970211387}
+  m_Layer: 0
+  m_Name: WaiterIdlePlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &547639458970211387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5692197745510606427}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1, y: 0, z: -2.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5700140788333015703}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6762544139946174066
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +525,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6179228222810695672}
+    - targetCorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 547639458970211387}
     - targetCorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       insertIndex: -1
@@ -575,6 +610,8 @@ MonoBehaviour:
   exit: {fileID: 7793505623685125207}
   upgradable: {fileID: 8776808841554711166}
   currencyStack: {fileID: 2853487081250928862}
+  waiterIdlePlace: {fileID: 547639458970211387}
+  sources: []
 --- !u!4 &8532991858180633960 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6128440657515243465, guid: ab3512ad7fea34161b18b52fd2504100,
@@ -609,7 +646,7 @@ PrefabInstance:
     - target: {fileID: 5595809409227361303, guid: 018d3b7d89926473e9fee61f354d7050,
         type: 3}
       propertyPath: m_Name
-      value: OrderProcessPlace
+      value: ProcessPlace
       objectReference: {fileID: 0}
     - target: {fileID: 8187419403403241524, guid: 018d3b7d89926473e9fee61f354d7050,
         type: 3}

@@ -10,14 +10,15 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     public int PlayerUseCounts { get; protected set; }
 
     public float ProcessPlaceUserTime { get; set; }
+    
     public Transform GetIdlePlace()
     {
-        throw new System.NotImplementedException();
+        return itemSource.IdlePlace;
     }
 
-    public Transform GetFirstProcessPlace()
+    public Transform GetPlaceToLookAt()
     {
-        throw new System.NotImplementedException();
+        return processPlaces[0].GetTargetTransform();
     }
     
     protected override void OnAwake()
@@ -83,14 +84,19 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     
     public Transform GetItemUsePlace()
     {
-        foreach (var place in processPlaces)
+        foreach (var place in wishPlacesTyped)
         {
             if(place.GetOwner() != null)
             {
-                return place.GetTargetTransform();
+                return place.GetItemSpendPlace();
             }
         }
 
-        return processPlaces[0].GetTargetTransform();
+        return wishPlacesTyped[0].GetItemSpendPlace();
+    }
+
+    public GenericCitizenItemSource GetItemsSource()
+    {
+        return itemSource;
     }
 }

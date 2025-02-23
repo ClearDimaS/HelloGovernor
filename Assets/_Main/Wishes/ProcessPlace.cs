@@ -90,4 +90,9 @@ public abstract class ProcessPlace : CulledBehaviour
     {
 
     }
+    
+    public bool IsAtPlace()
+    {
+        return GetOwner() != null && !GetOwner().Walker.IsMoving;
+    }
 }

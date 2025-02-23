@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: MarketGranterConfig
   m_EditorClassIdentifier: 
   granter: {fileID: 0}
-  grantDuration: 0
-  reward: 0
-  chanceWeight: 0
+  grantDuration: 1
+  reward: 10
+  chanceWeight: 1
   timerType: 0
   cooldown: 0
   gameDuration: 0
-  itemsData:
-    key: 
-    itemIcon: {fileID: 0}
+  itemDatas:
+  - key: bread
+    itemIcon: {fileID: 21300000, guid: 042dc77b9a10089408e4c53c1a5180e4, type: 3}
     _prefab: {fileID: 0}
-  assistantIcon: {fileID: 0}
-  itemTakeTime: 0
+  - key: meat
+    itemIcon: {fileID: 21300000, guid: 21d385b6b7b307a4481bfe5ec7c29b11, type: 3}
+    _prefab: {fileID: 0}
+  - key: vegies
+    itemIcon: {fileID: 21300000, guid: 7adcb863b752f8b468a9e3c375d55e87, type: 3}
+    _prefab: {fileID: 0}
+  assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
+  itemTakeTime: 1
+  icon: {fileID: 21300000, guid: 17a7724683a951f4e943e74b384efa55, type: 3}

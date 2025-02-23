@@ -132,10 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTo: {fileID: 0}
-  itemTakePlace: {fileID: 5639847236511322813}
-  displayers:
-  - {fileID: 6337493656840652597}
-  itemsCountMinMax: {x: 1, y: 1}
+  <ItemTakePlace>k__BackingField: {fileID: 5639847236511322813}
+  takeTimer: {fileID: 228646609333295804}
+  takeRadius: 1.5
 --- !u!1 &6996478158388433157
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +317,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4273faf3cf25e4d46a754648beaa98e8, type: 3}
+--- !u!114 &228646609333295804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2997728056056519556, guid: 4273faf3cf25e4d46a754648beaa98e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3077719043764912440}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b375c64a9a9834d17b15fc99c2bb51c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7256125851642621002 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5621813044024700274, guid: 4273faf3cf25e4d46a754648beaa98e8,
@@ -398,15 +409,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3401244826148123166}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6337493656840652597 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8701212596322628907, guid: b2d958913138a4f328961c0ca37dc018,
-    type: 3}
-  m_PrefabInstance: {fileID: 3401244826148123166}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83009bf185b8442dab587979675ceb38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -37,7 +37,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         {
             takeTimer.gameObject.SetActive(showTimer);
         }
-        if (visible && wishAssistant == null && !isOnPlayer && player.HasItemOfType(GetItemPrefab()))
+        if (visible && wishAssistant == null && !isOnPlayer && CanAddItemToPlayer(player))
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
             playerDiff.y = 0f;
@@ -62,15 +62,35 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         }
     }
 
-    protected abstract GenericCitizenItem GetItemPrefab();
+    private bool CanAddItemToPlayer(PlayerController playerController)
+    {
+        var source = GetItemSource();
+        if (source == null)
+        {
+            return false;
+        }
+
+        return playerController.CanAddItems();
+    }
 
     protected abstract Sprite GetItemIcon();
     
     public abstract GenericCitizenItemSource GetItemSource();
 
-    public abstract Transform GetItemTakePlace();
+    public Transform GetItemTakePlace()
+    {
+        var source = GetItemSource();
+        if (source == null)
+        {
+            return null;
+        }
+        return source.TakePlace;
+    }
 
-    public abstract Transform GetItemSpendPlace();
+    public Transform GetItemSpendPlace()
+    {
+        return ItemTakePlace;
+    }
 
     public void SetWishAssistant(IWishAssistant waiterAssistant)
     {
