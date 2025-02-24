@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TrainStationGranterConfig
   m_EditorClassIdentifier: 
   granter: {fileID: 0}
-  grantDuration: 0
-  reward: 0
-  chanceWeight: 0
+  grantDuration: 1
+  reward: 10
+  chanceWeight: 1
   timerType: 0
   cooldown: 0
   gameDuration: 0
-  operatorIcon: {fileID: 0}
-  timerIcon: {fileID: 0}
+  operatorIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
+  timerIcon: {fileID: 21300000, guid: 17342384c93024e5a8d2c5fd6f14b3bb, type: 3}

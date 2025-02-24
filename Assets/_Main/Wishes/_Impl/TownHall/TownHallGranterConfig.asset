@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5d1c91c484e919a11772c00d9ddfa, type: 3}
   m_Name: TownHallGranterConfig
   m_EditorClassIdentifier: 
-  granter: {fileID: 0}
-  grantDuration: 0
-  reward: 0
+  granter: {fileID: -3035955516313974354, guid: d8c01cbfed1294ec1a38707286d260e9,
+    type: 3}
+  grantDuration: 1
+  reward: 10
   chanceWeight: 0
   timerType: 0
   cooldown: 0
   gameDuration: 0
-  operatorIcon: {fileID: 0}
-  timerIcon: {fileID: 0}
+  operatorIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
+  timerIcon: {fileID: 21300000, guid: ddcf4842b20a3459b9e19555753aa0ed, type: 3}
