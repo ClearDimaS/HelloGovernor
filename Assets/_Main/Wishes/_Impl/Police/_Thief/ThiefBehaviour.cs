@@ -8,13 +8,20 @@ using Zenject;
 
 public class ThiefBehaviour : MonoBehaviour, IResetable
 {
+    [SerializeField] private TimerBase catchTimer;
+    
     public void OnReset()
     {
-        
+        catchTimer.SetProgress(0f);
     }
 
     public void OnPool()
     {
 
+    }
+
+    public void SetCatchProgress(float catchProgress)
+    {
+        catchTimer.SetProgress(catchProgress);
     }
 }

@@ -24,7 +24,6 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<CurrencyPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencySingleStackPool>().FromComponentInHierarchy().AsSingle().NonLazy();
 
-        Container.Bind<ThiefsManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<ThiefsPool>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.Bind<CompassManager>().FromComponentInHierarchy().AsSingle().NonLazy();

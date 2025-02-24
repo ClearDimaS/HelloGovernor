@@ -18,6 +18,8 @@ public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, T
     public Vector2Int bankRewardMinMaxPositive;
     public Vector2Int bankRewardMinMaxNegative;
     [Range(0, 1f)] public float bankNegativeProbability;
+    [Header("Police")] 
+    public float thiefSpawnPause = 240f;
     
     public float GetGrantDuration(WishGranter granter)
     {

@@ -1,11 +1,12 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class AssistantAnimationSetter : CulledBehaviour
 {
     [SerializeField] private Walker walker;
-    [SerializeField] private RuntimeAnimatorController animatorController;
-    
+    [SerializeField, ShowIf(nameof(useAnimatorOverride))] private RuntimeAnimatorController animatorController;
+    [SerializeField] private bool useAnimatorOverride = true;
     private int SpeedHash = Animator.StringToHash("Speed");
     private int IsWalkingHash = Animator.StringToHash("IsWalking");
 
@@ -15,7 +16,10 @@ public class AssistantAnimationSetter : CulledBehaviour
     {
         base.OnAwake();
         animator = GetComponentInChildren<Animator>();
-        animator.runtimeAnimatorController = animatorController;
+        if (useAnimatorOverride)
+        {
+            animator.runtimeAnimatorController = animatorController;
+        }
     }
 
     protected override void OnUpdate(bool visible)
