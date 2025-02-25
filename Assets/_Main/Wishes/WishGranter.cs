@@ -22,6 +22,25 @@ public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfi
             throw new NotImplementedException($"config of type {typeof(T)} is not added for granter {GetType()}");
         }
     }
+
+    protected override void AddExtraPlaces(WishGranterExtraPlacesData extraPlace)
+    {
+        base.AddExtraPlaces(extraPlace);
+        wishPlacesTyped = processPlaces.Select(x => x as U).ToArray();
+    }
+}
+
+public enum QueueExtraPlacesMode
+{
+    Sequential,
+    Parallel
+}
+[Serializable]
+public class WishGranterExtraPlacesData
+{
+    public ProcessPlace[] processPlaces;
+    public Transform[] extraQueuePlaces;
+    public QueueExtraPlacesMode queueMode = QueueExtraPlacesMode.Sequential;
 }
 
 public abstract class WishGranter : MonoBehaviour
@@ -35,7 +54,7 @@ public abstract class WishGranter : MonoBehaviour
     [SerializeField, PropertyOrder(9999)] private Transform exit;    
     [SerializeField, PropertyOrder(9999)] private UpgradableObject upgradable;
     [SerializeField, PropertyOrder(9999)] private CurrencyStackBehaviour currencyStack;
-
+    [SerializeField] protected WishGranterExtraPlacesData[] extraPlaces;
     private List<CitizenController> approaching = new ();
     private List<CitizenController> pendingQueue = new ();
     private List<CitizenController> queue = new ();
@@ -45,7 +64,7 @@ public abstract class WishGranter : MonoBehaviour
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
-
+    private int extraPlacesAddedLevel = 0;
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
     public float CoolDown => timer.CoolDownTime;
@@ -97,6 +116,15 @@ public abstract class WishGranter : MonoBehaviour
 
     private void Update()
     {
+        if (upgradable.Level - 1 > extraPlacesAddedLevel)
+        {
+            extraPlacesAddedLevel = upgradable.Level - 1; // 1 for level 2
+            var extraPlacesAddedIndex = extraPlacesAddedLevel - 1;  // 0 for level 2
+            if (extraPlacesAddedIndex < extraPlaces.Length && extraPlacesAddedIndex > 0)
+            {
+                AddExtraPlaces(extraPlaces[extraPlacesAddedIndex]);   
+            }
+        }
         if (timer.CanCooldown)
         {
             timer.OnUpdate();
@@ -199,7 +227,19 @@ public abstract class WishGranter : MonoBehaviour
 
         OnUpdate();
     }
-    
+
+    protected virtual void AddExtraPlaces(WishGranterExtraPlacesData extraPlace)
+    {
+        if (extraPlace.processPlaces.Length > 0)
+        {
+            processPlaces = processPlaces.Concat(extraPlace.processPlaces).ToArray();   
+        }
+        if (extraPlace.extraQueuePlaces.Length > 0)
+        {
+            queuePlaces = queuePlaces.Concat(extraPlace.extraQueuePlaces).ToArray();   
+        }
+    }
+
     protected virtual void OnUpdate()
     {
         

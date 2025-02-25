@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2c8544b0b448b388e54e247e973af9, type: 3}
   m_Name: UmbrellaGranterConfig
   m_EditorClassIdentifier: 
-  granter: {fileID: 0}
-  grantDuration: 0
-  reward: 0
-  chanceWeight: 0
+  granter: {fileID: -8656586727567027958, guid: a41739a176ee94388a3273bff7b6146d,
+    type: 3}
+  grantDuration: 1
+  reward: 10
+  chanceWeight: 1
   timerType: 0
   cooldown: 0
   gameDuration: 0
   itemsData:
-    assistantIcon: {fileID: 0}
-    itemIcon: {fileID: 0}
-    itemTakeTime: 0
-    _prefabs: []
+    assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
+    itemIcon: {fileID: 21300000, guid: f70d43692c2865649b254823ea3ed2b6, type: 3}
+    itemTakeTime: 1
+    _prefabs:
+    - {fileID: 2849660588124046457, guid: 77e16a22a8f9d46008f11b18457834a7, type: 3}
