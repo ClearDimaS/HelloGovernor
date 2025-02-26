@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public abstract class CitizenBehaviour : MonoBehaviour
 {
+    public abstract void OnReset();
     public virtual void OnUpdate(bool visible)
     {
 
@@ -35,6 +36,14 @@ public class CitizenController : CulledBehaviour
         base.OnAwake();
         Animator = GetComponentInChildren<Animator>();
         behaviours = GetComponentsInChildren<CitizenBehaviour>();
+    }
+
+    private void OnEnable()
+    {
+        foreach (var behaviour in behaviours)
+        {
+            behaviour.OnReset();
+        }
     }
 
     protected override void OnUpdate(bool visible)

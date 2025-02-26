@@ -13,12 +13,12 @@ public interface IWishAssistant
 
 public class WishesController : CitizenBehaviour
 {
-    [Inject] private PlayerController player;
     [Inject] private WishesPool wishesPool;
     [Inject] private WishGrantersManager grantersManager;
 
     [SerializeField] private CitizenController citizenController;
 
+    private bool isWishesDisabled;
     private bool isPaused;
     private bool isWishOver;
     private Wish currentWish;
@@ -27,24 +27,22 @@ public class WishesController : CitizenBehaviour
     private event Action<bool> wishResultEvent;
     
     public bool IsPaused => isPaused;
-    public bool IsProcessingWish => currentWish != null && currentWish.Granter != null && currentWish.Granter.IsProcessed(citizenController);
-    public float CurrentWishProgress =>  currentWish != null ? currentWish.Progress : -1f;
-    public WishGranter WishGranter => currentWish.Granter;
+
+    public override void OnReset()
+    {
+        isWishesDisabled = false;
+        currentWish = null;
+    }
 
     public override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        if (currentWish == null)
+        if (currentWish == null && !isWishesDisabled)
         {
             SetRandomWish();
         }
     }
 
-    public bool HasAnyWish()
-    {
-        return currentWish != null;
-    }
-    
     public void AddProgress(WishGranter granter, float addProgress)
     {
         if (currentWish != null && currentWish.Granter == granter)
@@ -96,33 +94,13 @@ public class WishesController : CitizenBehaviour
         }
     }
 
-    public void AbortWish()
-    {
-        if (currentWish != null)
-        {
-            var success = currentWish.IsSuccess;
-            currentWish.Abort();
-            if (!isWishOver)
-            {
-                isWishOver = true;
-                wishResultEvent?.Invoke(success);
-            }   
-        }
-    }
-
     public void SubscribeWishesResult(Action<bool> handler)
     {
         wishResultEvent += handler;
     }
 
-    /*public void Pause()
+    public void DisableAllDesires()
     {
-        isPaused = true;
-        AbortWish();
+        isWishesDisabled = true;
     }
-    
-    public void UnPause()
-    {
-        isPaused = false;
-    }*/
 }

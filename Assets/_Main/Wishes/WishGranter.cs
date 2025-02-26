@@ -71,7 +71,9 @@ public abstract class WishGranter : MonoBehaviour
     public float CoolDownTimeLeft => timer.CoolDownTimeLeft;
     public bool IsCooldown => timer.IsCooldown;
     public int ProcessedCounter { get; private set; }
-
+    protected int QueueBusyCount => queue.Count;
+    protected int QueueMaxCount => queuePlaces.Length;
+    
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
     protected WishGranterTimer timer;

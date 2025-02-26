@@ -15,6 +15,7 @@ public class CitizenSpawner : MonoBehaviour
     [SerializeField] private int baseCount;
 
     private List<CitizenController> citizens = new ();
+    protected Queue<CitizenController> despawned = new ();
 
     private void Update()
     {
@@ -58,5 +59,23 @@ public class CitizenSpawner : MonoBehaviour
         var citizen = container.InstantiatePrefabForComponent<CitizenController>(prefab);
         citizens.Add(citizen);
         return citizen;
+    }
+
+    public void Pool(CitizenController waiting)
+    {
+        citizens.Remove(waiting);
+        despawned.Enqueue(waiting);
+        waiting.gameObject.SetActive(false);
+    }
+
+    public CitizenController GetNewCitizen()
+    {
+        if (despawned.Count > 0)
+        {
+            var old = despawned.Dequeue();
+            old.gameObject.SetActive(true);
+            return old;
+        }
+        return Spawn();
     }
 }

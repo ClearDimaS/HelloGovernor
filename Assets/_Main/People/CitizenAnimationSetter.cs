@@ -24,6 +24,11 @@ public class CitizenAnimationSetter : CitizenBehaviour
         animator.SetFloat("SitRandomSpeedMult", Random.Range(0.5f, 2f));
     }
 
+    public override void OnReset()
+    {
+        
+    }
+
     public override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
