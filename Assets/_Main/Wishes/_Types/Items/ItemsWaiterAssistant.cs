@@ -64,7 +64,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
                 walker.MoveToTarget(target.GetItemSpendPlace().position, AllowAddProgressToWisher, 0.8f);   
             }
 
-            if (target.GetOwner() == null)
+            if (target != null && target.GetOwner() == null)
             {
                 target = null;
             }

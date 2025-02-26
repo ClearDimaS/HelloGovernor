@@ -12,8 +12,9 @@ using Zenject;
 public class ItemPlacesData
 {
     public ItemConfigData data;
-    public Transform[] places;
+    public GameObject rootGO;
     public Vector3 rootLocalPlace;
+    public Transform[] places;
 }
 public class Interactor : CulledBehaviour
 {
@@ -26,6 +27,7 @@ public class Interactor : CulledBehaviour
     {
         base.OnAwake();
         placesDict = places.ToDictionary(x => x.data, x => x);
+        RefreshRootsVisibility();
     }
 
     public bool HasAnyItem()
@@ -48,6 +50,7 @@ public class Interactor : CulledBehaviour
             }
         }
         interactables.Add(item);
+        RefreshRootsVisibility();
     }
 
     public CitizenItem RemoveItem()
@@ -57,12 +60,38 @@ public class Interactor : CulledBehaviour
             var items = interactables;
             var item = items[^1];
             items.RemoveAt(items.Count-1);
+            RefreshRootsVisibility();
             return item;
         }
-
+        
         return null;
     }
-    
+
+    private void RefreshRootsVisibility()
+    {
+        var visible = interactables.Count > 0;
+        if (visible)
+        {
+            foreach (var placesData in places)
+            {
+                if (placesData.rootGO != null && !placesData.rootGO.activeSelf && placesData.data == interactables[0].GetData())
+                {
+                    placesData.rootGO.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            foreach (var placesData in places)
+            {
+                if (placesData.rootGO != null && placesData.rootGO.activeSelf)
+                {
+                    placesData.rootGO.SetActive(false);
+                }
+            }
+        }
+    }
+
     public CitizenItem RemoveItem(CitizenItem item)
     {
         if (interactables.Count > 0)

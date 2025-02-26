@@ -39,6 +39,12 @@ public class UpdateCallManager : Singleton<UpdateCallManager>
         for (var i = 0; i < updatables.Count; i++)
         {
             var updatable = updatables[i];
+            if (updatable == null)
+            {
+                updatables.RemoveAt(i);
+                i--;
+                continue;
+            }
             updatable.UpdateCall(Time.deltaTime);
         }
     }

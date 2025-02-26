@@ -39,7 +39,7 @@ public class BuildingTutorialStep : TutorialStep
 
     public override Transform GetCameraTarget()
     {
-        return building.transform;
+        return building.BuyPlace;
     }
 
     public override Transform GetArrowTarget()
@@ -51,10 +51,10 @@ public class BuildingTutorialStep : TutorialStep
     {
         if (building.Level > levelIndex)
         {
-            return $"{price}/{price}";
+            return $"{Price.ToMoneyString(price)}/{Price.ToMoneyString(price)}";
         }
 
-        return $"{building.SpentAmount}/{price}";
+        return $"{Price.ToMoneyString(building.SpentAmount)}/{Price.ToMoneyString(price)}";
     }
 
     protected override string CreateTitle()

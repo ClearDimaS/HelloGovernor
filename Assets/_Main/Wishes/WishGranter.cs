@@ -118,7 +118,7 @@ public abstract class WishGranter : MonoBehaviour
 
     private void Update()
     {
-        if (upgradable.Level - 1 > extraPlacesAddedLevel)
+        if (upgradable != null && upgradable.Level - 1 > extraPlacesAddedLevel)
         {
             extraPlacesAddedLevel = upgradable.Level - 1; // 1 for level 2
             var extraPlacesAddedIndex = extraPlacesAddedLevel - 1;  // 0 for level 2

@@ -32,7 +32,10 @@ public class OperatableFillPlace : CulledBehaviour
         var operatable = GetComponentInParent<UpgradableBuilding>();
         timerBase.SetIcon(operatable.GetPurchaseIcon());
         granter = GetComponentInParent<OperatableGranter>();
-        
+        if (granter == null)
+        {
+            Debug.LogError($"granter null at: {transform.name}");
+        }
     }
 
     protected override void OnUpdate(bool visible)
@@ -49,6 +52,10 @@ public class OperatableFillPlace : CulledBehaviour
             maxText.text = GetCurString();
         }
 
+        if (granter == null)
+        {
+            Debug.LogError($"granter null at: {transform.name}");
+        }
         if (lastServed != granter.ServedCounter)
         {
             lastServed = granter.ServedCounter;

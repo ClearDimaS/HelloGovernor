@@ -5,11 +5,11 @@ public class PolicestationBuilding : BuildingBase
 {
     [Inject] private PlayerController player;
     [Inject] private WishesCollectionConfig wishesConfig;
+    [Inject] protected ThiefsPool thiefsPool;
 
     [SerializeField] protected float catchSpeed = 1f;
     [SerializeField] protected float catchRadius = 1.3f;
-    [SerializeField] protected ThiefsPool thiefsPool;
-   
+
     protected ThiefBehaviour activeThief;
     protected bool IsSpawned => activeThief != null;
     private float lastSpawnTime = -99999f;

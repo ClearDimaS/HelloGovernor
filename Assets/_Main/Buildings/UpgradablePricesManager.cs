@@ -187,20 +187,7 @@ public class UpgradablePricesManager : MonoBehaviour
     private void AllowBuy(MoneyConsumerData moneyConsumerData, float delay = -1f)
     {
         Action startCallback = () => lastUnlocked.upgradable.SetAllowBuy(moneyConsumerData.level, false);
-        var target = moneyConsumerData.upgradable.BuyPlace;
-        var sp = cameraManager.ActiveCamera.WorldToViewportPoint(target.position);
-
-        if ((sp.x < gameConfig.cameraUnlockXBorders.x ||
-             sp.y < gameConfig.cameraUnlockYBorders.x ||
-             sp.x > gameConfig.cameraUnlockXBorders.y || 
-             sp.y > gameConfig.cameraUnlockYBorders.y) && gameConfig.showCameraOnUnlock)
-        {
-            cameraManager.SetTarget(target, gameConfig.unlockCameraTimer, delay, startCallback);
-        }
-        else
-        {
-            startCallback?.Invoke();
-        }
+        startCallback?.Invoke();
     }
     
     private void SetAllLocked()

@@ -558,10 +558,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4819734673556841193}
-    - targetCorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1707015733527595797}
     - targetCorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -587,6 +583,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2918087462706183056}
+    - targetCorrespondingSourceObject: {fileID: 6128440657515243465, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4819734673556841193}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -675,8 +675,8 @@ MonoBehaviour:
   exit: {fileID: 4796778097285449925}
   upgradable: {fileID: 6292781317936020671}
   currencyStack: {fileID: 3302721525742526504}
+  extraPlaces: []
   activationPlace: {fileID: 4517819149485320798}
-  gameDuration: 30
 --- !u!1001 &1008472938998464873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1018,12 +1018,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7026734445665705046}
+    m_TransformParent: {fileID: 6409264959200566185}
     m_Modifications:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.69
+      value: 0.69000053
       objectReference: {fileID: 0}
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
@@ -1043,7 +1043,7 @@ PrefabInstance:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
@@ -1053,7 +1053,7 @@ PrefabInstance:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}

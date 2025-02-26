@@ -9,7 +9,7 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     public int TakesCount => itemSource == null ? 0 : itemSource.TakesCount;
     public int PlayerUseCounts { get; protected set; }
 
-    public float ProcessPlaceUserTime { get; set; }
+    [field: SerializeField] public float ProcessPlaceUserTime { get; private set; } = 1f;
     
     public Transform GetIdlePlace()
     {
@@ -24,7 +24,7 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     protected override void OnAwake()
     {
         base.OnAwake();
-        itemSource = GetComponentInChildren<GenericCitizenItemSource>();
+        itemSource = GetComponentInChildren<GenericCitizenItemSource>(true);
     }
 
     public ItemsUserProcessPlace GetProcessedWithoutAssistant()

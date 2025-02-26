@@ -29,6 +29,10 @@ public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
         {
             if (type == null)
             {
+                if (granter == null)
+                {
+                    Debug.LogError($"granter null at: {name}");
+                }
                 type = granter.GetType();
             }
 

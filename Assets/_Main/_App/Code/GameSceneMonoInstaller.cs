@@ -5,8 +5,12 @@ using Zenject;
 
 public class GameSceneMonoInstaller : MonoInstaller
 {
+    [SerializeField] protected CitizenSpawner spawner;
+    [SerializeField] protected ThiefsPool thiefsPool;
+    
     public override void InstallBindings()
     {
+        Container.Bind<CitizenSpawner>().FromInstance(spawner);
         Container.Bind<DayTimeManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<WishGrantersManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
@@ -19,7 +23,8 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<HousesManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<EnvironmentManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<UpgradablePricesManager>().FromComponentInHierarchy().AsSingle().NonLazy();
-        
+
+        Container.Bind<ThiefsPool>().FromInstance(thiefsPool).AsSingle().NonLazy();
         Container.Bind<WishesPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencyPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencySingleStackPool>().FromComponentInHierarchy().AsSingle().NonLazy();

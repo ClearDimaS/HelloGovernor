@@ -136,4 +136,9 @@ public class GenericCitizenItemSource : CulledBehaviour
 
         return false;
     }
+
+    public GenericCitizenItem GetPrefab()
+    {
+        return prefabs[0];
+    }
 }

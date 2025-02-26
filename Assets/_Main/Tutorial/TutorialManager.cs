@@ -164,7 +164,18 @@ public class TutorialManager : Singleton<TutorialManager>
             return;
         }
         var camTarget = step.GetCameraTarget();
-        cameraManager.SetTarget(camTarget, 2f, distanceMult: gameConfig.hintCameraDistanceMult, startCallback:callback);  
+        var sp = cameraManager.ActiveCamera.WorldToViewportPoint(camTarget.position);
+        if ((sp.x < gameConfig.cameraUnlockXBorders.x ||
+             sp.y < gameConfig.cameraUnlockYBorders.x ||
+             sp.x > gameConfig.cameraUnlockXBorders.y || 
+             sp.y > gameConfig.cameraUnlockYBorders.y))
+        {
+            cameraManager.SetTarget(camTarget, 2f, distanceMult: gameConfig.hintCameraDistanceMult, startCallback:callback);   
+        }
+        else
+        {
+            callback?.Invoke();
+        }
     }
 
     public ProgressMarker GetProgressMarker(int add = 0)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502f1fc72fcd41b3974aa1681a75b23c, type: 3}
   m_Name: MarketGranterConfig
   m_EditorClassIdentifier: 
-  granter: {fileID: 0}
+  granter: {fileID: 1837518794304854276, guid: 6047a527896924aa480089edfe93dc41, type: 3}
   grantDuration: 1
   reward: 10
   chanceWeight: 1
@@ -22,13 +22,16 @@ MonoBehaviour:
   itemDatas:
   - key: bread
     itemIcon: {fileID: 21300000, guid: 042dc77b9a10089408e4c53c1a5180e4, type: 3}
-    _prefab: {fileID: 0}
+    _prefab: {fileID: 7752469390994683090, guid: 6f820d14b94f642f7baa87bf89f6a25e,
+      type: 3}
   - key: meat
     itemIcon: {fileID: 21300000, guid: 21d385b6b7b307a4481bfe5ec7c29b11, type: 3}
-    _prefab: {fileID: 0}
+    _prefab: {fileID: 7752469390994683090, guid: 9e9dad2de4e8d4160a399fe5d26146ab,
+      type: 3}
   - key: vegies
     itemIcon: {fileID: 21300000, guid: 7adcb863b752f8b468a9e3c375d55e87, type: 3}
-    _prefab: {fileID: 0}
+    _prefab: {fileID: 7752469390994683090, guid: bb92eaa6d7ae846e9a9240cf9b778754,
+      type: 3}
   assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
   itemTakeTime: 1
   icon: {fileID: 21300000, guid: 17a7724683a951f4e943e74b384efa55, type: 3}

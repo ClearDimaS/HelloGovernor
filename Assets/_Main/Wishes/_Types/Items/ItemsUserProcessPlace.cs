@@ -23,9 +23,16 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         takeTimer.SetIcon(GetItemIcon());
     }
 
+    #if UNITY_EDITOR
+    public bool hasAssistant;
+    public bool debug;
+    #endif
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
+#if UNITY_EDITOR
+       hasAssistant = wishAssistant != null;
+#endif
         takeTimer.SetProgress(progress);
         var showGFX = GetOwner() != null;
         if (showGFX != ItemTakePlace.gameObject.activeSelf)
@@ -37,6 +44,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         {
             takeTimer.gameObject.SetActive(showTimer);
         }
+
         if (visible && wishAssistant == null && !isOnPlayer && CanAddItemToPlayer(player))
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
@@ -67,10 +75,11 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         var source = GetItemSource();
         if (source == null)
         {
+            Debug.LogError($"source null at: {transform.parent.parent.name}/{transform.parent.name}/{transform.name}");
             return false;
         }
 
-        return playerController.CanAddItems();
+        return playerController.HasItemOfType(source.GetPrefab());
     }
 
     protected abstract Sprite GetItemIcon();
