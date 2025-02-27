@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class PolicestationBuilding : BuildingBase
+public class PolicestationBuilding : BuildingBase, ICooldownable
 {
     [Inject] private PlayerController player;
     [Inject] private WishesCollectionConfig wishesConfig;
@@ -17,6 +17,10 @@ public class PolicestationBuilding : BuildingBase
     private float lastSpawnTime = -99999f;
     protected float catchProgress = 0f;
     private List<Transform> extraAssistants = new ();
+
+    public float CoolDown => wishesConfig.thiefSpawnPause;
+    public float CoolDownTimeLeft { get; protected set; }
+    public bool IsCooldown => CoolDownTimeLeft > 0;
 
     private void Update()
     {
@@ -49,6 +53,9 @@ public class PolicestationBuilding : BuildingBase
         }
         else
         {
+            var timeWaiting = Time.time - lastSpawnTime;
+            CoolDownTimeLeft  = wishesConfig.thiefSpawnPause - timeWaiting;
+            
             if (Time.time - lastSpawnTime > wishesConfig.thiefSpawnPause)
             {
                 lastSpawnTime = Time.time;

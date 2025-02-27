@@ -43,7 +43,7 @@ public class WishGranterExtraPlacesData
     public QueueExtraPlacesMode queueMode = QueueExtraPlacesMode.Sequential;
 }
 
-public abstract class WishGranter : MonoBehaviour
+public abstract class WishGranter : MonoBehaviour, ICooldownable
 {
     [Header("Optional Places")]
     [SerializeField] private Transform[] queuePlaces;

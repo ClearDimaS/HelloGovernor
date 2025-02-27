@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
+public interface ICooldownable
+{
+    public float CoolDown { get; }
+    public float CoolDownTimeLeft { get; }
+    public bool IsCooldown { get; }
+}
+
 public class CooldownTimerBehaviour : CulledBehaviour
 {
     [SerializeField] private float scaleTime = 0.1f;
@@ -11,7 +18,7 @@ public class CooldownTimerBehaviour : CulledBehaviour
     [SerializeField] private TextMesh textSS;
     [SerializeField] private TextMesh textMM;
 
-    private WishGranter wishGranter;
+    private ICooldownable wishGranter;
     private Dictionary<int, string> timeStrings = new ();
 
     protected int lastTimeLeft = -1;
@@ -21,7 +28,7 @@ public class CooldownTimerBehaviour : CulledBehaviour
     
     private void Start()
     {
-        wishGranter = GetComponentInParent<WishGranter>();
+        wishGranter = GetComponentInParent<ICooldownable>();
         if (wishGranter.CoolDown <= 0f)
         {
             Destroy(gameObject);
