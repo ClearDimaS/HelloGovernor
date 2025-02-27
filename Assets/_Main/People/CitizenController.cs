@@ -78,11 +78,9 @@ public class CitizenController : CulledBehaviour
     public void AddItem(CitizenItem item)
     {
         interactor.AddItem(item);
-        var time = 10f;
-        UniTask.Delay(TimeSpan.FromSeconds(time)).ContinueWith(() =>
+        item.PoolPleaseAtTimeout(() =>
         {
             interactor.RemoveItem(item);
-            item.PoolPlease();
         });
     }
 }

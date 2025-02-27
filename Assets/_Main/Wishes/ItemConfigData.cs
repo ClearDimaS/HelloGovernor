@@ -4,4 +4,5 @@ using UnityEngine;
 public class ItemConfigData : ScriptableObject
 {
     public string key = "";
+    public float timeOut;
 }
