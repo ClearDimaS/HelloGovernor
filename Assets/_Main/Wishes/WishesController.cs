@@ -9,6 +9,7 @@ public interface IWishAssistant
 {
     public GenericCitizenItem RemoveItem();
     public bool HasAnyItems();
+    public Transform TransformRoot { get; }
 }
 
 public class WishesController : CitizenBehaviour

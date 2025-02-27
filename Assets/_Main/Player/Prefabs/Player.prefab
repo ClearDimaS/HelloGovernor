@@ -298,6 +298,9 @@ MonoBehaviour:
     rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
     - {fileID: 216387460485860053}
+    - {fileID: 8926815620584184743}
+    - {fileID: 3478461100259802938}
+    - {fileID: 3248097703588268375}
   interactables: []
 --- !u!54 &2931607949898103547
 Rigidbody:
@@ -918,9 +921,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6868600969793520891}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3248097703588268375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8233041459362024876, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 6868600969793520891}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3260686416756361849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8219743552083988098, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 6868600969793520891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3478461100259802938 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8005101883981937601, guid: 59e048f099dd94dc7a7757b1ea61a058,
     type: 3}
   m_PrefabInstance: {fileID: 6868600969793520891}
   m_PrefabAsset: {fileID: 0}
@@ -975,6 +990,12 @@ Transform:
 --- !u!4 &8275108072389023967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3280092508520274980, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 6868600969793520891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8926815620584184743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2643691813044903772, guid: 59e048f099dd94dc7a7757b1ea61a058,
     type: 3}
   m_PrefabInstance: {fileID: 6868600969793520891}
   m_PrefabAsset: {fileID: 0}

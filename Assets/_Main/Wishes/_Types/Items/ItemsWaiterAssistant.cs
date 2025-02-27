@@ -23,6 +23,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     private ItemsUserProcessPlace target;
     
     public Transform Root => transform;
+    public Transform TransformRoot => transform;
     
     private void Awake()
     {

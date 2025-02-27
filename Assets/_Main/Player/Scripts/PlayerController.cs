@@ -28,6 +28,8 @@ public class PlayerController : Singleton<PlayerController>,
     private Vector3 delta;
     
     public Transform Root => transform;
+    public Transform TransformRoot => transform;
+    
     public void Spend(int diff)
     {
         repository.Money -= diff;

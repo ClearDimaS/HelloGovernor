@@ -45,6 +45,12 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
             takeTimer.gameObject.SetActive(showTimer);
         }
 
+        #if UNITY_EDITOR
+        if (debug)
+        {
+            Debug.Log($"{visible} {wishAssistant == null} {!isOnPlayer} {CanAddItemToPlayer(player)}");
+        }
+        #endif
         if (visible && wishAssistant == null && !isOnPlayer && CanAddItemToPlayer(player))
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
@@ -57,14 +63,17 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         }
         else
         {
-            if (isOnPlayer && wishAssistant == player)
+            if (wishAssistant != null)
             {
-                var playerDiff = player.transform.position - ItemTakePlace.position;
+                var playerDiff = wishAssistant.TransformRoot.position - ItemTakePlace.position;
                 playerDiff.y = 0f;
                 if (playerDiff.magnitude > takeRadius || GetOwner() == null)
                 {
-                    RemoveAssistant(player);
-                    isOnPlayer = false;
+                    if (wishAssistant == player)
+                    {
+                        isOnPlayer = false;
+                    }
+                    RemoveAssistant(wishAssistant);
                 }
             }
         }
