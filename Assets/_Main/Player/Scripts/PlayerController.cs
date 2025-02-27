@@ -88,15 +88,18 @@ public class PlayerController : Singleton<PlayerController>,
         currency.transform.SetParent(null, true);
         var startPos = currency.transform.position;
         var endPos = transform.position;
-        var middlePos = (startPos + endPos) / 2f + Vector3.up * gameConfig.moneyGainFlyHeight;
+        var diff = endPos - startPos;
+        diff.y = 0f;
+        var rightDir = Vector3.Cross((diff).normalized, Vector3.up);
+        var middlePos = (startPos + endPos) / 2f + Vector3.up * gameConfig.moneyGainFlyHeight + rightDir * Random.Range(-1f, 1f);
         
         var startRot = currency.transform.rotation;
         var middleRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
         var endRot = Quaternion.Euler(Random.Range(0, 360f), Random.Range(0, 360f), Random.Range(0, 360f));
 
         var startScale = currency.transform.localScale;
-        currency.transform.DORotateQuaternion(middleRot, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic);
-        currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).SetEase(Ease.InCubic).OnComplete(() =>
+        currency.transform.DORotateQuaternion(middleRot, gameConfig.moneyFlyTime1).SetEase(gameConfig.moneyFlyEase1);
+        currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).OnComplete(() =>
         {
             var t = 0f;
             SoundManager.Instance.PlayerGetMoney();
@@ -104,7 +107,7 @@ public class PlayerController : Singleton<PlayerController>,
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);
                 currency.transform.position = Vector3.Lerp(middlePos, transform.position, t);
-                currency.transform.localScale = startScale * Mathf.Sqrt(t);
+                currency.transform.localScale = startScale * Mathf.Lerp(1f, 0.4f, Mathf.Sqrt(1f-t));
             }).OnComplete(() =>
             {
                 repository.Money += currency.Amount;
