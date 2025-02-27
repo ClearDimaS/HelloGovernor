@@ -131,4 +131,14 @@ public class Interactor : CulledBehaviour
             return placesDict[interactables[0].GetData()].rootLocalPlace;
         }
     }
+
+    public int GetCurrentMaxPlaces()
+    {
+        if (interactables.Count > 0)
+        {
+            return placesDict[interactables[0].GetData()].places.Length;
+        }
+
+        return 0;
+    }
 }

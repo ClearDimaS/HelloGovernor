@@ -72,7 +72,7 @@ public class OperatablePlace : CulledBehaviour
     
     public Transform GetTargetPlaceTransform()
     {
-        if (fillPlace != null && fillPlace.CanFill)
+        if (fillPlace != null && fillPlace.CanFill && fillPlace.IsEmpty)
         {
             return fillPlace.GetPlace();
         }

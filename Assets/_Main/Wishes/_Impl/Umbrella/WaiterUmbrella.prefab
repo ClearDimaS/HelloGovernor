@@ -86,9 +86,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   places:
   - data: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}
+    rootGO: {fileID: 0}
+    rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
     - {fileID: 1855533281930340272}
-    rootLocalPlace: {x: 0.4, y: 1.5, z: 0}
   interactables: []
 --- !u!114 &7442794405539067157
 MonoBehaviour:

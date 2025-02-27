@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1198332242795881380, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
       propertyPath: m_Name
-      value: InteractZone Variant
+      value: InteractZone Circle
       objectReference: {fileID: 0}
     - target: {fileID: 1207193165806632743, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
@@ -66,17 +66,37 @@ PrefabInstance:
     - target: {fileID: 2939377197251583521, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.095
+      value: 0.0722
       objectReference: {fileID: 0}
     - target: {fileID: 2939377197251583521, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.095
+      value: 0.0722
       objectReference: {fileID: 0}
     - target: {fileID: 2939377197251583521, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.13571428
+      value: 0.0722
+      objectReference: {fileID: 0}
+    - target: {fileID: 2939377197251583521, guid: e8e48639673dd4c20823675de3027dc8,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3086592238767276709, guid: e8e48639673dd4c20823675de3027dc8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3086592238767276709, guid: e8e48639673dd4c20823675de3027dc8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3086592238767276709, guid: e8e48639673dd4c20823675de3027dc8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.49
       objectReference: {fileID: 0}
     - target: {fileID: 6147071823398427677, guid: e8e48639673dd4c20823675de3027dc8,
         type: 3}
@@ -90,6 +110,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 05980be263079154a844351cc2a70990,
         type: 3}
+    - target: {fileID: 8396807949608000154, guid: e8e48639673dd4c20823675de3027dc8,
+        type: 3}
+      propertyPath: scaleCurve.m_Curve.Array.data[1].value
+      value: 1.04
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

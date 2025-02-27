@@ -52,12 +52,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   places:
   - data: {fileID: 11400000, guid: ebfbaedb316dd4eeaa7ffa4d21aa77b5, type: 2}
+    rootGO: {fileID: 0}
+    rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
     - {fileID: 7452623434139384551}
     - {fileID: 242500966979951487}
     - {fileID: 4157790859503472003}
     - {fileID: 6465319331748485284}
-    rootLocalPlace: {x: 0.4, y: 1.5, z: 0}
   interactables: []
 --- !u!114 &747805115318707944
 MonoBehaviour:
@@ -88,6 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walker: {fileID: 3103095942397822185}
   animatorController: {fileID: 9100000, guid: a0ceb0b6923f62447af7bf91227b7c19, type: 2}
+  useAnimatorOverride: 1
 --- !u!114 &3103095942397822185
 MonoBehaviour:
   m_ObjectHideFlags: 0

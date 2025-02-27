@@ -63,6 +63,19 @@ public class TutorialManager : Singleton<TutorialManager>
 
             tutorIndex++;
         }
+        
+        if (curStepIndex < tutorialSteps.Count)
+        {
+            var newStep = tutorialSteps[curStepIndex];
+            ShowTargetPlace(callback: () =>
+            {
+                if (newStep is BuildingTutorialStep)
+                {
+                    pricesManager.AllowNext();
+                }
+            });   
+            RefreshArrowTarget(newStep); 
+        }
     }
     
     private void Update()
