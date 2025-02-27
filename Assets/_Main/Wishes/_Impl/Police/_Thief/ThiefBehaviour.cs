@@ -8,7 +8,10 @@ using Zenject;
 
 public class ThiefBehaviour : MonoBehaviour, IResetable
 {
+    [Inject] private EnvironmentManager environmentManager;
+    
     [SerializeField] private TimerBase catchTimer;
+    [SerializeField] private Walker walker;
     
     public void OnReset()
     {
@@ -18,6 +21,14 @@ public class ThiefBehaviour : MonoBehaviour, IResetable
     public void OnPool()
     {
 
+    }
+
+    private void Update()
+    {
+        if (!walker.IsMoving)
+        {
+            walker.MoveToTarget(environmentManager.GetRandomUnlockedPosition(0), null);
+        }
     }
 
     public void SetCatchProgress(float catchProgress)
