@@ -95,6 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6217546549893135226}
+  - component: {fileID: 4664084895376966864}
   - component: {fileID: 443563733223988503}
   - component: {fileID: 6124304945667144947}
   m_Layer: 0
@@ -119,6 +120,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3003013885625592102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4664084895376966864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697309913848491946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa0c627c13948ec937f3b8901e943fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleTime: 0.1
+  scale: 1.15
+  text: {fileID: 6124304945667144947}
 --- !u!23 &443563733223988503
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -262,10 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54201d3f3d244deb8d7dc9356effd951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleTime: 0.1
-  scale: 1.15
-  textSS: {fileID: 8402277729923602486}
-  textMM: {fileID: 6124304945667144947}
+  textSS: {fileID: 7244964519835800954}
+  textMM: {fileID: 4664084895376966864}
 --- !u!1 &8815460965137468821
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7965579234066116196}
+  - component: {fileID: 7244964519835800954}
   - component: {fileID: 3113182335695956885}
   - component: {fileID: 8402277729923602486}
   m_Layer: 0
@@ -441,6 +456,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3003013885625592102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7244964519835800954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063349304699872785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa0c627c13948ec937f3b8901e943fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleTime: 0.1
+  scale: 1.15
+  text: {fileID: 8402277729923602486}
 --- !u!23 &3113182335695956885
 MeshRenderer:
   m_ObjectHideFlags: 0

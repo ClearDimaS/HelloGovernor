@@ -3,12 +3,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BankWishResultPanel : MonoBehaviour
+public abstract class Minigame
 {
+    public abstract int GetReward();
+
+    public abstract void Complete();
+}
+public class MinigameResultPanel : MonoBehaviour
+{
+    [SerializeField] private UI_ElementAnimator animator;
     [SerializeField] private TMP_Text rewardText;
     [SerializeField] private Button claimButton;
 
-    private BankGame game;
+    private Minigame game;
     private Action onClaim;
     
     private void Awake()
@@ -25,7 +32,7 @@ public class BankWishResultPanel : MonoBehaviour
         game.Complete();
     }
 
-    public void Show(BankGame game, Action onClaim)
+    public void Show(Minigame game, Action onClaim)
     {
         this.game = game;
         this.onClaim = onClaim;
@@ -34,5 +41,10 @@ public class BankWishResultPanel : MonoBehaviour
         var symbol = reward > 0 ? "+" : "";
         rewardText.text = $"{symbol}{Price.ToMoneyString(reward)}";
         gameObject.SetActive(true);
+    }
+
+    public void Hide(bool immediate)
+    {
+        animator.AnimateBack(instant:immediate);
     }
 }

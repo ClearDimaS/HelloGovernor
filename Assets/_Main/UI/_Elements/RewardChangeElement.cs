@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class BankRewardChangeElement : MonoBehaviour
+public class RewardChangeElement : MonoBehaviour
 {
     [SerializeField] private CanvasGroup changeRoot;
     [SerializeField] private TMP_Text changeText;

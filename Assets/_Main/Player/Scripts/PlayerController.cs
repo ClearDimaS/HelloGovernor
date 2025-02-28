@@ -107,7 +107,7 @@ public class PlayerController : Singleton<PlayerController>,
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);
                 currency.transform.position = Vector3.Lerp(middlePos, transform.position, t);
-                currency.transform.localScale = startScale * Mathf.Lerp(1f, 0.4f, Mathf.Sqrt(1f-t));
+                currency.transform.localScale = startScale * Mathf.Lerp(1f, 0.4f, t);
             }).OnComplete(() =>
             {
                 repository.Money += currency.Amount;

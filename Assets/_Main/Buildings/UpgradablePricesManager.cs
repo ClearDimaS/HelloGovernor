@@ -332,4 +332,25 @@ public class UpgradablePricesManager : MonoBehaviour
     {
         return upgradablePriceDatas;
     }
+
+    public T GetBuildingsOfType<T>() where T : UpgradableBuilding
+    {
+        foreach (var building in available)
+        {
+            if (building.GetType() == typeof(T))
+            {
+                return building as T;
+            }
+        }
+
+        foreach (var queue in unlockQueue)
+        {
+            if (queue.upgradable is T building)
+            {
+                return building;
+            }
+        }
+
+        return null;
+    }
 }

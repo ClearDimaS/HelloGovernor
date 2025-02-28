@@ -14,7 +14,7 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
 
     protected ThiefBehaviour activeThief;
     protected bool IsSpawned => activeThief != null;
-    private float lastSpawnTime = -99999f;
+    private float lastSpawnTime = 0;
     protected float catchProgress = 0f;
     private List<Transform> extraAssistants = new ();
 
@@ -50,13 +50,19 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
             {
                 SetThiefCatched(player);
             }
+
+            if (GetTimeLeft() <= 0 && activeThief != null)
+            {
+                thiefsPool.Pool(activeThief);
+                activeThief = null;
+            }
         }
         else
         {
             var timeWaiting = Time.time - lastSpawnTime;
             CoolDownTimeLeft  = wishesConfig.thiefSpawnPause - timeWaiting;
             
-            if (Time.time - lastSpawnTime > wishesConfig.thiefSpawnPause)
+            if (timeWaiting > wishesConfig.thiefSpawnPause)
             {
                 lastSpawnTime = Time.time;
                 SpawnThief();
@@ -71,6 +77,7 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
 
     private void SetThiefCatched(PlayerController catcher)
     {
+        catcher.ReturnMoney(wishesConfig.thiefReward, activeThief.transform);
         thiefsPool.Pool(activeThief);
     }
 
@@ -79,5 +86,16 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
         catchProgress = 0f;
         activeThief = thiefsPool.GetElement();
         activeThief.transform.position = spawnPlace.position;
+    }
+
+    public bool HasThief()
+    {
+        return activeThief != null;
+    }
+
+    public int GetTimeLeft()
+    {
+        var timeSinceSpawn = Mathf.RoundToInt(Time.time - lastSpawnTime);
+        return wishesConfig.thiefLifeTime - timeSinceSpawn;
     }
 }

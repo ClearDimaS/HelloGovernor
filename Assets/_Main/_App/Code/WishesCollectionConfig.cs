@@ -6,7 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Configs/WishesConfig", fileName = "WishConfig")]
 public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, Type>
 {
-    public Vector2Int chatGroupSizeMinMax;
+    [Header("Chat")]
+    public int chatReward = 20;
+
     [Header("Break house")]
     public Vector2 breakTimerMinMax;
     public float repairHouseTime;
@@ -20,7 +22,9 @@ public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, T
     [Range(0, 1f)] public float bankNegativeProbability;
     [Header("Police")] 
     public float thiefSpawnPause = 240f;
-    
+    public int thiefLifeTime = 120;
+    public int thiefReward = 400;
+
     public float GetGrantDuration(WishGranter granter)
     {
         return GetItem(granter.GetType()).grantDuration;

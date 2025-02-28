@@ -10,6 +10,8 @@ public class UI_ElementAnimator : MonoBehaviour
     [SerializeField] private AnimationCurve scaleCurve;
     [SerializeField] private AnimationCurve alphaCurve;
 
+    public bool IsShown => state == 1;
+    private int state = -1;
     private CanvasGroup group;
     private float currentT;
 
@@ -26,7 +28,7 @@ public class UI_ElementAnimator : MonoBehaviour
     {
         transform.DOKill();
         var t = currentT;
-        
+        state = 1;
         if (instant)
         {
             currentT = 1f;
@@ -51,7 +53,7 @@ public class UI_ElementAnimator : MonoBehaviour
     {
         transform.DOKill();
         var t = currentT;
-
+        state = 0;
         if (instant)
         {
             currentT = 0f;

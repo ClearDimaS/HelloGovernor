@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BankWishPanel : UI_Panel
 {
-    [SerializeField] private BankRewardElement rewardElement;
-    [SerializeField] private BankWishTimer timer;
+    [SerializeField] private MiniGameUIRewardElement rewardElement;
+    [SerializeField] private UIWishTimer timer;
     [SerializeField] private BankOptionUIElement option1;
     [SerializeField] private BankOptionUIElement option2;
     [SerializeField] private CanvasGroup content;
-    [SerializeField] private BankWishResultPanel resultPanel;
+    [SerializeField] private MinigameResultPanel resultPanel;
 
     private Func<bool> canShowNext;
     private Action onAnswer;

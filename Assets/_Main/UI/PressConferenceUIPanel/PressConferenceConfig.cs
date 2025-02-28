@@ -8,7 +8,9 @@ using UnityEngine;
 public class PressConferenceConfig : ScriptableObject
 {
     public PressConferenceTopicData[] datas;
-
+    public int rewardPerAnswer = 100;
+    public int penaltyPerAnswer = 100;
+    
     [Button]
     protected void ReSplitSentences()
     {

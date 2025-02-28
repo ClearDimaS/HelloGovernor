@@ -518,14 +518,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8649739682565619876}
-    - targetCorrespondingSourceObject: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7407493375975785016}
     - targetCorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9185808989025756229}
+    - targetCorrespondingSourceObject: {fileID: 6128440657515243465, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7407493375975785016}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -554,6 +554,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc905ae8166469aa4d097eb477c18e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5270688769627859782 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6128440657515243465, guid: ab3512ad7fea34161b18b52fd2504100,
+    type: 3}
+  m_PrefabInstance: {fileID: 2029337603216428175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8094251354222685366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7817450110306230329, guid: ab3512ad7fea34161b18b52fd2504100,
@@ -589,6 +595,7 @@ MonoBehaviour:
   exit: {fileID: 8707150007015362185}
   upgradable: {fileID: 5080909494020951120}
   currencyStack: {fileID: 8649739682565619877}
+  extraPlaces: []
   activationPlace: {fileID: 5877898188301394116}
 --- !u!114 &1818858831030740625
 MonoBehaviour:
@@ -1561,7 +1568,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8094251354222685369}
+    m_TransformParent: {fileID: 5270688769627859782}
     m_Modifications:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
@@ -1586,7 +1593,7 @@ PrefabInstance:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
@@ -1596,7 +1603,7 @@ PrefabInstance:
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1076486244218525098, guid: 6744a8f791c0044ddaf3dfa991a41bc3,
         type: 3}

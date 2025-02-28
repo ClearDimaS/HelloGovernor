@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BankGame
+public class BankGame : Minigame
 {
     protected int reward = 0;
 
@@ -26,7 +26,7 @@ public class BankGame
         return timer.GameTimeLeft;
     }
     
-    public int GetReward()
+    public override int GetReward()
     {
         return reward;
     }
@@ -71,7 +71,7 @@ public class BankGame
         }
     }
 
-    public void Complete()
+    public override void Complete()
     {
         var reward = GetReward();
         reward = Mathf.Max(0, reward);

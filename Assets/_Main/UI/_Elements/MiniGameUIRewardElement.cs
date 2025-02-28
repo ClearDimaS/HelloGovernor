@@ -4,23 +4,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BankRewardElement : MonoBehaviour
+public class MiniGameUIRewardElement : MonoBehaviour
 {
     [SerializeField] private TMP_Text rewardText;
     
-    [FormerlySerializedAs("addReward")] [SerializeField] private BankRewardChangeElement addBankReward;
-    [FormerlySerializedAs("removeReward")] [SerializeField] private BankRewardChangeElement removeBankReward;
+    [FormerlySerializedAs("addBankReward")] [SerializeField] private RewardChangeElement addReward;
+    [FormerlySerializedAs("removeBankReward")] [SerializeField] private RewardChangeElement removeReward;
     
     [SerializeField] private RectTransform changeStartPlace;
     [SerializeField] private RectTransform changeEndPlace;
 
-    private Queue<BankRewardChangeElement> addRewards = new();
-    private Queue<BankRewardChangeElement> removeRewards = new();
+    private Queue<RewardChangeElement> addRewards = new();
+    private Queue<RewardChangeElement> removeRewards = new();
 
     private void Start()
     {
-        addRewards.Enqueue(addBankReward);
-        removeRewards.Enqueue(removeBankReward);
+        addRewards.Enqueue(addReward);
+        removeRewards.Enqueue(removeReward);
     }
 
     public void Init(int reward)
@@ -50,7 +50,7 @@ public class BankRewardElement : MonoBehaviour
         }
     }
 
-    private void SafeAddNewPrefab(Queue<BankRewardChangeElement> rewardsQueue)
+    private void SafeAddNewPrefab(Queue<RewardChangeElement> rewardsQueue)
     {
         if (rewardsQueue.Count <= 1)
         {
