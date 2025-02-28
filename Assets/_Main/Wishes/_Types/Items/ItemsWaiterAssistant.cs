@@ -85,7 +85,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     private void AllowAddProgressToWisher()
     {
-        if (target != null && (target.Assistant == null))
+        if (target != null && (target.Assistant == null || target.Assistant == this))
         {
             target.SetWishAssistant(this);   
         }

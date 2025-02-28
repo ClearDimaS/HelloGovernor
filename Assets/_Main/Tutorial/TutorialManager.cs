@@ -31,6 +31,9 @@ public class TutorialManager : Singleton<TutorialManager>
     private List<TutorialStep> tutorialSteps;
     private int curStepIndex = 0;
     
+    private int skippedFrames;
+    private bool isInit;
+    
     private void Start()
     {
         BuildTutorialSteps();
@@ -64,22 +67,27 @@ public class TutorialManager : Singleton<TutorialManager>
             tutorIndex++;
         }
         
-        if (curStepIndex < tutorialSteps.Count)
-        {
-            var newStep = tutorialSteps[curStepIndex];
-            ShowTargetPlace(callback: () =>
-            {
-                if (newStep is BuildingTutorialStep)
-                {
-                    pricesManager.AllowNext();
-                }
-            });   
-            RefreshArrowTarget(newStep); 
-        }
+       
     }
     
     private void Update()
     {
+        if (skippedFrames < 3)
+        {
+            skippedFrames++;
+            return;
+        }
+
+        if (!isInit)
+        {
+            foreach (var step in tutorialSteps)
+            {
+                if (step.IsCompleted())
+                {
+                    curStepIndex++;
+                }
+            }
+        }
         if (curStepIndex >= 0 && curStepIndex < tutorialSteps.Count)
         {
             var curStep = tutorialSteps[curStepIndex];

@@ -72,7 +72,16 @@ public class CityProgressPanel : UI_Panel
         }
 
         var step = tutorialManager.GetCurrentStep();
-        if (step != lastStep)
+        if (step == null)
+        {
+            progressRoot.SetActive(false);
+        }
+
+        if (!progressRoot.gameObject.activeSelf)
+        {
+            progressRoot.SetActive(true);
+        }
+        if (step != lastStep && step != null)
         {
             RefreshProgressSequence();
             lastStep = step;

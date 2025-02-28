@@ -13,12 +13,13 @@ public class CapacityIndicator : MonoBehaviour
     [SerializeField] private float fadeTime = 1f;
     
     protected float lastChangeTime;
-    protected int lastCount;
+    [SerializeField] protected int lastCount;
     protected Interactor interactor;
 
     private void Awake()
     {
         interactor = GetComponentInParent<Interactor>();
+        alphaGroup.Fade(0f, 0f);
     }
 
     private void Update()

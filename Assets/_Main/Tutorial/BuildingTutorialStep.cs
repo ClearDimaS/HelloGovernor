@@ -8,7 +8,8 @@ public class BuildingTutorialStep : TutorialStep
     protected int price;
     protected int typeIndex;
     public int LevelIndex => levelIndex;
-    
+    public override bool UseCache => false;
+
     public BuildingTutorialStep(UpgradableBuilding building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
     {
         this.building = building;

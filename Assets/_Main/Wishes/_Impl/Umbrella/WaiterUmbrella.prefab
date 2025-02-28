@@ -85,11 +85,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   places:
-  - data: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}
-    rootGO: {fileID: 0}
+  - data: {fileID: 11400000, guid: a29578dc7dd294b5da63fec308031bb7, type: 2}
+    rootGO: {fileID: 4979409363529734451}
     rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
-    - {fileID: 1855533281930340272}
+    - {fileID: 7002767203170112506}
   interactables: []
 --- !u!114 &7442794405539067157
 MonoBehaviour:
@@ -284,15 +284,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e048f099dd94dc7a7757b1ea61a058, type: 3}
---- !u!4 &1855533281930340272 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1000234857239816960, guid: 59e048f099dd94dc7a7757b1ea61a058,
-    type: 3}
-  m_PrefabInstance: {fileID: 1450618666342239408}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4138332900671003759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3265090098306207967, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 1450618666342239408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4979409363529734451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5853495972508784003, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 1450618666342239408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7002767203170112506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8435086342967566154, guid: 59e048f099dd94dc7a7757b1ea61a058,
     type: 3}
   m_PrefabInstance: {fileID: 1450618666342239408}
   m_PrefabAsset: {fileID: 0}

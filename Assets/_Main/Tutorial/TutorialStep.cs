@@ -10,6 +10,7 @@ public abstract class TutorialStep
     private float progress = -1;
     private string title;
     protected string progressText;
+    public virtual bool UseCache => true;
 
     protected string _key
     {
@@ -24,6 +25,7 @@ public abstract class TutorialStep
         }
     }
     protected string _keyCache;
+    
     public TutorialStep(PlayerDataRepository playerRepository)
     {
         this.playerRepository = playerRepository;
@@ -76,7 +78,7 @@ public abstract class TutorialStep
     }
     public bool IsCompleted()
     {
-        return progress >= 1f || playerRepository.IsTutorialCompleted(GetKey());
+        return progress >= 1f || (UseCache && playerRepository.IsTutorialCompleted(GetKey()));
     }
 
     private string GetKey()
