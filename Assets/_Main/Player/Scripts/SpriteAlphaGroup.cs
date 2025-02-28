@@ -32,7 +32,6 @@ public class SpriteAlphaGroup : MonoBehaviour
 
     public void Fade(float target, float time)
     {
-        Debug.Log($"fade: {target}");
         if (target < 0.01f)
         {
             IsShown = false;

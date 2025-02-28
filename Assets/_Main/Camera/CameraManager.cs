@@ -116,6 +116,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
 
     public void SetTarget(Transform target, float timer, float delay = -1f, Action startCallback = null, float distanceMult = 1f)
     {
+        Debug.Log($"set target: {target}");
         if ((currentTarget.HasTimer && currentTarget.timer > 0f))
         {
             if (delay > 0f)

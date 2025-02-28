@@ -87,6 +87,7 @@ public class TutorialManager : Singleton<TutorialManager>
                     curStepIndex++;
                 }
             }
+            isInit = true;
         }
         if (curStepIndex >= 0 && curStepIndex < tutorialSteps.Count)
         {
