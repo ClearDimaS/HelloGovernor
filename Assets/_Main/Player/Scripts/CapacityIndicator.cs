@@ -35,7 +35,7 @@ public class CapacityIndicator : MonoBehaviour
             }
         }
 
-        if (content.gameObject.activeSelf != show)
+        if (alphaGroup.IsShown != show)
         {
             alphaGroup.Fade(show ? 1f : 0f, fadeTime);
         }

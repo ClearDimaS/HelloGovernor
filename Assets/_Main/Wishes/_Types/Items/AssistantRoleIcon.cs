@@ -7,24 +7,27 @@ public class AssistantRoleIcon : MonoBehaviour
 {
     private const float BASE_SIZE_FACTOR = 0.5f;
     
-    [SerializeField] private SpriteRenderer icon;
-    private ItemsWishGranter building;
+    [SerializeField] private SpriteRenderer[] icons;
+    private UpgradableBuilding building;
 
     private void Awake()
     {
-        building = GetComponentInParent<ItemsWishGranter>(true);
+        building = GetComponentInParent<UpgradableBuilding>(true);
     }
 
     private void Start()
     {
-        var sprite = icon.sprite;
-        if (building != null)
+        foreach (var icon in icons)
         {
-            sprite = building.GetIconAssistant();
-        }
-        icon.sprite = sprite;
+            var sprite = icon.sprite;
+            if (building != null)
+            {
+                sprite = building.GetPurchaseIcon();
+            }
+            icon.sprite = sprite;
         
-        var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;
-        icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width; 
+            var pixelsPerUnit = sprite.rect.width / sprite.bounds.size.x;
+            icon.transform.localScale = new Vector3(pixelsPerUnit, pixelsPerUnit, pixelsPerUnit) * BASE_SIZE_FACTOR / sprite.rect.width; 
+        }
     }
 }
