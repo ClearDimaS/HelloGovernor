@@ -12,7 +12,7 @@ public class CapacityIndicator : MonoBehaviour
     [SerializeField] protected float showAfterChangeTime = 2f;
     [SerializeField] private float fadeTime = 1f;
     
-    protected float lastChangeTime;
+    protected float lastChangeTime = -10;
     [SerializeField] protected int lastCount;
     protected Interactor interactor;
 
