@@ -36,19 +36,19 @@ public class Price
     {
         if (money > 10000000)
         {
-            return (money / 1000000f).ToString("0.0") + "M";
+            return (money / 1000000f).ToString("0.") + "M";
         }
         if (money > 1000000)
         {
-            return (money / 1000000f).ToString("0.00") + "M";
+            return (money / 1000000f).ToString("0.0") + "M";
         }
         else if (money > 10000)
         {
-            return (money / 1000f).ToString("0.0") + "K";
+            return (money / 1000f).ToString("0.") + "K";
         }
         else if (money > 1000)
         {
-            return (money / 1000f).ToString("0.00") + "K";
+            return (money / 1000f).ToString("0.0") + "K";
         }
         else
         {
