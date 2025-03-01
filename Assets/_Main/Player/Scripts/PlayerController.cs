@@ -29,7 +29,10 @@ public class PlayerController : Singleton<PlayerController>,
     
     public Transform Root => transform;
     public Transform TransformRoot => transform;
-    
+    public int Exp { get; set; }
+    public int MaxExp { get; set; } = 20;
+    public int Level { get; set; } = 1;
+
     public void Spend(int diff)
     {
         repository.Money -= diff;
