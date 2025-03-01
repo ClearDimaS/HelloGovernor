@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class ThiefEventPanel : UI_Panel
+public class ThiefPanel : UI_Panel
 {
     [SerializeField] private UI_ElementAnimator timerContent;
     [SerializeField] private UIWishTimer uiWishTimer;

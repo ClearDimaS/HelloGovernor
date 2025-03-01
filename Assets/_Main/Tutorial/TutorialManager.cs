@@ -53,7 +53,7 @@ public class TutorialManager : Singleton<TutorialManager>
     
     private void Update()
     {
-        if (skippedFrames < 3)
+        if (skippedFrames < 4)
         {
             skippedFrames++;
             return;
@@ -63,11 +63,17 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             foreach (var step in tutorialSteps)
             {
+                step.UpdateProgress();
                 if (step.IsCompleted())
                 {
                     curStepIndex++;
                 }
+                else
+                {
+                    break;
+                }
             }
+
             isInit = true;
             if (curStepIndex < tutorialSteps.Count)
             {
@@ -90,6 +96,7 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 curStep.SaveAsCompleted();
                 curStepIndex++;
+                Debug.Log($"showing camera at: {curStepIndex}");
                 if (curStepIndex < tutorialSteps.Count)
                 {
                     var newStep = tutorialSteps[curStepIndex];

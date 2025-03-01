@@ -15,8 +15,21 @@ public class UI_ElementAnimator : MonoBehaviour
     private CanvasGroup group;
     private float currentT;
 
+    private bool isInit;
+
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        if (isInit)
+        {
+            return;
+        }
+
+        isInit = true;
         group = GetComponent<CanvasGroup>();
         if (group == null)
         {
@@ -26,6 +39,7 @@ public class UI_ElementAnimator : MonoBehaviour
 
     public void Animate(Action doneHandler = null, bool instant = false)
     {
+        Init();
         transform.DOKill();
         var t = currentT;
         state = 1;
@@ -51,6 +65,7 @@ public class UI_ElementAnimator : MonoBehaviour
 
     public void AnimateBack(Action doneHandler = null, bool instant = false)
     {
+        Init();
         transform.DOKill();
         var t = currentT;
         state = 0;

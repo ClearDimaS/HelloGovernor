@@ -36,7 +36,7 @@ public class Price
     {
         if (money > 10000000)
         {
-            return (money / 1000000f).ToString("0.") + "M";
+            return (money / 1000000000f).ToString("0.0") + "B";
         }
         if (money > 1000000)
         {
@@ -44,7 +44,7 @@ public class Price
         }
         else if (money > 10000)
         {
-            return (money / 1000f).ToString("0.") + "K";
+            return (money / 1000000f).ToString("0.0") + "M";
         }
         else if (money > 1000)
         {
@@ -62,6 +62,7 @@ public class MoneyConsumer : SimplePlayerPhysicsBehaviour
     [Inject] private PlayerInput playerInput;
     [Inject] private CurrencyPool currencyPool;
     [Inject] private GameConfig gameConfig;
+    [Inject] private CameraManager cameraManager;
 
     [SerializeField] private ScaleAnimator scaleAnimator;
     [SerializeField] private Transform flyTarget;
@@ -76,6 +77,14 @@ public class MoneyConsumer : SimplePlayerPhysicsBehaviour
 
     public event Action reachGoalEvent;
     public int Price => price.price;
+
+    private void Start()
+    {
+        var fwd = cameraManager.ActiveCamera.transform.forward;
+        fwd.y = 0f;
+        fwd = fwd.normalized;
+        transform.rotation = Quaternion.LookRotation(-fwd, Vector3.up);
+    }
 
     public void SetPrice(Price price)
     {
