@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b77b88cb7948bd931fcaee7d7e93a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultCapacity: 3
   interactor: {fileID: 2034568369727287653}
   rb: {fileID: 2931607949898103547}
   <XP_Controller>k__BackingField: {fileID: 3207154717441380223}
@@ -357,6 +358,7 @@ MonoBehaviour:
     - {fileID: 5156671027158930521}
     - {fileID: 9218155812859983777}
   interactables: []
+  playerController: {fileID: 6678607422693752179}
 --- !u!54 &2931607949898103547
 Rigidbody:
   m_ObjectHideFlags: 0

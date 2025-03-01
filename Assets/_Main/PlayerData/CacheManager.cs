@@ -8,6 +8,7 @@ using Zenject;
 public class CacheManager
 {
     private PlayerPrefsListIntRepository boughtSkins = new ("boughtSkins");
+    private PlayerPrefsListIntRepository grantedMoneys = new ("grantedMoneys");
     private PlayerPrefsListStringRepository completedTutorials = new ("completedTutorials");
     private PlayerPrefsIntRepository money = new("money");
     private PlayerPrefsIntRepository skinIndex = new("skin");
@@ -97,6 +98,12 @@ public class CacheManager
     {
         get => boughtSkins.Get().list;
         set => boughtSkins.Set(value);
+    }
+    
+    public List<int> GrantedMoneys
+    {
+        get => grantedMoneys.Get().list;
+        set => grantedMoneys.Set(value);
     }
 
     public List<string> CompletedTutorials

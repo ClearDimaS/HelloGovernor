@@ -46,4 +46,15 @@ public class PlayerDataRepository
     {
 
     }
+
+    public bool HasGrantedMoney(int levelIndex)
+    {
+        return cacheManager.GrantedMoneys.Contains(levelIndex);
+    }
+    
+    public void AddGrantedMoney(int levelIndex)
+    {
+        cacheManager.GrantedMoneys.Add(levelIndex);
+        cacheManager.GrantedMoneys = cacheManager.GrantedMoneys;
+    }
 }

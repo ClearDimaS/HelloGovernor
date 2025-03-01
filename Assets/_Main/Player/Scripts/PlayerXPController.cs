@@ -5,9 +5,11 @@ using Zenject;
 
 public class PlayerXPController : MonoBehaviour
 {
+    [Inject] private PlayerDataRepository dataRepository;
     [Inject] private GameConfig gameConfig;
     [Inject] private CacheManager cacheManager;
     [Inject] private UI_Manager uiManager;
+    [Inject] private PlayerController playerController;
     
     [SerializeField] private float waitPause = 1f;
 
@@ -40,6 +42,19 @@ public class PlayerXPController : MonoBehaviour
     private void Start()
     {
         rewardsPanel = uiManager.GetPanel<UI_RewardsPanel>();
+        GrantAllRewards();
+    }
+
+    private void GrantAllRewards()
+    {
+        for (var i = 0; i < gameConfig.levelUps.Length; i++)
+        {
+            if (LevelIndex > i)
+            {
+                var levelUpData = gameConfig.levelUps[i];
+                GrantLevelUpData(levelUpData, i, false);
+            }
+        }
     }
 
     private void Update()
@@ -54,6 +69,17 @@ public class PlayerXPController : MonoBehaviour
                 LevelIndex++;
             }
         }
+    }
+    
+    public void GrantLevelUpData(PlayerLevelData levelUpData, int levelIndex, bool isNew)
+    {
+        if (!dataRepository.HasGrantedMoney(levelIndex))
+        {
+            levelUpData.moneyReward.Grant(dataRepository);
+            dataRepository.AddGrantedMoney(levelIndex);
+        }
+        levelUpData.capacityReward.Grant(playerController, isNew);
+        levelUpData.speedReward.Grant(playerController, isNew);
     }
 
     public PlayerLevelData GetPrevLevelData()

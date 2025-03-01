@@ -7,6 +7,7 @@ using Zenject;
 
 public class LevelUpPanel : MonoBehaviour
 {
+    [Inject] private PlayerController playerController;
     [Inject] private UI_Manager uiManager;
     
     [SerializeField] private float showTime = 1f;
@@ -17,6 +18,8 @@ public class LevelUpPanel : MonoBehaviour
     [SerializeField] private LevelUpRewardElement rewardElementSpeed;
     [SerializeField] private LevelUpRewardElement rewardElementCapacity;
 
+    private int newLevelIndex;
+    private PlayerLevelData newLevelData;
     private int lastAddedMoneyCount;
     
     private void Awake()
@@ -25,11 +28,15 @@ public class LevelUpPanel : MonoBehaviour
         
         claimRewarddButton.onClick.AddListener(() =>
         {
+            claimRewarddButton.interactable = false;
             if (lastAddedMoneyCount > 0)
             {
                 uiManager.GetPanel<UI_RewardsPanel>().SpawnUIMoney(lastAddedMoneyCount,
-                    rewardElementMoney.IconRect, 
-                    null);   
+                    rewardElementMoney.IconRect,
+                    () =>
+                    {
+                        playerController.XP_Controller.GrantLevelUpData(newLevelData, newLevelIndex, true);
+                    });   
             }
             newLevelPanel.AnimateBack();
         });
@@ -37,6 +44,9 @@ public class LevelUpPanel : MonoBehaviour
 
     public void Show(int newLevelIndex, PlayerLevelData newLevelData)
     {
+        this.newLevelIndex = newLevelIndex;
+        claimRewarddButton.interactable = true;
+        this.newLevelData = newLevelData;
         newLevelPanel.Animate();
         levelText.text = (newLevelIndex + 1).ToString();
         claimRewarddButton.gameObject.SetActive(false);

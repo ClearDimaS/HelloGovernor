@@ -34,21 +34,29 @@ public class Price
 
     public static string ToMoneyString(int money)
     {
-        if (money > 10000000)
+        if (money > 100_000_000)
         {
-            return (money / 1000000000f).ToString("0.0") + "B";
+            return (money / 1_000_000_000f).ToString("0") + "B";
         }
-        if (money > 1000000)
+        if (money > 10_000_000)
         {
-            return (money / 1000000f).ToString("0.0") + "M";
+            return (money / 1_000_000_000f).ToString("0.0") + "B";
         }
-        else if (money > 10000)
+        if (money > 1_000_000)
         {
-            return (money / 1000000f).ToString("0.0") + "M";
+            return (money / 1_000_000f).ToString("0.00") + "M";
+        }
+        else if (money > 100_000)
+        {
+            return (money / 1000f).ToString("0") + "K";
+        }
+        else if (money > 10_000)
+        {
+            return (money / 1000f).ToString("0.0") + "K";
         }
         else if (money > 1000)
         {
-            return (money / 1000f).ToString("0.0") + "K";
+            return (money / 1000f).ToString("0.00") + "K";
         }
         else
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -25,6 +26,7 @@ public class TutorialManager : Singleton<TutorialManager>
     [Inject] private PlayerDataRepository playerRepository;
     [Inject] private UpgradablePricesManager pricesManager;
 
+    [SerializeField] private float finishDelay = 2f;
     [SerializeField] private GameObject tutorialArrow;
 
     private List<ProgressMarker> progressMarkers = new();
@@ -96,17 +98,20 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 curStep.SaveAsCompleted();
                 curStepIndex++;
-                Debug.Log($"showing camera at: {curStepIndex}");
+        
                 if (curStepIndex < tutorialSteps.Count)
                 {
                     var newStep = tutorialSteps[curStepIndex];
-                    ShowTargetPlace(callback: () =>
+                    UniTask.Delay(TimeSpan.FromSeconds(finishDelay)).ContinueWith(() =>
                     {
-                        if (newStep is BuildingTutorialStep)
+                        ShowTargetPlace(callback: () =>
                         {
-                            pricesManager.AllowNext();
-                        }
-                    });   
+                            if (newStep is BuildingTutorialStep)
+                            {
+                                pricesManager.AllowNext();
+                            }
+                        });   
+                    });
                     RefreshArrowTarget(newStep); 
                 }
             }

@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class ItemPlacesData
@@ -20,7 +21,8 @@ public class Interactor : CulledBehaviour
 {
     [SerializeField] private ItemPlacesData[] places;
     [HideInInspector] public List<CitizenItem> interactables = new ();
-
+    [SerializeField] private PlayerController playerController;
+    
     private Dictionary<ItemConfigData, ItemPlacesData> placesDict;
 
     protected override void OnAwake()
@@ -104,9 +106,24 @@ public class Interactor : CulledBehaviour
         return null;
     }
 
+    private int GetMaxItemsCount()
+    {
+        if (playerController == null)
+        {
+            if (interactables.Count > 0)
+            {
+                return placesDict[interactables[0].GetData()].places.Length;
+            }
+
+            return 0;
+        }
+
+        return playerController.Capacity;
+    }
+    
     public bool HasMorePlaceFor()
     {
-        return interactables.Count == 0 || interactables.Count < placesDict[interactables[0].GetData()].places.Length;
+        return interactables.Count == 0 || interactables.Count < GetMaxItemsCount();
     }
 
     public bool HasItemOfType(string key)
@@ -117,6 +134,30 @@ public class Interactor : CulledBehaviour
     public Transform GetPlace(int i)
     {
         var data = placesDict[interactables[0].GetData()];
+        if (i >= data.places.Length && playerController != null)
+        {
+            var lastPlace = data.places[^1];
+            var list = data.places.ToList();
+            var newLastPlaceGO = new GameObject("NewLastPlaceGO");
+            newLastPlaceGO.transform.SetParent(lastPlace.parent);
+            newLastPlaceGO.transform.localPosition = lastPlace.localPosition;
+            newLastPlaceGO.transform.localRotation = lastPlace.localRotation;
+            newLastPlaceGO.transform.localScale = lastPlace.localScale;
+            var newLastPlace = newLastPlaceGO.transform;
+            var prevLastPlace = data.places[data.places.Length - 2];
+            var lpDiff = lastPlace.localPosition.y - prevLastPlace.localPosition.y;
+            if (lpDiff > 0.01f)
+            {
+                newLastPlace.localPosition = lastPlace.localPosition + Vector3.up * lpDiff;
+            }
+            else
+            {
+                var randPlace = data.places[Random.Range(0, data.places.Length)];
+                newLastPlace.localPosition = randPlace.localPosition + Vector3.up * 0.2f;
+            }
+            list.Add(newLastPlace);
+            data.places = list.ToArray();
+        }
         return data.places[i % data.places.Length];
     }
 
@@ -134,11 +175,6 @@ public class Interactor : CulledBehaviour
 
     public int GetCurrentMaxPlaces()
     {
-        if (interactables.Count > 0)
-        {
-            return placesDict[interactables[0].GetData()].places.Length;
-        }
-
-        return 0;
+        return GetMaxItemsCount();
     }
 }

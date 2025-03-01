@@ -19,6 +19,8 @@ public class PlayerController : Singleton<PlayerController>,
     [Inject] private GameConfig gameConfig;
     [Inject] private PlayerInput playerInput;
 
+    [SerializeField] private ParticleSystem upgradePS;
+    [SerializeField] private int defaultCapacity = 3;
     [SerializeField] private Interactor interactor;
     [SerializeField] private Rigidbody rb;
     [field: SerializeField] public PlayerXPController XP_Controller { get; private set; }
@@ -28,6 +30,10 @@ public class PlayerController : Singleton<PlayerController>,
 
     private Vector3 spawnPlace;
     private Vector3 delta;
+    private int extraCapacity;
+    private float speedMult = 1f;
+
+    public int Capacity => extraCapacity + defaultCapacity;
     
     public Transform Root => transform;
     public Transform TransformRoot => transform;
@@ -77,12 +83,12 @@ public class PlayerController : Singleton<PlayerController>,
 
         var dir = delta.normalized;
         rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(dir, Vector3.up), 1f);
-        rb.MovePosition(rb.position + delta * Time.fixedDeltaTime * gameConfig.playerSpeed);
+        rb.MovePosition(rb.position + delta * Time.fixedDeltaTime * gameConfig.playerSpeed * speedMult);
     }
 
     public void AddCurrency(int amount)
     {
-        throw new NotImplementedException();
+        repository.Money += amount;
     }
 
     public void MoveCurrencyToMe(CurrencyBehaviour currency)
@@ -155,5 +161,23 @@ public class PlayerController : Singleton<PlayerController>,
     public void AddBoughtBuilding(UpgradableObject upgradableObject)
     {
         XP_Controller.AddXP(gameConfig.purchaseXP, upgradableObject.BuyPlace);
+    }
+
+    public void AddSpeedPercents(int percents, bool isNew)
+    {
+        speedMult += percents / 100f;
+        if (isNew)
+        {
+            upgradePS.Play();
+        }
+    }
+
+    public void AddCapacity(int extra, bool isNew)
+    {
+        extraCapacity += extra;
+        if (isNew)
+        {
+            upgradePS.Play();
+        }
     }
 }

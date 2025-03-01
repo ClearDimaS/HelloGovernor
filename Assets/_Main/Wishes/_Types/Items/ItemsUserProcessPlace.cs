@@ -39,7 +39,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         {
             ItemTakePlace.gameObject.SetActive(showGFX);
         }
-        var showTimer = progress >= 0f && progress < 1f && GetOwner() != null;
+        var showTimer = progress >= 0f && progress < 1f && GetOwner() != null && !GetOwner().Walker.IsMoving;
         if (takeTimer.gameObject.activeSelf != showTimer)
         {
             takeTimer.gameObject.SetActive(showTimer);
@@ -135,6 +135,6 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
     
     public override bool CanAddProgress(CitizenController citizen)
     {
-        return wishAssistant != null && wishAssistant.HasAnyItems();
+        return wishAssistant != null && wishAssistant.HasAnyItems() && !citizen.Walker.IsMoving;
     }
 }

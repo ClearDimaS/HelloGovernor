@@ -17,7 +17,12 @@ public class PlayerLevelRewardMoney
     public int amount;
     public string GetStringValue()
     {
-        return $"+{amount}%";
+        return $"+{amount}";
+    }
+
+    public void Grant(PlayerDataRepository repository)
+    {
+        repository.Money += amount;
     }
 }
 [Serializable]
@@ -29,6 +34,11 @@ public class PlayerLevelRewardSpeed
     {
         return $"+{addPercents}%";
     }
+    
+    public void Grant(PlayerController controller, bool isNew)
+    {
+        controller.AddSpeedPercents(addPercents, isNew);
+    }
 }
 [Serializable]
 public class PlayerLevelRewardCapacity
@@ -38,5 +48,10 @@ public class PlayerLevelRewardCapacity
     public string GetStringValue()
     {
         return $"+{add}";
+    }
+    
+    public void Grant(PlayerController controller, bool isNew)
+    {
+        controller.AddCapacity(add, isNew);
     }
 }

@@ -28,14 +28,14 @@ MonoBehaviour:
     moneyReward:
       amount: 400
     speedReward:
-      addPercents: 10
+      addPercents: 5
     capacityReward:
       add: 0
   - maxXP: 20
     moneyReward:
       amount: 1000
     speedReward:
-      addPercents: 10
+      addPercents: 3
     capacityReward:
       add: 1
   - maxXP: 25
@@ -49,16 +49,16 @@ MonoBehaviour:
     moneyReward:
       amount: 4000
     speedReward:
-      addPercents: 10
+      addPercents: 3
     capacityReward:
       add: 1
   - maxXP: 35
     moneyReward:
       amount: 8000
     speedReward:
-      addPercents: 10
+      addPercents: 0
     capacityReward:
-      add: 1
+      add: 0
   startMoney: 100
   moneySpendDelayAfterInput: 0.3
   buyTime: 2
