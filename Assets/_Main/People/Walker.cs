@@ -21,7 +21,7 @@ public class Walker : CulledBehaviour
     private void Start()
     {
         agent.speed = speed;
-        agent.stoppingDistance = stopDistance;
+        agent.stoppingDistance = stopDistance/2f;
     }
 
     private void OnDisable()

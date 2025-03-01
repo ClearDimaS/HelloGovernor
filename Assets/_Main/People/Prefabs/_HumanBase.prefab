@@ -142,6 +142,7 @@ MonoBehaviour:
     places:
     - {fileID: 5907752343067229947}
   interactables: []
+  playerController: {fileID: 0}
 --- !u!114 &3103095942397822185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +172,7 @@ NavMeshAgent:
   m_Acceleration: 800
   avoidancePriority: 50
   m_AngularSpeed: 1000
-  m_StoppingDistance: 0.2
+  m_StoppingDistance: 0.15
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

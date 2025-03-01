@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine;
 using Zenject;
 
 public class GenericItemsPool
@@ -7,6 +8,7 @@ public class GenericItemsPool
     private DiContainer container;
     protected GenericCitizenItem[] prefabs;
 
+    private Transform parent;
     private Queue<GenericCitizenItem> spawnedDict = new ();
 
     public GenericItemsPool(DiContainer container, params GenericCitizenItem[] prefabs)
@@ -42,5 +44,10 @@ public class GenericItemsPool
         spawnedDict.Enqueue(element);
         element.OnPool();
         element.gameObject.SetActive(false);
+        if (parent == null)
+        {
+            parent = new GameObject("[GenericItemsPool]").transform;
+        }
+        element.transform.SetParent(parent);
     }
 }
