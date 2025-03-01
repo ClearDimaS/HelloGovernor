@@ -16,11 +16,13 @@ MonoBehaviour:
   grantDuration: 1.5
   reward: 10
   chanceWeight: 1
-  coolDown: -1
+  timerType: 0
+  cooldown: 0
+  gameDuration: 0
   itemsData:
     assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}
     itemIcon: {fileID: 21300000, guid: a79966300db24ab4cb0d4544cd139927, type: 3}
-    itemTakeTime: 0.3
+    itemTakeTime: 1
     _prefabs:
     - {fileID: 5976418611851592270, guid: 42efee0091d644b569a29749d963cd15, type: 3}
     - {fileID: 5976418611851592270, guid: 8ebca2ae151af49beb562c528b84d9fc, type: 3}
