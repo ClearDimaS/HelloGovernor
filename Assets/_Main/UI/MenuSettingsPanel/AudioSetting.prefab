@@ -77,6 +77,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 33800ea627b19439fa59fbd2667c8eda,
         type: 3}
+    - target: {fileID: 1549155856702893547, guid: 102bf3aba33ee48128b68055a5723182,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549155856702893547, guid: 102bf3aba33ee48128b68055a5723182,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549155856702893547, guid: 102bf3aba33ee48128b68055a5723182,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9339623
+      objectReference: {fileID: 0}
     - target: {fileID: 2088908321780826838, guid: 102bf3aba33ee48128b68055a5723182,
         type: 3}
       propertyPath: m_Name
@@ -195,8 +210,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2080518880370781904, guid: 102bf3aba33ee48128b68055a5723182,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5563384575862003942}
   m_SourcePrefab: {fileID: 100100000, guid: 102bf3aba33ee48128b68055a5723182, type: 3}
+--- !u!1 &2353256905216576513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2080518880370781904, guid: 102bf3aba33ee48128b68055a5723182,
+    type: 3}
+  m_PrefabInstance: {fileID: 4356966874963321553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5563384575862003942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353256905216576513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 0
 --- !u!114 &2956819051204628282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1549155856702893547, guid: 102bf3aba33ee48128b68055a5723182,
@@ -215,7 +255,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4356966874963321553}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2353256905216576513}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}

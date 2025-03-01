@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -54,9 +54,11 @@ public class LevelPanel : UI_Panel
 
     [SerializeField] private float barSpeed = 3f;
     [SerializeField] private Image expFillImg;
-    
-    [SerializeField] private UI_ElementAnimator newLevelPanel;
+    [SerializeField] private LevelUpPanel levelUpPanel;
 
+    
+    private int lastLevelIndex;
+    private PlayerXPController xpController => player.XP_Controller;
     private FormatableText exp;
     private FormatableText expMax;
     private FormatableText level;
@@ -67,39 +69,32 @@ public class LevelPanel : UI_Panel
         exp = new FormatableText(expTextCur, "{0}");
         expMax = new FormatableText(expTextMax, "{0}");
         level = new FormatableText(levelText, "{0}");
+
     }
 
     private void Start()
     {
-        exp.RefreshText(true, player.Exp);
-        expMax.RefreshText(true, player.MaxExp);
-        level.RefreshText(true, player.Level);
-        newLevelPanel.AnimateBack(instant:true);
-    }
-    
-    [Button]
-    private void AddExp()
-    {
-        player.Exp += Random.Range(1, 10);
+        exp.RefreshText(true, xpController.Exp);
+        expMax.RefreshText(true, xpController.MaxExp);
+        level.RefreshText(true, xpController.LevelIndex+1);
+        lastLevelIndex = xpController.LevelIndex;
     }
 
     private void Update()
     {
-        exp.RefreshText(false, player.Exp);
-        expMax.RefreshText(false, player.MaxExp);
-        level.RefreshText(false, player.Level);
+        exp.RefreshText(false, xpController.Exp);
+        expMax.RefreshText(false, xpController.MaxExp);
+        level.RefreshText(false, xpController.LevelIndex+1);
         
         var oldProgress = expFillImg.rectTransform.anchorMax.x;
-        var targetProgress = player.Exp / (float)player.MaxExp;
+        var targetProgress = xpController.Exp / (float)xpController.MaxExp;
         var newProgress =  Mathf.Lerp(oldProgress, targetProgress, Time.deltaTime * barSpeed);
         expFillImg.rectTransform.FillParent(newProgress);
 
-        if (player.Exp > player.MaxExp)
+        if (lastLevelIndex != xpController.LevelIndex)
         {
-            Debug.Log($"increaseLevel");
-            player.Level++;
-            player.Exp = 0;
-            player.MaxExp += 15;
+            lastLevelIndex = xpController.LevelIndex;
+            levelUpPanel.Show(xpController.LevelIndex, xpController.GetPrevLevelData());
         }
     }
 }

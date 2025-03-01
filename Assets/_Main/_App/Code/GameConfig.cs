@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,6 +11,8 @@ public class GameConfig : ScriptableObject
     public float playerSpeed = 5f;
     public Vector3 moveForward = Vector3.back;
     public Vector3 moveRight = Vector3.left;
+    public int purchaseXP = 5;
+    public PlayerLevelData[] levelUps;
 
     [Header("Money")] 
     public int startMoney;
@@ -36,4 +37,5 @@ public class GameConfig : ScriptableObject
     public Ease cameraTransitionEase;
     public Vector2 cameraUnlockXBorders;
     public Vector2 cameraUnlockYBorders;
+
 }

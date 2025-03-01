@@ -21,7 +21,8 @@ public class PlayerController : Singleton<PlayerController>,
 
     [SerializeField] private Interactor interactor;
     [SerializeField] private Rigidbody rb;
-
+    [field: SerializeField] public PlayerXPController XP_Controller { get; private set; }
+    
     public IWishAssistant WishAssistant { get; private set; }
     private int frameRequiredDelta;
 
@@ -30,9 +31,6 @@ public class PlayerController : Singleton<PlayerController>,
     
     public Transform Root => transform;
     public Transform TransformRoot => transform;
-    public int Exp { get; set; }
-    public int MaxExp { get; set; } = 20;
-    public int Level { get; set; } = 1;
 
     public void Spend(int diff)
     {
@@ -152,5 +150,10 @@ public class PlayerController : Singleton<PlayerController>,
     public bool HasItemOfType(GenericCitizenItem prefab)
     {
         return interactor.HasItemOfType(prefab.GetData().key);
+    }
+
+    public void AddBoughtBuilding(UpgradableObject upgradableObject)
+    {
+        XP_Controller.AddXP(gameConfig.purchaseXP);
     }
 }

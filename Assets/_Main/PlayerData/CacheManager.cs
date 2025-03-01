@@ -15,6 +15,8 @@ public class CacheManager
     private PlayerPrefsIntRepository vibrations = new("vibrations");
     private PlayerPrefsIntRepository sound = new("sound");
     private PlayerPrefsStringRepository registration = new("registration");
+    private PlayerPrefsIntRepository levelIndex = new("levelIndex");
+    private PlayerPrefsIntRepository xp = new("xp");
 
     [Inject]
     public CacheManager(GameConfig gameConfig)
@@ -30,6 +32,18 @@ public class CacheManager
             PlayerPrefs.SetInt("IsInit", 1);
             PlayerPrefs.Save();
         }
+    }
+
+    public int LevelIndex
+    {
+        get => levelIndex.Get();
+        set => levelIndex.Set(value);
+    }
+    
+    public int XP
+    {
+        get => xp.Get();
+        set => xp.Set(value);
     }
     
     public bool IsVibrationsOn

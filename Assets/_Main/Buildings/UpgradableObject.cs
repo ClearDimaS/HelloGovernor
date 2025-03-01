@@ -7,6 +7,8 @@ using Zenject;
 [RequireComponent(typeof(UpgradableSavable))]
 public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
 {
+    [Inject] private PlayerController playerController;
+    
     [SerializeField] private bool autoGrantLevel1;
     [SerializeField] protected ScaleAnimator[] levels;
     [SerializeField] private MoneyConsumer moneyConsumer;
@@ -102,6 +104,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         upgradeEvent?.Invoke();
         RefreshLevelGFX(false);
         SetPrice();
+        playerController.AddBoughtBuilding(this);
     }
 
     protected virtual void RefreshLevelGFX(bool instant)
