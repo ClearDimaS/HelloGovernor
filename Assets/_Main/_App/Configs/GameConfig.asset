@@ -17,42 +17,42 @@ MonoBehaviour:
   moveRight: {x: -1, y: 0, z: 0}
   purchaseXP: 5
   levelUps:
-  - maxXP: 10
+  - maxXP: 15
     moneyReward:
       amount: 200
     speedReward:
       addPercents: 0
     capacityReward:
       add: 1
-  - maxXP: 15
+  - maxXP: 20
     moneyReward:
       amount: 400
     speedReward:
       addPercents: 5
     capacityReward:
       add: 0
-  - maxXP: 20
-    moneyReward:
-      amount: 1000
-    speedReward:
-      addPercents: 3
-    capacityReward:
-      add: 1
   - maxXP: 25
     moneyReward:
-      amount: 2000
+      amount: 1000
     speedReward:
       addPercents: 0
     capacityReward:
       add: 1
   - maxXP: 30
     moneyReward:
+      amount: 2000
+    speedReward:
+      addPercents: 3
+    capacityReward:
+      add: 0
+  - maxXP: 35
+    moneyReward:
       amount: 4000
     speedReward:
       addPercents: 3
     capacityReward:
       add: 1
-  - maxXP: 35
+  - maxXP: 40
     moneyReward:
       amount: 8000
     speedReward:
