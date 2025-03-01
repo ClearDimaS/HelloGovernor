@@ -14,6 +14,7 @@ public interface IWishAssistant
 
 public class WishesController : CitizenBehaviour
 {
+    [Inject] private SoundManager soundManager;
     [Inject] private WishesPool wishesPool;
     [Inject] private WishGrantersManager grantersManager;
 
@@ -88,7 +89,7 @@ public class WishesController : CitizenBehaviour
             if (currentWish.IsSuccess && 
                 wish.UseSound)
             {
-                SoundManager.Instance.WishDone();
+                soundManager.WishDone();
             }
             isWishOver = true;
             wishResultEvent?.Invoke(currentWish.IsSuccess);   

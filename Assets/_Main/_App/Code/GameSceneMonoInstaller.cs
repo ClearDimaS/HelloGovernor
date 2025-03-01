@@ -5,6 +5,8 @@ using Zenject;
 
 public class GameSceneMonoInstaller : MonoInstaller
 {
+    [SerializeField] protected SoundManager soundManager;
+    [SerializeField] protected VibrationManager vibrationManager;
     [SerializeField] protected CitizenSpawner spawner;
     [SerializeField] protected ThiefsPool thiefsPool;
     
@@ -14,6 +16,9 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<DayTimeManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<WishGrantersManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
+        Container.Bind<SoundManager>().FromInstance(soundManager).AsSingle().NonLazy();
+        Container.Bind<VibrationManager>().FromInstance(vibrationManager).AsSingle().NonLazy();
+        
         Container.Bind<TutorialManager>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerController>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<PlayerInput>().FromComponentInHierarchy().AsSingle().NonLazy();

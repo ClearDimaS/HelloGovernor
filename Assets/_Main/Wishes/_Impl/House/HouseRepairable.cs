@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 {
+    [Inject] private SoundManager soundManager;
     [Inject] private PlayerController player;
     [Inject] private WishesCollectionConfig gameConfig;
 
@@ -149,7 +150,7 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
 
         if (repairer == player)
         {
-            SoundManager.Instance.PlayerRepair();
+            soundManager.PlayerRepair();
         }
 
         CurrencyStackBehaviour.SpawnSingleCurrency(gameConfig.repairHouseReward, transform.position);

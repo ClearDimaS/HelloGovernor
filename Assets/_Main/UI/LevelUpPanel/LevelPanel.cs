@@ -74,6 +74,7 @@ public class LevelPanel : UI_Panel
         exp.RefreshText(true, player.Exp);
         expMax.RefreshText(true, player.MaxExp);
         level.RefreshText(true, player.Level);
+        newLevelPanel.AnimateBack(instant:true);
     }
     
     [Button]

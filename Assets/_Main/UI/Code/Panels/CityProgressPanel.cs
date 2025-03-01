@@ -33,6 +33,7 @@ public class CityProgressPanel : UI_Panel
         RefreshProgressSequence();
     }
 
+    private ProgressMarker lastFirstProgressMarker;
     private void RefreshProgressSequence()
     {
         for (var i = 0; i < progressSteps.Length; i++)
@@ -54,7 +55,18 @@ public class CityProgressPanel : UI_Panel
                     progressRoot.SetActive(true);   
                 }
                 step.gameObject.SetActive(true);
-                step.Init(progressMarker.sprite, progressMarker.orderNumber);
+                if (i == 0 && lastFirstProgressMarker != progressMarker && lastFirstProgressMarker != null)
+                {
+                    step.MarkCompleted(() => step.Init(progressMarker.sprite, progressMarker.orderNumber));
+                }
+                else
+                {
+                    step.Init(progressMarker.sprite, progressMarker.orderNumber);
+                }
+                if (i == 0)
+                {
+                    lastFirstProgressMarker = progressMarker;
+                }
             }
         }
     }

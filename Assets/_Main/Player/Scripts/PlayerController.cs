@@ -12,6 +12,7 @@ public class PlayerController : Singleton<PlayerController>,
     IItemTaker,
     IWishAssistant
 {
+    [Inject] private SoundManager soundManager;
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;
     [Inject] private CurrencySingleStackPool currencyStackPool;
@@ -105,7 +106,7 @@ public class PlayerController : Singleton<PlayerController>,
         currency.transform.DOMove(middlePos, gameConfig.moneyFlyTime1).OnComplete(() =>
         {
             var t = 0f;
-            SoundManager.Instance.PlayerGetMoney();
+            soundManager.PlayerGetMoney();
             DOTween.To(() => t, x => t = x, 1f, gameConfig.moneyFlyTime2).OnUpdate(() =>
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);

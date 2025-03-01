@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 [Serializable]
 public class SerializedAudioData
@@ -12,8 +13,10 @@ public class SerializedAudioData
     [HideInInspector] public float lastPLayTime;
 }
 
-public class SoundManager : Singleton<SoundManager>
+public class SoundManager : MonoBehaviour
 {
+    [Inject] private CacheManager cacheManager;
+    
     [SerializeField] private AudioSource source;
     [SerializeField] private SerializedAudioData spendMoney;
     [SerializeField] private SerializedAudioData purchase;
@@ -22,6 +25,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private SerializedAudioData repair;
     [SerializeField] private SerializedAudioData wishDone;
     [SerializeField] private SerializedAudioData taskComplete;
+    [SerializeField] private SerializedAudioData[] clicks;
     
     [field: SerializeField] public AudioClip PlayerFootstepsSound;
     
@@ -67,6 +71,10 @@ public class SoundManager : Singleton<SoundManager>
 
     private void PlaySoundInternal(SerializedAudioData soundData)
     {
+        if (!cacheManager.IsSoundOn)
+        {
+            return;
+        }
         if (Time.time - soundData.lastPLayTime > soundData.minPause)
         {
             soundData.lastPLayTime = Time.time;
@@ -77,5 +85,12 @@ public class SoundManager : Singleton<SoundManager>
     private void PlayClip(AudioClip clip, float volume)
     {
         source.PlayOneShot(clip, volumeScale:volume);
+    }
+
+    public void Click(int getInstanceID)
+    {
+        var clickID = Mathf.Abs(getInstanceID);
+        var data = clicks[clickID % clicks.Length];
+        PlaySoundInternal(data);
     }
 }

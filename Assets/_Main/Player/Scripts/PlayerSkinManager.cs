@@ -7,9 +7,11 @@ using Zenject;
 
 public class PlayerSkinManager : MonoBehaviour
 {
+    [Inject] private SoundManager soundManager;
     [Inject] private PlayerDataRepository playerDataRepository;
     [Inject] private PlayerSkinConfig skinConfig;
-
+    [Inject] private DiContainer container;
+    
     [SerializeField] private Transform gfxRoot;
     [SerializeField] private RuntimeAnimatorController animatorOverride;
     
@@ -61,11 +63,11 @@ public class PlayerSkinManager : MonoBehaviour
     private void SpawnSkin()
     {
         var modedIndex = playerDataRepository.SkinIndex % skins.Length;
-        skinGO = Instantiate(skins[modedIndex].prefab, gfxRoot);
+        skinGO = container.InstantiatePrefab(skins[modedIndex].prefab, gfxRoot);
         animator = skinGO.GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorOverride;
         skinIndex = playerDataRepository.SkinIndex;
-        animator.gameObject.AddComponent<SoundPlayer>().SetClip(SoundManager.Instance.PlayerFootstepsSound);
+        container.InstantiateComponent<SoundPlayer>(animator.gameObject).SetClip(soundManager.PlayerFootstepsSound);
     }
 
     public int GetPrice(int skinIndex)

@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3326015864102332756}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &424700624745112190
 MonoBehaviour:
@@ -80,6 +80,27 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2fd2296a1fc7748c79008dafbbc1143a, type: 3}
     minPause: 0
     volume: 1
+    lastPLayTime: 0
+  clicks:
+  - clip: {fileID: 8300000, guid: e3f026bb5a0664d4fb81f3907c206229, type: 3}
+    minPause: 0.14
+    volume: 0.3
+    lastPLayTime: 0
+  - clip: {fileID: 8300000, guid: 8a68fd24fc8024f6a8b453ede446423e, type: 3}
+    minPause: 0.14
+    volume: 0.3
+    lastPLayTime: 0
+  - clip: {fileID: 8300000, guid: f9175724fcf064af08bd092be5917e5f, type: 3}
+    minPause: 0.14
+    volume: 0.3
+    lastPLayTime: 0
+  - clip: {fileID: 8300000, guid: 8024844e0bd1b4a3d80b1ccab537f8f6, type: 3}
+    minPause: 0.14
+    volume: 0.3
+    lastPLayTime: 0
+  - clip: {fileID: 8300000, guid: 3742d9889004f48a7814d185891eb4db, type: 3}
+    minPause: 0.14
+    volume: 0.3
     lastPLayTime: 0
   PlayerFootstepsSound: {fileID: 8300000, guid: 5108a621563084ba388d86949ecdad53,
     type: 3}
