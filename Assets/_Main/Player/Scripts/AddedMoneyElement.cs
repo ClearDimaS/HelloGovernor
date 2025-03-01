@@ -5,9 +5,11 @@ using UnityEngine;
 public class AddedMoneyElement : MonoBehaviour
 {
     [SerializeField] private TextMesh textChange;
+    [SerializeField] private TextMesh textChang2;
     [SerializeField] private Color startColor;
     [SerializeField] private string format = "+{0} $";
     private Color endColor;
+    private Color startColor2;
     
     private void Awake()
     {
@@ -15,13 +17,17 @@ public class AddedMoneyElement : MonoBehaviour
         gameObject.SetActive(false);
         endColor = startColor;
         endColor.a = 0f;
+        startColor2 = textChang2.color;
     }
 
     public void Show(int showChange, Transform startPlace, Transform endPlace, float moveTime, float fadeDelay, CameraManager cameraManager, Action onComplete)
     {
         gameObject.SetActive(true);
         textChange.text = string.Format(format,  Price.ToMoneyString(showChange));
+        textChang2.text = textChange.text;
         textChange.color = startColor;
+        textChang2.color = startColor2;
+        
         transform.position = startPlace.position;
         var t = 0f;
         transform.forward = cameraManager.ActiveCamera.transform.forward;
@@ -38,6 +44,7 @@ public class AddedMoneyElement : MonoBehaviour
         DOTween.To(() => t0, x => t0 = x, 1f, moveTime - fadeDelay).OnUpdate(() =>
         {
             textChange.color = Color.Lerp(startColor, endColor, t0);
+            textChang2.color = Color.Lerp(startColor2, endColor, t0);
         }).SetDelay(fadeDelay);
     }
 }

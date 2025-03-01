@@ -35,7 +35,7 @@ public class BuildingTutorialStep : TutorialStep
             return 1f;
         }
 
-        return building.SpentAmount / (float)price;
+        return 0f;
     }
 
     public override Transform GetCameraTarget()
@@ -48,14 +48,17 @@ public class BuildingTutorialStep : TutorialStep
         return building.BuyPlace;
     }
 
+    private static string notBoughtProgressText = "0/1";
+    private static string boughtProgressText = "1/1";
+    
     protected override string CreateProgressText()
     {
         if (building.Level > levelIndex)
         {
-            return $"{Price.ToMoneyString(price)}/{Price.ToMoneyString(price)}";
+            return boughtProgressText;
         }
 
-        return $"{Price.ToMoneyString(building.SpentAmount)}/{Price.ToMoneyString(price)}";
+        return notBoughtProgressText;
     }
 
     protected override string CreateTitle()

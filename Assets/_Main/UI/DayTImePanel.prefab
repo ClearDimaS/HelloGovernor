@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 5575043068220261538}
   - component: {fileID: 5810163573954870343}
   - component: {fileID: 1250020378381570228}
+  - component: {fileID: 7806101175393494638}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -252,6 +253,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7806101175393494638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238237156940888358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3474301691708412067
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +279,7 @@ GameObject:
   - component: {fileID: 2150308044638089855}
   - component: {fileID: 2267626889294181728}
   - component: {fileID: 1557989882008194509}
+  - component: {fileID: 7358895167213217244}
   m_Layer: 5
   m_Name: Outline
   m_TagString: Untagged
@@ -327,6 +344,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7358895167213217244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474301691708412067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5529412}
+  m_EffectDistance: {x: 4.5, y: 4.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3974098838656947582
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +445,7 @@ GameObject:
   - component: {fileID: 216429793779487566}
   - component: {fileID: 2330492080625250883}
   - component: {fileID: 3300523188242589006}
+  - component: {fileID: 2062757200384692242}
   m_Layer: 5
   m_Name: Line
   m_TagString: Untagged
@@ -437,7 +470,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 171.2, y: 10}
+  m_SizeDelta: {x: 160.1, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2330492080625250883
 CanvasRenderer:
@@ -478,6 +511,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2062757200384692242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371501966272173527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &7446327758840167759
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +695,7 @@ GameObject:
   - component: {fileID: 7967225478702706817}
   - component: {fileID: 3225134855626597235}
   - component: {fileID: 3028024519440964024}
+  - component: {fileID: 9093251546778323397}
   m_Layer: 5
   m_Name: NightIcon
   m_TagString: Untagged
@@ -711,6 +760,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9093251546778323397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728757084889242719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1.3, y: 1.3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &7844809337284573572
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +824,7 @@ GameObject:
   - component: {fileID: 7184246993383680260}
   - component: {fileID: 1420391146679625175}
   - component: {fileID: 1489237030484806632}
+  - component: {fileID: 4637914509373457695}
   m_Layer: 5
   m_Name: DayIcon
   m_TagString: Untagged
@@ -824,3 +889,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4637914509373457695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9172108807840695804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1.3, y: 1.3}
+  m_UseGraphicAlpha: 1

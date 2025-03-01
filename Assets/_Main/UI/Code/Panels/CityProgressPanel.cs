@@ -90,7 +90,7 @@ public class CityProgressPanel : UI_Panel
         }
         if (lastStep != null)
         {
-            progressImage.fillAmount = lastStep.GetProgress();
+            progressImage.rectTransform.FillParent(lastStep.GetProgress());
             progressText.text = lastStep.GetProgressText();
         }
     }
