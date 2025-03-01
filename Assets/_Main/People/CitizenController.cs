@@ -83,4 +83,14 @@ public class CitizenController : CulledBehaviour
             interactor.RemoveItem(item);
         });
     }
+
+    public void PlayAnimation(string animName)
+    {
+        Animator.CrossFade(animName, 0.01f);
+    }
+
+    public void ResetAnimation()
+    {
+        Animator.CrossFade("Idle", 0.01f);
+    }
 }

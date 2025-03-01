@@ -19,6 +19,7 @@ public class SimpleProcessPlace : ProcessPlace
 
 public abstract class ProcessPlace : CulledBehaviour
 {
+    public string animationName { get; set; }
     [SerializeField] protected Transform teleportTo;
     
     private CitizenController processed;
@@ -79,6 +80,10 @@ public abstract class ProcessPlace : CulledBehaviour
         processed = null;
         citizen.Animator.transform.localPosition = Vector3.zero;
         citizen.Animator.transform.localRotation = Quaternion.identity;
+        if (!string.IsNullOrEmpty(animationName))
+        {
+            citizen.ResetAnimation();
+        }
     }
 
     public Transform GetTargetTransform()
@@ -88,7 +93,10 @@ public abstract class ProcessPlace : CulledBehaviour
 
     public virtual void SetAtPlace(CitizenController citizen)
     {
-
+        if (!string.IsNullOrEmpty(animationName))
+        {
+            citizen.PlayAnimation(animationName);
+        }
     }
     
     public bool IsAtPlace()

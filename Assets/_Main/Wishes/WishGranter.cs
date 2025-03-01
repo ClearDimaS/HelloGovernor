@@ -17,9 +17,26 @@ public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfi
         base.OnConstruct();
         wishPlacesTyped = processPlaces.Select(x => x as U).ToArray();
         config = wishesCollectionConfig.GetConfig(this) as T;
+        SetAnimationNames();
         if (config == null)
         {
             throw new NotImplementedException($"config of type {typeof(T)} is not added for granter {GetType()}");
+        }
+    }
+
+    private void SetAnimationNames()
+    {
+        foreach (var processPlace in processPlaces)
+        {
+            processPlace.animationName = config.processAnimation;
+        }
+
+        foreach (var extraPlacesData in extraPlaces)
+        {
+            foreach (var processPlace in extraPlacesData.processPlaces)
+            {
+                processPlace.animationName = config.processAnimation;
+            }
         }
     }
 

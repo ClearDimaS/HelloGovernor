@@ -11,6 +11,7 @@ public enum ETimer
 //[CreateAssetMenu(menuName = "Configs/Wishes/WishGranter", fileName = "WishConfig")]
 public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
 {
+    public string processAnimation;
     public WishGranter granter;
     public float grantDuration;
     public int reward;
