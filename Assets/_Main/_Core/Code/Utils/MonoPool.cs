@@ -24,7 +24,7 @@ public class MonoPool<T> : MonoBehaviour where T : MonoBehaviour, IResetable
     {
         if (spawned.Count == 0)
         {
-            spawned.Enqueue(container.InstantiatePrefabForComponent<T>(prefab));
+            spawned.Enqueue(container.InstantiatePrefabForComponent<T>(prefab, transform));
         }
 
         var element = spawned.Dequeue();

@@ -1,9 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelUpRewardElement : MonoBehaviour
 {
+    [SerializeField] private Image icon;
     [SerializeField] private TMP_Text rewardText;
+    public RectTransform IconRect => icon.rectTransform;
 
     public void Refresh(PlayerLevelRewardMoney reward)
     {

@@ -154,6 +154,6 @@ public class PlayerController : Singleton<PlayerController>,
 
     public void AddBoughtBuilding(UpgradableObject upgradableObject)
     {
-        XP_Controller.AddXP(gameConfig.purchaseXP);
+        XP_Controller.AddXP(gameConfig.purchaseXP, upgradableObject.BuyPlace);
     }
 }

@@ -3,9 +3,12 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class LevelUpPanel : MonoBehaviour
 {
+    [Inject] private UI_Manager uiManager;
+    
     [SerializeField] private float showTime = 1f;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private UI_ElementAnimator newLevelPanel;
@@ -13,6 +16,8 @@ public class LevelUpPanel : MonoBehaviour
     [SerializeField] private LevelUpRewardElement rewardElementMoney;
     [SerializeField] private LevelUpRewardElement rewardElementSpeed;
     [SerializeField] private LevelUpRewardElement rewardElementCapacity;
+
+    private int lastAddedMoneyCount;
     
     private void Awake()
     {
@@ -20,6 +25,12 @@ public class LevelUpPanel : MonoBehaviour
         
         claimRewarddButton.onClick.AddListener(() =>
         {
+            if (lastAddedMoneyCount > 0)
+            {
+                uiManager.GetPanel<UI_RewardsPanel>().SpawnUIMoney(lastAddedMoneyCount,
+                    rewardElementMoney.IconRect, 
+                    null);   
+            }
             newLevelPanel.AnimateBack();
         });
     }
@@ -33,6 +44,8 @@ public class LevelUpPanel : MonoBehaviour
         {
             claimRewarddButton.gameObject.SetActive(true);
         }).AddTo(gameObject);
+
+        lastAddedMoneyCount = newLevelData.moneyReward.amount;
         
         rewardElementMoney.Refresh(newLevelData.moneyReward);
         rewardElementSpeed.Refresh(newLevelData.speedReward);

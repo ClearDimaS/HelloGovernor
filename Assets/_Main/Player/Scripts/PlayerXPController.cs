@@ -7,9 +7,11 @@ public class PlayerXPController : MonoBehaviour
 {
     [Inject] private GameConfig gameConfig;
     [Inject] private CacheManager cacheManager;
+    [Inject] private UI_Manager uiManager;
     
     [SerializeField] private float waitPause = 1f;
-    
+
+    private UI_RewardsPanel rewardsPanel;
     private float waitTime = 0f;
 
     public int Exp
@@ -35,6 +37,11 @@ public class PlayerXPController : MonoBehaviour
         return gameConfig.levelUps[levelIndex];
     }
 
+    private void Start()
+    {
+        rewardsPanel = uiManager.GetPanel<UI_RewardsPanel>();
+    }
+
     private void Update()
     {
         if (Exp >= MaxExp)
@@ -43,8 +50,8 @@ public class PlayerXPController : MonoBehaviour
             if (waitPause > waitTime)
             {
                 waitTime = 0f;
+                Exp -= MaxExp;
                 LevelIndex++;
-                Exp = 0;
             }
         }
     }
@@ -56,8 +63,9 @@ public class PlayerXPController : MonoBehaviour
     }
 
     [Button]
-    public void AddXP(int value)
+    public void AddXP(int value, Transform from)
     {
         Exp += value;
+        rewardsPanel.SpawnXP(value, from.position, null);
     }
 }

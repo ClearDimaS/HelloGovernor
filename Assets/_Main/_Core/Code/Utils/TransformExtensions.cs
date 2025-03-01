@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -50,5 +51,11 @@ public static class TransformExtensions
           rect.anchorMin = Vector2.zero;
           rect.anchorMax = new Vector2(value, 1f);
           rect.sizeDelta = Vector2.zero;
+     }
+
+     public static Camera GetRenderCamera(this RectTransform rectTransform)
+     {
+          var canvas = rectTransform.GetComponentsInParent<Canvas>().Last();
+          return canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
      }
 }

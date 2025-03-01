@@ -55,7 +55,6 @@ public class LevelPanel : UI_Panel
     [SerializeField] private float barSpeed = 3f;
     [SerializeField] private Image expFillImg;
     [SerializeField] private LevelUpPanel levelUpPanel;
-
     
     private int lastLevelIndex;
     private PlayerXPController xpController => player.XP_Controller;
@@ -63,6 +62,8 @@ public class LevelPanel : UI_Panel
     private FormatableText expMax;
     private FormatableText level;
     
+    public RectTransform XP_Place => expTextCur.rectTransform;
+
     protected override void OnAwake()
     {
         base.OnAwake();

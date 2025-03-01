@@ -14,6 +14,7 @@ public class WalletPanel : UI_Panel
     [SerializeField] private TMP_Text moneyText;
 
     private int lastMoney = -99;
+    public RectTransform MoneyPlace => moneyText.rectTransform;
 
     private void Start()
     {

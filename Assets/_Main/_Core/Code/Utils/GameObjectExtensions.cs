@@ -18,3 +18,11 @@ public static class GameObjectExtensions
         }
     }
 }
+
+public static class Vector2Extensions
+{
+    public static Vector2 SP_To_VP(this Vector2 sp)
+    {
+        return Vector2.Scale(sp, new Vector2(1f / Screen.width, 1f / Screen.height));
+    }
+}
