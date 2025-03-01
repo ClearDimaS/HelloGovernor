@@ -5,6 +5,16 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
     [SerializeField] protected OperatablePlace operatablePlace;
     public int ServedCounter { get; set; }
 
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        operatablePlace.SetShowExtraCondition(() =>
+        {
+            var owner = processPlaces[0].GetOwner();
+            return owner != null && !owner.Walker.IsMoving;
+        });
+    }
+
     public Sprite GetIconOperator()
     {
         return config.operatorIcon;

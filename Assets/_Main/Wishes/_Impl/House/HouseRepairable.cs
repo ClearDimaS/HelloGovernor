@@ -15,6 +15,7 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
     [SerializeField] private ScaleAnimator needRepairContent;
     [SerializeField] private ScaleAnimator levelContent;
     [SerializeField] private ParticleSystem[] donePSs;
+    [SerializeField] private Transform repairPlace;
     
     protected IRepairer repairer;
 
@@ -24,8 +25,9 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
     protected bool isAdded;
     protected float repairProgress = 0f;
     public bool IsBroken { get; private set; }
-    
-    public Transform Place => transform;
+
+    protected override Transform myCenter => repairPlace;
+    public Transform Place => repairPlace;
 
     protected override void OnAwake()
     {
@@ -74,6 +76,10 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
         {
             if (IsBroken)
             {
+                if (!repairPlace.gameObject.activeSelf)
+                {
+                    repairPlace.gameObject.SetActive(true);
+                }
                 timer.SetProgress(repairProgress);
                 if (repairer != null)
                 {
@@ -84,9 +90,16 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
                     }
                 }     
             }
-            else if (Time.time - lastBreakTime > breakTimer)
-            {
-                Break();
+            else 
+            { 
+                if (repairPlace.gameObject.activeSelf)
+                {
+                    repairPlace.gameObject.SetActive(false);
+                }
+                if (Time.time - lastBreakTime > breakTimer)
+                {
+                    Break();
+                }
             }
         }
     }

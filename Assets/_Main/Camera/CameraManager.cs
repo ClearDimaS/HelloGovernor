@@ -58,6 +58,8 @@ public class CameraManager : MonoBehaviour, ICameraManager
     private Transform defaultTarget;
     private CameraTarget currentTarget;
     private Queue<CameraTarget> targetsQueue = new ();
+    public int BlockersCount { get; set; }
+    private bool IsBlocked => BlockersCount > 0;
 
     private void Awake()
     {
@@ -78,7 +80,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
 
     private void Update()
     {
-        if (currentTarget.HasTimer && !isTransition)
+        if (currentTarget.HasTimer && !isTransition && !IsBlocked)
         {
             currentTarget.timer -= Time.deltaTime;
             if (currentTarget.timer < 0f)
@@ -130,7 +132,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
         else
         {
             var newTarget = new CameraTarget(target, timer, startCallback, distanceMult);
-            if (delay > 0f)
+            if (delay > 0f || IsBlocked)
             {
                 currentTarget.OverrideTimer(Mathf.Max(currentTarget.timer, delay));
                 targetsQueue.Enqueue(newTarget);

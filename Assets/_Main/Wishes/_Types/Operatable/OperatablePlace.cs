@@ -14,6 +14,7 @@ public class OperatablePlace : CulledBehaviour
 
     public int GetFillCount => fillPlace == null ? 0 : fillPlace.CurrentCount;
     public bool IsOperated { get; set; }
+    private Func<bool> extraShowCondition;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class OperatablePlace : CulledBehaviour
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        var show = fillPlace == null || !fillPlace.IsEmpty;
+        var show = (fillPlace == null || !fillPlace.IsEmpty) && (extraShowCondition == null || extraShowCondition.Invoke());
         if (show != operatedPlace.gameObject.activeSelf)
         {
             operatedPlace.gameObject.SetActive(show);
@@ -77,5 +78,10 @@ public class OperatablePlace : CulledBehaviour
             return fillPlace.GetPlace();
         }
         return operatedPlace;
+    }
+
+    public void SetShowExtraCondition(Func<bool> func)
+    {
+        extraShowCondition = func;
     }
 }

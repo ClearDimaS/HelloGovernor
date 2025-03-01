@@ -11,8 +11,9 @@ public class JoystickPanel : UI_Panel
     [Inject] private CameraManager cameraManager;
     [SerializeField] private Joystick joystick;
 
-    public float Magnitude => joystick.Direction.magnitude;
-    public bool IsMoving => joystick.Vertical != 0f && joystick.Horizontal != 0f;
+    public float Magnitude => joystick.gameObject.activeSelf ? joystick.Direction.magnitude : 0f;
+    public bool IsMoving => joystick.gameObject.activeSelf && 
+                            (joystick.Vertical != 0f && joystick.Horizontal != 0f);
     
     protected event Action<Vector2> inputEvent;
 

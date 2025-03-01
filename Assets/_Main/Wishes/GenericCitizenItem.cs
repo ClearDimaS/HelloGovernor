@@ -7,12 +7,13 @@ using UnityEngine;
 public class GenericCitizenItem : CitizenItem, IResetable
 {
     [SerializeField] private ItemConfigData itemsData;
-    
+
+    private int resetCounter;
     private GenericItemsPool pool;
 
     public void OnReset()
     {
-        
+        resetCounter++;
     }
 
     public void OnPool()
@@ -38,9 +39,13 @@ public class GenericCitizenItem : CitizenItem, IResetable
 
     public override void PoolPleaseAtTimeout(Action action)
     {
+        var cntr = resetCounter;
         UniTask.Delay(TimeSpan.FromSeconds(itemsData.timeOut)).ContinueWith(() =>
         {
-            PoolPlease();
+            if (resetCounter == cntr)
+            {
+                PoolPlease();   
+            }
         });
     }
 

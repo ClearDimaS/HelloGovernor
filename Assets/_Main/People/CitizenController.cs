@@ -77,6 +77,10 @@ public class CitizenController : CulledBehaviour
 
     public void AddItem(CitizenItem item)
     {
+        if (interactor.interactables.Count > 0)
+        {
+            interactor.ClearItems();
+        }
         interactor.AddItem(item);
         item.PoolPleaseAtTimeout(() =>
         {

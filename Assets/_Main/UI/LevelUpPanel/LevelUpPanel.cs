@@ -7,6 +7,7 @@ using Zenject;
 
 public class LevelUpPanel : MonoBehaviour
 {
+    [Inject] private CameraManager cameraManager;
     [Inject] private PlayerController playerController;
     [Inject] private UI_Manager uiManager;
     
@@ -39,6 +40,7 @@ public class LevelUpPanel : MonoBehaviour
                     });   
             }
             newLevelPanel.AnimateBack();
+            cameraManager.BlockersCount--;
         });
     }
 
@@ -47,6 +49,10 @@ public class LevelUpPanel : MonoBehaviour
         this.newLevelIndex = newLevelIndex;
         claimRewarddButton.interactable = true;
         this.newLevelData = newLevelData;
+        if (newLevelPanel.IsShown)
+        {
+            cameraManager.BlockersCount++;
+        }
         newLevelPanel.Animate();
         levelText.text = (newLevelIndex + 1).ToString();
         claimRewarddButton.gameObject.SetActive(false);

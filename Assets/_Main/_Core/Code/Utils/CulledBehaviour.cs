@@ -23,13 +23,14 @@ public interface IRootProvider
 }
 public abstract class SimplePhysicsBehaviourInterface<T> : SimplePhysicsBehaviourBase<T> where T : IRootProvider
 {
+    public abstract Transform Center { get; }
     protected override bool IsInside(T component)
     {
         if (!component.Root.gameObject.activeInHierarchy)
         {
             return false;
         }
-        var diff = transform.position - component.Root.position;
+        var diff = Center.position - component.Root.position;
         diff.y = 0;
         var sqrDist = diff.sqrMagnitude;
         return sqrRadius > sqrDist;

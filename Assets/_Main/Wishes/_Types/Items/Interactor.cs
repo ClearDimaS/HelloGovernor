@@ -177,4 +177,13 @@ public class Interactor : CulledBehaviour
     {
         return GetMaxItemsCount();
     }
+
+    public void ClearItems()
+    {
+        foreach (var interactable in interactables)
+        {
+            interactable.PoolPlease();
+        }
+        interactables.Clear();
+    }
 }

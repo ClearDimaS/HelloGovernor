@@ -14,6 +14,9 @@ public class SimplePlayerPhysicsBehaviour : SimplePhysicsBehaviour<PlayerControl
 
 public class SimpleRepairerPhysicsBehaviour : SimplePhysicsBehaviourInterface<IRepairer>
 {
+    public override Transform Center => myCenter;
+    protected virtual Transform myCenter => transform;
+
     protected override List<IRepairer> GetComponentsForWork()
     {
         return FindObjectsOfType<RepairAssistant>(true).Select(x => x as IRepairer).
