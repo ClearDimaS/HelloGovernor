@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 public class JoystickPanel : UI_Panel
 {
+    [Inject] private CameraManager cameraManager;
     [SerializeField] private Joystick joystick;
 
     public float Magnitude => joystick.Direction.magnitude;
@@ -31,6 +33,11 @@ public class JoystickPanel : UI_Panel
     
     private void Update()
     {
+        var activeJoystick = cameraManager.IsOnPlayer;
+        if (activeJoystick != joystick.gameObject.activeSelf)
+        {
+            joystick.gameObject.SetActive(activeJoystick);
+        }
         if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
         {
             inputEvent?.Invoke(joystick.Direction);

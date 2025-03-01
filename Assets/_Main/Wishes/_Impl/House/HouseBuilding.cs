@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -31,7 +32,10 @@ public class HouseBuilding : BuildingBase
         if (!repository.HouseBroken)
         {
             repository.HouseBroken = true;
-            repairables[0].Break();
+            UniTask.WaitUntil(() => repairables.Count > 0).ContinueWith(() =>
+            {
+                repairables[0].Break();
+            }).AddTo(gameObject);
         }
     }
 
