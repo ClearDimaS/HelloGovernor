@@ -383,7 +383,7 @@ PrefabInstance:
     - target: {fileID: 3679989852462289481, guid: 2385444ab6ebb4a508654018980f4596,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.97
+      value: -3.76
       objectReference: {fileID: 0}
     - target: {fileID: 3679989852462289481, guid: 2385444ab6ebb4a508654018980f4596,
         type: 3}
@@ -393,7 +393,7 @@ PrefabInstance:
     - target: {fileID: 3679989852462289481, guid: 2385444ab6ebb4a508654018980f4596,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.83
+      value: 5.27
       objectReference: {fileID: 0}
     - target: {fileID: 3679989852462289481, guid: 2385444ab6ebb4a508654018980f4596,
         type: 3}
@@ -632,17 +632,17 @@ PrefabInstance:
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.1
+      value: 1.91
       objectReference: {fileID: 0}
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.28
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.45
+      value: 4.93
       objectReference: {fileID: 0}
     - target: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -821,6 +821,8 @@ MonoBehaviour:
   exit: {fileID: 4360632264913496921}
   upgradable: {fileID: 918257262650868857}
   currencyStack: {fileID: 5724849644326985084}
+  extraPlaces: []
+  <ProcessPlaceUserTime>k__BackingField: 1
 --- !u!114 &9000612881463764057
 MonoBehaviour:
   m_ObjectHideFlags: 0

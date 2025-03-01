@@ -37,23 +37,6 @@ public class TutorialManager : Singleton<TutorialManager>
     private void Start()
     {
         BuildTutorialSteps();
-        for (int i = 0; i < tutorialSteps.Count; i++)
-        {
-            if (tutorialSteps[i].IsCompleted())
-            {
-                curStepIndex++;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        if (curStepIndex < tutorialSteps.Count)
-        {
-            RefreshArrowTarget(tutorialSteps[curStepIndex]);   
-        }
-        
         var index = 1;
         var tutorIndex = 0;
         foreach (var tutorialStep in tutorialSteps)
@@ -66,8 +49,6 @@ public class TutorialManager : Singleton<TutorialManager>
 
             tutorIndex++;
         }
-        
-       
     }
     
     private void Update()
@@ -88,6 +69,18 @@ public class TutorialManager : Singleton<TutorialManager>
                 }
             }
             isInit = true;
+            if (curStepIndex < tutorialSteps.Count)
+            {
+                var newStep = tutorialSteps[curStepIndex];
+                RefreshArrowTarget(tutorialSteps[curStepIndex]);   
+                ShowTargetPlace(callback: () =>
+                {
+                    if (newStep is BuildingTutorialStep)
+                    {
+                        pricesManager.AllowNext();
+                    }
+                });   
+            }
         }
         if (curStepIndex >= 0 && curStepIndex < tutorialSteps.Count)
         {

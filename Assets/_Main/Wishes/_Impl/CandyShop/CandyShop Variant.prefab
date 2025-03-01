@@ -849,12 +849,12 @@ PrefabInstance:
     - target: {fileID: 4837816760625099580, guid: 7c6fcc089262a4dfd8e9a93ae9ef096d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.08
+      value: 2.03
       objectReference: {fileID: 0}
     - target: {fileID: 4837816760625099580, guid: 7c6fcc089262a4dfd8e9a93ae9ef096d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.07
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 4918134083925735488, guid: 7c6fcc089262a4dfd8e9a93ae9ef096d,
         type: 3}
@@ -954,7 +954,7 @@ PrefabInstance:
     - target: {fileID: 2529652047770296343, guid: 42f6c42b0ae6b4e4da33e8bfbf2d0468,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.95
+      value: 3.56
       objectReference: {fileID: 0}
     - target: {fileID: 2529652047770296343, guid: 42f6c42b0ae6b4e4da33e8bfbf2d0468,
         type: 3}
@@ -964,7 +964,7 @@ PrefabInstance:
     - target: {fileID: 2529652047770296343, guid: 42f6c42b0ae6b4e4da33e8bfbf2d0468,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.92
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: 2529652047770296343, guid: 42f6c42b0ae6b4e4da33e8bfbf2d0468,
         type: 3}
@@ -1040,7 +1040,7 @@ PrefabInstance:
     - target: {fileID: 6365816165139685790, guid: 9e6b7c5f076f947ba9dc8c3411368122,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.74
+      value: -2.81
       objectReference: {fileID: 0}
     - target: {fileID: 6365816165139685790, guid: 9e6b7c5f076f947ba9dc8c3411368122,
         type: 3}
@@ -1050,7 +1050,7 @@ PrefabInstance:
     - target: {fileID: 6365816165139685790, guid: 9e6b7c5f076f947ba9dc8c3411368122,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.37
+      value: 5.57
       objectReference: {fileID: 0}
     - target: {fileID: 6365816165139685790, guid: 9e6b7c5f076f947ba9dc8c3411368122,
         type: 3}
@@ -1114,12 +1114,12 @@ PrefabInstance:
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.44
+      value: -0.89
       objectReference: {fileID: 0}
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.22
+      value: 5.76
       objectReference: {fileID: 0}
     - target: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -1276,6 +1276,7 @@ MonoBehaviour:
   exit: {fileID: 2730897828829680081}
   upgradable: {fileID: 4305615372893449941}
   currencyStack: {fileID: 434016788909206835}
+  extraPlaces: []
   operatablePlace: {fileID: 3173566858066742303}
   giveItemFrom: {fileID: 7184654416074941393}
   itemPrefabs:
