@@ -68,6 +68,12 @@ public class UpgradableBuilding : UpgradableObject
         return _upgradablePricesManager.GetLevelPrices(this);
     }
 
+    protected override void OnUpgrade()
+    {
+        base.OnUpgrade();
+        buildingBase.OnUpgrade();
+    }
+
     protected override void RefreshLevelGFX(bool instant)
     {
         base.RefreshLevelGFX(instant);

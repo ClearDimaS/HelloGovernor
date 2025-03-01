@@ -103,10 +103,16 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         data.level++;
         upgradeEvent?.Invoke();
         RefreshLevelGFX(false);
+        OnUpgrade();
         SetPrice();
         playerController.AddBoughtBuilding(this);
     }
 
+    protected virtual void OnUpgrade()
+    {
+        
+    }
+    
     protected virtual void RefreshLevelGFX(bool instant)
     {
         for (int i = 0; i < levels.Length; i++)

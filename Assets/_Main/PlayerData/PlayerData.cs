@@ -20,6 +20,12 @@ public class PlayerDataRepository
         set => cacheManager.SkinIndex = value;
     }
 
+    public bool HouseBroken 
+    {
+        get => cacheManager.HouseBroken;
+        set => cacheManager.HouseBroken = value;
+    }
+
     public bool IsSkinBought(int skin)
     {
         return cacheManager.BoughtSkins.Contains(skin);

@@ -18,6 +18,7 @@ public class CacheManager
     private PlayerPrefsStringRepository registration = new("registration");
     private PlayerPrefsIntRepository levelIndex = new("levelIndex");
     private PlayerPrefsIntRepository xp = new("xp");
+    private PlayerPrefsIntRepository houseBroken = new("houseBroken");
 
     [Inject]
     public CacheManager(GameConfig gameConfig)
@@ -57,6 +58,12 @@ public class CacheManager
     {
         get => sound.Get() == 0;
         set => sound.Set(value ? 0 : -1);
+    }
+
+    public bool HouseBroken
+    {
+        get => houseBroken.Get() == 1;
+        set => houseBroken.Set(value ? 1 : 0);
     }
 
     public DateTime RegistrationDate

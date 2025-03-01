@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class HouseBuilding : BuildingBase
 {
+    [Inject] private PlayerDataRepository repository;
     [Inject] private WishesCollectionConfig gameConfig;
     [Inject] private HousesManager housesManager;
 
@@ -22,6 +23,16 @@ public class HouseBuilding : BuildingBase
     {
         base.OnAwake();
         housesManager.Add(this);
+    }
+
+    public override void OnUpgrade()
+    {
+        base.OnUpgrade();
+        if (!repository.HouseBroken)
+        {
+            repository.HouseBroken = true;
+            repairables[0].Break();
+        }
     }
 
     public bool CanRepair(IRepairer repairer, out IRepairable target)

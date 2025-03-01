@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class OperatableFillPlace : CulledBehaviour
 {
+    [SerializeField] protected float fillTime = 1f;
     [SerializeField] protected TextMesh maxText;
     [SerializeField] protected TextMesh curText;
     [SerializeField] protected Transform fillPlace;
@@ -75,7 +76,7 @@ public class OperatableFillPlace : CulledBehaviour
 
         if (isFilling && CanFill)
         {
-            fillProgress += Time.deltaTime;
+            fillProgress += Time.deltaTime / fillTime;
         }
         else
         {
