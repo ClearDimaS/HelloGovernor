@@ -8,8 +8,6 @@ public class CityProgressPanel : UI_Panel
 {
     [Inject] private TutorialManager tutorialManager;
 
-    [SerializeField] private GameObject progressRoot;
-    [SerializeField] private CityProgressStep[] progressSteps;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image progressImage;
     [SerializeField] private TMP_Text progressText;
@@ -29,46 +27,6 @@ public class CityProgressPanel : UI_Panel
         {
             group = gameObject.AddComponent<CanvasGroup>();
         }
-
-        RefreshProgressSequence();
-    }
-
-    private ProgressMarker lastFirstProgressMarker;
-    private void RefreshProgressSequence()
-    {
-        for (var i = 0; i < progressSteps.Length; i++)
-        {
-            var step = progressSteps[i];
-            var progressMarker = tutorialManager.GetProgressMarker(i);
-            if (progressMarker == null)
-            {
-                if (i == 0)
-                {
-                    progressRoot.SetActive(false);
-                }
-                step.gameObject.SetActive(false);
-            }
-            else
-            {
-                if (!progressRoot.activeSelf)
-                {
-                    progressRoot.SetActive(true);   
-                }
-                step.gameObject.SetActive(true);
-                if (i == 0 && lastFirstProgressMarker != progressMarker && lastFirstProgressMarker != null)
-                {
-                    step.MarkCompleted(() => step.Init(progressMarker.sprite, progressMarker.orderNumber));
-                }
-                else
-                {
-                    step.Init(progressMarker.sprite, progressMarker.orderNumber);
-                }
-                if (i == 0)
-                {
-                    lastFirstProgressMarker = progressMarker;
-                }
-            }
-        }
     }
 
     private void ShowTarget()
@@ -84,18 +42,8 @@ public class CityProgressPanel : UI_Panel
         }
 
         var step = tutorialManager.GetCurrentStep();
-        if (step == null)
-        {
-            progressRoot.SetActive(false);
-        }
-
-        if (!progressRoot.gameObject.activeSelf)
-        {
-            progressRoot.SetActive(true);
-        }
         if (step != lastStep && step != null)
         {
-            RefreshProgressSequence();
             lastStep = step;
             titleText.text = step.GetTitle();
             iconImage.sprite = step.GetTutorialIcon();

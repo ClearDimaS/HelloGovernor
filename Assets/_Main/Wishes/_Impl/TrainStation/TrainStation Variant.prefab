@@ -587,6 +587,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 904874c7585184ff889459985c260d94, type: 3}
+--- !u!114 &2559994107513021345 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7806790001398827008, guid: 904874c7585184ff889459985c260d94,
+    type: 3}
+  m_PrefabInstance: {fileID: 5751562054466726817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7144c01c4a6541e3b3eb4a4ce5d37432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4862382833424150730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 912823744142957419, guid: 904874c7585184ff889459985c260d94,
@@ -910,7 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3288c4e3b3f46828e4a896614a0306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wishPostProcessor: {fileID: 0}
+  wishPostProcessor: {fileID: 2559994107513021345}
   queuePlaces:
   - {fileID: 934681105289934341}
   - {fileID: 2298898349346307449}
