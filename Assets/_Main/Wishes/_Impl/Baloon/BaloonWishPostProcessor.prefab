@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631486369873635907}
-  - component: {fileID: 3752366351851588028}
   - component: {fileID: 6230286652667052721}
+  - component: {fileID: 2957026669149972875}
   m_Layer: 0
   m_Name: BaloonWishPostProcessor
   m_TagString: Untagged
@@ -67,25 +67,6 @@ Transform:
   - {fileID: 5948594499075928152}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3752366351851588028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024338146902842969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac2c2392884213afc392837bb1ea29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimName: 
-  stayTime: 4
-  postProcessorAnimator: {fileID: 6230286652667052721}
-  processPlaces:
-  - {fileID: 5830715008315767391}
-  - {fileID: 909497937221752459}
-  citizens: []
 --- !u!114 &6230286652667052721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,8 +83,27 @@ MonoBehaviour:
   points:
   - {fileID: 3580497674185019240}
   - {fileID: 5948594499075928152}
-  time: 2
+  time: 4
   changeRotationFWD: 0
+--- !u!114 &2957026669149972875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024338146902842969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb11147a063486db774c6ef11aeb3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimName: 
+  stayTime: 4
+  postProcessorAnimator: {fileID: 6230286652667052721}
+  processPlaces:
+  - {fileID: 5830715008315767391}
+  - {fileID: 909497937221752459}
+  citizens: []
 --- !u!1 &2299604305476559953
 GameObject:
   m_ObjectHideFlags: 0

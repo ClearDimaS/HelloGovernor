@@ -736,16 +736,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3e2959852c0649cba3169fcb6699f89, type: 3}
---- !u!114 &2350306158873799953 stripped
+--- !u!114 &4433683579224034598 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3752366351851588028, guid: c3e2959852c0649cba3169fcb6699f89,
+  m_CorrespondingSourceObject: {fileID: 2957026669149972875, guid: c3e2959852c0649cba3169fcb6699f89,
     type: 3}
   m_PrefabInstance: {fileID: 1481371668951327917}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac2c2392884213afc392837bb1ea29, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cb11147a063486db774c6ef11aeb3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &5226750730500722414 stripped
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8758ac6dcd98340408505046a9c33a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wishPostProcessor: {fileID: 2350306158873799953}
+  wishPostProcessor: {fileID: 4433683579224034598}
   queuePlaces:
   - {fileID: 6251175637851080486}
   - {fileID: 231869396701355155}
