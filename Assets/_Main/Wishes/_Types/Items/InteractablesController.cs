@@ -34,6 +34,11 @@ public class InteractablesController : CulledBehaviour
                 animator = getAnimatorFrom.GetComponentInChildren<Animator>();
                 reinit = true;
             }
+            else
+            {
+                transform.position = animator.transform.position;
+                transform.rotation = animator.transform.rotation;
+            }
 
             if (reinit && animator != null)
             {
@@ -55,7 +60,7 @@ public class InteractablesController : CulledBehaviour
         if (interactor.HasAnyItem())
         {
             var localPlace = interactor.GetItemsRootLocalPlace();
-            root.position = Vector3.Lerp(root.position, animator.transform.TransformPoint(localPlace), Time.deltaTime * 5f);
+            root.position = animator.transform.TransformPoint(localPlace);
             target.position = root.position;
             if (handRig.weight < 1)
             {

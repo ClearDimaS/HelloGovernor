@@ -567,6 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5058150745714626311}
   - component: {fileID: 4647335520690578677}
+  - component: {fileID: 2431714572802777510}
   m_Layer: 5
   m_Name: MinigameResultPanel
   m_TagString: Untagged
@@ -607,8 +608,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119d8514f5874cd6817f3598e363f8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2431714572802777510}
   rewardText: {fileID: 1670006091898671712}
   claimButton: {fileID: 1524395358347346889}
+--- !u!114 &2431714572802777510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142120424005997834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0d3cec1f38c4a9c9844f3d7a5f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.2
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  alphaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5851820894325921360
 GameObject:
   m_ObjectHideFlags: 0
