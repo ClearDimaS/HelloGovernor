@@ -10,6 +10,7 @@ public class GenericCitizenItem : CitizenItem, IResetable
 
     private int resetCounter;
     private GenericItemsPool pool;
+    private Action onPool;
 
     public void OnReset()
     {
@@ -32,6 +33,11 @@ public class GenericCitizenItem : CitizenItem, IResetable
         {
             return;
         }
+
+        var fire = onPool;
+        fire?.Invoke();
+        onPool = null;
+        
         var poolTmp = pool;
         pool = null;
         poolTmp.Pool(this);
@@ -40,6 +46,7 @@ public class GenericCitizenItem : CitizenItem, IResetable
     public override void PoolPleaseAtTimeout(Action action)
     {
         var cntr = resetCounter;
+        onPool = action;
         UniTask.Delay(TimeSpan.FromSeconds(itemsData.timeOut)).ContinueWith(() =>
         {
             if (resetCounter == cntr)

@@ -25,7 +25,6 @@ public class OperatableWithItems : OperatableGranter
         if (operatablePlace.GetFillCount > itemsQueue.Count)
         {
             var element = pool.GetElement();
-            element.SetPool(pool);
             element.transform.position = operatablePlace.fillPlace.GetPlace().position + Vector3.up;
             element.transform.DOMove(itemPlaces[itemsQueue.Count % itemPlaces.Length].position, 0.3f)
                 .SetEase(Ease.InOutCubic);
@@ -45,7 +44,6 @@ public class OperatableWithItems : OperatableGranter
         else
         {
             var element = pool.GetElement();
-            element.SetPool(pool);
             item = element;
             item.transform.position = giveItemFrom.position;
         }
