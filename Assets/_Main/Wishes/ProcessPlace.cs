@@ -24,23 +24,26 @@ public abstract class ProcessPlace : CulledBehaviour
     private CitizenController processed;
     public Vector3 Position => transform.position;
     protected CitizenController Processed => processed;
-    
+
     public abstract float ProcessTime { get; }
     protected float progress;
-
+    protected WishGranter granter;
+    
     public abstract bool CanAddProgress(CitizenController citizen);
 
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        if (processed != null && CanAddProgress(processed))
+
+        progress = processed == null ? 0f : processed.WishesController.GetProgress();
+        /*if (processed != null && CanAddProgress(processed) && granter.CanAddProgressFor(processed))
         {
             progress += Time.deltaTime / Mathf.Max(ProcessTime, 0.001f);
         }
         else
         {
             progress = 0f;
-        }
+        }*/
     }
 
     public void SetComplete()

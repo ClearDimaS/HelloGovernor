@@ -110,4 +110,9 @@ public class WishesController : CitizenBehaviour
     {
         isWishesDisabled = false;
     }
+
+    public float GetProgress()
+    {
+        return currentWish == null ? 0f : currentWish.Progress;
+    }
 }
