@@ -32,10 +32,15 @@ public class OrderWishDisplayer : MonoBehaviour
                 content.DOScale(Vector3.zero, 0.3f);
             }
         }
-    }
 
-    public void Init(OrderItemsConfigData orderDataItem)
-    {
-        icon.sprite = orderDataItem.itemIcon;
+        if (show)
+        {
+            var curIcon = processPlace.GetCurrentIcon();
+            if (icon.sprite != curIcon)
+            {
+                icon.sprite = curIcon;
+                icon.color = processPlace.GetCurrentColor();
+            }
+        }
     }
 }

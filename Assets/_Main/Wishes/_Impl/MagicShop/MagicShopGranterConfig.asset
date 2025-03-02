@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502f1fc72fcd41b3974aa1681a75b23c, type: 3}
   m_Name: MagicShopGranterConfig
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: 3227494351629266801, guid: 22d5cea1e34a740e08c7ae620b1ba41e, type: 3}
   grantDuration: 1
   reward: 10
@@ -20,16 +21,19 @@ MonoBehaviour:
   cooldown: 0
   gameDuration: 0
   itemDatas:
-  - key: fire
-    itemIcon: {fileID: 21300000, guid: 3089bc9c6e35e4d94a510e57248dd925, type: 3}
+  - key: red
+    itemIcon: {fileID: 21300000, guid: 59daba922b5824633bc85c1d58a3d68a, type: 3}
+    color: {r: 0.8113208, g: 0.07918512, b: 0, a: 1}
     _prefab: {fileID: 3323512718209497352, guid: f3e57a0ddf32c499b84b363ed2408e69,
       type: 3}
-  - key: bats
-    itemIcon: {fileID: 21300000, guid: 047b3b316f7f71042bbf36d41cfafdc2, type: 3}
+  - key: green
+    itemIcon: {fileID: 21300000, guid: 59daba922b5824633bc85c1d58a3d68a, type: 3}
+    color: {r: 0.059144888, g: 0.8117647, b: 0, a: 1}
     _prefab: {fileID: 3323512718209497352, guid: 268704299e5fc4fc89483317fd8db254,
       type: 3}
-  - key: pumpkin
-    itemIcon: {fileID: 21300000, guid: 887a27a1e6dd41049993da0556019fcf, type: 3}
+  - key: blue
+    itemIcon: {fileID: 21300000, guid: 59daba922b5824633bc85c1d58a3d68a, type: 3}
+    color: {r: 0.08124568, g: 0, b: 0.8117647, a: 1}
     _prefab: {fileID: 3323512718209497352, guid: 25516ae5fc5c449fb9835852224cda1e,
       type: 3}
   assistantIcon: {fileID: 21300000, guid: f10309488bda44c7792095a446bd7701, type: 3}

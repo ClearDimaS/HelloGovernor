@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88c8f75b81945609e3c9447ebaec009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportTo: {fileID: 0}
   <ItemTakePlace>k__BackingField: {fileID: 5639847236511322813}
   takeTimer: {fileID: 228646609333295804}
   takeRadius: 1.5
@@ -264,7 +263,7 @@ PrefabInstance:
     - target: {fileID: 3110902642272949093, guid: b2d958913138a4f328961c0ca37dc018,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.79
       objectReference: {fileID: 0}
     - target: {fileID: 3110902642272949093, guid: b2d958913138a4f328961c0ca37dc018,
         type: 3}
@@ -274,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 3110902642272949093, guid: b2d958913138a4f328961c0ca37dc018,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 3110902642272949093, guid: b2d958913138a4f328961c0ca37dc018,
         type: 3}

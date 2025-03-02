@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 
 public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, OrderProcessPlace>, IItemsUserWishGranter
 {
+    [Inject] protected PlayerController player;
+    
     [SerializeField] protected Transform waiterIdlePlace;
     [SerializeField] protected GenericCitizenItemSource[] sources;
     public int PlayerUseCounts { get; protected set; }
@@ -13,11 +15,33 @@ public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, Ord
     {
         base.OnAwake();
         sources = GetComponentsInChildren<GenericCitizenItemSource>();
+        foreach (var source in sources)
+        {
+            foreach (var data in config.GetItemDatas())
+            {
+                if (source.HasPrefab(data.prefab))
+                {
+                    source.SetItemIcon(data.itemIcon, data.color);
+                }
+            }
+        }
     }
 
     protected override void OnLeave(CitizenController citizen)
     {
-        PlayerUseCounts++;
+        foreach (var wishPlace in wishPlacesTyped)
+        {
+            if (wishPlace.GetOwner() == citizen)
+            {
+                var item = wishPlace.RemoveItem();
+                citizen.AddItem(item);
+                if (wishPlace.Assistant == player)
+                {
+                    PlayerUseCounts++;
+                }
+                break;
+            }
+        }
     }
 
     public GenericCitizenItemSource GetItemSourceFor(OrderItemsConfigData itemsConfigData)

@@ -29,4 +29,14 @@ public class OrderProcessPlace : ItemsUserProcessPlace
         base.LeavePlace(citizen);
         itemsConfigData = granter.GetRandomItem();
     }
+
+    public Sprite GetCurrentIcon()
+    {
+        return itemsConfigData.itemIcon;
+    }
+    
+    public Color GetCurrentColor()
+    {
+        return itemsConfigData.color;
+    }
 }

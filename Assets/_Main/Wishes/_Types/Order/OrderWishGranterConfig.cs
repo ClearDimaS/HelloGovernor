@@ -20,6 +20,7 @@ public class OrderItemsConfigData
 {
     public string key;
     public Sprite itemIcon;
+    public Color color;
     [SerializeField] private GenericCitizenItem _prefab;
     public GenericCitizenItem prefab => _prefab;
 }

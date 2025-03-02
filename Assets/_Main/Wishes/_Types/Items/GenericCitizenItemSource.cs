@@ -50,6 +50,13 @@ public class GenericCitizenItemSource : CulledBehaviour
         pool = new GenericItemsPool(container, prefabs);
         takerTimers[player] = 0;
     }
+    
+    public void SetItemIcon(Sprite dataItemIcon, Color color)
+    {
+        iconImage.sprite = dataItemIcon;
+        iconImage.color = color;
+        icon = dataItemIcon;
+    }
 
     protected override void OnUpdate(bool visible)
     {
