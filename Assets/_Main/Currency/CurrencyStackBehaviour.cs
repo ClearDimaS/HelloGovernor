@@ -20,6 +20,8 @@ public class CurrencyStackData
 
 public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHolder, IDataHolder<CurrencyStackData>
 {
+    [Inject] private CameraManager cameraManager;
+    
     [Inject] private GameConfig gameConfig;
     [Inject] private CurrencyPool currencyPool;
     [Inject] private CurrencySingleStackPool currencySinglePool;
@@ -38,7 +40,14 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         }
         return saveData.moneyAmount;
     }
-
+    private void Start()
+    {
+        var fwd = cameraManager.ActiveCamera.transform.forward;
+        fwd.y = 0f;
+        fwd = fwd.normalized;
+        transform.rotation = Quaternion.LookRotation(-fwd, Vector3.up);
+    }
+    
     public void Initialize(CurrencyStackData data)
     {
         if (instance == null)

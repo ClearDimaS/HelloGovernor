@@ -55,6 +55,17 @@ public class TutorialManager : Singleton<TutorialManager>
     
     private void Update()
     {
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            var stepToSkip = tutorialSteps[curStepIndex];
+            stepToSkip.SaveAsCompleted();
+            if (stepToSkip is BuildingTutorialStep buildingTutorialStep)
+            {
+                buildingTutorialStep.ForcePurchase();
+            }
+        }
+        #endif
         if (skippedFrames < 4)
         {
             skippedFrames++;

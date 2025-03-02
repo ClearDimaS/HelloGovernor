@@ -105,4 +105,9 @@ public class WishesController : CitizenBehaviour
     {
         isWishesDisabled = true;
     }
+    
+    public void EnableAllDesires()
+    {
+        isWishesDisabled = false;
+    }
 }

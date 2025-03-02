@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5d1c91c484e919a11772c00d9ddfa, type: 3}
   m_Name: BoatGranter
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: -195985758542127140, guid: 51609ab6c47e44653b5dfc01223b7463, type: 3}
-  grantDuration: 5
+  grantDuration: 1
   reward: 10
   chanceWeight: 1
   timerType: 0

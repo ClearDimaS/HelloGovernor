@@ -77,4 +77,9 @@ public class BuildingTutorialStep : TutorialStep
     {
         return building.GetPurchaseIcon();
     }
+
+    public void ForcePurchase()
+    {
+        building.ForcePurchase();
+    }
 }

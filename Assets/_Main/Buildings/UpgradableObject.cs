@@ -97,7 +97,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         return data;
     }
     
-    private void LevelUp()
+    protected void LevelUp()
     {
         data.spentMoney = 0;
         data.level++;

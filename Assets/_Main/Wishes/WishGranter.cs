@@ -62,6 +62,7 @@ public class WishGranterExtraPlacesData
 
 public abstract class WishGranter : MonoBehaviour, ICooldownable
 {
+    [SerializeField] protected WishPostProcessor wishPostProcessor;
     [Header("Optional Places")]
     [SerializeField] private Transform[] queuePlaces;
     [SerializeField] protected ProcessPlace[] processPlaces;
@@ -219,9 +220,18 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         foreach (var citizen in processed)
         {
             UpdateProcessed(citizen);
-            if (citizen.WishesController.IsProgressFull(this))
+            var postProcessorCanLeave = wishPostProcessor == null ||
+                                        wishPostProcessor.HasMorePlace();
+            if (citizen.WishesController.IsProgressFull(this) && 
+                postProcessorCanLeave)
             {
+                ProcessedCounter++;
+                if (wishPostProcessor != null)
+                {
+                    wishPostProcessor.Add(citizen);
+                }
                 pendingLeaving.Add(citizen);
+                OnLeave(citizen);
             }
         }
         foreach (var citizen in pendingLeaving)
@@ -245,6 +255,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         pendingRemove.Clear();
 
         OnUpdate();
+        if (wishPostProcessor != null)
+        {
+            wishPostProcessor.OnUpdate();
+        }
     }
 
     protected virtual void AddExtraPlaces(WishGranterExtraPlacesData extraPlace)
@@ -269,11 +283,6 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         if (CanAddProgress(citizen))
         {
             citizen.WishesController.AddProgress(this, Time.deltaTime / FullProgressTime);
-            if (citizen.WishesController.IsProgressFull(this))
-            {
-                ProcessedCounter++;
-                OnLeave(citizen);
-            }
         }
     }
 
@@ -298,7 +307,8 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     {
         if (citizenPlacesDict.ContainsKey(citizen))
         {
-            return citizenPlacesDict[citizen].CanAddProgress(citizen);
+            return citizenPlacesDict[citizen].CanAddProgress(citizen) && (wishPostProcessor == null || 
+                                                                          wishPostProcessor.HasMorePlace());
         }
 
         return false;
