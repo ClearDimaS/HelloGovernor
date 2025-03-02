@@ -27,15 +27,16 @@ public class WishPostProcessor : MonoBehaviour
 
     public void OnUpdate()
     {
+        for (int i = 0; i < citizens.Count; i++)
+        {
+            var teleportTo = processPlaces[i];
+            var processed = citizens[i];
+            processed.Animator.transform.position = teleportTo.position;
+            processed.Animator.transform.rotation = teleportTo.rotation;
+        }
+        
         if (citizens.Count == processPlaces.Count)
         {
-            for (int i = 0; i < citizens.Count; i++)
-            {
-                var teleportTo = processPlaces[i];
-                var processed = citizens[i];
-                processed.Animator.transform.position = teleportTo.position;
-                processed.Animator.transform.rotation = teleportTo.rotation;
-            }
             postProcessorAnimator.Move();
             processingTime += Time.deltaTime;
             if (processingTime >= stayTime)

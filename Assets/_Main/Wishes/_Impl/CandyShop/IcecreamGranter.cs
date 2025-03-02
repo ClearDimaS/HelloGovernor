@@ -28,7 +28,7 @@ public class OperatableWithItems : OperatableGranter
             element.SetPool(pool);
             element.transform.position = operatablePlace.fillPlace.GetPlace().position + Vector3.up;
             element.transform.DOMove(itemPlaces[itemsQueue.Count % itemPlaces.Length].position, 0.3f)
-                .SetEase(Ease.InCubic);
+                .SetEase(Ease.InOutCubic);
             itemsQueue.Push(element);
         }
     }
