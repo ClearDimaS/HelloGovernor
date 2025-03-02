@@ -21,6 +21,7 @@ public class CitizenAnimationSetter : CitizenBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorController;
+        animator.applyRootMotion = false;
         animator.SetFloat("SitRandomSpeedMult", Random.Range(0.5f, 2f));
     }
 

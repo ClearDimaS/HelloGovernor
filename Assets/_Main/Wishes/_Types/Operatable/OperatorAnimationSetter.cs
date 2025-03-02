@@ -16,6 +16,7 @@ public class OperatorAnimationSetter : CulledBehaviour
         base.OnAwake();
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = animatorController;
+        animator.applyRootMotion = false;
     }
 
     protected override void OnUpdate(bool visible)

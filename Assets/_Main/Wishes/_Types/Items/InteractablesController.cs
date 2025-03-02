@@ -43,6 +43,7 @@ public class InteractablesController : CulledBehaviour
 
             PlaceInteractables(false);
             RefreshRig();
+            transform.position = animator.transform.position;
         }
         else
         {

@@ -32,6 +32,11 @@ public class GenericItemsPool
         }
 
         var element = spawnedDict.Dequeue();
+        if (parent == null)
+        {
+            parent = new GameObject("[GenericItemsPool]").transform;
+        }
+        element.transform.SetParent(parent);
         element.OnReset();
         element.gameObject.SetActive(true);
         element.SetPool(this);

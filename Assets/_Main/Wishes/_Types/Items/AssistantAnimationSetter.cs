@@ -20,6 +20,7 @@ public class AssistantAnimationSetter : CulledBehaviour
         {
             animator.runtimeAnimatorController = animatorController;
         }
+        animator.applyRootMotion = false;
     }
 
     protected override void OnUpdate(bool visible)
