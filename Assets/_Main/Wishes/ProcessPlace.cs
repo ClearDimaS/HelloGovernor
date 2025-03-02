@@ -4,7 +4,6 @@ using UnityEngine;
 public class SimpleProcessPlace : ProcessPlace
 {
     protected WishGranter granter;
-    public override float ProcessTime => granter.FullProgressTime;
 
     private void Start()
     {
@@ -24,10 +23,7 @@ public abstract class ProcessPlace : CulledBehaviour
     private CitizenController processed;
     public Vector3 Position => transform.position;
     protected CitizenController Processed => processed;
-
-    public abstract float ProcessTime { get; }
     protected float progress;
-    protected WishGranter granter;
     
     public abstract bool CanAddProgress(CitizenController citizen);
 
@@ -36,14 +32,6 @@ public abstract class ProcessPlace : CulledBehaviour
         base.OnUpdate(visible);
 
         progress = processed == null ? 0f : processed.WishesController.GetProgress();
-        /*if (processed != null && CanAddProgress(processed) && granter.CanAddProgressFor(processed))
-        {
-            progress += Time.deltaTime / Mathf.Max(ProcessTime, 0.001f);
-        }
-        else
-        {
-            progress = 0f;
-        }*/
     }
 
     public void SetComplete()

@@ -6,7 +6,6 @@ public class OperatableProcessPlace : ProcessPlace
     [SerializeField] protected TimerBase timer;
     private OperatableGranter granter;
 
-    public override float ProcessTime => granter.FullProgressTime;
     
     private void Start()
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfig, OperatableProcessPlace>
 {
     [SerializeField] protected OperatablePlace operatablePlace;

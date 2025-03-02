@@ -56,22 +56,25 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         }
         saveData = data;
 
-        var amount = saveData.moneyAmount;
-        var given = 0;
-        var max = Mathf.Min(saveData.modelsCount, gridPlacer.MaxPlaces);
-        for (int i = 0; i < max; i++)
+        UniTask.DelayFrame(0, PlayerLoopTiming.PostLateUpdate).ContinueWith(() =>
         {
-            var toGive = amount / saveData.modelsCount;
-            if (i == saveData.modelsCount - 1)
+            var amount = saveData.moneyAmount;
+            var given = 0;
+            var max = Mathf.Min(saveData.modelsCount, gridPlacer.MaxPlaces);
+            for (int i = 0; i < max; i++)
             {
-                toGive = amount - given;
-            }
+                var toGive = amount / saveData.modelsCount;
+                if (i == saveData.modelsCount - 1)
+                {
+                    toGive = amount - given;
+                }
 
-            given += toGive;
-            CurrencyBehaviour currency = currencyPool.GetElement();
-            currency.Init(toGive);
-            gridPlacer.Add(currency, true);
-        }
+                given += toGive;
+                CurrencyBehaviour currency = currencyPool.GetElement();
+                currency.Init(toGive);
+                gridPlacer.Add(currency, true);
+            }
+        }).AddTo(gameObject);
     }
 
     protected override void OnUpdate(bool visible)

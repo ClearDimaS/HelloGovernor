@@ -13,12 +13,11 @@ public class OperatableFillPlace : CulledBehaviour
     
     public bool CanFill => currentCount < Max;
     public bool IsEmpty => currentCount == 0;
-    public int CurrentCount => currentCount;
 
-    protected OperatableGranter granter;
+    protected OperatableWithItems granter;
     protected float fillProgress;
     protected List<IOperator> operators = new ();
-    protected int currentCount;
+    protected int currentCount => granter.GetItemsCount();
     protected Dictionary<int, string> stringsDict = new ();
     protected int lastServed;
     private void Start()
@@ -28,11 +27,11 @@ public class OperatableFillPlace : CulledBehaviour
             Destroy(gameObject);
             return;
         }
+        granter = GetComponentInParent<OperatableWithItems>();
         curText.text = GetMaxString();
         maxText.text = GetCurString();
         var operatable = GetComponentInParent<UpgradableBuilding>();
         timerBase.SetIcon(operatable.GetPurchaseIcon());
-        granter = GetComponentInParent<OperatableGranter>();
         if (granter == null)
         {
             Debug.LogError($"granter null at: {transform.name}");
@@ -60,8 +59,6 @@ public class OperatableFillPlace : CulledBehaviour
         if (lastServed != granter.ServedCounter)
         {
             lastServed = granter.ServedCounter;
-            currentCount--;
-            currentCount = Mathf.Max(currentCount, 0);
         }
         var isFilling = false;
         foreach (var @operator in operators)
@@ -85,7 +82,7 @@ public class OperatableFillPlace : CulledBehaviour
         if (fillProgress >= 1f)
         {
             fillProgress -= 1f;
-            currentCount++;
+            granter.AddItem();
         }
 
         var showTimer = CanFill;

@@ -9,17 +9,14 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
     [field: SerializeField] public Transform ItemTakePlace { get; private set; }
     [SerializeField] private TimerBase takeTimer;
     [SerializeField] private float takeRadius = 1.5f;
-    
-    private IItemsUserWishGranter itemsWishGranter;
+
     private IWishAssistant wishAssistant;
     private static bool isOnPlayer;
 
-    public override float ProcessTime => itemsWishGranter.ProcessPlaceUserTime;
     public IWishAssistant Assistant => wishAssistant;
 
     private void Start()
     {
-        itemsWishGranter = GetComponentInParent<IItemsUserWishGranter>(true);
         takeTimer.SetIcon(GetItemIcon());
     }
 
