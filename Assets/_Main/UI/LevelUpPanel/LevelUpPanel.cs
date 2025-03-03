@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class LevelUpPanel : MonoBehaviour
+public class LevelUpPanel : UI_Panel
 {
     [Inject] private CameraManager cameraManager;
     [Inject] private PlayerController playerController;
@@ -40,7 +40,7 @@ public class LevelUpPanel : MonoBehaviour
                     });   
             }
             newLevelPanel.AnimateBack();
-            cameraManager.BlockersCount--;
+            Hide();
         });
     }
 
@@ -49,10 +49,6 @@ public class LevelUpPanel : MonoBehaviour
         this.newLevelIndex = newLevelIndex;
         claimRewarddButton.interactable = true;
         this.newLevelData = newLevelData;
-        if (newLevelPanel.IsShown)
-        {
-            cameraManager.BlockersCount++;
-        }
         newLevelPanel.Animate();
         levelText.text = (newLevelIndex + 1).ToString();
         claimRewarddButton.gameObject.SetActive(false);
@@ -66,5 +62,18 @@ public class LevelUpPanel : MonoBehaviour
         rewardElementMoney.Refresh(newLevelData.moneyReward);
         rewardElementSpeed.Refresh(newLevelData.speedReward);
         rewardElementCapacity.Refresh(newLevelData.capacityReward);
+        Show();
+    }
+
+    public override void OnShow()
+    {
+        base.OnShow();
+        cameraManager.BlockersCount++;
+    }
+
+    public override void OnHide()
+    {
+        base.OnHide();
+        cameraManager.BlockersCount--;
     }
 }

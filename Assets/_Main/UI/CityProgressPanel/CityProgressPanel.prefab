@@ -828,7 +828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -258.8}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 369.9, y: 143.9}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7261457747172116018
@@ -1018,11 +1018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af47dcfc66094126a31bd6395c6e9c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressRoot: {fileID: 0}
-  progressSteps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   iconImage: {fileID: 1332489053081871185}
   progressImage: {fileID: 7670790001291688133}
   progressText: {fileID: 6483697667640815285}
@@ -1087,7 +1082,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 136

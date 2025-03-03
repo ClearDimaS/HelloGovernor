@@ -46,21 +46,23 @@ public class FormatableText
 
 public class LevelPanel : UI_Panel
 {
+    [Inject] private UI_Manager uiManager;
     [Inject] private PlayerController player;
-    
+
+    [SerializeField] private Button showRoadMapButton;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text expTextCur;
     [SerializeField] private TMP_Text expTextMax;
 
     [SerializeField] private float barSpeed = 3f;
     [SerializeField] private Image expFillImg;
-    [SerializeField] private LevelUpPanel levelUpPanel;
     
     private int lastLevelIndex;
     private PlayerXPController xpController => player.XP_Controller;
     private FormatableText exp;
     private FormatableText expMax;
     private FormatableText level;
+    private LevelRoadmapPanel roadmapPanel;
     
     public RectTransform XP_Place => expTextCur.rectTransform;
 
@@ -70,7 +72,10 @@ public class LevelPanel : UI_Panel
         exp = new FormatableText(expTextCur, "{0}");
         expMax = new FormatableText(expTextMax, "{0}");
         level = new FormatableText(levelText, "{0}");
-
+        showRoadMapButton.onClick.AddListener(() =>
+        {
+            roadmapPanel.Show(false);
+        });
     }
 
     private void Start()
@@ -79,6 +84,7 @@ public class LevelPanel : UI_Panel
         expMax.RefreshText(true, xpController.MaxExp);
         level.RefreshText(true, xpController.LevelIndex+1);
         lastLevelIndex = xpController.LevelIndex;
+        roadmapPanel = uiManager.GetPanel<LevelRoadmapPanel>();
     }
 
     private void Update()
@@ -95,7 +101,7 @@ public class LevelPanel : UI_Panel
         if (lastLevelIndex != xpController.LevelIndex)
         {
             lastLevelIndex = xpController.LevelIndex;
-            levelUpPanel.Show(xpController.LevelIndex, xpController.GetPrevLevelData());
+            roadmapPanel.Show(true);
         }
     }
 }

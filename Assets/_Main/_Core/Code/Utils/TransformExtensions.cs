@@ -46,10 +46,17 @@ public static class TransformExtensions
                Random.Range(-1f, 1f) * axis.z).normalized;
      }
 
-     public static void FillParent(this RectTransform rect, float value)
+     public static void FillParent(this RectTransform rect, float value, bool horizontal = true)
      {
           rect.anchorMin = Vector2.zero;
-          rect.anchorMax = new Vector2(value, 1f);
+          if (horizontal)
+          {
+               rect.anchorMax = new Vector2(value, 1f);    
+          }
+          else
+          {
+               rect.anchorMax = new Vector2(1f, value);
+          }
           rect.sizeDelta = Vector2.zero;
      }
 

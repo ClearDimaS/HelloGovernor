@@ -30,6 +30,7 @@ public class UpgradableBuilding : UpgradableObject
     private GameObject spawnedGFX;
     private int spawnedLevel = -2;
     public Vector3 Center => transform.position;
+    public BuildingBase Building => buildingBase;
 
     protected override void OnAwake()
     {
