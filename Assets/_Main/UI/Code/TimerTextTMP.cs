@@ -28,6 +28,10 @@ public abstract class TimerText : MonoBehaviour
         return timeStrings[v];
     }
 
+    public void SetValue(float value)
+    {
+        SetValue(Mathf.RoundToInt(value));
+    }
     public void SetValue(int value)
     {
         if (lastValue != value)

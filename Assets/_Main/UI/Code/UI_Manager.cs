@@ -53,6 +53,8 @@ public class UI_Manager : Singleton<UI_Manager>
         {
             screen.Value.screen.gameObject.SetActive(false);
         }
+
+        group.alpha = 1f;
     }
 
     public void OpenScreen(EScreenType screenType)
