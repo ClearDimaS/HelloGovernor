@@ -38,6 +38,7 @@ public class JoystickPanel : UI_Panel
         if (activeJoystick != joystick.gameObject.activeSelf)
         {
             inputEvent?.Invoke(Vector2.zero);
+            joystick.OnPointerUp(new PointerEventData(EventSystem.current));
             joystick.gameObject.SetActive(activeJoystick);
         }
 
