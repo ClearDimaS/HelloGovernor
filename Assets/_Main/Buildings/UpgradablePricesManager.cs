@@ -31,7 +31,9 @@ public class UpgradablePricesManager : MonoBehaviour
     [SerializeField] private int firstPrice;
     [SerializeField] private int secondPrice;
     [SerializeField] private List<MoneyConsumerData> upgradablePriceDatas;
-    [SerializeField] private float priceGrowthFactor = 1.15f;
+    [SerializeField] private Vector2 priceGrowthFactorMinMax = new Vector2(1.05f, 1.4f);
+    [SerializeField] private int maxPriceChange = 3900;
+    [SerializeField] private int minPriceChange = 500;
     [SerializeField] private Transform center;
     private MoneyConsumerData waitingUnlock;
     private MoneyConsumerData lastUnlocked;
@@ -326,7 +328,18 @@ public class UpgradablePricesManager : MonoBehaviour
             }
             else
             {
-                upgradablePriceDatas[i].price = Mathf.RoundToInt(upgradablePriceDatas[i - 1].price * priceGrowthFactor)/10 * 10;
+                var factorT = i / (float)upgradablePriceDatas.Count;
+                var factor = Mathf.Lerp(priceGrowthFactorMinMax.y, priceGrowthFactorMinMax.x, factorT);
+                var newPrice = Mathf.RoundToInt(upgradablePriceDatas[i - 1].price * factor) / 10 * 10;
+                if (newPrice - upgradablePriceDatas[i - 1].price > maxPriceChange)
+                {
+                    newPrice = upgradablePriceDatas[i - 1].price + maxPriceChange;
+                }
+                if (newPrice - upgradablePriceDatas[i - 1].price < minPriceChange)
+                {
+                    newPrice = upgradablePriceDatas[i - 1].price + minPriceChange;
+                }
+                upgradablePriceDatas[i].price = newPrice;
             }
             
             var set = new HashSet<UpgradableObject>();
