@@ -298,6 +298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5966059361079674246, guid: 06b43a3b07b0242c8af64072658e0e0c,
         type: 3}
+      propertyPath: center
+      value: 
+      objectReference: {fileID: 5101225408948708680}
+    - target: {fileID: 5966059361079674246, guid: 06b43a3b07b0242c8af64072658e0e0c,
+        type: 3}
       propertyPath: firstPrice
       value: 30
       objectReference: {fileID: 0}
@@ -841,6 +846,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b43a3b07b0242c8af64072658e0e0c, type: 3}
+--- !u!4 &5101225408948708680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6701254559698934699, guid: 06b43a3b07b0242c8af64072658e0e0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1888295767954161379}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5259959852579142500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5966059361079674247, guid: 06b43a3b07b0242c8af64072658e0e0c,

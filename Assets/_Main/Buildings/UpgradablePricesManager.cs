@@ -31,7 +31,8 @@ public class UpgradablePricesManager : MonoBehaviour
     [SerializeField] private int firstPrice;
     [SerializeField] private int secondPrice;
     [SerializeField] private List<MoneyConsumerData> upgradablePriceDatas;
-
+    [SerializeField] private float priceGrowthFactor = 1.15f;
+    [SerializeField] private Transform center;
     private MoneyConsumerData waitingUnlock;
     private MoneyConsumerData lastUnlocked;
     
@@ -311,6 +312,8 @@ public class UpgradablePricesManager : MonoBehaviour
     [Button]
     private void UpdatePrices()
     {
+        upgradablePriceDatas = upgradablePriceDatas.OrderBy(x =>
+            (x.upgradable.transform.position - center.position).sqrMagnitude).ToList();
         for (int i = 0; i < upgradablePriceDatas.Count; i++)
         {
             if (i == 0)
@@ -323,7 +326,7 @@ public class UpgradablePricesManager : MonoBehaviour
             }
             else
             {
-                upgradablePriceDatas[i].price = upgradablePriceDatas[i - 1].price + upgradablePriceDatas[Mathf.Clamp(i - 3, 0, 99999)].price;
+                upgradablePriceDatas[i].price = Mathf.RoundToInt(upgradablePriceDatas[i - 1].price * priceGrowthFactor)/10 * 10;
             }
             
             var set = new HashSet<UpgradableObject>();
