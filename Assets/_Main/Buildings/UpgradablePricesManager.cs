@@ -275,8 +275,38 @@ public class UpgradablePricesManager : MonoBehaviour
             data.level = levelsDict[data.upgradable];
         }
 
+        /*for (int i = 0; i < upgradablePriceDatas.Count; i++)
+        {
+            var upgradable = upgradablePriceDatas[i];
+            if (upgradable.upgradable is UpgradableBuilding building)
+            {
+                var ops = building.GetComponentsInChildren<UpgradableOperator>();
+                var helpers = building.GetComponentsInChildren<UpgradableHelper>();
+                var ass = building.GetComponentsInChildren<UpgradableAssistant>();
+                AddIfNone(ops, ref i);
+                AddIfNone(helpers, ref i);
+                AddIfNone(ass, ref i);
+            }
+        }*/
+
         UpdatePrices();
     }
+
+    /*private void AddIfNone<T>(T[] ops, ref int index) where T : UpgradableObject
+    {
+        foreach (var op in ops)
+        {
+            if (upgradablePriceDatas.Any(x => x.upgradable == op))
+            {
+                continue;
+            }
+            else
+            {
+                upgradablePriceDatas.Insert(index, new MoneyConsumerData(0, op, 1));
+                index++;
+            }
+        }
+    }*/
 
     [Button]
     private void UpdatePrices()
