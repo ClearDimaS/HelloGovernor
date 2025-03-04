@@ -37,11 +37,16 @@ public class JoystickPanel : UI_Panel
         var activeJoystick = cameraManager.IsOnPlayer;
         if (activeJoystick != joystick.gameObject.activeSelf)
         {
+            inputEvent?.Invoke(Vector2.zero);
             joystick.gameObject.SetActive(activeJoystick);
         }
-        if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
+
+        if (activeJoystick)
         {
-            inputEvent?.Invoke(joystick.Direction);
+            if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
+            {
+                inputEvent?.Invoke(joystick.Direction);
+            }
         }
     }
 }

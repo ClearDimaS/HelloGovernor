@@ -16,7 +16,7 @@ public class JumpingItem : CulledBehaviour
     [SerializeField] private float interactionRadius = 1.3f;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpHeight = 1f;
-    
+    [SerializeField] private bool lookFwd = true;
     protected int placeIndex;
     protected int dir = 1;
     protected bool isInteracting;
@@ -89,7 +89,14 @@ public class JumpingItem : CulledBehaviour
                 root.position = Vector3.Lerp(startPos, endPos, t) + Vector3.up * height;
                 var targetRot = Quaternion.Lerp(startRot, endRot, t);
 
-                root.rotation = Quaternion.Lerp(targetRot, moveRot, heightT);
+                if (lookFwd)
+                {
+                    root.rotation = Quaternion.Lerp(targetRot, moveRot, heightT);   
+                }
+                else
+                {
+                    root.rotation = targetRot;
+                }
                 
             })
             .OnComplete(() =>

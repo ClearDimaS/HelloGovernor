@@ -13,7 +13,6 @@ public class LevelUpPanel : UI_Panel
     
     [SerializeField] private float showTime = 1f;
     [SerializeField] private TMP_Text levelText;
-    [SerializeField] private UI_ElementAnimator newLevelPanel;
     [SerializeField] private Button claimRewarddButton;
     [SerializeField] private LevelUpRewardElement rewardElementMoney;
     [SerializeField] private LevelUpRewardElement rewardElementSpeed;
@@ -25,8 +24,6 @@ public class LevelUpPanel : UI_Panel
     
     private void Awake()
     {
-        newLevelPanel.AnimateBack(instant:true);
-        
         claimRewarddButton.onClick.AddListener(() =>
         {
             claimRewarddButton.interactable = false;
@@ -39,7 +36,6 @@ public class LevelUpPanel : UI_Panel
                         playerController.XP_Controller.GrantLevelUpData(newLevelData, newLevelIndex, true);
                     });   
             }
-            newLevelPanel.AnimateBack();
             Hide();
         });
     }
@@ -49,13 +45,13 @@ public class LevelUpPanel : UI_Panel
         this.newLevelIndex = newLevelIndex;
         claimRewarddButton.interactable = true;
         this.newLevelData = newLevelData;
-        newLevelPanel.Animate();
         levelText.text = (newLevelIndex + 1).ToString();
         claimRewarddButton.gameObject.SetActive(false);
         UniTask.Delay(TimeSpan.FromSeconds(showTime)).ContinueWith(() =>
         {
             claimRewarddButton.gameObject.SetActive(true);
         }).AddTo(gameObject);
+        Debug.Log($"show level up panel!");
 
         lastAddedMoneyCount = newLevelData.moneyReward.amount;
         

@@ -31,4 +31,5 @@ public class BuildingConfig : ScriptableObject, IKey<Type>
 public class BuildingLevelData
 {
     public GameObject option;
+    public GameObject[] variants;
 }

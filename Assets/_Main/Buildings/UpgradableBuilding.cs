@@ -90,6 +90,15 @@ public class UpgradableBuilding : UpgradableObject
             var buildingData = buildingsCollection.GetBuildingData(buildingBase);
             var level = buildingData.levels[data.level - 1];
             var optionPrefab = level.option;
+            if (level.variants.Length > 0)
+            {
+                var allCount = level.variants.Length + 1;
+                var index = Random.Range(0, allCount);
+                if (index > 0)
+                {
+                    optionPrefab = level.variants[index - 1];
+                }
+            }
             if (spawnedGFX != null)
             {
                 Destroy(spawnedGFX);
