@@ -180,10 +180,15 @@ public class Interactor : CulledBehaviour
 
     public void ClearItems()
     {
-        foreach (var interactable in interactables)
+        for (var i = interactables.Count; i >= 0; i--)
         {
-            interactable.PoolPlease();
+            if (i < interactables.Count)
+            {
+                var interactable = interactables[i];
+                interactable.PoolPlease();   
+            }
         }
+
         interactables.Clear();
     }
 }

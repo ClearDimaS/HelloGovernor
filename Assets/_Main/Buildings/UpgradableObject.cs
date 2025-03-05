@@ -145,6 +145,10 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
 
     public void SetAllowBuy(int allowedLevel, bool instant)
     {
+        if (allowedLevel >= 1)
+        {
+            allowedLevel = 10;
+        }
         allowedLevelToPurchase = allowedLevel;
         if (IsAllowedToBuy)
         {

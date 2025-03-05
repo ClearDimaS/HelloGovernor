@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class UpgradableAssistant : UpgradableObject
 {
+    [Inject] private GameConfig gameConfig;
+    
     [SerializeField] private Transform boughtRoot;
 
     private ItemsWishGranter itemsWishGranter;
@@ -26,6 +29,10 @@ public class UpgradableAssistant : UpgradableObject
         if (pricesCopy == null)
         {
             pricesCopy = upgradableBuilding.GetPricesCopy();
+            foreach (var price in pricesCopy)
+            {
+                price.price = Mathf.RoundToInt(gameConfig.assistantPricesMult * price.price) / 10 * 10;
+            }
         }
         
         return pricesCopy;

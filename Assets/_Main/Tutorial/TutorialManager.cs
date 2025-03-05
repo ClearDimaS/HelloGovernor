@@ -29,7 +29,6 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private float finishDelay = 2f;
     [SerializeField] private GameObject tutorialArrow;
 
-    private List<ProgressMarker> progressMarkers = new();
     private List<TutorialStep> tutorialSteps;
     private int curStepIndex = 0;
     
@@ -39,18 +38,6 @@ public class TutorialManager : Singleton<TutorialManager>
     private void Start()
     {
         BuildTutorialSteps();
-        var index = 1;
-        var tutorIndex = 0;
-        foreach (var tutorialStep in tutorialSteps)
-        {
-            if (tutorialStep is BuildingTutorialStep buidlingStep && buidlingStep.LevelIndex == 0)
-            {
-                progressMarkers.Add(new ProgressMarker(buidlingStep.GetTutorialIcon(), index, tutorIndex));
-                index++;   
-            }
-
-            tutorIndex++;
-        }
     }
     
     private void Update()
@@ -92,6 +79,7 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 var newStep = tutorialSteps[curStepIndex];
                 RefreshArrowTarget(tutorialSteps[curStepIndex]);   
+                newStep.Start();
                 ShowTargetPlace(callback: () =>
                 {
                     if (newStep is BuildingTutorialStep)
@@ -169,7 +157,7 @@ public class TutorialManager : Singleton<TutorialManager>
         tutorialSteps = new();
         foreach (var purchasable in pricesManager.GetPurchaseSequence())
         {
-            if (purchasable.upgradable is UpgradableBuilding building)
+            if (purchasable.upgradable is UpgradableBuilding building && purchasable.level <= 1)
             {
                 tutorialSteps.Add(new BuildingTutorialStep(building, purchasable.level-1, purchasable.thisTypeIndex, playerRepository));
             }
@@ -214,23 +202,5 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             callback?.Invoke();
         }
-    }
-
-    public ProgressMarker GetProgressMarker(int add = 0)
-    {
-        var cntr = 0;
-        for (int i = 0; i < progressMarkers.Count; i++)
-        {
-            if (progressMarkers[i].tutorIndex >= curStepIndex)
-            {
-                if (cntr >= add)
-                {
-                    return progressMarkers[i]; 
-                }
-                cntr++;
-            }
-        }
-
-        return null;
     }
 }

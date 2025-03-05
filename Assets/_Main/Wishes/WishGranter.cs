@@ -62,6 +62,8 @@ public class WishGranterExtraPlacesData
 
 public abstract class WishGranter : MonoBehaviour, ICooldownable
 {
+    [Inject] protected GameConfig _gameConfig;
+    
     [SerializeField] protected WishPostProcessor wishPostProcessor;
     [Header("Optional Places")]
     [SerializeField] private Transform[] queuePlaces;
@@ -428,9 +430,14 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     protected virtual void OnSuccessProcess(CitizenController citizen)
     {
+        var rwrd = Reward;
+        if (upgradable != null && upgradable.Level > 1)
+        {
+            rwrd = Mathf.RoundToInt(rwrd * _gameConfig.incomeIncrease);
+        }
         if (currencyStack != null)
         {
-            currencyStack.MoveCurrencyToMe(Reward, citizen.transform.position);   
+            currencyStack.MoveCurrencyToMe(rwrd, citizen.transform.position);   
         }
         else if(Reward > 0)
         {

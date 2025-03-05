@@ -11,6 +11,8 @@ public class OperatableProcessPlace : ProcessPlace
     {
         granter = GetComponentInParent<OperatableGranter>();
         timer.SetIcon(granter.GetIconTimer());
+        var operatedPos = granter.GetOperatedPlace().transform.position;
+        timer.transform.position = new Vector3(operatedPos.x, timer.transform.position.y, operatedPos.z);
     }
 
     protected override void OnUpdate(bool visible)

@@ -15,6 +15,9 @@ public class RoadmapLevelInfo : MonoBehaviour
     [Header("XP")]
     [SerializeField] protected TMP_Text levelText;
     [SerializeField] protected Image xpFill;
+    [SerializeField] protected GameObject hideIfMoreThan1Level;
+    [SerializeField] protected GameObject[] doneGOs;
+    [SerializeField] protected GameObject[] notDoneGOs;
     [SerializeField] protected GameObject[] notReachedContents;
     [SerializeField] protected GameObject[] reachedContents;
 
@@ -62,7 +65,28 @@ public class RoadmapLevelInfo : MonoBehaviour
 
     private void RefreshReached()
     {
-        var reached = controller.XP_Controller.LevelIndex >= levelIndex + 1;
+        var reached = controller.XP_Controller.LevelIndex >= levelIndex;
+        var done = controller.XP_Controller.LevelIndex >= levelIndex + 1;
+        var notNext = controller.XP_Controller.LevelIndex < levelIndex - 1 && !reached;
+        if (hideIfMoreThan1Level.activeSelf != notNext)
+        {
+            hideIfMoreThan1Level.gameObject.SetActive(notNext);   
+        }
+
+        foreach (var go in doneGOs)
+        {
+            if (go.activeSelf != done)
+            {
+                go.SetActive(done);
+            }
+        }
+        foreach (var go in notDoneGOs)
+        {
+            if (go.activeSelf == done)
+            {
+                go.SetActive(!done);
+            }
+        }
         foreach (var content in notReachedContents)
         {
             if (content.activeSelf == reached)

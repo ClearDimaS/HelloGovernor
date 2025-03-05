@@ -18,6 +18,12 @@ public class BuildingTutorialStep : TutorialStep
         this.typeIndex = typeIndex;
     }
 
+    public override void Start()
+    {
+        base.Start();
+        this.building.SetAllowBuy(levelIndex+1, true);
+    }
+
     protected override string CreateKey()
     {
         return $"buy_{building.GetType().Name}({typeIndex})_level_{levelIndex}";

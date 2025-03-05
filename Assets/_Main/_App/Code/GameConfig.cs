@@ -37,5 +37,8 @@ public class GameConfig : ScriptableObject
     public Ease cameraTransitionEase;
     public Vector2 cameraUnlockXBorders;
     public Vector2 cameraUnlockYBorders;
-
+    [Header("Price")]
+    public float assistantPricesMult = 0.5f;
+    public float upgradeIncomePriceMult = 0.5f;
+    public float incomeIncrease = 1.5f;
 }

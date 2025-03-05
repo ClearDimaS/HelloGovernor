@@ -33,6 +33,10 @@ public abstract class TutorialStep
 
     protected abstract string CreateKey();
 
+    public virtual void Start()
+    {
+        
+    }
     public string GetTitle()
     {
         if (string.IsNullOrEmpty(title))

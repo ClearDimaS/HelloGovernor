@@ -25,16 +25,14 @@ public class MoneyConsumerData
 
 public class UpgradablePricesManager : MonoBehaviour
 {
-    [Inject] private GameConfig gameConfig;
-    [Inject] private CameraManager cameraManager;
-    
+    [SerializeField] private GameConfig gameConfig;
     [SerializeField] private int firstPrice;
     [SerializeField] private int secondPrice;
     [SerializeField] private List<MoneyConsumerData> upgradablePriceDatas;
     [SerializeField] private Vector2 priceGrowthFactorMinMax = new Vector2(1.05f, 1.4f);
-    [SerializeField] private int maxPriceChange = 3900;
-    [SerializeField] private int minPriceChange = 500;
-    [SerializeField] private Transform center;
+    [SerializeField] private int[] maxPriceChanges = new int[]{3900, 6000, 4500};
+    [SerializeField] private int[] minPriceChanges = new int[]{500, 1500, 1000};
+    [SerializeField] private int seedForRequiredPurchases;
     private MoneyConsumerData waitingUnlock;
     private MoneyConsumerData lastUnlocked;
     
@@ -48,7 +46,7 @@ public class UpgradablePricesManager : MonoBehaviour
 
     private void Awake()
     {
-        CollectAllConsumers();
+        //CollectAllConsumers();
     }
 
     private void Start()
@@ -94,7 +92,7 @@ public class UpgradablePricesManager : MonoBehaviour
     {
         if (unlockQueue.Count > 0)
         {
-            if (IsBought(lastUnlocked) && allowNext)
+            if (IsBought(lastUnlocked) && (allowNext || lastUnlocked.level > 1))
             {
                 if (waitingUnlock == unlockQueue.Peek())
                 {
@@ -118,7 +116,10 @@ public class UpgradablePricesManager : MonoBehaviour
                             }
                         }
                         lastUnlocked = unlockQueue.Dequeue();
-                        allowNext = false;
+                        if (lastUnlocked.level <= 1)
+                        {
+                            allowNext = false;
+                        }
                         if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
                         {
                             available.Add(building);
@@ -278,44 +279,14 @@ public class UpgradablePricesManager : MonoBehaviour
             data.level = levelsDict[data.upgradable];
         }
 
-        /*for (int i = 0; i < upgradablePriceDatas.Count; i++)
-        {
-            var upgradable = upgradablePriceDatas[i];
-            if (upgradable.upgradable is UpgradableBuilding building)
-            {
-                var ops = building.GetComponentsInChildren<UpgradableOperator>();
-                var helpers = building.GetComponentsInChildren<UpgradableHelper>();
-                var ass = building.GetComponentsInChildren<UpgradableAssistant>();
-                AddIfNone(ops, ref i);
-                AddIfNone(helpers, ref i);
-                AddIfNone(ass, ref i);
-            }
-        }*/
-
         UpdatePrices();
     }
-
-    /*private void AddIfNone<T>(T[] ops, ref int index) where T : UpgradableObject
-    {
-        foreach (var op in ops)
-        {
-            if (upgradablePriceDatas.Any(x => x.upgradable == op))
-            {
-                continue;
-            }
-            else
-            {
-                upgradablePriceDatas.Insert(index, new MoneyConsumerData(0, op, 1));
-                index++;
-            }
-        }
-    }*/
-
+    
     [Button]
     private void UpdatePrices()
     {
-        upgradablePriceDatas = upgradablePriceDatas.OrderBy(x =>
-            (x.upgradable.transform.position - center.position).sqrMagnitude).ToList();
+        return;
+        UnityEngine.Random.InitState(seedForRequiredPurchases);
         for (int i = 0; i < upgradablePriceDatas.Count; i++)
         {
             if (i == 0)
@@ -331,6 +302,8 @@ public class UpgradablePricesManager : MonoBehaviour
                 var factorT = i / (float)upgradablePriceDatas.Count;
                 var factor = Mathf.Lerp(priceGrowthFactorMinMax.y, priceGrowthFactorMinMax.x, factorT);
                 var newPrice = Mathf.RoundToInt(upgradablePriceDatas[i - 1].price * factor) / 10 * 10;
+                var minPriceChange = minPriceChanges[i % minPriceChanges.Length];
+                var maxPriceChange = maxPriceChanges[i % maxPriceChanges.Length];
                 if (newPrice - upgradablePriceDatas[i - 1].price > maxPriceChange)
                 {
                     newPrice = upgradablePriceDatas[i - 1].price + maxPriceChange;
@@ -339,7 +312,17 @@ public class UpgradablePricesManager : MonoBehaviour
                 {
                     newPrice = upgradablePriceDatas[i - 1].price + minPriceChange;
                 }
-                upgradablePriceDatas[i].price = newPrice;
+
+                if (upgradablePriceDatas[i].level > 1)
+                {
+                    var prevLevel = upgradablePriceDatas.FirstOrDefault(x =>
+                        x.upgradable == upgradablePriceDatas[i].upgradable && x != upgradablePriceDatas[i]);
+                    upgradablePriceDatas[i].price = Mathf.RoundToInt(gameConfig.upgradeIncomePriceMult * prevLevel.price)/10 * 10;
+                }
+                else
+                {
+                    upgradablePriceDatas[i].price = newPrice;
+                }
             }
             
             var set = new HashSet<UpgradableObject>();

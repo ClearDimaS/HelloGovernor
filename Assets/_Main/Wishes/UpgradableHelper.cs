@@ -5,6 +5,7 @@ using Zenject;
 
 public class UpgradableHelper : UpgradableObject
 {
+    [Inject] protected GameConfig gameConfig;
     [Inject] protected BuildingsCollectionConfig buildingsCollectionConfig;
     
     [SerializeField] private Transform boughtRoot;
@@ -28,7 +29,12 @@ public class UpgradableHelper : UpgradableObject
         if (pricesCopy == null)
         {
             pricesCopy = upgradableBuilding.GetPricesCopy();
+            foreach (var price in pricesCopy)
+            {
+                price.price = Mathf.RoundToInt(gameConfig.assistantPricesMult * price.price) / 10 * 10;
+            }
         }
+        
         
         return pricesCopy;
     }

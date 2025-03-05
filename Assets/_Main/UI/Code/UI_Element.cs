@@ -75,8 +75,8 @@ public abstract class UI_Element : MonoBehaviour
         {
             Debug.LogWarning($"null canvas at: {transform.name}  {GetInstanceID()}");
         }
-        canvas.sortingOrder = order;
-        canvas.overrideSorting = true;
+        //canvas.sortingOrder = order;
+        //canvas.overrideSorting = true;
     }
 
     public virtual void OnShown()
