@@ -27,7 +27,8 @@ public class LevelRoadmapPanel : UI_Panel
 
     private LevelUpPanel levelUpPanel;
     private HashSet<Type> upgradablesSeen = new ();
-    
+
+    private bool lastIsNew;
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -48,6 +49,7 @@ public class LevelRoadmapPanel : UI_Panel
 
     public void Show(bool isNew)
     {
+        lastIsNew = isNew;
         closeButton.gameObject.SetActive(!isNew);
         acceptButton.gameObject.SetActive(isNew);
         
@@ -118,8 +120,9 @@ public class LevelRoadmapPanel : UI_Panel
 
     private void MoveToTarget()
     {
+        var index = lastIsNew ? Mathf.Max(0, cacheManager.LevelIndex-1) : cacheManager.LevelIndex;
         var t = 0f;
-        var endScroll = 1f - (Mathf.Abs(roadmapLevelInfos[cacheManager.LevelIndex].Rect.anchoredPosition.y)/scrollView.content.rect.height);
+        var endScroll = 1f - (Mathf.Abs(roadmapLevelInfos[index].Rect.anchoredPosition.y)/scrollView.content.rect.height);
         DOTween.To(() => t, x => t = x, endScroll, 0.3f).OnUpdate(() =>
         {
             scrollView.verticalNormalizedPosition = t;

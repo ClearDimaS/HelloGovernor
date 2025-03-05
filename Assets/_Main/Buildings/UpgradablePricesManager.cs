@@ -42,7 +42,6 @@ public class UpgradablePricesManager : MonoBehaviour
     private List<UpgradableBuilding> available = new();
     private HashSet<WishGranter> bought = new();
     public int AvailableCount => available.Count;
-    private bool allowNext = true;
 
     private void Awake()
     {
@@ -92,7 +91,7 @@ public class UpgradablePricesManager : MonoBehaviour
     {
         if (unlockQueue.Count > 0)
         {
-            if (IsBought(lastUnlocked) && (allowNext || lastUnlocked.level > 1))
+            if (IsBought(lastUnlocked) || (lastUnlocked.level > 1 && lastUnlocked.upgradable.GetType() == typeof(UpgradableBuilding)))
             {
                 if (waitingUnlock == unlockQueue.Peek())
                 {
@@ -116,10 +115,6 @@ public class UpgradablePricesManager : MonoBehaviour
                             }
                         }
                         lastUnlocked = unlockQueue.Dequeue();
-                        if (lastUnlocked.level <= 1)
-                        {
-                            allowNext = false;
-                        }
                         if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
                         {
                             available.Add(building);
@@ -141,7 +136,6 @@ public class UpgradablePricesManager : MonoBehaviour
                     {
                         available.Add(building);
                     }
-                    allowNext = false;
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
                     levelCounter = 1;
@@ -365,11 +359,6 @@ public class UpgradablePricesManager : MonoBehaviour
     public HashSet<WishGranter> GetBoughtGranters()
     {
         return bought;
-    }
-
-    public void AllowNext()
-    {
-        allowNext = true;
     }
 
     public List<MoneyConsumerData> GetPurchaseSequence()

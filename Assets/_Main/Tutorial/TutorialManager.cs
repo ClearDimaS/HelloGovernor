@@ -66,12 +66,13 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 var newStep = tutorialSteps[curStepIndex];
                 RefreshArrowTarget(tutorialSteps[curStepIndex]);   
-                newStep.Start();
+
                 ShowTargetPlace(callback: () =>
                 {
-                    if (newStep is BuildingTutorialStep)
+                    newStep.Start();
+                    if (newStep is BuildingTutorialStep buildingTutorialStep)
                     {
-                        pricesManager.AllowNext();
+                       
                     }
                 });   
             }
@@ -92,10 +93,7 @@ public class TutorialManager : Singleton<TutorialManager>
                     {
                         ShowTargetPlace(callback: () =>
                         {
-                            if (newStep is BuildingTutorialStep)
-                            {
-                                pricesManager.AllowNext();
-                            }
+  
                         });   
                     });
                     RefreshArrowTarget(newStep); 

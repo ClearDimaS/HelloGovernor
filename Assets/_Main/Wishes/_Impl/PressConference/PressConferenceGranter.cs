@@ -14,8 +14,8 @@ public class PressConferenceGranter : UIWishGranter
 
     protected override void OnActivate()
     {
-        base.OnActivate();
         var game = new PressConferenceGame(conferenceConfig);
         (panel as PressConferenceUI_Panel).Init(game);
+        base.OnActivate();
     }
 }

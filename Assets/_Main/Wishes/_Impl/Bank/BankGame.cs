@@ -10,13 +10,17 @@ public class BankGame : Minigame
     private BankOption curVariant2;
     public bool IsRunning => timer.GameTimeLeft > 0f;
 
-    protected WishGranterTimer timer;
+    protected WishGranterGameTimer timer;
     protected WishesCollectionConfig gameConfig;
     private Action<int> onComplete;
     
-    public BankGame(WishGranterTimer timer, WishesCollectionConfig gameConfig, Action<int> onComplete)
+    public BankGame(WishGranterGameTimer timer, WishesCollectionConfig gameConfig, Action<int> onComplete)
     {
         this.timer = timer;
+        if (this.timer == null)
+        {
+            Debug.LogError($"null timer!");
+        }
         this.gameConfig = gameConfig;
         this.onComplete = onComplete;
     }
@@ -75,6 +79,12 @@ public class BankGame : Minigame
     {
         var reward = GetReward();
         reward = Mathf.Max(0, reward);
+        timer.ResetToCooldown();
         onComplete?.Invoke(reward);
+    }
+
+    public bool IsOver()
+    {
+        return timer.IsOver();
     }
 }

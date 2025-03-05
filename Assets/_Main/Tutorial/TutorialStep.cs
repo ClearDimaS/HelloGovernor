@@ -24,6 +24,7 @@ public abstract class TutorialStep
             return _keyCache;
         }
     }
+
     protected string _keyCache;
     
     public TutorialStep(PlayerDataRepository playerRepository)

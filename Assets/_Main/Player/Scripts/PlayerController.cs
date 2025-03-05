@@ -160,7 +160,10 @@ public class PlayerController : Singleton<PlayerController>,
 
     public void AddBoughtBuilding(UpgradableObject upgradableObject)
     {
-        XP_Controller.AddXP(gameConfig.purchaseXP, upgradableObject.BuyPlace);
+        if ((upgradableObject is UpgradableBuilding building && building.Level <= 1) || upgradableObject is IncomeUpgrader)
+        {
+            XP_Controller.AddXP(gameConfig.purchaseXP, upgradableObject.BuyPlace);
+        }
     }
 
     public void AddSpeedPercents(int percents, bool isNew)

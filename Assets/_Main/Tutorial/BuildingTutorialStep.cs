@@ -9,6 +9,7 @@ public class BuildingTutorialStep : TutorialStep
     protected int typeIndex;
     public int LevelIndex => levelIndex;
     public override bool UseCache => false;
+    public UpgradableBuilding Building => building;
 
     public BuildingTutorialStep(UpgradableBuilding building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
     {
@@ -21,6 +22,7 @@ public class BuildingTutorialStep : TutorialStep
     public override void Start()
     {
         base.Start();
+        Debug.Log($"starting building tutorial!");
         this.building.SetAllowBuy(levelIndex+1, true);
     }
 

@@ -18,7 +18,7 @@ public class BankWishPanel : UI_Panel
 
     private void Update()
     {
-        if (bankGame.GetTimeLeft() <= 0f)
+        if (bankGame.IsOver())
         {
             if (!isOverShown)
             {

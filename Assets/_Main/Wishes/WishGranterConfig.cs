@@ -78,6 +78,11 @@ public class NullWishGranterTimer : WishGranterTimer
     {
 
     }
+
+    public override void ResetToCooldown()
+    {
+        
+    }
 }
 
 public abstract class WishGranterTimer
@@ -98,6 +103,8 @@ public abstract class WishGranterTimer
     public abstract bool CanAddMore();
     
     public abstract void OnUpdate();
+
+    public abstract void ResetToCooldown();
 }
 
 public class WishGranterCooldownTimer : WishGranterTimer
@@ -131,6 +138,11 @@ public class WishGranterCooldownTimer : WishGranterTimer
         }
     }
 
+    public override void ResetToCooldown()
+    {
+        CoolDownStartTime = Time.time;
+    }
+
     public override bool CanAddMore()
     {
         return !IsCooldown;
@@ -150,6 +162,7 @@ public class WishGranterGameTimer : WishGranterTimer
         Cooldown,
         WaitingStart,
         Started,
+        Over,
     }
 
     protected float cooldown;
@@ -170,7 +183,6 @@ public class WishGranterGameTimer : WishGranterTimer
         this.cooldown = cooldown;
         this.duration = duration;
         gameState = GameState.Cooldown;
-        startProcessedCounter = granter.ProcessedCounter;
         CoolDownStartTime = Time.time;
     }
     
@@ -186,6 +198,7 @@ public class WishGranterGameTimer : WishGranterTimer
             if (CoolDownTimeLeft < 0f)
             {
                 gameState = GameState.WaitingStart;
+                startProcessedCounter = granter.ProcessedCounter;
             }
             else
             {
@@ -205,8 +218,19 @@ public class WishGranterGameTimer : WishGranterTimer
             if (GameTimeLeft < 0)
             {
                 CoolDownStartTime = Time.time;
-                gameState = GameState.Cooldown;
+                gameState = GameState.Over;
             }
         }
+    }
+
+    public override void ResetToCooldown()
+    {
+        gameState = GameState.Cooldown;
+        CoolDownStartTime = Time.time;
+    }
+
+    public bool IsOver()
+    {
+        return gameState == GameState.Over;
     }
 }
