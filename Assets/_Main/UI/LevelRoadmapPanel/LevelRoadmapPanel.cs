@@ -103,13 +103,29 @@ public class LevelRoadmapPanel : UI_Panel
             levelInfoElement.Rect.SetAsFirstSibling();
         }
 
+        if (scrollView.content.rect.height < 1)
+        {
+            UniTask.DelayFrame(1).ContinueWith(() =>
+            {
+                MoveToTarget();
+            }).AddTo(gameObject);
+        }
+        else
+        {
+            MoveToTarget();
+        }
+    }
+
+    private void MoveToTarget()
+    {
         var t = 0f;
-        DOTween.To(() => t, x => t = x, 1f, 0.3f).OnUpdate(() =>
+        var endScroll = 1f - (Mathf.Abs(roadmapLevelInfos[cacheManager.LevelIndex].Rect.anchoredPosition.y)/scrollView.content.rect.height);
+        DOTween.To(() => t, x => t = x, endScroll, 0.3f).OnUpdate(() =>
         {
             scrollView.verticalNormalizedPosition = t;
         }).OnComplete(() =>
         {
-            scrollView.verticalNormalizedPosition = 1f;
+            scrollView.verticalNormalizedPosition = endScroll;
         }).SetEase(Ease.InOutCirc);
     }
 }
