@@ -777,7 +777,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showTime: 1
   levelText: {fileID: 5220084704624553168}
-  newLevelPanel: {fileID: 7741223843310370244}
   claimRewarddButton: {fileID: 3733212521015021933}
   rewardElementMoney: {fileID: 6934932199052788424}
   rewardElementSpeed: {fileID: 1505036084456510229}
@@ -796,14 +795,14 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 8
   m_TargetDisplay: 0
 --- !u!225 &2726716124650545933
 CanvasGroup:

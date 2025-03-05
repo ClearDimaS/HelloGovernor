@@ -36,6 +36,7 @@ public class LevelRoadmapPanel : UI_Panel
         {
             var levelData = GetClampedLevelData(cacheManager.LevelIndex);
             levelUpPanel.Show(cacheManager.LevelIndex, levelData);
+            Hide();
         });
         closeButton.onClick.AddListener(Hide);
     }

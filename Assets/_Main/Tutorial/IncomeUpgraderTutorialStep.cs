@@ -4,7 +4,6 @@ public class IncomeUpgraderTutorialStep : TutorialStep
 {
     protected IncomeUpgrader building;
     protected int levelIndex;
-    protected int price;
     protected int typeIndex;
     public int LevelIndex => levelIndex;
     public override bool UseCache => false;
@@ -13,7 +12,6 @@ public class IncomeUpgraderTutorialStep : TutorialStep
     {
         this.building = building;
         this.levelIndex = levelIndex;
-        this.price = building.GetPriceForLevel(levelIndex);
         this.typeIndex = typeIndex;
     }
 
