@@ -283,7 +283,7 @@ public class UpgradablePricesManager : MonoBehaviour
 
 
         var incomeUpgraders = FindObjectsOfType<IncomeUpgrader>();
-        upgradablePriceDatas.RemoveAll(x => x is IncomeUpgrader);
+        upgradablePriceDatas.RemoveAll(x => x.upgradable is IncomeUpgrader);
         var upgraderDatas = new List<MoneyConsumerData>();
         foreach (var incomeUpgrader in incomeUpgraders)
         {

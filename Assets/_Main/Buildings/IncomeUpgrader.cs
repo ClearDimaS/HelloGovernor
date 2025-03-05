@@ -17,7 +17,7 @@ public class IncomeUpgrader : UpgradableObject
         wishGranter = GetComponentInParent<WishGranter>();
         if (wishGranter == null || building == null)
         {
-            Debug.LogError("couldnt place income upgrader!");
+            Debug.LogError($"couldnt place income upgrader! my parent: {transform.parent}");
         }
         Consumer.transform.position = building.Consumer.transform.position;
         Consumer.transform.rotation = building.Consumer.transform.rotation;
