@@ -280,6 +280,21 @@ public class UpgradablePricesManager : MonoBehaviour
         }
 
         UpdatePrices();
+
+
+        var incomeUpgraders = FindObjectsOfType<IncomeUpgrader>();
+        upgradablePriceDatas.RemoveAll(x => x is IncomeUpgrader);
+        var upgraderDatas = new List<MoneyConsumerData>();
+        foreach (var incomeUpgrader in incomeUpgraders)
+        {
+            for (int i = 0; i < incomeUpgrader.LevelsCount; i++)
+            {
+                var price = 10;
+                upgraderDatas.Add(new MoneyConsumerData(price, incomeUpgrader, i));
+            }
+        }
+        var orderedUpgraders= upgraderDatas.OrderBy(x => x.level);
+        upgradablePriceDatas = upgradablePriceDatas.Concat(orderedUpgraders).ToList();
     }
     
     [Button]

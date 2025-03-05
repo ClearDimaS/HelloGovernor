@@ -13,6 +13,7 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     [SerializeField] protected ScaleAnimator[] levels;
     [SerializeField] private MoneyConsumer moneyConsumer;
 
+    public MoneyConsumer Consumer => moneyConsumer;
     private List<Price> levelPrices;
     protected UpgradableData data;
     protected int allowedLevelToPurchase;

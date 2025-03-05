@@ -93,7 +93,8 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     public int ProcessedCounter { get; private set; }
     protected int QueueBusyCount => queue.Count;
     protected int QueueMaxCount => queuePlaces.Length;
-    
+    public float IncomeMultiplier { get; set; } = 1f;
+
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
     protected WishGranterTimer timer;
@@ -433,7 +434,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         var rwrd = Reward;
         if (upgradable != null && upgradable.Level > 1)
         {
-            rwrd = Mathf.RoundToInt(rwrd * _gameConfig.incomeIncrease);
+            rwrd = Mathf.RoundToInt(rwrd * _gameConfig.incomeIncrease * IncomeMultiplier);
         }
         if (currencyStack != null)
         {

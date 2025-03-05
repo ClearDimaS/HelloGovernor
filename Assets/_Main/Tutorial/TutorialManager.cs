@@ -6,19 +6,6 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class ProgressMarker
-{
-    public Sprite sprite;
-    public int orderNumber;
-    public int tutorIndex;
-
-    public ProgressMarker(Sprite sprite, int orderNumber, int tutorIndex)
-    {
-        this.sprite = sprite;
-        this.orderNumber = orderNumber;
-        this.tutorIndex = tutorIndex;
-    }
-}
 public class TutorialManager : Singleton<TutorialManager>
 {
     [Inject] private GameConfig gameConfig;
@@ -113,6 +100,10 @@ public class TutorialManager : Singleton<TutorialManager>
                     });
                     RefreshArrowTarget(newStep); 
                 }
+                else
+                {
+                    RefreshArrowTarget(curStep); 
+                }
             }
 
             if (curStepIndex < tutorialSteps.Count)
@@ -134,7 +125,7 @@ public class TutorialManager : Singleton<TutorialManager>
     private void RefreshArrowTarget(TutorialStep step)
     {
         var arrowTarget = step.GetArrowTarget();
-        var show = arrowTarget != null;
+        var show = arrowTarget != null && !step.IsCompleted();
         if (show)
         {
             if (!tutorialArrow.activeSelf)
@@ -159,7 +150,22 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             if (purchasable.upgradable is UpgradableBuilding building && purchasable.level <= 1)
             {
-                tutorialSteps.Add(new BuildingTutorialStep(building, purchasable.level-1, purchasable.thisTypeIndex, playerRepository));
+                tutorialSteps.Add(new BuildingTutorialStep(
+                    building, 
+                    purchasable.level-1, 
+                    purchasable.thisTypeIndex, 
+                    playerRepository)
+                );
+            }
+
+            if (purchasable.upgradable is IncomeUpgrader incomeUpgrader)
+            {
+                tutorialSteps.Add(new IncomeUpgraderTutorialStep(
+                    incomeUpgrader, 
+                    purchasable.level-1,
+                    purchasable.thisTypeIndex,
+                    playerRepository)
+                );
             }
 
             var granter = purchasable.upgradable.GetComponent<WishGranter>();

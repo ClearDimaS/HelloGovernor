@@ -18,6 +18,7 @@ public class CityProgressPanel : UI_Panel
     private float completionTime = -4f;
     private CanvasGroup group;
     private TutorialStep lastStep;
+    private float completedTimeout;
 
     private void Start()
     {
@@ -52,6 +53,20 @@ public class CityProgressPanel : UI_Panel
         {
             progressImage.rectTransform.FillParent(lastStep.GetProgress());
             progressText.text = lastStep.GetProgressText();
+        }
+
+        if (step != null && step.IsCompleted())
+        {
+            completedTimeout += Time.deltaTime;
+        }
+        else
+        {
+            completedTimeout = 0f;
+        }
+
+        if (completedTimeout > 10f)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
