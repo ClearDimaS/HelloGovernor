@@ -29,23 +29,7 @@ public class Wish : UpdateableBehaviour, IResetable
         readyToRemoveEvent += onReadyToRemove;
         IsRemoved = false;
     }
-
-    public override void UpdateCall(float deltaTime)
-    {
-        base.UpdateCall(deltaTime);
-        if (granter == null)
-        {
-            return;
-        }
-
-        if (progress >= 1)
-        {
-            var fire = readyToRemoveEvent;
-            fire?.Invoke(this);
-            readyToRemoveEvent = null;
-        }
-    }
-
+    
     public bool HasOKGranter()
     {
         return granter != null && granter.IsWorking();
@@ -90,6 +74,10 @@ public class Wish : UpdateableBehaviour, IResetable
         }
         if (!IsRemoved)
         {
+            var fire = readyToRemoveEvent;
+            fire?.Invoke(this);
+            readyToRemoveEvent = null;
+            
             IsRemoved = true;
             removeEvent?.Invoke(this);
         }
