@@ -115,4 +115,12 @@ public class WishesController : CitizenBehaviour
     {
         return currentWish == null ? 0f : currentWish.Progress;
     }
+
+    public void RemoveWish(WishGranter wishGranter)
+    {
+        if (currentWish != null)
+        {
+            currentWish.SetRemoved(wishGranter);
+        }
+    }
 }

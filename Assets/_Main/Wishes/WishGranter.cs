@@ -408,6 +408,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     private void RemoveFromLeaving(CitizenController citizen)
     {
         leaving.Remove(citizen);
+        citizen.WishesController.RemoveWish(this);
     }
 
     public void Abort(CitizenController citizen)

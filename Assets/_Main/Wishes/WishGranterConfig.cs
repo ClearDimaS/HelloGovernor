@@ -155,6 +155,7 @@ public class WishGranterCooldownTimer : WishGranterTimer
     }
 }
 
+[Serializable]
 public class WishGranterGameTimer : WishGranterTimer
 {
     protected enum GameState

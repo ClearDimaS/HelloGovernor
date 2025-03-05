@@ -12,7 +12,6 @@ public class Wish : UpdateableBehaviour, IResetable
     private event Action<Wish> readyToRemoveEvent;
     private event Action<Wish> removeEvent;
 
-    public bool IsReadyToRemove { get; private set; }
     public bool IsRemoved { get; private set; }
     public bool IsProgressFull => progress >= 1f;
     public WishGranter Granter => granter;
@@ -29,7 +28,6 @@ public class Wish : UpdateableBehaviour, IResetable
         removeEvent += onRemove;
         readyToRemoveEvent += onReadyToRemove;
         IsRemoved = false;
-        IsReadyToRemove = false;
     }
 
     public override void UpdateCall(float deltaTime)
@@ -42,11 +40,9 @@ public class Wish : UpdateableBehaviour, IResetable
 
         if (progress >= 1)
         {
-            SetWishReadyToRemove();
-        }
-        if (progress >= 1f && !granter.HasInQueueOrProcessed(citizen))
-        {
-            SetRemoved();
+            var fire = readyToRemoveEvent;
+            fire?.Invoke(this);
+            readyToRemoveEvent = null;
         }
     }
 
@@ -67,7 +63,6 @@ public class Wish : UpdateableBehaviour, IResetable
         granter = null;
         citizen = null;
         walker = null;
-        IsReadyToRemove = false;
         removeEvent = null;
     }
 
@@ -80,24 +75,19 @@ public class Wish : UpdateableBehaviour, IResetable
     {
         progress += addProgress;
     }
-    
-    private void SetWishReadyToRemove()
-    {
-        if (!IsReadyToRemove)
-        {
-            IsReadyToRemove = true;
-            readyToRemoveEvent?.Invoke(this);
-        }
-    }
 
     public void Abort()
     {
         granter.Abort(citizen);
-        SetRemoved();
+        SetRemoved(granter);
     }
     
-    private void SetRemoved()
+    public void SetRemoved(WishGranter granter)
     {
+        if (granter != this.granter)
+        {
+            Debug.LogError($"removing other wish!");
+        }
         if (!IsRemoved)
         {
             IsRemoved = true;

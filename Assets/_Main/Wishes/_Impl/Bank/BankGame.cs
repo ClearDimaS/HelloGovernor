@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Serializable]
 public class BankGame : Minigame
 {
     protected int reward = 0;
