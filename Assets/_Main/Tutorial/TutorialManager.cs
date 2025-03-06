@@ -180,7 +180,7 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 if (granter is OperatableGranter operatable)
                 {
-                    tutorialSteps.Add(new OperatableTutorialStep(operatable, playerRepository));
+                    tutorialSteps.Add(new OperatableTutorialStep(operatable, playerRepository, cameraManager));
                     if (!wasOperatorAdded)
                     {
                         var operatorUpgradable = granter.GetComponentInChildren<UpgradableOperator>();

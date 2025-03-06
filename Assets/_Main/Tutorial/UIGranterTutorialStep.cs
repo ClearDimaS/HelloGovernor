@@ -4,7 +4,7 @@ using UnityEngine;
 public class UIGranterTutorialStep : TutorialStep
 {
     protected UIWishGranter uiGranter;
-    
+    protected bool wasLaunched;
     public UIGranterTutorialStep(UIWishGranter uiGranter, PlayerDataRepository repository) : base(repository)
     {
         this.uiGranter = uiGranter;
@@ -17,7 +17,11 @@ public class UIGranterTutorialStep : TutorialStep
 
     protected override void UpdateProgress_Internal()
     {
-        if (uiGranter.IsCooldown && !IsCompleted())
+        if (!uiGranter.IsCooldown && !wasLaunched)
+        {
+            wasLaunched = true;
+        }
+        if (uiGranter.IsCooldown && !IsCompleted() && !wasLaunched)
         {
             uiGranter.SetReady();
         }

@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class OperatableTutorialStep : TutorialStep
 {
+    protected CameraManager cameraManager;
     protected OperatableGranter operatable;
     protected float targetServeCount = 3f;
-    
-    public OperatableTutorialStep(OperatableGranter operatable, PlayerDataRepository repository) : base(repository)
+
+    protected bool wasServeShown;
+    protected Transform startTarget;
+    public OperatableTutorialStep(OperatableGranter operatable, PlayerDataRepository repository, CameraManager cameraManager) : base(repository)
     {
         this.operatable = operatable;
+        this.cameraManager = cameraManager;
+        startTarget = GetArrowTarget();
     }
 
     protected override string CreateKey()
@@ -18,7 +23,14 @@ public class OperatableTutorialStep : TutorialStep
 
     protected override void UpdateProgress_Internal()
     {
-        
+        if (!IsCompleted())
+        {
+            if (!wasServeShown && startTarget != GetArrowTarget())
+            {
+                wasServeShown = true;
+                cameraManager.SetTarget(GetCameraTarget(), 2f, distanceMult: 1f, startCallback:() => {});
+            }
+        }
     }
 
     public override float GetProgress()

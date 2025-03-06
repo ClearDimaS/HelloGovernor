@@ -56,6 +56,8 @@ public class PressConferenceUI_Panel : UI_Panel
     public void Init(PressConferenceGame game)
     {
         this.game = game;
+        resultPanel.Hide(true);
+        resultPanel.gameObject.SetActive(false);
     }
 
     public override void OnShow()

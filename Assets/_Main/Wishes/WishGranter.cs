@@ -234,8 +234,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             UpdateProcessed(citizen);
             var postProcessorCanLeave = wishPostProcessor == null ||
                                         wishPostProcessor.HasMorePlace();
-            if ((citizen.WishesController.IsProgressFull(this) || 
-                 (citizen.transform.position - transform.position).magnitude > 15f) && 
+            if (citizen.WishesController.IsProgressFull(this) && 
                 postProcessorCanLeave)
             {
                 ProcessedCounter++;
