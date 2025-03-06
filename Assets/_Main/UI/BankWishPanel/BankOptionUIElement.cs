@@ -13,7 +13,9 @@ public class BankOptionUIElement : MonoBehaviour
 
     [SerializeField] private Color color1;
     [SerializeField] private Color color2;
-    
+
+    public Color ColorRight => color1;
+    public Color ColorWrong => color2;
     private Action onSelect;
     private BankOption option;
     

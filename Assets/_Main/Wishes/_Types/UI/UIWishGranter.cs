@@ -49,7 +49,11 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
     protected virtual void OnActivate()
     {
         panel.Show();
-        coolDownTimer.GetGameTimer().SetStarted();
+        var gameTimer = coolDownTimer.GetGameTimer();
+        if (gameTimer != null)
+        {
+            gameTimer.SetStarted();
+        }
         isStarted = true;
     }
 
@@ -75,7 +79,7 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 
     protected virtual bool CanShowActivation_Internal()
     {
-        return processed.Count > 0;
+        return processed.Count > 0 && !coolDownTimer.IsCooldown;
     }
     
     protected override bool CanAddProgress(CitizenController citizen)

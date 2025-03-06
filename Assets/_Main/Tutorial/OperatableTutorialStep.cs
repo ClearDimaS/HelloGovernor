@@ -13,7 +13,6 @@ public class OperatableTutorialStep : TutorialStep
     {
         this.operatable = operatable;
         this.cameraManager = cameraManager;
-        startTarget = GetArrowTarget();
     }
 
     protected override string CreateKey()
@@ -25,7 +24,11 @@ public class OperatableTutorialStep : TutorialStep
     {
         if (!IsCompleted())
         {
-            if (!wasServeShown && startTarget != GetArrowTarget())
+            if (startTarget == null)
+            {
+                startTarget = GetArrowTarget();
+            }
+            if (!wasServeShown && startTarget != GetArrowTarget() && startTarget != null)
             {
                 wasServeShown = true;
                 cameraManager.SetTarget(GetCameraTarget(), 2f, distanceMult: 1f, startCallback:() => {});

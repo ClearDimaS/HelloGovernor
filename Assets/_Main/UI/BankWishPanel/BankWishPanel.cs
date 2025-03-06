@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class BankWishPanel : UI_Panel
@@ -10,7 +11,10 @@ public class BankWishPanel : UI_Panel
     [SerializeField] private BankOptionUIElement option2;
     [SerializeField] private CanvasGroup content;
     [SerializeField] private MinigameResultPanel resultPanel;
-
+    [SerializeField] private GameObject answersGO;
+    [SerializeField] private TMP_Text answer1;
+    [SerializeField] private TMP_Text answer2;
+    
     private Func<bool> canShowNext;
     private BankGame bankGame;
     private bool isOverShown;
@@ -40,6 +44,7 @@ public class BankWishPanel : UI_Panel
 
     public void Init(BankGame bankGame, Func<bool> canShowNext)
     {
+        answersGO.SetActive(false);
         this.canShowNext = canShowNext;
         resultPanel.gameObject.SetActive(false);
         content.alpha = 1f;
@@ -62,18 +67,27 @@ public class BankWishPanel : UI_Panel
         var isPositiveFirst = UnityEngine.Random.Range(0, 1f) < 0.5f;
         option1.Init(optionData1, () => Select(optionData1), isPositiveFirst);
         option2.Init(optionData2, () => Select(optionData2), !isPositiveFirst);
+
+        var reward1 = optionData1.GetReward();
+        var reward2 = optionData2.GetReward();
+        answer2.text = reward1 > 0 ? $"+{reward1}" : $"{reward1}";
+        answer1.color = reward1 > 0 ? option1.ColorRight : option1.ColorWrong;
+        answer2.text = reward2 > 0 ? $"+{reward2}" : $"{reward2}";
+        answer2.color = reward2 > 0 ? option1.ColorRight : option1.ColorWrong;
     }
 
     private void Select(BankOption data)
     {
         option1.gameObject.SetActive(false);
         option2.gameObject.SetActive(false);
+        answersGO.SetActive(true);
         bankGame.SetSelected(data);
         rewardElement.RefreshWithChange(bankGame.GetReward(), data.GetReward());
         if (bankGame.IsRunning)
         {
             UniTask.WaitUntil(() => canShowNext()).ContinueWith(() =>
             {
+                answersGO.SetActive(false);
                 ShowNewOptions(false);
             });
         }

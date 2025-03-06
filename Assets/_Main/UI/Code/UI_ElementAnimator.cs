@@ -53,6 +53,10 @@ public class UI_ElementAnimator : MonoBehaviour
             currentT = 1f;
             ApplyT(currentT);
             doneHandler?.Invoke();
+            if (setActive && !gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
             return;
         }
         
@@ -79,6 +83,10 @@ public class UI_ElementAnimator : MonoBehaviour
             currentT = 0f;
             ApplyT(currentT);
             doneHandler?.Invoke();
+            if (setActive && gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
             return;
         }
         

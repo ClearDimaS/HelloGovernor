@@ -56,6 +56,7 @@ public class ChatUI_Panel : UI_Panel
     {
         base.OnShow();
         resultElement.Hide(true);
+        resultElement.gameObject.SetActive(false);
         var questions = questionsConfig.questions;
         var questionIndex = Random.Range(0, questions.Length);
         var question = questions[questionIndex];
