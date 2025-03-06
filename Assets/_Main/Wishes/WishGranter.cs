@@ -94,6 +94,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     protected int QueueBusyCount => queue.Count;
     protected int QueueMaxCount => queuePlaces.Length;
     public float IncomeMultiplier { get; set; } = 1f;
+    protected bool IsBought => upgradable == null || upgradable.IsBought;
 
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
