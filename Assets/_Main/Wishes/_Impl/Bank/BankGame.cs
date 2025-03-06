@@ -14,9 +14,11 @@ public class BankGame : Minigame
     protected WishGranterGameTimer timer;
     protected WishesCollectionConfig gameConfig;
     private Action<int> onComplete;
+    protected Action onAnswer;
     
-    public BankGame(WishGranterGameTimer timer, WishesCollectionConfig gameConfig, Action<int> onComplete)
+    public BankGame(WishGranterGameTimer timer, WishesCollectionConfig gameConfig, Action<int> onComplete, Action onAnswer)
     {
+        this.onAnswer = onAnswer;
         this.timer = timer;
         if (this.timer == null)
         {
@@ -73,6 +75,7 @@ public class BankGame : Minigame
             curVariant2 = null;
             curVariant1 = null;
             reward += data.GetReward();   
+            onAnswer?.Invoke();
         }
     }
 

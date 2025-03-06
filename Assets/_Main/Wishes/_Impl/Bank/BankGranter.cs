@@ -19,17 +19,13 @@ public class BankGranter : UIWishGranter
 
     protected override void OnActivate()
     {
-        game = new BankGame(coolDownTimer.GetGameTimer(), wishesConfig, GiveReward);
-        (panel as BankWishPanel).Init(game, () =>
-            {
-                processPlaces[0].SetComplete();
-                var owner = processPlaces[0].GetOwner();
-                if (owner != null)
-                {
-                    lastAnswerTime = Time.time;
-                    owner.WishesController.AddProgress(this, 1);
-                }
-            },
+        game = new BankGame(coolDownTimer.GetGameTimer(), wishesConfig, GiveReward, onAnswer: () =>
+        {
+            var owner = processPlaces[0].GetOwner();
+            lastAnswerTime = Time.time;
+            owner.WishesController.AddProgress(this, 1);
+        });
+        (panel as BankWishPanel).Init(game,
             () =>
             {
                 return (Time.time - lastAnswerTime > minPause) && 

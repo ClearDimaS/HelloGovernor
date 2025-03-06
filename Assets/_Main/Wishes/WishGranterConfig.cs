@@ -185,14 +185,6 @@ public class WishGranterGameTimer
                 startProcessedCounter = granter.ProcessedCounter;
             }
         }
-        if (gameState == GameState.WaitingStart)
-        {
-            if (granter.ProcessedCounter != startProcessedCounter)
-            {
-                gameState = GameState.Started;
-                GameStartTime = Time.time;
-            }
-        }
         else if (gameState == GameState.Started)
         {
             if (GameTimeLeft < 0)
@@ -205,6 +197,10 @@ public class WishGranterGameTimer
 
     public void SetGameReady()
     {
+        if (gameState != GameState.Cooldown)
+        {
+            return;
+        }
         gameState = GameState.WaitingStart;
         startProcessedCounter = granter.ProcessedCounter;
         CoolDownStartTime = Time.time - (CoolDownTime + 1);
@@ -219,5 +215,11 @@ public class WishGranterGameTimer
     public bool IsOver()
     {
         return gameState == GameState.Over;
+    }
+
+    public void SetStarted()
+    {
+        gameState = GameState.Started;
+        GameStartTime = Time.time;
     }
 }

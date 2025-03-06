@@ -35,7 +35,7 @@ public class LevelRoadmapPanel : UI_Panel
         roadmapLevelInfos = levelsParent.GetComponentsInChildren<RoadmapLevelInfo>().ToList();
         acceptButton.onClick.AddListener(() =>
         {
-            var levelData = GetClampedLevelData(cacheManager.LevelIndex);
+            var levelData = GetClampedLevelData(cacheManager.LevelIndex-1);
             levelUpPanel.Show(cacheManager.LevelIndex, levelData);
             Hide();
         });

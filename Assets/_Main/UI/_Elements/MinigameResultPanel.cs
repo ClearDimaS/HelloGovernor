@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = fbg.Debug;
 
 public abstract class Minigame
 {
@@ -25,11 +26,17 @@ public class MinigameResultPanel : MonoBehaviour
 
     private void ClaimReward()
     {
+        if (game == null)
+        {
+            return;
+        }
         var fire = onClaim;
         fire?.Invoke();
         onClaim = null;
         gameObject.SetActive(false);
         game.Complete();
+        game = null;
+        Hide(false);
     }
 
     public void Show(Minigame game, Action onClaim)
@@ -41,6 +48,7 @@ public class MinigameResultPanel : MonoBehaviour
         var symbol = reward > 0 ? "+" : "";
         rewardText.text = $"{symbol}{Price.ToMoneyString(reward)}";
         gameObject.SetActive(true);
+        animator.Animate();
     }
 
     public void Hide(bool immediate)

@@ -34,11 +34,6 @@ public abstract class ProcessPlace : CulledBehaviour
         progress = processed == null ? 0f : processed.WishesController.GetProgress();
     }
 
-    public void SetComplete()
-    {
-        progress = 1f;
-    }
-
     public void SetOwner(CitizenController citizen)
     {
         if (processed != null)

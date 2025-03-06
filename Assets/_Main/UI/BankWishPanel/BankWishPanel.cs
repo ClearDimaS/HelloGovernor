@@ -12,7 +12,6 @@ public class BankWishPanel : UI_Panel
     [SerializeField] private MinigameResultPanel resultPanel;
 
     private Func<bool> canShowNext;
-    private Action onAnswer;
     private BankGame bankGame;
     private bool isOverShown;
 
@@ -39,9 +38,8 @@ public class BankWishPanel : UI_Panel
         }
     }
 
-    public void Init(BankGame bankGame, Action onAnswer, Func<bool> canShowNext)
+    public void Init(BankGame bankGame, Func<bool> canShowNext)
     {
-        this.onAnswer = onAnswer;
         this.canShowNext = canShowNext;
         resultPanel.gameObject.SetActive(false);
         content.alpha = 1f;
@@ -57,10 +55,6 @@ public class BankWishPanel : UI_Panel
         option2.gameObject.SetActive(true);
         bankGame.GetNextOptions(out BankOption optionData1, out BankOption optionData2);
         ShowOptions(optionData1, optionData2);
-        if (!first)
-        {
-            onAnswer?.Invoke();
-        }
     }
 
     private void ShowOptions(BankOption optionData1, BankOption optionData2)
