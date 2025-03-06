@@ -227,9 +227,4 @@ public class UpgradableBuilding : UpgradableObject
     {
         return allowedSides;
     }
-
-    public void ForcePurchase()
-    {
-        LevelUp();
-    }
 }

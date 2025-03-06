@@ -9,6 +9,7 @@ public class UI_ElementAnimator : MonoBehaviour
     [SerializeField] private float duration = 0f;
     [SerializeField] private AnimationCurve scaleCurve;
     [SerializeField] private AnimationCurve alphaCurve;
+    [SerializeField] private bool setActive = true;
 
     public bool IsShown => state == 1;
     private int state = -1;
@@ -40,6 +41,10 @@ public class UI_ElementAnimator : MonoBehaviour
     public void Animate(Action doneHandler = null, bool instant = false)
     {
         Init();
+        if (setActive && !gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
         transform.DOKill();
         var t = currentT;
         state = 1;
@@ -86,6 +91,10 @@ public class UI_ElementAnimator : MonoBehaviour
             currentT = 0f;
             ApplyT(currentT);
             doneHandler?.Invoke();
+            if (setActive && gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
         }).SetTarget(transform).SetEase(Ease.Linear);
     }
 

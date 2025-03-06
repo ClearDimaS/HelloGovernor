@@ -87,9 +87,9 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     private int extraPlacesAddedLevel = 0;
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
-    public float CoolDown => timer.CoolDownTime;
-    public float CoolDownTimeLeft => timer.CoolDownTimeLeft;
-    public bool IsCooldown => timer.IsCooldown;
+    public float CoolDown => coolDownTimer == null ? -1f : coolDownTimer.CoolDownTime;
+    public float CoolDownTimeLeft => coolDownTimer == null ? -1f : coolDownTimer.CoolDownTimeLeft;
+    public bool IsCooldown => coolDownTimer == null ? false : coolDownTimer.IsCooldown;
     public int ProcessedCounter { get; private set; }
     protected int QueueBusyCount => queue.Count;
     protected int QueueMaxCount => queuePlaces.Length;
@@ -97,7 +97,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
-    protected WishGranterTimer timer;
+    protected WishGranterCooldownTimer coolDownTimer;
 
     [Inject]
     protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
@@ -105,7 +105,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         this.wishesCollectionConfig = wishesCollectionConfig;
         this.grantersManager = grantersManager;
         OnConstruct();
-        timer = this.wishesCollectionConfig.GetTimer(this);
+        coolDownTimer = this.wishesCollectionConfig.GetCooldownTimer(this);
     }
 
     protected virtual void OnConstruct()
@@ -148,9 +148,9 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
                 AddExtraPlaces(extraPlaces[extraPlacesAddedIndex]);   
             }
         }
-        if (timer.CanCooldown)
+        if (coolDownTimer != null)
         {
-            timer.OnUpdate();
+            coolDownTimer.OnUpdate();
         }
 
         for (int i = 0; i < queue.Count; i++)
@@ -180,9 +180,15 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         foreach (var citizen in approaching)
         {
             var queuePlace = GetQueuePlaceFor(citizen);
-            if (!citizen.Walker.IsMoving)
+            if (!citizen.Walker.IsMovingToTarget(queuePlace))
             {
-                citizen.Walker.MoveToTarget(queuePlace, () => pendingQueue.Add(citizen));
+                citizen.Walker.MoveToTarget(queuePlace, () =>
+                {
+                    if (!pendingQueue.Contains(citizen))
+                    {
+                        pendingQueue.Add(citizen);
+                    }
+                });
             }
         }
         foreach (var citizen in pendingQueue)
@@ -204,11 +210,14 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
                     var processPlace = GetProcessPlaceFor(citizen);
                     queue.RemoveAt(i);
                     i--;
-                    citizen.Walker.MoveToTarget(processPlace, () =>
+                    if (!citizen.Walker.IsMoving)
                     {
-                        AddToProcessed(citizen);
-                        citizenPlacesDict[citizen].SetAtPlace(citizen);
-                    });   
+                        citizen.Walker.MoveToTarget(processPlace, () =>
+                        {
+                            AddToProcessed(citizen);
+                            citizenPlacesDict[citizen].SetAtPlace(citizen);
+                        });   
+                    }
                 }
             }
             else
@@ -225,7 +234,8 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             UpdateProcessed(citizen);
             var postProcessorCanLeave = wishPostProcessor == null ||
                                         wishPostProcessor.HasMorePlace();
-            if (citizen.WishesController.IsProgressFull(this) && 
+            if ((citizen.WishesController.IsProgressFull(this) || 
+                 (citizen.transform.position - transform.position).magnitude > 15f) && 
                 postProcessorCanLeave)
             {
                 ProcessedCounter++;
@@ -247,8 +257,11 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         // 4. Leaving
         foreach (var citizen in leaving)
         {
-            var exitPlace = GetExitPlaceFor(citizen);
-            citizen.Walker.MoveToTarget(exitPlace, () => pendingRemove.Add(citizen));
+            if (!citizen.Walker.IsMoving)
+            {
+                var exitPlace = GetExitPlaceFor(citizen);
+                citizen.Walker.MoveToTarget(exitPlace, () => pendingRemove.Add(citizen));
+            }
         }
 
         foreach (var citizen in pendingRemove)
@@ -262,6 +275,11 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         {
             wishPostProcessor.OnUpdate();
         }
+    }
+
+    public void SetReady()
+    {
+        coolDownTimer.SetGameReady();
     }
 
     protected virtual void AddExtraPlaces(WishGranterExtraPlacesData extraPlace)
@@ -449,7 +467,8 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     public virtual bool CanAddOneMore()
     {
-        return approaching.Count + queue.Count + processed.Count < queuePlaces.Length + processPlaces.Length && timer.CanAddMore();
+        return approaching.Count + queue.Count + processed.Count < queuePlaces.Length + processPlaces.Length && 
+              (coolDownTimer == null || coolDownTimer.CanAddMore());
     }
 
     private ProcessPlace DequeuePlace()

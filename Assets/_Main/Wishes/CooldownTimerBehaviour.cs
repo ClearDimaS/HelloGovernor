@@ -14,7 +14,8 @@ public class CooldownTimerBehaviour : CulledBehaviour
 {
     [SerializeField] private TimerTextMesh textSS;
     [SerializeField] private TimerTextMesh textMM;
-
+    [SerializeField] private GameObject content;
+    
     private ICooldownable wishGranter;
 
     protected int lastTimeLeft = -1;
@@ -33,6 +34,10 @@ public class CooldownTimerBehaviour : CulledBehaviour
         if (visible)
         {
             var showTimer = wishGranter.IsCooldown;
+            if (showTimer != content.activeSelf)
+            {
+                content.SetActive(showTimer);
+            }
             if (showTimer)
             {
                 var timeLeft = Mathf.RoundToInt(wishGranter.CoolDownTimeLeft);

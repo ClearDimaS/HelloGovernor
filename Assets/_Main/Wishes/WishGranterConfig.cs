@@ -41,110 +41,84 @@ public abstract class WishGranterConfig : ScriptableObject, IKey<Type>
         }
     }
 
-    public WishGranterTimer GetTimer(WishGranter granterInstance)
+    public WishGranterCooldownTimer GetCooldownTimer(WishGranter granterInstance)
     {
-        switch (timerType)
+        if (timerType == ETimer.None)
         {
-            case ETimer.None:
-                return new NullWishGranterTimer(granterInstance);
-            case ETimer.Cooldown:
-                return new WishGranterCooldownTimer(cooldown:cooldown, granterInstance);
-            case ETimer.Game:
-                return new WishGranterGameTimer(cooldown:cooldown, duration:gameDuration, granterInstance);
-            default:
-                throw new NotImplementedException($"");
+            return null;
         }
+        return new WishGranterCooldownTimer(cooldown:cooldown, granterInstance, GetGameTimer(granter));
     }
-}
-
-public class NullWishGranterTimer : WishGranterTimer
-{
-    public NullWishGranterTimer(WishGranter granter) : base(granter)
-    {
-    }
-
-    public override bool IsCooldown => false;
-    public override float CoolDownTime => -1;
-    public override float CoolDownTimeLeft => -1;
-    public override float GameTimeLeft => -1;
-    public override bool CanCooldown => false;
-
-    public override bool CanAddMore()
-    {
-        return true;
-    }
-
-    public override void OnUpdate()
-    {
-
-    }
-
-    public override void ResetToCooldown()
-    {
-        
-    }
-}
-
-public abstract class WishGranterTimer
-{
-    public abstract bool IsCooldown { get;  }
-    public abstract float CoolDownTime { get; }
-    public abstract float CoolDownTimeLeft { get; }
-    public abstract float GameTimeLeft { get; }
-    public abstract bool CanCooldown { get;  }
-
-    protected WishGranter granter;
     
-    public WishGranterTimer(WishGranter granter)
+    private WishGranterGameTimer GetGameTimer(WishGranter granter)
     {
-        this.granter = granter;
+        if (timerType != ETimer.Game)
+        {
+            return null;
+        }
+        return new WishGranterGameTimer(cooldown:cooldown, duration:gameDuration, granter);
     }
-
-    public abstract bool CanAddMore();
-    
-    public abstract void OnUpdate();
-
-    public abstract void ResetToCooldown();
 }
 
-public class WishGranterCooldownTimer : WishGranterTimer
+[Serializable]
+public class WishGranterCooldownTimer 
 {
-    public override float GameTimeLeft => -1;
-    public override bool CanCooldown => true;
-    public override float CoolDownTimeLeft => (CoolDownTime - (Time.time - CoolDownStartTime));
-    public override bool IsCooldown => isCoolDown;
-    public override float CoolDownTime => coolDownTime;
+    public float CoolDownTimeLeft => gameTimer != null ? gameTimer.CoolDownTimeLeft : (CoolDownTime - (Time.time - CoolDownStartTime));
+    public bool IsCooldown =>gameTimer != null ? gameTimer.IsCooldown : isCoolDown;
+    public float CoolDownTime => gameTimer != null ? gameTimer.CoolDownTime : coolDownTime;
+    protected int processedCount;
     
     public float CoolDownStartTime { get; protected set; }
 
+    protected WishGranter granter;
     protected float coolDownTime;
     protected bool isCoolDown;
-    public WishGranterCooldownTimer(float cooldown, WishGranter granter) : base(granter)
+    protected WishGranterGameTimer gameTimer;
+    public WishGranterCooldownTimer(float cooldown, WishGranter granter, WishGranterGameTimer gameTimer)
     {
+        this.gameTimer = gameTimer;
         coolDownTime = cooldown;
         CoolDownStartTime = Time.time;
+        this.granter = granter;
     }
 
-    public override void OnUpdate()
+    public void OnUpdate()
     {
+        if (gameTimer != null)
+        {
+            gameTimer.OnUpdate();
+            return;
+        }
         if (IsCooldown && Time.time - CoolDownStartTime > CoolDownTime)
         {
             isCoolDown = false;
+            processedCount = granter.ProcessedCounter;
         }
-
-        if (!IsCooldown && granter.HasAnyone())
+        
+        if (!IsCooldown && processedCount != granter.ProcessedCounter)
         {
             Restart();
         }
     }
 
-    public override void ResetToCooldown()
+    public void SetGameReady()
     {
-        CoolDownStartTime = Time.time;
+        if (gameTimer != null)
+        {
+            gameTimer.SetGameReady();
+            return;
+        }
+        isCoolDown = false;
+        CoolDownStartTime = Time.time - (CoolDownTime + 1);
+        processedCount = granter.ProcessedCounter;
     }
 
-    public override bool CanAddMore()
+    public bool CanAddMore()
     {
+        if (gameTimer != null)
+        {
+            return gameTimer.CanAddMore();
+        }
         return !IsCooldown;
     }
     
@@ -153,10 +127,15 @@ public class WishGranterCooldownTimer : WishGranterTimer
         CoolDownStartTime = Time.time;
         isCoolDown = true;
     }
+
+    public WishGranterGameTimer GetGameTimer()
+    {
+        return gameTimer;
+    }
 }
 
 [Serializable]
-public class WishGranterGameTimer : WishGranterTimer
+public class WishGranterGameTimer
 {
     protected enum GameState
     {
@@ -173,33 +152,33 @@ public class WishGranterGameTimer : WishGranterTimer
     protected float CoolDownStartTime { get; private set; }
     protected float GameStartTime { get; private set; }
     
-    public override bool IsCooldown => gameState == GameState.Cooldown;
-    public override float CoolDownTime => cooldown;
-    public override float CoolDownTimeLeft => IsCooldown ? CoolDownTime - (Time.time - CoolDownStartTime): 0f;
-    public override float GameTimeLeft => gameState == GameState.Started ? duration - (Time.time - GameStartTime): 0f;
-    public override bool CanCooldown => true;
+    public bool IsCooldown => gameState == GameState.Cooldown;
+    public float CoolDownTime => cooldown;
+    public float CoolDownTimeLeft => IsCooldown ? CoolDownTime - (Time.time - CoolDownStartTime): 0f;
+    public float GameTimeLeft => gameState == GameState.Started ? duration - (Time.time - GameStartTime): 0f;
+    protected WishGranter granter;
 
-    public WishGranterGameTimer(float cooldown, float duration, WishGranter granter) : base(granter)
+    public WishGranterGameTimer(float cooldown, float duration, WishGranter granter)
     {
         this.cooldown = cooldown;
         this.duration = duration;
         gameState = GameState.Cooldown;
         CoolDownStartTime = Time.time;
+        this.granter = granter;
     }
     
-    public override bool CanAddMore()
+    public bool CanAddMore()
     {
         return gameState == GameState.WaitingStart || gameState == GameState.Started;
     }
 
-    public override void OnUpdate()
+    public void OnUpdate()
     {
         if (gameState == GameState.Cooldown)
         {
             if (CoolDownTimeLeft < 0f)
             {
-                gameState = GameState.WaitingStart;
-                startProcessedCounter = granter.ProcessedCounter;
+                SetGameReady();
             }
             else
             {
@@ -224,7 +203,14 @@ public class WishGranterGameTimer : WishGranterTimer
         }
     }
 
-    public override void ResetToCooldown()
+    public void SetGameReady()
+    {
+        gameState = GameState.WaitingStart;
+        startProcessedCounter = granter.ProcessedCounter;
+        CoolDownStartTime = Time.time - (CoolDownTime + 1);
+    }
+
+    public void ResetToCooldown()
     {
         gameState = GameState.Cooldown;
         CoolDownStartTime = Time.time;

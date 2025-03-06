@@ -8,12 +8,28 @@ public class IncomeUpgrader : UpgradableObject
     [SerializeField] private float[] incomeMultipliers;
     [SerializeField] private string[] titles;
     private WishGranter wishGranter;
-    private UpgradableBuilding building;
+
+    private UpgradableBuilding building
+    {
+        get
+        {
+            if (_building == null)
+            {
+                _building = GetComponentInParent<UpgradableBuilding>();
+            }
+
+            return _building;
+        }
+    }
+    protected UpgradableBuilding _building;
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        building = GetComponentInParent<UpgradableBuilding>();
+        if (_building == null)
+        {
+            _building = GetComponentInParent<UpgradableBuilding>();
+        }
         wishGranter = GetComponentInParent<WishGranter>();
         if (wishGranter == null || building == null)
         {
@@ -45,10 +61,5 @@ public class IncomeUpgrader : UpgradableObject
         {
             wishGranter.IncomeMultiplier = incomeMultipliers[Mathf.Clamp(Level - 1, 0, incomeMultipliers.Length - 1)];
         }
-    }
-
-    public void ForcePurchase()
-    {
-        LevelUp();
     }
 }

@@ -19,7 +19,7 @@ public class BankGranter : UIWishGranter
 
     protected override void OnActivate()
     {
-        game = new BankGame(timer as WishGranterGameTimer, wishesConfig, GiveReward);
+        game = new BankGame(coolDownTimer.GetGameTimer(), wishesConfig, GiveReward);
         (panel as BankWishPanel).Init(game, () =>
             {
                 processPlaces[0].SetComplete();
@@ -38,7 +38,7 @@ public class BankGranter : UIWishGranter
             });
         base.OnActivate();
     }
-
+    
     private void GiveReward(int count)
     {
         AddMoney(count);

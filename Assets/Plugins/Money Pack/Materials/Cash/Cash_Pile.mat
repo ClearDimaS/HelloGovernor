@@ -30,8 +30,10 @@ Material:
   - TCP2_RAMP_BANDS
   - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING
-  - TCP2_RIM_LIGHTING_LIGHTMASK
+  - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords:
+  - TCP2_OUTLINE_CONST_SIZE
+  - TCP2_OUTLINE_TEXTURED_VERTEX
   - TCP2_UV_NORMALS_FULL
   - _METALLICGLOSSMAP
   - _SPECGLOSSMAP
@@ -149,10 +151,10 @@ Material:
     - _OutlineLightingTypeURP: 0
     - _OutlineMaxWidth: 1
     - _OutlineMinWidth: 1
-    - _OutlinePixelSizeType: 0
-    - _OutlineTextureLOD: 5
-    - _OutlineTextureType: 0
-    - _OutlineWidth: 1
+    - _OutlinePixelSizeType: 1
+    - _OutlineTextureLOD: 0
+    - _OutlineTextureType: 1
+    - _OutlineWidth: 8.82
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -161,14 +163,14 @@ Material:
     - _RampOffset: 0
     - _RampScale: 1
     - _RampSmoothing: 0
-    - _RampThreshold: 0.01
+    - _RampThreshold: 0.83
     - _RampType: 2
-    - _ReceiveShadowsOff: 1
+    - _ReceiveShadowsOff: 0
     - _ReflectionMapType: 0
     - _ReflectionSmoothness: 0.5
     - _RenderingMode: 0
-    - _RimMax: 0.97
-    - _RimMin: 0
+    - _RimMax: 1.68
+    - _RimMin: 0.25
     - _ShadowColorLightAtten: 0
     - _SingleIndirectColor: 0
     - _SmoothnessTextureChannel: 0
@@ -195,7 +197,7 @@ Material:
     - _UseOutline: 0
     - _UseReflections: 0
     - _UseRim: 1
-    - _UseRimLightMask: 1
+    - _UseRimLightMask: 0
     - _UseRoughnessMap: 1
     - _UseShadowTexture: 0
     - _UseSpecular: 0
@@ -206,9 +208,9 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.8679245, g: 0.8561897, b: 0, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.5}
+    - _RimColor: {r: 1, g: 0.37588555, b: 0, a: 0.5}
     - _SColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
     - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}

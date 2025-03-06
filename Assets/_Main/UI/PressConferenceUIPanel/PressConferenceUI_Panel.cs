@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,6 +25,11 @@ public class PressConferenceUI_Panel : UI_Panel
         base.OnAwake();
         answer1.onClick.AddListener(() => Answer(0));
         answer2.onClick.AddListener(() => Answer(1));
+    }
+
+    private void Start()
+    {
+        resultPanel.Hide(true);
     }
 
     private void Answer(int index)

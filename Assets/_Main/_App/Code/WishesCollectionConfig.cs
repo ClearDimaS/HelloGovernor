@@ -67,8 +67,9 @@ public class WishesCollectionConfig : TypedCollectionConfig<WishGranterConfig, T
         return GetItem(granter.GetType());
     }
 
-    public WishGranterTimer GetTimer(WishGranter granter)
+    public WishGranterCooldownTimer GetCooldownTimer(WishGranter granter)
     {
-        return GetItem(granter.GetType()).GetTimer(granter);
+        var config = GetItem(granter.GetType());
+        return config.GetCooldownTimer(granter);
     }
 }

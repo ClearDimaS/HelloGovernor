@@ -48,6 +48,7 @@ public class ChatUI_Panel : UI_Panel
 
     private void Start()
     {
+        resultElement.Hide(true);
         chatMinigame = new ChatMinigame(wishesCollectionConfig.chatReward);
     }
 

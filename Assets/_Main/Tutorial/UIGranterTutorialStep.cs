@@ -17,12 +17,15 @@ public class UIGranterTutorialStep : TutorialStep
 
     protected override void UpdateProgress_Internal()
     {
-        
+        if (uiGranter.IsCooldown && !IsCompleted())
+        {
+            uiGranter.SetReady();
+        }
     }
 
     public override float GetProgress()
     {
-        return uiGranter.WasCompletedAtLeastOnce ? 0f : 1f;
+        return uiGranter.WasCompletedAtLeastOnce ? 1f : 0f;
     }
 
     public override Transform GetCameraTarget()
@@ -37,7 +40,7 @@ public class UIGranterTutorialStep : TutorialStep
 
     protected override string CreateProgressText()
     {
-        return uiGranter.WasCompletedAtLeastOnce ? "0/1" : "1/1";
+        return uiGranter.WasCompletedAtLeastOnce ? "1/1" : "0/1";
     }
 
     protected override string CreateTitle()

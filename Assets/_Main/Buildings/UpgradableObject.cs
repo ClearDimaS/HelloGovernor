@@ -166,4 +166,9 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     public abstract Sprite GetPurchaseIcon();
 
     public abstract string GetTitle();
+
+    public void ForcePurchase()
+    {
+        LevelUp();
+    }
 }

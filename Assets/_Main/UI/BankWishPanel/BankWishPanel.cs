@@ -16,6 +16,11 @@ public class BankWishPanel : UI_Panel
     private BankGame bankGame;
     private bool isOverShown;
 
+    private void Start()
+    {
+        resultPanel.Hide(true);
+    }
+
     private void Update()
     {
         if (bankGame.IsOver())

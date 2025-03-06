@@ -14,6 +14,7 @@ public class AddedMoneyDisplayer : MonoBehaviour
     public Transform endPlace;
     public float changePause = 0.5f;
     public AddedMoneyElement element1;
+    public AddedMoneyElement element2;
     public Queue<AddedMoneyElement> queue = new();
 
     private float lastChangeTime;
@@ -23,6 +24,7 @@ public class AddedMoneyDisplayer : MonoBehaviour
     private void Awake()
     {
         queue.Enqueue(element1);
+        queue.Enqueue(element2);
     }
 
     private void Start()
@@ -60,10 +62,6 @@ public class AddedMoneyDisplayer : MonoBehaviour
 
     private AddedMoneyElement GetQueueElement()
     {
-        if (queue.Count <= 1)
-        {
-            queue.Enqueue(Instantiate(queue.Peek(), queue.Peek().transform.parent));
-        }
         return queue.Dequeue();
     }
 }

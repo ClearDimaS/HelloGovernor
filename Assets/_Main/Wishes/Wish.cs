@@ -10,7 +10,6 @@ public class Wish : UpdateableBehaviour, IResetable
 
     private float progress;
     private event Action<Wish> readyToRemoveEvent;
-    private event Action<Wish> removeEvent;
 
     public bool IsRemoved { get; private set; }
     public bool IsProgressFull => progress >= 1f;
@@ -20,12 +19,11 @@ public class Wish : UpdateableBehaviour, IResetable
     public bool IsSuccess => progress >= 1f;
     public bool UseSound { get; private set; }
 
-    public void Initialize(CitizenController citizen, Action<Wish> onRemove, Action<Wish> onReadyToRemove)
+    public void Initialize(CitizenController citizen, Action<Wish> onReadyToRemove)
     {
         progress = 0;
         this.citizen = citizen;
         walker = citizen.Walker;
-        removeEvent += onRemove;
         readyToRemoveEvent += onReadyToRemove;
         IsRemoved = false;
     }
@@ -47,7 +45,6 @@ public class Wish : UpdateableBehaviour, IResetable
         granter = null;
         citizen = null;
         walker = null;
-        removeEvent = null;
     }
 
     public void OnPool()
@@ -60,17 +57,19 @@ public class Wish : UpdateableBehaviour, IResetable
         progress += addProgress;
     }
 
+    /*
     public void Abort()
     {
         granter.Abort(citizen);
         SetRemoved(granter);
     }
+    */
     
     public void SetRemoved(WishGranter granter)
     {
         if (granter != this.granter)
         {
-            Debug.LogError($"removing other wish!");
+            Debug.LogError($"removing other wish!  {granter}  /  {this.granter}");
         }
         if (!IsRemoved)
         {
@@ -79,7 +78,6 @@ public class Wish : UpdateableBehaviour, IResetable
             readyToRemoveEvent = null;
             
             IsRemoved = true;
-            removeEvent?.Invoke(this);
         }
     }
 }

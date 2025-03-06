@@ -71,17 +71,11 @@ public class WishesController : CitizenBehaviour
             isWishOver = false;
             currentWish = wishesPool.GetElement();
             currentWish.transform.SetParent(transform);
-            currentWish.Initialize(citizenController, PoolWish, OnWishResult);
+            currentWish.Initialize(citizenController, OnWishResult);
             currentWish.SetGranter(granter);
         }
     }
 
-    private void PoolWish(Wish wish)
-    {
-        wishesPool.Pool(wish);
-        currentWish = null;
-    }
-    
     private void OnWishResult(Wish wish)
     {
         if (!isWishOver)
@@ -121,6 +115,8 @@ public class WishesController : CitizenBehaviour
         if (currentWish != null)
         {
             currentWish.SetRemoved(wishGranter);
+            wishesPool.Pool(currentWish);
+            currentWish = null;
         }
     }
 }
