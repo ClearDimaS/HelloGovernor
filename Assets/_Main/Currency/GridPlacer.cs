@@ -81,7 +81,7 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
 
         var itemSize = item.GetWorldSize();
         var placeSizeWorld = place.transform.TransformVector(placeSize);
-        item.Root.localScale = new Vector3(placeSizeWorld.x /itemSize.x, placeSizeWorld.y /itemSize.y, placeSizeWorld.z /itemSize.z) ;
+        item.Root.localScale = Vector3.one; // new Vector3(placeSizeWorld.x /itemSize.x, placeSizeWorld.y /itemSize.y, placeSizeWorld.z /itemSize.z)
         placedObjects.Add(item);
     }
 

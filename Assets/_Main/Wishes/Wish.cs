@@ -19,22 +19,13 @@ public class Wish : UpdateableBehaviour, IResetable
     public bool IsSuccess => progress >= 1f;
     public bool UseSound { get; private set; }
 
-    public void Initialize(CitizenController citizen, Action<Wish> onReadyToRemove)
+    public void Initialize(CitizenController citizen, Action<Wish> onReadyToRemove, WishGranter granter)
     {
         progress = 0;
         this.citizen = citizen;
         walker = citizen.Walker;
         readyToRemoveEvent += onReadyToRemove;
         IsRemoved = false;
-    }
-    
-    public bool HasOKGranter()
-    {
-        return granter != null && granter.IsWorking();
-    }
-
-    public void SetGranter(WishGranter granter)
-    {
         this.granter = granter;
         granter.AddApproaching(citizen);
     }

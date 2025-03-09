@@ -27,9 +27,10 @@ public class TrainBehaviour : Singleton<TrainBehaviour>
 
     [SerializeField] private Transform[] entries;
     
-    private float inStateTime = 0f;
-    private ETrainState currentState;
-    
+    [SerializeField]private float inStateTime = 0f;
+    [SerializeField] private ETrainState currentState;
+    public bool IsHere => currentState != ETrainState.Away;
+
     protected override void OnCreated()
     {
         base.OnCreated();

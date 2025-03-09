@@ -26,7 +26,7 @@ public class WishGrantersManager : MonoBehaviour
         var type = wishesCollectionConfig.GetRandomWishType();
         foreach (var granterCandidate in grantersDict[type])
         {
-            if (granterCandidate.IsWorking() && granterCandidate.CanAddOneMore())
+            if (granterCandidate.IsWorking() && granterCandidate.CanAddOneMore() && granterCandidate.Weight > 0)
             {
                 granter = granterCandidate;
                 break;

@@ -17,6 +17,30 @@ public static class GameObjectExtensions
              
         }
     }
+
+    public static void SetActiveOnce(this GameObject[] gos, bool state)
+    {
+        foreach (var go in gos)
+        {
+            SetActiveOnce(go, state);
+        }
+    }
+    
+    public static void SetActiveOnce(this List<GameObject> gos, bool state)
+    {
+        foreach (var go in gos)
+        {
+            SetActiveOnce(go, state);
+        }
+    }
+    
+    public static void SetActiveOnce(this GameObject go, bool state)
+    {
+        if (go.activeSelf != state)
+        {
+            go.SetActive(state);
+        }
+    }
 }
 
 public static class Vector2Extensions

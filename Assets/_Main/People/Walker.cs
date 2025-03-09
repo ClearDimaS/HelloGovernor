@@ -27,6 +27,7 @@ public class Walker : CulledBehaviour
     private void OnDisable()
     {
         isFinished = true;
+        reachTargetEvent = null;
     }
 
     protected override void OnUpdate(bool visible)

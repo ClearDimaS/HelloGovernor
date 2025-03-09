@@ -12,6 +12,8 @@ public abstract class WishGranter<T, U> : WishGranter where T : WishGranterConfi
     
     protected T config;
 
+    public override float Weight => config.chanceWeight;
+
     protected override void OnConstruct()
     {
         base.OnConstruct();
@@ -95,6 +97,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     protected int QueueMaxCount => queuePlaces.Length;
     public float IncomeMultiplier { get; set; } = 1f;
     protected bool IsBought => upgradable == null || upgradable.IsBought;
+    public abstract float Weight { get; }
 
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
@@ -108,6 +111,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         this.grantersManager = grantersManager;
         OnConstruct();
         coolDownTimer = this.wishesCollectionConfig.GetCooldownTimer(this);
+        Debug.Log($"{GetType()} timer is: {coolDownTimer}");
     }
 
     protected virtual void OnConstruct()
@@ -149,6 +153,15 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     private void Update()
     {
+        #if UNITY_EDITOR
+        foreach (var citizen in queue)
+        {
+            if (!citizen.WishesController.IsGranterMe(this))
+            {
+                Debug.LogError($"granter is not me!  {GetType()}    {transform.name}   {citizen.WishesController.GetGranter()}");
+            }
+        }
+        #endif
         if (upgradable != null && upgradable.Level - 1 > extraPlacesAddedLevel)
         {
             extraPlacesAddedLevel = upgradable.Level - 1; // 1 for level 2
@@ -248,10 +261,6 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
                 postProcessorCanLeave)
             {
                 ProcessedCounter++;
-                if (wishPostProcessor != null)
-                {
-                    wishPostProcessor.Add(citizen);
-                }
                 pendingLeaving.Add(citizen);
                 OnLeave(citizen);
             }
@@ -276,6 +285,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         foreach (var citizen in pendingRemove)
         {
             RemoveFromLeaving(citizen);
+            if (wishPostProcessor != null)
+            {
+                wishPostProcessor.Add(citizen);
+            }
         }
         pendingRemove.Clear();
 
@@ -452,6 +465,12 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     {
         leaving.Remove(citizen);
         citizen.WishesController.RemoveWish(this);
+        #if UNITY_EDITOR
+        if (approaching.Contains(citizen) || queue.Contains(citizen))
+        {
+            Debug.LogError($"something wrong with this granter bro");
+        }
+        #endif
     }
 
     public void Abort(CitizenController citizen)

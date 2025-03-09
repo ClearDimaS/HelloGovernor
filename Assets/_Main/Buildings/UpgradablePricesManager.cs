@@ -101,26 +101,23 @@ public class UpgradablePricesManager : MonoBehaviour
                 if (waitingUnlock != null)
                 {
                     waitingUnlock = unlockQueue.Peek();
-                    UniTask.Delay(TimeSpan.FromSeconds(1f)).ContinueWith(() =>
+                    if (lastUnlocked != null)
                     {
-                        if (lastUnlocked != null)
+                        if (lastUnlocked.upgradable is UpgradableBuilding building1)
                         {
-                            if (lastUnlocked.upgradable is UpgradableBuilding building1)
+                            var granter = building1.GetComponent<WishGranter>();
+                            if (granter != null)
                             {
-                                var granter = building1.GetComponent<WishGranter>();
-                                if (granter != null)
-                                {
-                                    bought.Add(granter);
-                                }  
-                            }
+                                bought.Add(granter);
+                            }  
                         }
-                        lastUnlocked = unlockQueue.Dequeue();
-                        if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
-                        {
-                            available.Add(building);
-                        }
-                        AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
-                    });
+                    }
+                    lastUnlocked = unlockQueue.Dequeue();
+                    if (lastUnlocked.upgradable is UpgradableBuilding building && !available.Contains(building))
+                    {
+                        available.Add(building);
+                    }
+                    AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
                     VodooAnalyticsManagerFacade.WinLevel(levelCounter);
                     //AnalyticsManager.Instance.WinLevel(levelCounter);

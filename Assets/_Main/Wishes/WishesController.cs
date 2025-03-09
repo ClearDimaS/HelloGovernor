@@ -34,6 +34,10 @@ public class WishesController : CitizenBehaviour
     public override void OnReset()
     {
         isWishesDisabled = false;
+        if (currentWish != null)
+        {
+            Debug.LogError($"old wish not null!");
+        }
         currentWish = null;
     }
 
@@ -75,11 +79,14 @@ public class WishesController : CitizenBehaviour
 
     private void CreateWishForGranter(WishGranter granter)
     {
+        if (currentWish != null)
+        {
+            Debug.LogError($"old wish not null!");
+        }
         isWishOver = false;
         currentWish = wishesPool.GetElement();
         currentWish.transform.SetParent(transform);
-        currentWish.Initialize(citizenController, OnWishResult);
-        currentWish.SetGranter(granter);
+        currentWish.Initialize(citizenController, OnWishResult, granter);
     }
 
     private void OnWishResult(Wish wish)
@@ -129,5 +136,15 @@ public class WishesController : CitizenBehaviour
     public void SetWish(WishGranter startWish)
     {
         CreateWishForGranter(startWish);
+    }
+
+    public bool IsGranterMe(WishGranter wishGranter)
+    {
+        return wishGranter == currentWish.Granter;
+    }
+
+    public WishGranter GetGranter()
+    {
+        return currentWish.Granter;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -22,19 +23,17 @@ public class TrainWishPostProcessor : WishPostProcessor
     {
         if (TrainBehaviour.Instance.GetState() == ETrainState.Departure && TrainBehaviour.Instance.GetTimeLeft() > maxTimeToWalk)
         {
-            foreach (var waiting in waitingCitizens)
+            for (var i = 0; i < waitingCitizens.Count; i++)
             {
-                if (!waiting.Walker.IsMoving)
+                var waiting = waitingCitizens[i];
+                if (!waiting.Walker.IsMoving && waiting.gameObject.activeSelf)
                 {
                     waiting.ResetAnimation();
                     var entry = TrainBehaviour.Instance.GetNearestEntry(waiting.transform);
                     var tmp = waiting;
-                    waiting.Walker.MoveToTarget(entry.position, () =>
-                    {
-                        Remove(tmp);
-                    });
+                    waiting.Walker.MoveToTarget(entry.position, () => { Remove(tmp); });
                 }
-            }   
+            }
         }
     }
 
@@ -46,7 +45,12 @@ public class TrainWishPostProcessor : WishPostProcessor
     public override void Add(CitizenController citizen)
     {
         citizen.WishesController.DisableAllDesires();
-        citizen.Walker.MoveToTarget(waitPlaces[waitingCitizens.Count].position, () => citizen.PlayAnimation(waitingAnimation));
+        var place = waitPlaces[waitingCitizens.Count];
+        citizen.Walker.MoveToTarget(place.position, () =>
+        {
+            citizen.transform.DORotateQuaternion(place.rotation, 0.2f);
+            citizen.PlayAnimation(waitingAnimation);
+        });
         waitingCitizens.Add(citizen);
     }
 

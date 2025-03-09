@@ -19,7 +19,8 @@ public class OperatableProcessPlace : ProcessPlace
     {
         base.OnUpdate(visible);
         var owner = GetOwner();
-        var showTimer = owner != null && progress < 1f;
+        var showTimer = progress >= 0f && progress < 1f && owner != null && !owner.Walker.IsMoving && CanAddProgress(owner);
+        
         if (showTimer != timer.gameObject.activeSelf)
         {
             timer.gameObject.SetActive(showTimer);
@@ -32,6 +33,6 @@ public class OperatableProcessPlace : ProcessPlace
 
     public override bool CanAddProgress(CitizenController citizen)
     {
-        return granter.IsOperated() && citizen != null && !citizen.Walker.IsMoving;
+        return granter.IsOperated();
     }
 }

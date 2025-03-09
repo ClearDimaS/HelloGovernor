@@ -5,7 +5,7 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
 {
     [SerializeField] protected OperatablePlace operatablePlace;
     public int ServedCounter { get; set; }
-
+    
     protected override void OnAwake()
     {
         base.OnAwake();

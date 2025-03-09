@@ -165,6 +165,10 @@ public class WishGranterGameTimer
         gameState = GameState.Cooldown;
         CoolDownStartTime = Time.time;
         this.granter = granter;
+        if (this.granter == null)
+        {
+            Debug.LogError($"granter is null!");
+        }
     }
     
     public bool CanAddMore()

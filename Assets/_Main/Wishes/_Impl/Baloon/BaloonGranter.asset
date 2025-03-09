@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5d1c91c484e919a11772c00d9ddfa, type: 3}
   m_Name: BaloonGranter
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: 2188635362542824320, guid: 1fadc80b04b064575af2bb67958769f2, type: 3}
-  grantDuration: 5
+  grantDuration: 1
   reward: 10
   chanceWeight: 1
   timerType: 0

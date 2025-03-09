@@ -21,23 +21,18 @@ public class TownHallWishGranter : OperatableGranter
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (TrainBehaviour.Instance.GetState() == ETrainState.Arrival && IsBought)
+        if (TrainBehaviour.Instance.GetState() == ETrainState.Arrival && Time.time > 10f)
         {
-            if (CanAddOneMore() && Time.time - lastExitTime > exitFromTrainPause)
+            if (IsWorking() && CanAddOneMore() && Time.time - lastExitTime > exitFromTrainPause)
             {
                 lastExitTime = Time.time;
                 var citizen = spawner.GetNewCitizen();
                 var entry = TrainBehaviour.Instance.GetRandomEntry();
-                citizen.transform.position = entry.position;
-                AddApproaching(citizen);
+                citizen.Place(entry.position);
+                citizen.WishesController.SetWish(this);
+                extraCitizensCount++;
             }   
         }
-    }
-
-    protected override void OnLeave(CitizenController citizen)
-    {
-        base.OnLeave(citizen);
-        extraCitizensCount++;
     }
 
     public void RemoveExtraCitizen()
