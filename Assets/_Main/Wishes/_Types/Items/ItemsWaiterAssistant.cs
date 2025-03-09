@@ -24,7 +24,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     
     public Transform Root => transform;
     public Transform TransformRoot => transform;
-    
+
     private void Awake()
     {
         wishGranter = GetComponentInParent<IItemsUserWishGranter>();
@@ -106,6 +106,11 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         interactor.RemoveItem();
         item = null;
         return removed;
+    }
+
+    public GenericCitizenItem PeekItem()
+    {
+        return interactor.PeekItem();
     }
 
     public bool HasAnyItems()

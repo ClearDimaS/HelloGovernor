@@ -5,7 +5,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class CitizenSpawner : MonoBehaviour
+public class CitizenSpawner : Singleton<CitizenSpawner>
 {
     [Inject] private DiContainer container;
     [Inject] private HousesManager housesManager;
@@ -20,6 +20,14 @@ public class CitizenSpawner : MonoBehaviour
     private void Update()
     {
         SpawnNew();
+    }
+
+    public void SpawnCitizenFor(Transform place, WishGranter startWish)
+    {
+        var citizen = Spawn();
+        citizen.transform.rotation = place.rotation;
+        citizen.Place(place.position);
+        citizen.WishesController.SetWish(startWish);
     }
 
     private void SpawnNew()

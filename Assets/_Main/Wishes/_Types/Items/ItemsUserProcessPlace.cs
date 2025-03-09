@@ -10,7 +10,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
     [SerializeField] private TimerBase takeTimer;
     [SerializeField] private float takeRadius = 1.5f;
 
-    private IWishAssistant wishAssistant;
+    protected IWishAssistant wishAssistant;
     private static bool isOnPlayer;
 
     public IWishAssistant Assistant => wishAssistant;
@@ -48,7 +48,9 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
             Debug.Log($"{visible} {wishAssistant == null} {!isOnPlayer} {CanAddItemToPlayer(player)}");
         }
         #endif
-        if (visible && wishAssistant == null && !isOnPlayer && CanAddItemToPlayer(player))
+        if (visible && wishAssistant == null && !isOnPlayer 
+            && CanAddItemToPlayer(player) && GetOwner() != null 
+            && !GetOwner().Walker.IsMoving)
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
             playerDiff.y = 0f;

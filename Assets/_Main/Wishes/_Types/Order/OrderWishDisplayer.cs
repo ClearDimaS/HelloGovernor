@@ -11,6 +11,7 @@ public class OrderWishDisplayer : MonoBehaviour
     private void Awake()
     {
         processPlace = GetComponentInParent<OrderProcessPlace>();
+        content.transform.localScale = Vector3.zero;
     }
 
     private void Update()
@@ -36,10 +37,13 @@ public class OrderWishDisplayer : MonoBehaviour
         if (show)
         {
             var curIcon = processPlace.GetCurrentIcon();
-            if (icon.sprite != curIcon)
+            var curColor = processPlace.GetCurrentColor();
+            if (icon.sprite != curIcon || icon.color.r != curColor.r 
+                                       || icon.color.g != curColor.g
+                || icon.color.b != curColor.b)
             {
                 icon.sprite = curIcon;
-                icon.color = processPlace.GetCurrentColor();
+                icon.color = curColor;
             }
         }
     }

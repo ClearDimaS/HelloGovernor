@@ -14,6 +14,8 @@ public class BankWishPanel : UI_Panel
     [SerializeField] private GameObject answersGO;
     [SerializeField] private TMP_Text answer1;
     [SerializeField] private TMP_Text answer2;
+    [SerializeField] private GameObject answer1CorrectGO;
+    [SerializeField] private GameObject answer2CorrectGO;
     
     private Func<bool> canShowNext;
     private BankGame bankGame;
@@ -70,7 +72,7 @@ public class BankWishPanel : UI_Panel
 
         var reward1 = optionData1.GetReward();
         var reward2 = optionData2.GetReward();
-        answer2.text = reward1 > 0 ? $"+{reward1}" : $"{reward1}";
+        answer1.text = reward1 > 0 ? $"+{reward1}" : $"{reward1}";
         answer1.color = reward1 > 0 ? option1.ColorRight : option1.ColorWrong;
         answer2.text = reward2 > 0 ? $"+{reward2}" : $"{reward2}";
         answer2.color = reward2 > 0 ? option1.ColorRight : option1.ColorWrong;

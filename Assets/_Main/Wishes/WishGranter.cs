@@ -99,6 +99,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
     protected WishGranterCooldownTimer coolDownTimer;
+    protected bool wasBought;
 
     [Inject]
     protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
@@ -115,6 +116,13 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     }
     private void Awake()
     {
+        foreach (var extraPlacesData in extraPlaces)
+        {
+            foreach (var processPlace in extraPlacesData.processPlaces)
+            {
+                processPlace.gameObject.SetActive(false);
+            }
+        }
         grantersManager.AddGranter(this);
         for (int i = 0; i < processPlaces.Length; i++)
         {
@@ -131,6 +139,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     private void Start()
     {
         OnStart();
+        wasBought = upgradable == null || upgradable.IsBought;
     }
 
     protected virtual void OnStart()
@@ -284,6 +293,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     protected virtual void AddExtraPlaces(WishGranterExtraPlacesData extraPlace)
     {
+        foreach (var processPlace in extraPlace.processPlaces)
+        {
+            processPlace.gameObject.SetActive(true);
+        }
         if (extraPlace.processPlaces.Length > 0)
         {
             processPlaces = processPlaces.Concat(extraPlace.processPlaces).ToArray();   
@@ -296,9 +309,21 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
 
     protected virtual void OnUpdate()
     {
-        
+        if (!wasBought && IsBought)
+        {
+            wasBought = true;
+            FillQueueWithCitizens();
+        }
     }
-    
+
+    protected virtual void FillQueueWithCitizens()
+    {
+        foreach (var queuePlace in queuePlaces)
+        {
+            CitizenSpawner.Instance.SpawnCitizenFor(queuePlace, this);
+        }
+    }
+
     protected virtual void UpdateProcessed(CitizenController citizen)
     {
         if (CanAddProgress(citizen))
@@ -494,6 +519,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     
     protected void AddMoney(int count)
     {
+        Debug.Log($"adding money: {count}");
         currencyStack.AddCurrency(count);
     }
 }

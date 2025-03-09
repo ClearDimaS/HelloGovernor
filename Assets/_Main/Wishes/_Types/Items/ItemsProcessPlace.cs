@@ -5,7 +5,24 @@ using Object = UnityEngine.Object;
 
 public class ItemsProcessPlace : ItemsUserProcessPlace
 {
+    [SerializeField] protected GameObject gfx;
     protected ItemsWishGranter granter;
+
+    private void OnDisable()
+    {
+        if (gfx != null)
+        {
+            gfx.SetActive(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (gfx != null)
+        {
+            gfx.SetActive(true);
+        }
+    }
 
     protected override void OnAwake()
     {

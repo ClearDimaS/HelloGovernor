@@ -191,4 +191,14 @@ public class Interactor : CulledBehaviour
 
         interactables.Clear();
     }
+
+    public GenericCitizenItem PeekItem()
+    {
+        if (interactables.Count > 0)
+        {
+            return interactables[^1] as GenericCitizenItem;
+        }
+
+        return null;
+    }
 }

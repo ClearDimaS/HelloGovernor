@@ -548,12 +548,12 @@ PrefabInstance:
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.1
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 270391778550255216, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.22
+      value: 4.91
       objectReference: {fileID: 0}
     - target: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
@@ -696,6 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0da40b3235e74b378dfe22d58df5fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wishPostProcessor: {fileID: 0}
   queuePlaces:
   - {fileID: 2649429967390912028}
   - {fileID: 8272743273053592742}
@@ -708,7 +709,9 @@ MonoBehaviour:
   exit: {fileID: 9133581574923211806}
   upgradable: {fileID: 819254169116940984}
   currencyStack: {fileID: 104522210317948971}
+  extraPlaces: []
   operatablePlace: {fileID: 7890604675397095690}
+  exitFromTrainPause: 0.2
 --- !u!4 &4732050745929091629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,

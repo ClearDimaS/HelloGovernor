@@ -10,6 +10,7 @@ public interface IWishAssistant
     public GenericCitizenItem RemoveItem();
     public bool HasAnyItems();
     public Transform TransformRoot { get; }
+    public GenericCitizenItem PeekItem();
 }
 
 public class WishesController : CitizenBehaviour
@@ -68,12 +69,17 @@ public class WishesController : CitizenBehaviour
         WishGranter granter = grantersManager.TryGetWorkingFreeGranter();
         if (granter != null)
         {
-            isWishOver = false;
-            currentWish = wishesPool.GetElement();
-            currentWish.transform.SetParent(transform);
-            currentWish.Initialize(citizenController, OnWishResult);
-            currentWish.SetGranter(granter);
+            CreateWishForGranter(granter);
         }
+    }
+
+    private void CreateWishForGranter(WishGranter granter)
+    {
+        isWishOver = false;
+        currentWish = wishesPool.GetElement();
+        currentWish.transform.SetParent(transform);
+        currentWish.Initialize(citizenController, OnWishResult);
+        currentWish.SetGranter(granter);
     }
 
     private void OnWishResult(Wish wish)
@@ -118,5 +124,10 @@ public class WishesController : CitizenBehaviour
             wishesPool.Pool(currentWish);
             currentWish = null;
         }
+    }
+
+    public void SetWish(WishGranter startWish)
+    {
+        CreateWishForGranter(startWish);
     }
 }

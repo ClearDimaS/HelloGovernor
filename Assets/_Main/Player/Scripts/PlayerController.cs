@@ -148,6 +148,11 @@ public class PlayerController : Singleton<PlayerController>,
         return interactor.RemoveItem() as GenericCitizenItem;
     }
     
+    public GenericCitizenItem PeekItem()
+    {
+        return interactor.PeekItem();
+    }
+
     public bool HasAnyItems()
     {
         return interactor.HasAnyItem();
