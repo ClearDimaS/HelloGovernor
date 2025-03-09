@@ -8,7 +8,7 @@ public interface IItemsUserWishGranter
     ItemsUserProcessPlace GetProcessedWithoutAssistant();
     Transform GetIdlePlace();
     Transform GetPlaceToLookAt();
-    float ProcessPlaceUserTime { get; }
+    Sprite GetIconAssistant();
 }
 
 
@@ -70,6 +70,11 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
                 target = null;
             }
         }
+    }
+
+    public bool HasItems(GenericCitizenItem item)
+    {
+        return interactor.HasItemOfType(item.GetData().key);
     }
 
     public bool CanAddItems()

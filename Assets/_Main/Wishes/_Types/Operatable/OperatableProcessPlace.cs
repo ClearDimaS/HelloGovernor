@@ -18,8 +18,7 @@ public class OperatableProcessPlace : ProcessPlace
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        var owner = GetOwner();
-        var showTimer = progress >= 0f && progress < 1f && owner != null && !owner.Walker.IsMoving && CanAddProgress(owner);
+        var showTimer = ShowTimer();
         
         if (showTimer != timer.gameObject.activeSelf)
         {

@@ -9,6 +9,7 @@ public class DayTimeData
 {
     public float startT;
     public Color sunColor;
+    public Color skyColor;
     public float intensity = 1f;
     public float shadows;
 
@@ -18,6 +19,7 @@ public class DayTimeData
         {
             startT = this.startT,
             sunColor = this.sunColor,
+            skyColor = this.skyColor,
             intensity = this.intensity,
             shadows = this.shadows
         };
@@ -55,7 +57,7 @@ public class DayTimeManager : MonoBehaviour
         }
 
         var t = GetDaytT();
-        IsLampsEnabled = t > .7f || t < 0.3f;
+        IsLampsEnabled = t > .8f || t < 0.2f;
     }
 
     public float GetDaytT()

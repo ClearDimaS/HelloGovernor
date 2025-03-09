@@ -21,20 +21,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Cash_Pile
-  m_Shader: {fileID: -6465566751694194690, guid: edd7abf643fa4bc4e8561d4c280c97cf,
+  m_Shader: {fileID: -6465566751694194690, guid: df5bb027d94a6c44bb32b3c31ec1303f,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - TCP2_MOBILE
+  - TCP2_OUTLINE_CONST_SIZE
   - TCP2_RAMP_BANDS
   - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING
+  - TCP2_UV_NORMALS_FULL
   - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords:
-  - TCP2_OUTLINE_CONST_SIZE
-  - TCP2_OUTLINE_TEXTURED_VERTEX
-  - TCP2_UV_NORMALS_FULL
   - _METALLICGLOSSMAP
   - _SPECGLOSSMAP
   m_LightmapFlags: 4
@@ -153,8 +152,8 @@ Material:
     - _OutlineMinWidth: 1
     - _OutlinePixelSizeType: 1
     - _OutlineTextureLOD: 0
-    - _OutlineTextureType: 1
-    - _OutlineWidth: 8.82
+    - _OutlineTextureType: 0
+    - _OutlineWidth: 5.72
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -194,7 +193,7 @@ Material:
     - _UseMobileMode: 1
     - _UseNormalMap: 0
     - _UseOcclusion: 0
-    - _UseOutline: 0
+    - _UseOutline: 1
     - _UseReflections: 0
     - _UseRim: 1
     - _UseRimLightMask: 0
@@ -208,7 +207,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.8679245, g: 0.8561897, b: 0, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 1, g: 0.37588555, b: 0, a: 0.5}
     - _SColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}

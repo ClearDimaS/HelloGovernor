@@ -378,7 +378,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             return citizenPlacesDict[citizen].CanAddProgress(citizen) && (wishPostProcessor == null || 
                                                                           wishPostProcessor.HasMorePlace());
         }
-
+        else
+        {
+            Debug.LogError($"who is checking this bs");
+        }
         return false;
     }
     
@@ -548,5 +551,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     protected void AddMoney(int count)
     {
         currencyStack.AddCurrency(count);
+    }
+
+    public bool CanProcess()
+    {
+        return wishPostProcessor == null || wishPostProcessor.HasMorePlace();
     }
 }

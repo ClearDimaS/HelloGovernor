@@ -38,7 +38,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         }
 
         var owner = GetOwner();
-        var showTimer = progress >= 0f && progress < 1f && owner != null && !owner.Walker.IsMoving && CanAddProgress(owner);
+        var showTimer = ShowTimer();
         if (takeTimer.gameObject.activeSelf != showTimer)
         {
             takeTimer.gameObject.SetActive(showTimer);

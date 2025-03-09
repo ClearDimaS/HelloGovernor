@@ -8,7 +8,7 @@ public class UpgradableAssistant : UpgradableObject
     
     [SerializeField] private Transform boughtRoot;
 
-    private ItemsWishGranter itemsWishGranter;
+    private IItemsUserWishGranter itemsWishGranter;
     private UpgradableBuilding upgradableBuilding;
     protected List<Price> pricesCopy;
     
@@ -63,7 +63,7 @@ public class UpgradableAssistant : UpgradableObject
     {
         if (itemsWishGranter == null)
         {
-            itemsWishGranter = GetComponentInParent<ItemsWishGranter>(true);
+            itemsWishGranter = GetComponentInParent<IItemsUserWishGranter>(true);
         }
         return itemsWishGranter.GetIconAssistant();
     }

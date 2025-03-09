@@ -24,8 +24,15 @@ public abstract class ProcessPlace : CulledBehaviour
     public Vector3 Position => transform.position;
     protected CitizenController Processed => processed;
     protected float progress;
+    protected WishGranter granterParent;
     
     public abstract bool CanAddProgress(CitizenController citizen);
+
+    protected override void OnAwake()
+    {
+        granterParent = GetComponentInParent<WishGranter>();
+        base.OnAwake();
+    }
 
     protected override void OnUpdate(bool visible)
     {
@@ -34,6 +41,12 @@ public abstract class ProcessPlace : CulledBehaviour
         progress = processed == null ? 0f : processed.WishesController.GetProgress();
     }
 
+    protected virtual bool ShowTimer()
+    {
+        var owner = GetOwner();
+        return granterParent.CanProcess() && progress >= 0f && progress < 1f && owner != null && !owner.Walker.IsMoving;
+    }
+    
     public void SetOwner(CitizenController citizen)
     {
         if (processed != null)

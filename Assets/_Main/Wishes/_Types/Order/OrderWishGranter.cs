@@ -92,4 +92,9 @@ public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, Ord
     {
         return processPlaces[0].GetTargetTransform();
     }
+
+    public Sprite GetIconAssistant()
+    {
+        return config.assistantIcon;
+    }
 }

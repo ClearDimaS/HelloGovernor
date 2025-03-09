@@ -35,6 +35,7 @@ public class SunBehaviour : MonoBehaviour
         }
 
         var t = Mathf.InverseLerp(currentData.startT, nextData.startT, curT);
+        RenderSettings.ambientLight =  Color.Lerp(currentData.sunColor, nextData.sunColor, t);
         light.shadowStrength = Mathf.Lerp(currentData.shadows, nextData.shadows, t);
         light.color = Color.Lerp(currentData.sunColor, nextData.sunColor, t);
         light.intensity = Mathf.Lerp(currentData.intensity, nextData.intensity, t);

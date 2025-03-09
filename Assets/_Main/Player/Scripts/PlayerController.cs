@@ -133,6 +133,11 @@ public class PlayerController : Singleton<PlayerController>,
         currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
     }
 
+    public bool HasItems(GenericCitizenItem item)
+    {
+        return interactor.HasItemOfType(item.GetData().key);
+    }
+
     public bool CanAddItems()
     {
         return interactor.HasMorePlaceFor();

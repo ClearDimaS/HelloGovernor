@@ -138,6 +138,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1688965303556554977}
     m_Modifications:
+    - target: {fileID: 5807789231517603447, guid: 59d64a4d2a5c8e8429e2ebc6157bd6c7,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7276049895485059080, guid: 59d64a4d2a5c8e8429e2ebc6157bd6c7,
         type: 3}
       propertyPath: m_RootOrder
