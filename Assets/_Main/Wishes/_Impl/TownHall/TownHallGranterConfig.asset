@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5d1c91c484e919a11772c00d9ddfa, type: 3}
   m_Name: TownHallGranterConfig
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: -3035955516313974354, guid: d8c01cbfed1294ec1a38707286d260e9,
     type: 3}
   grantDuration: 1
-  reward: 10
+  reward: 40
   chanceWeight: 0
   timerType: 0
   cooldown: 0

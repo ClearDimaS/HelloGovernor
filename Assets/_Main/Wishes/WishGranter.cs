@@ -269,26 +269,35 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         {
             OnSuccessProcess(citizen);
             AddToLeaving(citizen);
+            if (wishPostProcessor != null)
+            {
+                wishPostProcessor.Add(citizen);
+            }
         }
         pendingLeaving.Clear();
 
         // 4. Leaving
         foreach (var citizen in leaving)
         {
-            if (!citizen.Walker.IsMoving)
+            if (wishPostProcessor != null)
             {
-                var exitPlace = GetExitPlaceFor(citizen);
-                citizen.Walker.MoveToTarget(exitPlace, () => pendingRemove.Add(citizen));
+                if (!wishPostProcessor.IsProcessing(citizen))
+                {
+                    pendingRemove.Add(citizen);
+                }
+            }
+            else
+            {
+                if (!citizen.Walker.IsMoving)
+                {
+                    var exitPlace = GetExitPlaceFor(citizen);
+                    citizen.Walker.MoveToTarget(exitPlace, () => pendingRemove.Add(citizen));
+                }   
             }
         }
-
         foreach (var citizen in pendingRemove)
         {
             RemoveFromLeaving(citizen);
-            if (wishPostProcessor != null)
-            {
-                wishPostProcessor.Add(citizen);
-            }
         }
         pendingRemove.Clear();
 

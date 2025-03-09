@@ -21,7 +21,7 @@ public class TownHallWishGranter : OperatableGranter
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (TrainBehaviour.Instance.GetState() == ETrainState.Arrival && Time.time > 10f)
+        if (TrainBehaviour.Instance.GetState() == ETrainState.Arrival)
         {
             if (IsWorking() && CanAddOneMore() && Time.time - lastExitTime > exitFromTrainPause)
             {

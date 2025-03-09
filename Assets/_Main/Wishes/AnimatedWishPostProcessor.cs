@@ -24,7 +24,12 @@ public class AnimatedWishPostProcessor : WishPostProcessor
         citizens.Add(processed);
         processed.WishesController.DisableAllDesires();
     }
-
+    
+    public override bool IsProcessing(CitizenController citizen)
+    {
+        return citizens.Contains(citizen);
+    }
+    
     public override void OnUpdate()
     {
         for (int i = 0; i < citizens.Count; i++)

@@ -19,6 +19,11 @@ public class TrainWishPostProcessor : WishPostProcessor
         townHallWishGranter = FindObjectOfType<TownHallWishGranter>();
     }
 
+    public override bool IsProcessing(CitizenController citizen)
+    {
+        return waitingCitizens.Contains(citizen);
+    }
+
     public override void OnUpdate()
     {
         if (TrainBehaviour.Instance.GetState() == ETrainState.Departure && TrainBehaviour.Instance.GetTimeLeft() > maxTimeToWalk)
