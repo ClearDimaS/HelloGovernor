@@ -8,10 +8,14 @@ public class BankGranter : UIWishGranter
     [Inject] protected WishesCollectionConfig wishesConfig;
 
     protected override bool CanAddToStarted => true;
-    protected BankGame game;
     protected float lastAnswerTime;
     protected float minPause = 0.2f;
-    
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+    }
+
     protected override UI_Panel GetPanel()
     {
         return UI_Manager.Instance.GetPanel<BankWishPanel>();
@@ -19,12 +23,13 @@ public class BankGranter : UIWishGranter
 
     protected override void OnActivate()
     {
-        game = new BankGame(coolDownTimer.GetGameTimer(), wishesConfig, GiveReward, onAnswer: () =>
+        var game = new BankGame(coolDownTimer.GetGameTimer(), wishesConfig, GiveReward, onAnswer: () =>
         {
             var owner = processPlaces[0].GetOwner();
             lastAnswerTime = Time.time;
             owner.WishesController.AddProgress(this, 1);
         });
+        
         (panel as BankWishPanel).Init(game,
             () =>
             {

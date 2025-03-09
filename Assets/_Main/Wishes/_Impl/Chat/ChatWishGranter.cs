@@ -16,10 +16,17 @@ public class ChatWishGranter : UIWishGranter
     protected float startTime = -1;
 
     protected bool IsTimeOut => processed.Count > 0 && Time.time - startTime < timeOut;
-    
+
     protected override UI_Panel GetPanel()
     {
         return uiManager.GetPanel<ChatUI_Panel>();
+    }
+
+    protected override void OnActivate()
+    {
+        var chatMinigame = new ChatMinigame(config.reward * GetCitizensCount(), coolDownTimer.GetGameTimer());
+        uiManager.GetPanel<ChatUI_Panel>().Show(chatMinigame);
+        base.OnActivate();
     }
 
     protected override void OnStart()

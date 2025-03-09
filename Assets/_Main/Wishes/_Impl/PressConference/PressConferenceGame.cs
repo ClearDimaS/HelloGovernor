@@ -10,13 +10,15 @@ public class PressConferenceGame : Minigame
     private int curIndex = 0;
     private int correctIndex = 0;
     
+    private WishGranterGameTimer timer;
     public int correctCounter { get; private set; }
     public int wrongCounter { get; private set; }
 
-    public PressConferenceGame(PressConferenceConfig config)
+    public PressConferenceGame(PressConferenceConfig config, WishGranterGameTimer timer)
     {
         this.config = config;
         themeIndex = Random.Range(0, config.datas.Length);
+        this.timer = timer;
 
         RefreshAnswers();
     }
@@ -28,7 +30,7 @@ public class PressConferenceGame : Minigame
 
     public override void Complete()
     {
-
+        timer.ResetToCooldown();
     }
 
     public void Answer(int index)

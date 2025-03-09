@@ -8,10 +8,12 @@ using Random = UnityEngine.Random;
 public class ChatMinigame : Minigame
 {
     private int reward;
+    protected WishGranterGameTimer timer;
     
-    public ChatMinigame(int reward)
+    public ChatMinigame(int reward, WishGranterGameTimer timer)
     {
         this.reward = reward;
+        this.timer = timer;
     }
     public override int GetReward()
     {
@@ -20,7 +22,7 @@ public class ChatMinigame : Minigame
 
     public override void Complete()
     {
-
+        timer.ResetToCooldown();
     }
 }
 public class ChatUI_Panel : UI_Panel
@@ -49,7 +51,12 @@ public class ChatUI_Panel : UI_Panel
     private void Start()
     {
         resultElement.Hide(true);
-        chatMinigame = new ChatMinigame(wishesCollectionConfig.chatReward);
+    }
+
+    public void Show(ChatMinigame minigame)
+    {
+        this.chatMinigame = minigame;
+        Show();
     }
 
     public override void OnShow()
