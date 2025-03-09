@@ -52,7 +52,7 @@ public class BankGame : Minigame
         var isNegative = false;
         if (allowNegative)
         {
-            isNegative = Random.Range(0, 1f) < gameConfig.bankNegativeProbability;
+            isNegative = Random.Range(0, 1f) <= gameConfig.bankNegativeProbability;
         }
 
         var minMax = isNegative ? gameConfig.bankRewardMinMaxNegative : gameConfig.bankRewardMinMaxPositive;
@@ -62,7 +62,7 @@ public class BankGame : Minigame
             newReward = -newReward;
         }
 
-        var typeInt = Random.Range(0, 4);
+        var typeInt = Random.Range(0, 3);
         var type = (EBankOption)typeInt;
         var option = BankOption.CreateFromType(type, newReward);
         return option;

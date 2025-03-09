@@ -13,7 +13,7 @@ public class JoystickPanel : UI_Panel
 
     public float Magnitude => joystick.gameObject.activeSelf ? joystick.Direction.magnitude : 0f;
     public bool IsMoving => joystick.gameObject.activeSelf && 
-                            (joystick.Vertical != 0f && joystick.Horizontal != 0f);
+                            (joystick.Vertical != 0f || joystick.Horizontal != 0f);
     
     protected event Action<Vector2> inputEvent;
 

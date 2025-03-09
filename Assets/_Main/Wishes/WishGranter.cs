@@ -519,7 +519,6 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     
     protected void AddMoney(int count)
     {
-        Debug.Log($"adding money: {count}");
         currencyStack.AddCurrency(count);
     }
 }

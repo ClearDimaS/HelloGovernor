@@ -7,7 +7,9 @@ using Random = UnityEngine.Random;
 public class BankOptionUIElement : MonoBehaviour
 {
     [SerializeField] private TMP_Text optionTextArg1;
-    [SerializeField] private TMP_Text optionTextOp;
+    [SerializeField] private GameObject multiplyOp;
+    [SerializeField] private GameObject addOp;
+    [SerializeField] private GameObject subtractOp;
     [SerializeField] private TMP_Text optionTextArg2;
     [SerializeField] private Button optionButton;
 
@@ -28,18 +30,19 @@ public class BankOptionUIElement : MonoBehaviour
     {
         this.option = option;
         optionTextArg1.text = option.x.ToString();
-        optionTextOp.text = GetOpText(option);
+        multiplyOp.SetActive(option.type == EBankOption.Multiply);
+        addOp.SetActive(option.type == EBankOption.Add);
+        subtractOp.SetActive(option.type == EBankOption.Subtract);
         optionTextArg2.text = option.y.ToString();
-        SetColor(isPositive ? color1 : color2);
+        //SetColor(isPositive ? color1 : color2);
         
         this.onSelect = onSelect;
     }
 
     private void SetColor(Color color)
     {
-        optionTextArg1.color = color;
-        optionTextOp.color = color;
-        optionTextArg2.color = color;
+        //optionTextArg1.color = color;
+        //optionTextArg2.color = color;
     }
 
     private void SelectOption()
@@ -60,9 +63,7 @@ public class BankOptionUIElement : MonoBehaviour
             case EBankOption.Subtract:
                 return "-";
             case EBankOption.Multiply:
-                return "*";
-            case EBankOption.Divide:
-                return "%";
+                return "x";
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -72,6 +72,8 @@ public class BankWishPanel : UI_Panel
 
         var reward1 = optionData1.GetReward();
         var reward2 = optionData2.GetReward();
+        answer1CorrectGO.SetActive(reward1 > 0);
+        answer2CorrectGO.SetActive(reward2 > 0);
         answer1.text = reward1 > 0 ? $"+{reward1}" : $"{reward1}";
         answer1.color = reward1 > 0 ? option1.ColorRight : option1.ColorWrong;
         answer2.text = reward2 > 0 ? $"+{reward2}" : $"{reward2}";
@@ -84,6 +86,7 @@ public class BankWishPanel : UI_Panel
         option2.gameObject.SetActive(false);
         answersGO.SetActive(true);
         bankGame.SetSelected(data);
+
         rewardElement.RefreshWithChange(bankGame.GetReward(), data.GetReward());
         if (bankGame.IsRunning)
         {

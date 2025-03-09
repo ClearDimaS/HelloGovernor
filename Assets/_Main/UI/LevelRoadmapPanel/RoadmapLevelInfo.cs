@@ -108,7 +108,7 @@ public class RoadmapLevelInfo : MonoBehaviour
         rewardsHeader.gameObject.SetActive(levelData.moneyReward.amount > 0 || 
                                            levelData.speedReward.addPercents > 0 || 
                                            levelData.capacityReward.add > 0);
-        var received = cacheManager.GrantedMoneys.Contains(levelIndex);
+        var received = cacheManager.GrantedMoneys.Contains(levelIndex - 1);
         rewardMoney.gameObject.SetActive(levelData.moneyReward.amount > 0);
         rewardMoney.Refresh(levelData.moneyReward, received);
         

@@ -2141,7 +2141,7 @@ PrefabInstance:
     - target: {fileID: 7183468602264297377, guid: e9f3d18ac61214aa9bf74aae499ffbb7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 7383870252812977181, guid: e9f3d18ac61214aa9bf74aae499ffbb7,
         type: 3}
@@ -2925,7 +2925,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[8].price
-      value: 700
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -2935,7 +2935,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[9].price
-      value: 750
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -2955,37 +2955,37 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[11].price
-      value: 1500
+      value: 2300
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[12].level
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[12].price
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[13].level
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[13].price
+      propertyPath: upgradablePriceDatas.Array.data[12].price
       value: 1700
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[14].level
+      propertyPath: upgradablePriceDatas.Array.data[13].level
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[14].price
+      propertyPath: upgradablePriceDatas.Array.data[13].price
       value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[14].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[14].price
+      value: 1900
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -2995,37 +2995,37 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[15].price
-      value: 2300
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[16].level
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[16].price
       value: 2900
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[17].level
+      propertyPath: upgradablePriceDatas.Array.data[16].level
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[17].price
+      propertyPath: upgradablePriceDatas.Array.data[16].price
       value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[18].level
+      propertyPath: upgradablePriceDatas.Array.data[17].level
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[17].price
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[18].level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
       propertyPath: upgradablePriceDatas.Array.data[18].price
-      value: 1900
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3055,7 +3055,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[21].price
-      value: 2500
+      value: 4200
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3065,7 +3065,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[22].price
-      value: 3000
+      value: 3400
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3075,17 +3075,17 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[23].price
-      value: 3620
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[24].level
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[24].price
-      value: 3100
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3095,17 +3095,17 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[25].price
-      value: 4200
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[26].level
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[26].price
-      value: 3400
+      value: 3620
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3115,7 +3115,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[27].price
-      value: 3500
+      value: 3100
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3125,17 +3125,17 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[28].price
-      value: 7000
+      value: 9200
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[29].level
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[29].price
-      value: 7500
+      value: 3500
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3145,37 +3145,37 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[30].price
-      value: 5000
+      value: 7000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[31].level
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[31].price
-      value: 8300
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[32].level
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[32].price
-      value: 6200
+      propertyPath: upgradablePriceDatas.Array.data[31].price
+      value: 7500
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[33].level
+      propertyPath: upgradablePriceDatas.Array.data[32].level
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[32].price
+      value: 8300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[33].level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
       propertyPath: upgradablePriceDatas.Array.data[33].price
-      value: 9000
+      value: 6200
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3185,7 +3185,7 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[34].price
-      value: 9200
+      value: 9000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -5526,12 +5526,12 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[8].upgradable
       value: 
-      objectReference: {fileID: 1284197385}
+      objectReference: {fileID: 1157140310}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[9].upgradable
       value: 
-      objectReference: {fileID: 1284197385}
+      objectReference: {fileID: 1157140310}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[10].upgradable
@@ -5541,12 +5541,12 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[11].upgradable
       value: 
-      objectReference: {fileID: 1157140310}
+      objectReference: {fileID: 1377996952}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[12].upgradable
       value: 
-      objectReference: {fileID: 1157140310}
+      objectReference: {fileID: 2077581643}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[13].upgradable
@@ -5556,12 +5556,12 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[14].upgradable
       value: 
-      objectReference: {fileID: 2077581643}
+      objectReference: {fileID: 1392550865}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[15].upgradable
       value: 
-      objectReference: {fileID: 1377996952}
+      objectReference: {fileID: 314209333}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[16].upgradable
@@ -5571,12 +5571,12 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[17].upgradable
       value: 
-      objectReference: {fileID: 314209333}
+      objectReference: {fileID: 1284197385}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[18].upgradable
       value: 
-      objectReference: {fileID: 1392550865}
+      objectReference: {fileID: 1284197385}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[19].upgradable
@@ -5591,57 +5591,57 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[21].upgradable
       value: 
-      objectReference: {fileID: 800567833}
+      objectReference: {fileID: 434417799}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[22].upgradable
       value: 
-      objectReference: {fileID: 800567833}
+      objectReference: {fileID: 434417799}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[23].upgradable
       value: 
-      objectReference: {fileID: 458778441}
+      objectReference: {fileID: 800567833}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[24].upgradable
       value: 
-      objectReference: {fileID: 1613315319}
+      objectReference: {fileID: 800567833}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[25].upgradable
       value: 
-      objectReference: {fileID: 434417799}
+      objectReference: {fileID: 837521769}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[26].upgradable
       value: 
-      objectReference: {fileID: 434417799}
+      objectReference: {fileID: 458778441}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[27].upgradable
       value: 
-      objectReference: {fileID: 206332923}
+      objectReference: {fileID: 1613315319}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[28].upgradable
       value: 
-      objectReference: {fileID: 752683691}
+      objectReference: {fileID: 481706860}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[29].upgradable
       value: 
-      objectReference: {fileID: 752683691}
+      objectReference: {fileID: 206332923}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[30].upgradable
       value: 
-      objectReference: {fileID: 837521769}
+      objectReference: {fileID: 752683691}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[31].upgradable
       value: 
-      objectReference: {fileID: 484480575}
+      objectReference: {fileID: 752683691}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[32].upgradable
@@ -5651,12 +5651,12 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[33].upgradable
       value: 
-      objectReference: {fileID: 1717634321}
+      objectReference: {fileID: 484480575}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[34].upgradable
       value: 
-      objectReference: {fileID: 481706860}
+      objectReference: {fileID: 1717634321}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[35].upgradable
@@ -6875,12 +6875,12 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[8].thisTypeIndex
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[9].thisTypeIndex
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -6890,12 +6890,12 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[11].thisTypeIndex
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[12].thisTypeIndex
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -6905,12 +6905,12 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[14].thisTypeIndex
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[15].thisTypeIndex
-      value: 9
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -6920,12 +6920,12 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[17].thisTypeIndex
-      value: 15
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[18].thisTypeIndex
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -6940,57 +6940,57 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[21].thisTypeIndex
-      value: 11
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[22].thisTypeIndex
-      value: 11
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[23].thisTypeIndex
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[24].thisTypeIndex
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[25].thisTypeIndex
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[26].thisTypeIndex
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[27].thisTypeIndex
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[28].thisTypeIndex
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[29].thisTypeIndex
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: upgradablePriceDatas.Array.data[30].thisTypeIndex
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[26].thisTypeIndex
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[27].thisTypeIndex
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[28].thisTypeIndex
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[29].thisTypeIndex
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[30].thisTypeIndex
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
       propertyPath: upgradablePriceDatas.Array.data[31].thisTypeIndex
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -7000,12 +7000,12 @@ PrefabInstance:
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[33].thisTypeIndex
-      value: 21
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[34].thisTypeIndex
-      value: 22
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
