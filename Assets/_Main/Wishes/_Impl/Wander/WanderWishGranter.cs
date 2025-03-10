@@ -9,6 +9,7 @@ public class WanderWishGranter : TimerWishGranter
 {
     [Inject] private EnvironmentManager environment;
 
+    public override bool ProcessInstant => true;
     protected IEnumerator cor;
     protected int lastReshuffleIndex;
     private void Start()
@@ -59,7 +60,6 @@ public class WanderWishGranter : TimerWishGranter
 
         if (index == -1)
         {
-            cor.Reset();
             StartCoroutine(cor);
         }
         else

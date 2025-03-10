@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8a16b914c44750b35632f22e9e3b92, type: 3}
   m_Name: BankGranterConfig
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: -4562623514073670754, guid: 19093a0d97d304adaa5eec5549041577,
     type: 3}
   grantDuration: 1
   reward: 0
   chanceWeight: 100
   timerType: 2
-  cooldown: 90
+  cooldown: 170
   gameDuration: 30
   tutorialTitle: Become a banker!
   tutorialIcon: {fileID: 21300000, guid: 5441f1fff4d4e4991a52ce4af98567d2, type: 3}

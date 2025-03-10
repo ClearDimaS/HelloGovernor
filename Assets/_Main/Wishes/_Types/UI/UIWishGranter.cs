@@ -41,9 +41,16 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
         }
     }
 
+    protected override void OnPurchase()
+    {
+        SetReady();
+        base.OnPurchase();
+    }
+
     protected virtual void OnResetActivation()
     {
         WasCompletedAtLeastOnce = true;
+        LeaveAllCitizens();
     }
 
     protected virtual void OnActivate()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -103,6 +104,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     private WishGrantersManager grantersManager;
     protected WishGranterCooldownTimer coolDownTimer;
     protected bool wasBought;
+    public virtual bool ProcessInstant => false;
 
     [Inject]
     protected void Construct(WishesCollectionConfig wishesCollectionConfig, WishGrantersManager grantersManager)
@@ -205,13 +207,23 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             var queuePlace = GetQueuePlaceFor(citizen);
             if (!citizen.Walker.IsMovingToTarget(queuePlace))
             {
-                citizen.Walker.MoveToTarget(queuePlace, () =>
+                if (ProcessInstant)
                 {
                     if (!pendingQueue.Contains(citizen))
                     {
                         pendingQueue.Add(citizen);
                     }
-                });
+                }
+                else
+                {
+                    citizen.Walker.MoveToTarget(queuePlace, () =>
+                    {
+                        if (!pendingQueue.Contains(citizen))
+                        {
+                            pendingQueue.Add(citizen);
+                        }
+                    });   
+                }
             }
         }
         foreach (var citizen in pendingQueue)
@@ -308,6 +320,21 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         }
     }
 
+    protected void LeaveAllCitizens()
+    {
+        foreach (var citizen in queue)
+        {
+            citizen.WishesController.RemoveWish(this);
+        }
+
+        foreach (var citizen in processed)
+        {
+            citizen.WishesController.RemoveWish(this);
+        }
+        processed.Clear();
+        queue.Clear();
+    }
+
     public void SetReady()
     {
         coolDownTimer.SetGameReady();
@@ -334,8 +361,13 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         if (!wasBought && IsBought)
         {
             wasBought = true;
-            FillQueueWithCitizens();
+            OnPurchase();
         }
+    }
+
+    protected virtual void OnPurchase()
+    {
+        FillQueueWithCitizens();
     }
 
     protected virtual void FillQueueWithCitizens()
@@ -556,5 +588,16 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     public bool CanProcess()
     {
         return wishPostProcessor == null || wishPostProcessor.HasMorePlace();
+    }
+
+    public Vector3 GetMiddleProcessPlace()
+    {
+        var middle = Vector3.zero;
+        foreach (var place in processPlaces)
+        {
+            middle += place.Position;
+        }
+
+        return middle / processPlaces.Length;
     }
 }
