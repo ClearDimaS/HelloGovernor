@@ -13,8 +13,7 @@ public class AddedMoneyDisplayer : MonoBehaviour
     public Transform startPlace;
     public Transform endPlace;
     public float changePause = 0.5f;
-    public AddedMoneyElement element1;
-    public AddedMoneyElement element2;
+    public AddedMoneyElement[] elements;
     public Queue<AddedMoneyElement> queue = new();
 
     private float lastChangeTime;
@@ -23,8 +22,10 @@ public class AddedMoneyDisplayer : MonoBehaviour
     
     private void Awake()
     {
-        queue.Enqueue(element1);
-        queue.Enqueue(element2);
+        foreach (var element in elements)
+        {
+            queue.Enqueue(element); 
+        }
     }
 
     private void Start()

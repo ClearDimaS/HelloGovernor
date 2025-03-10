@@ -29,6 +29,9 @@ public class GameConfig : ScriptableObject
     public Ease moneyFlyEase2;
     public int moneyInOneModel = 3;
     public int moneyRewardMaxModels = 10;
+    public float moneyToStackTime = 1f;
+    public Ease moneyToStackEase = Ease.InOutCirc;
+    
     [Header("Camera")] 
     public float hintCameraDistanceMult = 0.8f;
     public float unlockCameraDelay = 1f;

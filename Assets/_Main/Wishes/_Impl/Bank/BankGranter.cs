@@ -42,6 +42,6 @@ public class BankGranter : UIWishGranter
     
     private void GiveReward(int count)
     {
-        AddMoney(count);
+        AddMoney(count, processPlaces[0].Position + Vector3.up);
     }
 }

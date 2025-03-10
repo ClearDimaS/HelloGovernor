@@ -24,7 +24,7 @@ public class OrderProcessPlace : ItemsUserProcessPlace
     public override bool CanAddProgress(CitizenController citizen)
     {
         return base.CanAddProgress(citizen) && wishAssistant.PeekItem() != null && 
-               wishAssistant.PeekItem().GetData().key == itemsConfigData.key;
+               (wishAssistant.PeekItem().GetData().key == itemsConfigData.key || wishAssistant.PeekItem().secondaryKey == itemsConfigData.key) ;
     }
 
     public override GenericCitizenItemSource GetItemSource()

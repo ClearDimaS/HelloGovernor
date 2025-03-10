@@ -4,6 +4,7 @@ using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 public interface IGridPlaceable
 {
@@ -13,6 +14,8 @@ public interface IGridPlaceable
 
 public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
 {
+    [Inject] private GameConfig gameConfig;
+    
     [SerializeField] private BoxCollider sizeCollider;
     [SerializeField] private Vector3Int counts;
     [SerializeField] private Transform placesParent;
@@ -75,8 +78,8 @@ public class GridPlacer<T> : MonoBehaviour where T : IGridPlaceable
         }
         else
         {
-            item.Root.DOLocalMove(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
-            item.Root.DOLocalRotate(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);   
+            item.Root.DOLocalMove(Vector3.zero, gameConfig.moneyToStackTime).SetEase(gameConfig.moneyToStackEase);
+            item.Root.DOLocalRotate(Vector3.zero, gameConfig.moneyToStackTime).SetEase(gameConfig.moneyToStackEase);   
         }
 
         var itemSize = item.GetWorldSize();

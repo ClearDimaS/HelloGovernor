@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -8,16 +9,26 @@ public class WanderWishGranter : TimerWishGranter
 {
     [Inject] private EnvironmentManager environment;
 
+    protected IEnumerator cor;
     protected int lastReshuffleIndex;
     private void Start()
     {
+        cor = ReshuffleCoroutine();
         Reshuffle();
     }
 
     protected override void OnRemoveFromProcessed(CitizenController citizen)
     {
         base.OnRemoveFromProcessed(citizen);
-        Reshuffle(lastReshuffleIndex++);
+        if (lastReshuffleIndex > processPlaces.Length)
+        {
+            lastReshuffleIndex = -1;
+            Reshuffle(lastReshuffleIndex);
+        }
+        else
+        {
+            Reshuffle(lastReshuffleIndex++);
+        }
     }
 
     protected override void UpdateProcessed(CitizenController citizen)
@@ -45,16 +56,36 @@ public class WanderWishGranter : TimerWishGranter
             });
             return;
         }
+
+        if (index == -1)
+        {
+            cor.Reset();
+            StartCoroutine(cor);
+        }
+        else
+        {
+            for (var i = 0; i < processPlaces.Length; i++)
+            {
+                if (index != -1 && index != i)
+                {
+                    continue;
+                }
+                var processPlace = processPlaces[i];
+                processPlace.transform.position = environment.GetRandomUnlockedPosition(0);
+                processPlace.transform.rotation = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up);
+            }
+        }
         
+    }
+
+    private IEnumerator ReshuffleCoroutine()
+    {
         for (var i = 0; i < processPlaces.Length; i++)
         {
-            if (index != -1 && index != i)
-            {
-                continue;
-            }
             var processPlace = processPlaces[i];
             processPlace.transform.position = environment.GetRandomUnlockedPosition(0);
             processPlace.transform.rotation = Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up);
+            yield return null;
         }
     }
 }

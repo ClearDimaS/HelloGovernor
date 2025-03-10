@@ -2974,60 +2974,90 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[0].sunColor.g
-      value: 0.8873474
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[0].sunColor.r
-      value: 0.8349056
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[1].sunColor.b
-      value: 0.4575472
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[1].sunColor.g
-      value: 0.58699614
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[1].sunColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[4].sunColor.b
-      value: 0.8392157
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[4].sunColor.g
-      value: 0.95686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[4].sunColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[5].sunColor.g
-      value: 0.8873474
-      objectReference: {fileID: 0}
-    - target: {fileID: 1949072997789567395, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
-        type: 3}
-      propertyPath: dayTimes.Array.data[5].sunColor.r
-      value: 0.8349056
-      objectReference: {fileID: 0}
     - target: {fileID: 2408433062620598094, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: m_Name
       value: '[App]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[10].price
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[11].price
+      value: 1300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[13].price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[14].price
+      value: 1600
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[16].price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[18].price
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[20].price
+      value: 2250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[25].price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[26].price
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[27].price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[28].price
+      value: 3300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[29].price
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[30].price
+      value: 4300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[32].price
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[34].price
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[35].price
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}

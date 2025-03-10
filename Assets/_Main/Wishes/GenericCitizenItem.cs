@@ -11,6 +11,7 @@ public class GenericCitizenItem : CitizenItem, IResetable
     private int resetCounter;
     private GenericItemsPool pool;
     private Action onPool;
+    public string secondaryKey;
 
     public void OnReset()
     {

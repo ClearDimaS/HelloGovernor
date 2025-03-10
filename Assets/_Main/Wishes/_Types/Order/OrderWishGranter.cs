@@ -9,7 +9,24 @@ public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, Ord
     
     [SerializeField] protected Transform waiterIdlePlace;
     [SerializeField] protected GenericCitizenItemSource[] sources;
+
+    public int TakesCount => wishPlacesTyped[0].GetItemSource().TakesCount;
     public int PlayerUseCounts { get; protected set; }
+    
+    public Transform GetItemTakePlace()
+    {
+        return wishPlacesTyped[0].GetItemSource().TakePlace;
+    }
+    
+    public Transform GetItemUsePlace()
+    {
+        return processPlaces[0].GetTargetTransform();
+    }
+    
+    public Sprite GetItemIcon()
+    {
+        return config.GetItemDatas()[0].itemIcon;
+    }
 
     protected override void OnAwake()
     {

@@ -3,10 +3,10 @@ using UnityEngine;
 public class ItemsUseTutorialStep : TutorialStep
 {
     protected float targetItemsCount = 3;
-    protected ItemsWishGranter itemsGranter;
+    protected IItemsUserWishGranter itemsGranter;
     protected int usedItemsCount;
     
-    public ItemsUseTutorialStep(ItemsWishGranter itemsGranter, PlayerDataRepository repository) : base(repository)
+    public ItemsUseTutorialStep(IItemsUserWishGranter itemsGranter, PlayerDataRepository repository) : base(repository)
     {
         this.itemsGranter = itemsGranter;
     }

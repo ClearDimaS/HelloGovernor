@@ -513,7 +513,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         }
         if (currencyStack != null)
         {
-            currencyStack.MoveCurrencyToMe(rwrd, citizen.transform.position);   
+            currencyStack.MoveCurrencyToMe(rwrd, citizen.transform.position + Vector3.up);   
         }
         else if(Reward > 0)
         {
@@ -548,9 +548,9 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         return processPlaces.Length + queuePlaces.Length;
     }
     
-    protected void AddMoney(int count)
+    protected void AddMoney(int count, Vector3 from)
     {
-        currencyStack.AddCurrency(count);
+        currencyStack.MoveCurrencyToMe(count, from);
     }
 
     public bool CanProcess()

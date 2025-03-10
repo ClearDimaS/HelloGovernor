@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba9b2bd52a8471eb151c165f0583487, type: 3}
   m_Name: Wander Granter
   m_EditorClassIdentifier: 
+  processAnimation: 
   granter: {fileID: 5623357189268133602, guid: 7e8e683be1d7c4408acb2d9ae2077b3b, type: 3}
-  grantDuration: 10
+  grantDuration: 7
   reward: 0
   chanceWeight: 1
-  buildingData:
-    title: 
-    icon: {fileID: 0}
-    levels: []
+  timerType: 0
+  cooldown: 0
+  gameDuration: 0

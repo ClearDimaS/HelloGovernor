@@ -19,8 +19,6 @@ public class TutorialManager : Singleton<TutorialManager>
     private List<TutorialStep> tutorialSteps;
     private int curStepIndex = 0;
 
-    private bool wasAssistantAdded;
-    private bool wasOperatorAdded;
     private int skippedFrames;
     private bool isInit;
     
@@ -181,18 +179,14 @@ public class TutorialManager : Singleton<TutorialManager>
                 if (granter is OperatableGranter operatable)
                 {
                     tutorialSteps.Add(new OperatableTutorialStep(operatable, playerRepository, cameraManager));
-                    if (!wasOperatorAdded)
+                    var operatorUpgradable = granter.GetComponentInChildren<UpgradableOperator>();
+                    if (operatorUpgradable != null)
                     {
-                        var operatorUpgradable = granter.GetComponentInChildren<UpgradableOperator>();
-                        if (operatorUpgradable != null)
-                        {
-                            tutorialSteps.Add(new AnyUpgradableTutorialStep(
-                                operatorUpgradable,
-                                0,
-                                100,
-                                playerRepository));
-                            wasOperatorAdded = true;   
-                        }
+                        tutorialSteps.Add(new AnyUpgradableTutorialStep(
+                            operatorUpgradable,
+                            0,
+                            100,
+                            playerRepository));
                     }
                 }else
                 if (granter is ItemsWishGranter itemsGranter)
@@ -200,18 +194,30 @@ public class TutorialManager : Singleton<TutorialManager>
                     tutorialSteps.Add(new ItemsTakeTutorialStep(itemsGranter, playerRepository));
                     tutorialSteps.Add(new ItemsUseTutorialStep(itemsGranter, playerRepository));
                     
-                    if (!wasAssistantAdded)
+                    var assistantUpgradable = granter.GetComponentInChildren<UpgradableAssistant>();
+                    if (assistantUpgradable != null)
                     {
-                        var assistantUpgradable = granter.GetComponentInChildren<UpgradableAssistant>();
-                        if (assistantUpgradable != null)
-                        {
-                            tutorialSteps.Add(new AnyUpgradableTutorialStep(
-                                assistantUpgradable,
-                                0,
-                                1000,
-                                playerRepository));
-                            wasAssistantAdded = true;   
-                        }
+                        tutorialSteps.Add(new AnyUpgradableTutorialStep(
+                            assistantUpgradable,
+                            0,
+                            1000,
+                            playerRepository));  
+                    }
+                }
+                else
+                if (granter is OrderWishGranter orderGranter)
+                {
+                    tutorialSteps.Add(new ItemsTakeTutorialStep(orderGranter, playerRepository));
+                    tutorialSteps.Add(new ItemsUseTutorialStep(orderGranter, playerRepository));
+                    
+                    var assistantUpgradable = granter.GetComponentInChildren<UpgradableAssistant>();
+                    if (assistantUpgradable != null)
+                    {
+                        tutorialSteps.Add(new AnyUpgradableTutorialStep(
+                            assistantUpgradable,
+                            0,
+                            1000,
+                            playerRepository));  
                     }
                 }else
                 if (granter is UIWishGranter uiGranter)

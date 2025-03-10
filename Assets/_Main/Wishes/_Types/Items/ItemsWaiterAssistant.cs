@@ -9,6 +9,11 @@ public interface IItemsUserWishGranter
     Transform GetIdlePlace();
     Transform GetPlaceToLookAt();
     Sprite GetIconAssistant();
+    Sprite GetItemIcon();
+    Transform GetItemTakePlace();
+    int TakesCount { get; }
+    int PlayerUseCounts { get; }
+    Transform GetItemUsePlace();
 }
 
 
@@ -54,7 +59,7 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
         }
         if (target != null)
         {
-            if (item == null)
+            if (item == null || target.GetItemSource().GetPrefab().secondaryKey != item.secondaryKey)
             {
                 target.RemoveAssistant(this);
                 var source = target.GetItemSource();
