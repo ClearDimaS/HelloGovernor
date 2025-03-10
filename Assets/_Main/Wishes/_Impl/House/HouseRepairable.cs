@@ -50,10 +50,11 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
     {
         needRepairContent.Hide(true);
         breakTimer = Random.Range(gameConfig.breakTimerMinMax.x, gameConfig.breakTimerMinMax.y);
-        if (houseBuilding.GetInstanceID() % 3 == levelIndex)
+        if (Mathf.Abs(houseBuilding.GetInstanceID()) % 3 == levelIndex)
         {
             isAdded = true;
             levelContent.Show(true);
+            houseBuilding.AddRepairable(this);
         }
         else
         {
