@@ -52,9 +52,10 @@ public static class UIExtensions
                 if (rects[rect] != -1)
                 {
                     rects[rect] = -1;
-                    rect.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.OutCubic).OnComplete(() =>
+                    rect.DOKill();
+                    rect.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.InOutCubic).OnComplete(() =>
                     {
-                        rect.DOScale(Vector3.one * 1f, 0.1f).SetEase(Ease.InCubic);
+                        rect.DOScale(Vector3.one * 1f, 0.1f).SetEase(Ease.InOutCubic);
                     });
                 }
             }
@@ -63,7 +64,8 @@ public static class UIExtensions
                 if (rects[rect] != -2)
                 {
                     rects[rect] = -2;
-                    rect.DOScale(Vector3.one * 0f, 0.3f).SetEase(Ease.InCubic);
+                    rect.DOKill();
+                    rect.DOScale(Vector3.one * 0f, 0.3f).SetEase(Ease.InOutCubic);
                 }
             }
         }

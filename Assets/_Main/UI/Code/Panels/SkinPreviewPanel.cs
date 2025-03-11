@@ -16,10 +16,12 @@ public class SkinPreviewPanel : UI_Panel
     [SerializeField] private Button closeButton;
     [SerializeField] private Button buyButton;
     [SerializeField] private Button selectButton;
+    [SerializeField] private GameObject[] lockedGOs;
+    [SerializeField] private GameObject[] unlockedGOs;
     [SerializeField] private Image selectedImg;
     [SerializeField] private Image notSelectedImg;
     [SerializeField] private EventTrigger trigger;
-
+    [SerializeField] private TMP_Text levelToUnlockText;
     [SerializeField] private SwiperNextPreviousButtons swiperNextPreviousButtons;
 
     private int lastIndex = -1;
@@ -70,6 +72,13 @@ public class SkinPreviewPanel : UI_Panel
         var isBought = playerRepository.IsSkinBought(lastIndex);
         var isSelected = playerRepository.SkinIndex == lastIndex;
 
+        var isLocked = skinChooser.IsCurrentLocked();
+        lockedGOs.SetActiveOnce(isLocked);
+        unlockedGOs.SetActiveOnce(!isLocked);
+        if (isLocked)
+        {
+            levelToUnlockText.text = $"{skinChooser.GetCurrentLevelIndexToUnlock() + 1}";
+        }
         buyButton.UpdateState(!isBought);
         selectButton.UpdateState(isBought);
         if (isBought)

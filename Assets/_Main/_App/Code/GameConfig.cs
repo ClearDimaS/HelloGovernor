@@ -44,4 +44,6 @@ public class GameConfig : ScriptableObject
     public float assistantPricesMult = 0.5f;
     public float upgradeIncomePriceMult = 0.5f;
     public float incomeIncrease = 1.5f;
+    [Header("Progression")]
+    public int skinsPerLevel = 10;
 }
