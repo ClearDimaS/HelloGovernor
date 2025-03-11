@@ -240,13 +240,13 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             {
                 if (freePlaces.Count > 0)
                 {
-                    citizenPlacesDict[citizen] = DequeuePlace();   
-                    citizenPlacesDict[citizen].SetOwner(citizen);
-                    var processPlace = GetProcessPlaceFor(citizen);
-                    queue.RemoveAt(i);
-                    i--;
                     if (!citizen.Walker.IsMoving)
                     {
+                        citizenPlacesDict[citizen] = DequeuePlace();   
+                        citizenPlacesDict[citizen].SetOwner(citizen);
+                        var processPlace = GetProcessPlaceFor(citizen);
+                        queue.RemoveAt(i);
+                        i--;
                         citizen.Walker.MoveToTarget(processPlace, () =>
                         {
                             AddToProcessed(citizen);

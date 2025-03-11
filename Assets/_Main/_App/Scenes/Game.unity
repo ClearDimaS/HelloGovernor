@@ -2992,6 +2992,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
+      propertyPath: upgradablePriceDatas.Array.size
+      value: 76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
       propertyPath: upgradablePriceDatas.Array.data[8].price
       value: 1100
       objectReference: {fileID: 0}
@@ -3084,6 +3089,66 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[35].price
       value: 7000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[37].level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[37].price
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[38].level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[38].price
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[39].level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[39].price
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[50].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[51].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[52].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[63].level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[64].level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
+        type: 3}
+      propertyPath: upgradablePriceDatas.Array.data[65].level
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
@@ -3274,207 +3339,207 @@ PrefabInstance:
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[37].upgradable
       value: 
-      objectReference: {fileID: 752683691}
+      objectReference: {fileID: 4735246116039466299}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[38].upgradable
       value: 
-      objectReference: {fileID: 800567833}
+      objectReference: {fileID: 4735246116039466300}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[39].upgradable
       value: 
-      objectReference: {fileID: 1157140310}
+      objectReference: {fileID: 4735246116039466301}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[40].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466299}
+      objectReference: {fileID: 4735246116039466302}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[41].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466300}
+      objectReference: {fileID: 4735246116039466303}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[42].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466301}
+      objectReference: {fileID: 4735246116039466304}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[43].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466302}
+      objectReference: {fileID: 4735246116039466305}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[44].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466303}
+      objectReference: {fileID: 4735246116039466306}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[45].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466304}
+      objectReference: {fileID: 4735246116039466307}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[46].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466305}
+      objectReference: {fileID: 4735246116039466309}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[47].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466306}
+      objectReference: {fileID: 4735246116039466310}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[48].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466307}
+      objectReference: {fileID: 4735246116039466311}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[49].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466309}
+      objectReference: {fileID: 4735246116039466312}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[50].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466310}
+      objectReference: {fileID: 4735246116039466299}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[51].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466311}
+      objectReference: {fileID: 4735246116039466300}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[52].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466312}
+      objectReference: {fileID: 4735246116039466301}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[53].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466299}
+      objectReference: {fileID: 4735246116039466302}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[54].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466300}
+      objectReference: {fileID: 4735246116039466303}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[55].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466301}
+      objectReference: {fileID: 4735246116039466304}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[56].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466302}
+      objectReference: {fileID: 4735246116039466305}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[57].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466303}
+      objectReference: {fileID: 4735246116039466306}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[58].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466304}
+      objectReference: {fileID: 4735246116039466307}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[59].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466305}
+      objectReference: {fileID: 4735246116039466309}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[60].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466306}
+      objectReference: {fileID: 4735246116039466310}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[61].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466307}
+      objectReference: {fileID: 4735246116039466311}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[62].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466309}
+      objectReference: {fileID: 4735246116039466312}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[63].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466310}
+      objectReference: {fileID: 4735246116039466299}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[64].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466311}
+      objectReference: {fileID: 4735246116039466300}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[65].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466312}
+      objectReference: {fileID: 4735246116039466301}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[66].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466299}
+      objectReference: {fileID: 4735246116039466302}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[67].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466300}
+      objectReference: {fileID: 4735246116039466303}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[68].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466301}
+      objectReference: {fileID: 4735246116039466304}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[69].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466302}
+      objectReference: {fileID: 4735246116039466305}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[70].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466303}
+      objectReference: {fileID: 4735246116039466306}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[71].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466304}
+      objectReference: {fileID: 4735246116039466307}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[72].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466305}
+      objectReference: {fileID: 4735246116039466309}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[73].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466306}
+      objectReference: {fileID: 4735246116039466310}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[74].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466307}
+      objectReference: {fileID: 4735246116039466311}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[75].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466309}
+      objectReference: {fileID: 4735246116039466312}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[76].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466310}
+      objectReference: {fileID: 4735246116039466312}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[77].upgradable
       value: 
-      objectReference: {fileID: 4735246116039466311}
+      objectReference: {fileID: 4735246116039466312}
     - target: {fileID: 5259959852579142501, guid: 4d48a9c581a7c4bfcbd4ad8156d6174e,
         type: 3}
       propertyPath: upgradablePriceDatas.Array.data[78].upgradable

@@ -464,6 +464,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 897913991928978629}
     m_Modifications:
+    - target: {fileID: 4027348691458528087, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4027348691458528087, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844293429766559471, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844293429766559471, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570537831646954177, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570537831646954177, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
     - target: {fileID: 7157111886354250660, guid: df7039d62f66b4326adaa7ef35dbdda0,
         type: 3}
       propertyPath: m_Name
@@ -524,6 +554,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7937284200814042920, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937284200814042920, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372311930435922458, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372311930435922458, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914165412337763447, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914165412337763447, guid: df7039d62f66b4326adaa7ef35dbdda0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.31
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -562,6 +622,11 @@ PrefabInstance:
         type: 3}
       propertyPath: type
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6533214046412964063, guid: ab3512ad7fea34161b18b52fd2504100,
+        type: 3}
+      propertyPath: addObstacles
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6533214046412964063, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}

@@ -22,6 +22,7 @@ public class UpgradableBuilding : UpgradableObject
     [Inject] private BuildingsCollectionConfig buildingsCollection;
     [Inject] private UpgradablePricesManager _upgradablePricesManager;
 
+    [SerializeField] private bool addObstacles = true;
     [SerializeField] private Vector2 minMaxX;
     [SerializeField] private Vector2 minMaxZ;
     [SerializeField] private MinMaxData[] allowedSides;
@@ -122,21 +123,24 @@ public class UpgradableBuilding : UpgradableObject
             }
 
             var colliders = spawnedGFX.GetComponentsInChildren<BoxCollider>(true);
-            foreach (var collider in colliders)
+            if (addObstacles)
             {
-                var obstacleGO = new GameObject($"{collider.name}_obstacle");
-                obstacleGO.transform.SetParent(collider.transform, false);
-                obstacleGO.transform.localPosition = Vector3.zero;
-                obstacleGO.transform.localRotation = Quaternion.identity;
-                obstacleGO.transform.localScale = Vector3.one;
+                foreach (var collider in colliders)
+                {
+                    var obstacleGO = new GameObject($"{collider.name}_obstacle");
+                    obstacleGO.transform.SetParent(collider.transform, false);
+                    obstacleGO.transform.localPosition = Vector3.zero;
+                    obstacleGO.transform.localRotation = Quaternion.identity;
+                    obstacleGO.transform.localScale = Vector3.one;
                 
-                var obstacle = obstacleGO.AddComponent<NavMeshObstacle>();
-                obstacle.shape = NavMeshObstacleShape.Box;
-                obstacle.carving = true;
-                obstacle.carveOnlyStationary = true;
-                obstacle.carvingTimeToStationary = 0.1f;
-                obstacle.size = collider.size;
-                obstacle.center = collider.center;
+                    var obstacle = obstacleGO.AddComponent<NavMeshObstacle>();
+                    obstacle.shape = NavMeshObstacleShape.Box;
+                    obstacle.carving = true;
+                    obstacle.carveOnlyStationary = true;
+                    obstacle.carvingTimeToStationary = 0.1f;
+                    obstacle.size = collider.size;
+                    obstacle.center = collider.center;
+                }
             }
         }
         else

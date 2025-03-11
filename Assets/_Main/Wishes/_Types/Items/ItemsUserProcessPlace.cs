@@ -52,7 +52,7 @@ public abstract class ItemsUserProcessPlace : ProcessPlace
         #endif
         if (visible && wishAssistant == null && !isOnPlayer 
             && CanAddItemToPlayer(player) && GetOwner() != null 
-            && !GetOwner().Walker.IsMoving)
+            && !GetOwner().Walker.IsMoving && (GetOwner().transform.position - Position).magnitude < 0.5f)
         {
             var playerDiff = player.transform.position - ItemTakePlace.position;
             playerDiff.y = 0f;
