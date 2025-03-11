@@ -19,13 +19,14 @@ public class PressConferenceGame : Minigame
         this.config = config;
         themeIndex = Random.Range(0, config.datas.Length);
         this.timer = timer;
-
+        correctCounter = 0;
+        wrongCounter = 0;
         RefreshAnswers();
     }
 
     public override int GetReward()
     {
-        return correctCounter * config.rewardPerAnswer + wrongCounter * config.penaltyPerAnswer;
+        return (curIndex+1) * config.rewardPerAnswer;
     }
 
     public override void Complete()
