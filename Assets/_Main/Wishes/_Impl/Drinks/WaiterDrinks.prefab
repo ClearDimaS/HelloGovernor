@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   places:
   - data: {fileID: 11400000, guid: a0c3e219408b245538a3753abf6934b6, type: 2}
-    rootGO: {fileID: 0}
+    rootGO: {fileID: 799782655465247183}
     rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
     - {fileID: 8424703755827442765}
@@ -644,11 +644,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractablesWaiter
       objectReference: {fileID: 0}
+    - target: {fileID: 5002506444535849946, guid: 59e048f099dd94dc7a7757b1ea61a058,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219743552083988098, guid: 59e048f099dd94dc7a7757b1ea61a058,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e048f099dd94dc7a7757b1ea61a058, type: 3}
+--- !u!1 &799782655465247183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8219743552083988098, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 8722068554645528397}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6072238810839617426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3265090098306207967, guid: 59e048f099dd94dc7a7757b1ea61a058,

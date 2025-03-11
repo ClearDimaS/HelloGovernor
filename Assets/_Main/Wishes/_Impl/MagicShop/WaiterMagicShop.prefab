@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   places:
   - data: {fileID: 11400000, guid: 53755aeef374f418b8af5c2f61468035, type: 2}
-    rootGO: {fileID: 0}
+    rootGO: {fileID: 7093516580412449891}
     rootLocalPlace: {x: -0.5, y: 0.8, z: 0.3}
     places:
     - {fileID: 6201776410213906740}
@@ -668,6 +668,12 @@ Transform:
 --- !u!4 &6201776410213906740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3394062562133943929, guid: 59e048f099dd94dc7a7757b1ea61a058,
+    type: 3}
+  m_PrefabInstance: {fileID: 8722068554645528397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7093516580412449891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1979957232029383470, guid: 59e048f099dd94dc7a7757b1ea61a058,
     type: 3}
   m_PrefabInstance: {fileID: 8722068554645528397}
   m_PrefabAsset: {fileID: 0}
