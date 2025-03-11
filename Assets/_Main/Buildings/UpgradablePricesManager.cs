@@ -213,7 +213,7 @@ public class UpgradablePricesManager : MonoBehaviour
 
             if (prices.Count != upgradesCount)
             {
-                throw new NotImplementedException($"prices for: {upgradableObject.transform.name} is not set correctly!");
+                throw new NotImplementedException($"prices for: {upgradableObject.transform.name} is not set correctly! {prices.Count}/{upgradesCount}");
             }
             consumersDict[upgradableObject] = prices;
         }
