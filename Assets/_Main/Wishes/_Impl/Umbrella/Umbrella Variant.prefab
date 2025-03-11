@@ -438,56 +438,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9095898072864159373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8303334573582675099
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1207698012021084798}
-  - component: {fileID: 5986030245625328006}
-  m_Layer: 0
-  m_Name: Level1 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1207698012021084798
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8303334573582675099}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6940416510112981322}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5986030245625328006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8303334573582675099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d7f8ebe2eb76497089edb05d3403eb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pause: 0.05
-  heightAnimationOffset: 0.4
-  animationDuration: 0.3
-  mrs: []
-  localPositions: []
-  localScales: []
 --- !u!1 &8611421676544240139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,11 +1034,6 @@ PrefabInstance:
       propertyPath: levels.Array.data[1]
       value: 
       objectReference: {fileID: 8523047788003011855}
-    - target: {fileID: 6533214046412964063, guid: ab3512ad7fea34161b18b52fd2504100,
-        type: 3}
-      propertyPath: levels.Array.data[2]
-      value: 
-      objectReference: {fileID: 5986030245625328006}
     - target: {fileID: 7817450110306230326, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1187,10 +1132,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4049481352533615975}
-    - targetCorrespondingSourceObject: {fileID: 5240984163831497566, guid: ab3512ad7fea34161b18b52fd2504100,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1207698012021084798}
     - targetCorrespondingSourceObject: {fileID: 1179854905063067722, guid: ab3512ad7fea34161b18b52fd2504100,
         type: 3}
       insertIndex: -1
@@ -1272,9 +1213,6 @@ MonoBehaviour:
   extraPlaces:
   - processPlaces:
     - {fileID: 9218395446880711969}
-    extraQueuePlaces: []
-    queueMode: 0
-  - processPlaces:
     - {fileID: 5435086677345292689}
     - {fileID: 6628238104613686227}
     extraQueuePlaces: []

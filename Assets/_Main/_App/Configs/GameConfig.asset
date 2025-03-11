@@ -17,42 +17,42 @@ MonoBehaviour:
   moveRight: {x: -1, y: 0, z: 0}
   purchaseXP: 5
   levelUps:
-  - maxXP: 25
+  - maxXP: 15
     moneyReward:
       amount: 200
     speedReward:
       addPercents: 0
     capacityReward:
       add: 1
-  - maxXP: 30
+  - maxXP: 15
     moneyReward:
       amount: 400
     speedReward:
       addPercents: 5
     capacityReward:
       add: 0
-  - maxXP: 35
+  - maxXP: 15
     moneyReward:
       amount: 1000
     speedReward:
       addPercents: 0
     capacityReward:
       add: 1
-  - maxXP: 40
+  - maxXP: 20
     moneyReward:
       amount: 2000
     speedReward:
       addPercents: 3
     capacityReward:
       add: 0
-  - maxXP: 45
+  - maxXP: 20
     moneyReward:
       amount: 4000
     speedReward:
       addPercents: 3
     capacityReward:
       add: 1
-  - maxXP: 50
+  - maxXP: 25
     moneyReward:
       amount: 8000
     speedReward:
@@ -73,6 +73,8 @@ MonoBehaviour:
   moneyFlyEase2: 8
   moneyInOneModel: 3
   moneyRewardMaxModels: 10
+  moneyToStackTime: 1
+  moneyToStackEase: 22
   hintCameraDistanceMult: 0.8
   unlockCameraDelay: 1
   cameraTransitionMaxTime: 1
@@ -83,3 +85,4 @@ MonoBehaviour:
   assistantPricesMult: 0.5
   upgradeIncomePriceMult: 0.5
   incomeIncrease: 1.5
+  skinsPerLevel: 10

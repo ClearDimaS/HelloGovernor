@@ -358,9 +358,14 @@ public class UpgradablePricesManager : MonoBehaviour
         return bought;
     }
 
+    private List<MoneyConsumerData> tutorialPurchases;
     public List<MoneyConsumerData> GetPurchaseSequence()
     {
-        return upgradablePriceDatas;
+        if (tutorialPurchases == null)
+        {
+            tutorialPurchases = upgradablePriceDatas.Where(x => x.level <= 1).ToList();
+        }
+        return tutorialPurchases;
     }
 
     public T GetBuildingsOfType<T>() where T : UpgradableBuilding
