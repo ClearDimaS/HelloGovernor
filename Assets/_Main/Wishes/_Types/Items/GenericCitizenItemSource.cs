@@ -9,8 +9,7 @@ public class GenericCitizenItemSource : CulledBehaviour
     [Inject] private PlayerController player;
 
     [SerializeField] private float radius = 1f;
-    [SerializeField] private Image iconImage;
-    [SerializeField] private Image takeProgressImage;
+    [SerializeField] protected TimerBase timerBase;
     [field: SerializeField] public Transform TakePlace { get; private set; }
     [field: SerializeField] public Transform IdlePlace { get; private set; }
     public int TakesCount { get; protected set; }
@@ -46,15 +45,15 @@ public class GenericCitizenItemSource : CulledBehaviour
 
     private void Start()
     {
-        iconImage.sprite = icon;
+        timerBase.SetIcon(icon);
         pool = new GenericItemsPool(container, prefabs);
         takerTimers[player] = 0;
     }
     
     public void SetItemIcon(Sprite dataItemIcon, Color color)
     {
-        iconImage.sprite = dataItemIcon;
-        iconImage.color = color;
+        timerBase.SetIcon(dataItemIcon);
+        timerBase.SetColor(color);
         icon = dataItemIcon;
     }
 
@@ -106,7 +105,7 @@ public class GenericCitizenItemSource : CulledBehaviour
         
         giveItemToTakersTMP.Clear();
 
-        takeProgressImage.fillAmount = progress;
+        timerBase.SetProgress(progress);
     }
 
     private GenericCitizenItem TakeItem()
