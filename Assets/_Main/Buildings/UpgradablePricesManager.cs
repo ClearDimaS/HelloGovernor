@@ -119,10 +119,10 @@ public class UpgradablePricesManager : MonoBehaviour
                     }
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
-                    VodooAnalyticsManagerFacade.WinLevel(levelCounter);
+                    //VodooAnalyticsManagerFacade.WinLevel(levelCounter);
                     //AnalyticsManager.Instance.WinLevel(levelCounter);
                     levelCounter++;
-                    VodooAnalyticsManagerFacade.StartLevel(levelCounter);
+                    //VodooAnalyticsManagerFacade.StartLevel(levelCounter);
                     //AnalyticsManager.Instance.StartLevel(levelCounter);
                 }
                 else
@@ -137,7 +137,7 @@ public class UpgradablePricesManager : MonoBehaviour
                     
                     levelCounter = 1;
                     
-                    VodooAnalyticsManagerFacade.StartLevel(levelCounter);
+                    //VodooAnalyticsManagerFacade.StartLevel(levelCounter);
                     //AnalyticsManager.Instance.StartLevel(levelCounter);
                 }
             }
