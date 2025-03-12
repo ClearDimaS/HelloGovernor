@@ -9,6 +9,7 @@ using Zenject;
 
 public class SkinPreviewPanel : UI_Panel
 {
+    [Inject] private CameraManager cameraManager;
     [Inject] private SkinChooser skinChooser;
     [Inject] private PlayerDataRepository playerRepository;
 
@@ -132,6 +133,7 @@ public class SkinPreviewPanel : UI_Panel
     public override void OnShow()
     {
         base.OnShow();
+        cameraManager.Blockers.Add(GetInstanceID());
         UI_Manager.Instance.ClosePanel<JoystickPanel>();
         originalPos = PlayerController.Instance.transform.position;
     }
@@ -145,6 +147,7 @@ public class SkinPreviewPanel : UI_Panel
     public override void OnHide()
     {
         base.OnHide();
+        cameraManager.Blockers.Remove(GetInstanceID());
         UI_Manager.Instance.OpenPanel<JoystickPanel>();
         PlayerController.Instance.transform.position = originalPos + Vector3.forward * 2;
     }

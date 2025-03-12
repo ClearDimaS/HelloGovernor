@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
@@ -46,7 +48,6 @@ class MyEditorScript {
         UnityEditor.PlayerSettings.SetIncrementalIl2CppBuild(BuildTargetGroup.Android, true);
         EditorUserBuildSettings.buildAppBundle = false;
         var ext = ".apk";
-        PlayerSettings.Android.useCustomKeystore = false;
         var envTarget = EnvironmentVariableTarget.Process;
         if (TryGetEnv(BUILD_TYPE_VAR, out string buildType, envTarget))
         {
@@ -61,7 +62,8 @@ class MyEditorScript {
                 PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable(KEYSTORE_ALIAS_PASS_VAR, envTarget);
             }
         }
-        
+        PlayerSettings.Android.useCustomKeystore = false;
+
         var dir = Application.productName;
         if (TryGetEnv(BUILD_NAME_VAR, out string buildPath))
         {
@@ -96,6 +98,56 @@ class MyEditorScript {
     
     static void GenericBuild(string[] scenes, string target_dir, BuildTarget build_target, BuildOptions build_options)
     {
+        NamedBuildTarget buildTarget = NamedBuildTarget.Android;
+        if (build_target == BuildTarget.iOS)
+        {
+            if (TryGetEnv(BUILD_NUMBER_IOS_VAR, out var bundleVersionNumber))
+            {
+                PlayerSettings.iOS.buildNumber = bundleVersionNumber;
+            }
+            buildTarget = NamedBuildTarget.iOS;
+        }
+        else if (build_target == BuildTarget.Android)
+        {
+            if (TryGetEnv(BUNDLE_VERSION_ANDROID_VAR, out var bundleVersionNumber) && Int32.TryParse(bundleVersionNumber, out int bundleNumber))
+            {
+                PlayerSettings.Android.bundleVersionCode = bundleNumber; 
+            }
+            buildTarget = NamedBuildTarget.Android;
+        }
+        
+        var envTarget = EnvironmentVariableTarget.Process;
+        if (TryGetEnv(BUILD_TYPE_VAR, out string buildType, envTarget))
+        {
+            List<string> symbolsArr;
+            var DEVELOPMENT = "DEVELOPMENT";
+            if (buildType == $"RELEASE")
+            {
+                var symbols = PlayerSettings.GetScriptingDefineSymbols(buildTarget);
+                symbolsArr = symbols.Split(";").ToList();
+                if (symbolsArr.Contains(DEVELOPMENT))
+                {
+                    symbolsArr.Remove(DEVELOPMENT);
+                }
+            }
+            else
+            {
+                var symbols = PlayerSettings.GetScriptingDefineSymbols(buildTarget);
+                symbolsArr = symbols.Split(";").ToList();
+                if (!symbolsArr.Contains(DEVELOPMENT))
+                {
+                    symbolsArr.Add(DEVELOPMENT);
+                }
+            }
+            var edittedSymbols = "";
+            foreach (var symbol in symbolsArr)
+            {
+                edittedSymbols += $"{symbol};";
+            }
+            Debug.Log($"scripting symbols: {edittedSymbols}");
+            PlayerSettings.SetScriptingDefineSymbols(buildTarget, edittedSymbols);
+        }
+        
         EditorUserBuildSettings.SwitchActiveBuildTarget(build_target);
         QualitySettings.asyncUploadTimeSlice = 2;
 

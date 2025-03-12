@@ -59,8 +59,8 @@ public class CameraManager : MonoBehaviour, ICameraManager
     private Transform defaultTarget;
     private CameraTarget currentTarget;
     private Queue<CameraTarget> targetsQueue = new ();
-    public int BlockersCount { get; set; }
-    private bool IsBlocked => BlockersCount > 0;
+    public HashSet<int> Blockers { get; set; } = new();
+    private bool IsBlocked => Blockers.Count > 0;
 
     private void Awake()
     {

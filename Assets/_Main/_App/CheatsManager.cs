@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class CheatsManager : MonoBehaviour
@@ -7,21 +8,40 @@ public class CheatsManager : MonoBehaviour
     [Inject] private PlayerDataRepository playerRepository;
     [Inject] private UI_Manager uiManager;
 
+    [SerializeField] private Button close;
+    [SerializeField] private GameObject view;
+    [SerializeField] private Button[] activateCheatButtons;
+
+    private int activateCheatIndex = -1;
     private bool isCinematicMode;
     private float startFOV;
     
     private void Start()
     {
-#if !UNITY_EDITOR
-Destroy(gameObject);
-#endif
+        #if !DEVELOPMENT 
+        Destroy(gameObject);
+        #endif
+        close.onClick.AddListener(() => view.SetActive(false));
+
+        for (var i = 0; i < activateCheatButtons.Length; i++)
+        {
+            var btn = activateCheatButtons[i];
+            var index = i;
+            btn.onClick.AddListener(() =>
+            {
+                activateCheatIndex = index;
+            });
+        }
     }
 
     private void Update()
     {
-#if UNITY_EDITOR
+        if (Input.touchCount > 3 || Input.GetKeyDown(KeyCode.Space))
+        {
+            view.SetActive(true);
+        }
         var tutorialManager = TutorialManager.Instance;
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U) || activateCheatIndex == 0)
         {
             var stepToSkip = tutorialManager.TutorialSteps[tutorialManager.CurrentIndex];
             stepToSkip.SaveAsCompleted();
@@ -36,15 +56,23 @@ Destroy(gameObject);
             {
                 incomeUpgrader.ForcePurchase();
             }
+            else if (stepToSkip is ChangeSkinTutorialStep skinStep)
+            {
+                skinStep.ForcePurchase();
+            }
+
+            activateCheatIndex = -1;
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) || activateCheatIndex == 1)
         {
+            activateCheatIndex = -1;
             playerRepository.Money += 5000;
         }
         
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) || activateCheatIndex == 2)
         {
+            activateCheatIndex = -1;
             if (!isCinematicMode)
             {
                 isCinematicMode = true;
@@ -63,6 +91,5 @@ Destroy(gameObject);
                 tutorialManager.ArrowGO.transform.localScale = Vector3.one;
             }
         }
-#endif
     }
 }

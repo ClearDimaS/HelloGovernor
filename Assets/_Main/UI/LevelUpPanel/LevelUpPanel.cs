@@ -64,12 +64,12 @@ public class LevelUpPanel : UI_Panel
     public override void OnShow()
     {
         base.OnShow();
-        cameraManager.BlockersCount++;
+        cameraManager.Blockers.Add(GetInstanceID());
     }
 
     public override void OnHide()
     {
         base.OnHide();
-        cameraManager.BlockersCount--;
+        cameraManager.Blockers.Remove(GetInstanceID());
     }
 }

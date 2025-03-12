@@ -12,6 +12,7 @@ using Button = UnityEngine.UI.Button;
 
 public class LevelRoadmapPanel : UI_Panel
 {
+    [Inject] private CameraManager cameraManager;
     [Inject] private CacheManager cacheManager;
     [Inject] private UI_Manager uiManager;
     [Inject] private DiContainer container;
@@ -116,6 +117,13 @@ public class LevelRoadmapPanel : UI_Panel
         {
             MoveToTarget();
         }
+        cameraManager.Blockers.Add(GetInstanceID());
+    }
+    
+    public override void OnHide()
+    {
+        base.OnHide();
+        cameraManager.Blockers.Remove(GetInstanceID());
     }
 
     private void MoveToTarget()
