@@ -19,6 +19,9 @@ public class TutorialManager : Singleton<TutorialManager>
     private List<TutorialStep> tutorialSteps;
     private int curStepIndex = 0;
 
+    public List<TutorialStep> TutorialSteps => tutorialSteps;
+    public int CurrentIndex => curStepIndex;
+
     private int skippedFrames;
     private bool isInit;
     
@@ -29,24 +32,6 @@ public class TutorialManager : Singleton<TutorialManager>
     
     private void Update()
     {
-        #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            var stepToSkip = tutorialSteps[curStepIndex];
-            stepToSkip.SaveAsCompleted();
-            if (stepToSkip is BuildingTutorialStep buildingTutorialStep)
-            {
-                buildingTutorialStep.ForcePurchase();
-            }
-            else if (stepToSkip is AnyUpgradableTutorialStep upgradable)
-            {
-                upgradable.ForcePurchase();
-            }else if (stepToSkip is IncomeUpgraderTutorialStep incomeUpgrader)
-            {
-                incomeUpgrader.ForcePurchase();
-            }
-        }
-        #endif
         if (skippedFrames < 4)
         {
             skippedFrames++;

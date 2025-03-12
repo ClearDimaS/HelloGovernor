@@ -11,7 +11,8 @@ public class PlayerSkinManager : MonoBehaviour
     [Inject] private PlayerDataRepository playerDataRepository;
     [Inject] private PlayerSkinConfig skinConfig;
     [Inject] private DiContainer container;
-    
+
+    [SerializeField] private RenderTexture rt;
     [SerializeField] private Transform gfxRoot;
     [SerializeField] private RuntimeAnimatorController animatorOverride;
     
@@ -28,6 +29,9 @@ public class PlayerSkinManager : MonoBehaviour
     {
         CreateAndSortSkinDatas();
         SpawnSkin();
+        rt.width = Screen.width;
+        rt.height = Screen.height;
+        rt.Create();
     }
 
     private void Update()
