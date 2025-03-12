@@ -20,6 +20,7 @@ public class SkinChooser : MonoBehaviour
     private SkinBehaviour[] skinBehaviours;
     public int SkinIndex { get; private set; }
     public int CurrentPrice => skinManager.GetPrice(SkinIndex);
+    public bool WasOpen { get; set; }
 
     private bool isInit;
 
@@ -48,6 +49,7 @@ public class SkinChooser : MonoBehaviour
     [Button]
     public void Show()
     {
+        WasOpen = true;
         cam.enabled = true;
         if (!isInit)
         {
@@ -118,5 +120,11 @@ public class SkinChooser : MonoBehaviour
         SkinIndex++;
         SkinIndex %= skinManager.SkinCount;
         swiper.MoveElements(1, false);
+    }
+
+    [SerializeField] private Sprite tutorialIcon;
+    public Sprite GetTutorialIcon()
+    {
+       return tutorialIcon;
     }
 }

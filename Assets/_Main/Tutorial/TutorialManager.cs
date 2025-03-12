@@ -8,6 +8,7 @@ using Zenject;
 
 public class TutorialManager : Singleton<TutorialManager>
 {
+    [Inject] private SkinChooser skinChooser;
     [Inject] private GameConfig gameConfig;
     [Inject] private CameraManager cameraManager;
     [Inject] private PlayerDataRepository playerRepository;
@@ -133,6 +134,8 @@ public class TutorialManager : Singleton<TutorialManager>
             }
         }
     }
+
+    private bool wasFashionFound;
     
     private void BuildTutorialSteps()
     {
@@ -147,6 +150,18 @@ public class TutorialManager : Singleton<TutorialManager>
                     purchasable.thisTypeIndex, 
                     playerRepository)
                 );
+                if (!wasFashionFound)
+                {
+                    var fashion = building.GetComponent<FashionBuilding>();
+                    if (fashion != null)
+                    {
+                        wasFashionFound = true;
+                        tutorialSteps.Add(new ChangeSkinTutorialStep(
+                            skinChooser: skinChooser,
+                            activationPlace: fashion.ActivationPlace,
+                            repository:playerRepository));
+                    }
+                }
             }
 
             if (purchasable.upgradable is IncomeUpgrader incomeUpgrader)
