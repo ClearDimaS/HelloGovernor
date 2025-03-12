@@ -87,7 +87,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     private List<CitizenController> pendingLeaving = new ();
     private List<CitizenController> leaving = new ();
     protected List<CitizenController> pendingRemove = new ();
-    private int extraPlacesAddedLevel = 0;
+    private int extraPlacesAddedLevel = -1;
     public float FullProgressTime => wishesCollectionConfig.GetGrantDuration(this);
     public int Reward => wishesCollectionConfig.GetReward(this);
     public float CoolDown => coolDownTimer == null ? -1f : coolDownTimer.CoolDownTime;
@@ -168,7 +168,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         {
             extraPlacesAddedLevel = upgradable.Level - 1; // 1 for level 2
             var extraPlacesAddedIndex = extraPlacesAddedLevel - 1;  // 0 for level 2
-            if (extraPlacesAddedIndex < extraPlaces.Length && extraPlacesAddedIndex > 0)
+            if (extraPlacesAddedIndex < extraPlaces.Length && extraPlacesAddedIndex >= 0)
             {
                 AddExtraPlaces(extraPlaces[extraPlacesAddedIndex]);   
             }
@@ -349,6 +349,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         if (extraPlace.processPlaces.Length > 0)
         {
             processPlaces = processPlaces.Concat(extraPlace.processPlaces).ToArray();   
+            for (int i = 0; i < extraPlace.processPlaces.Length; i++)
+            {
+                freePlaces.Enqueue(extraPlace.processPlaces[i]);
+            }
         }
         if (extraPlace.extraQueuePlaces.Length > 0)
         {
