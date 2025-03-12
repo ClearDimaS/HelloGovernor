@@ -47,6 +47,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     
     public Camera ActiveCamera => _currentCamera;
     public Camera OriginalCamera => camera;
+    private bool isChangeAllowed = true;
     public bool IsOnPlayer { get; private set; }
 
     private Camera _currentCamera;
@@ -121,6 +122,11 @@ public class CameraManager : MonoBehaviour, ICameraManager
 
     public void SetTarget(Transform target, float timer, float delay = -1f, Action startCallback = null, float distanceMult = 1f)
     {
+        if (!isChangeAllowed)
+        {
+            startCallback?.Invoke();
+            return;
+        }
         if ((currentTarget.HasTimer && currentTarget.timer > 0f))
         {
             if (delay > 0f)
@@ -175,5 +181,10 @@ public class CameraManager : MonoBehaviour, ICameraManager
                 isTransition = false;
             }).SetEase(gameConfig.cameraTransitionEase);
         }
+    }
+
+    public void AllowChangeTarget(bool value)
+    {
+        isChangeAllowed = value;
     }
 }

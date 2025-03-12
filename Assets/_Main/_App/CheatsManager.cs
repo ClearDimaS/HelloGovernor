@@ -51,12 +51,16 @@ Destroy(gameObject);
                 startFOV = cameraManager.ActiveCamera.fieldOfView;
                 cameraManager.ActiveCamera.fieldOfView = 30f;
                 uiManager.GetComponentInParent<CanvasGroup>().alpha = 0f;
+                cameraManager.AllowChangeTarget(false);
+                tutorialManager.ArrowGO.transform.localScale = Vector3.zero;
             }
             else
             {
                 isCinematicMode = false;
                 cameraManager.ActiveCamera.fieldOfView = startFOV;
                 uiManager.GetComponentInParent<CanvasGroup>().alpha = 1f;
+                cameraManager.AllowChangeTarget(true);
+                tutorialManager.ArrowGO.transform.localScale = Vector3.one;
             }
         }
 #endif

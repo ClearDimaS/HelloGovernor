@@ -17,6 +17,7 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private GameObject tutorialArrow;
 
     private List<TutorialStep> tutorialSteps;
+    public GameObject ArrowGO => tutorialArrow;
     private int curStepIndex = 0;
 
     public List<TutorialStep> TutorialSteps => tutorialSteps;
