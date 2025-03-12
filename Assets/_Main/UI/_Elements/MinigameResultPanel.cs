@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = fbg.Debug;
 
 public abstract class Minigame
 {

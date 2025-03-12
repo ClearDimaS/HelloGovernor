@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using Debug = fbg.Debug;
 
 public class Walker : CulledBehaviour
 {
