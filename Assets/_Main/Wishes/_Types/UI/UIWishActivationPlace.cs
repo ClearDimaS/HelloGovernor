@@ -8,7 +8,8 @@ using Zenject;
 public class UIWishActivationPlace : MonoBehaviour
 {
     [Inject] private PlayerController player;
-
+    [Inject] protected CameraManager cameraManager;
+    
     [SerializeField] protected float radius = 1.5f;
     [SerializeField] protected GameObject content;
 
@@ -26,7 +27,7 @@ public class UIWishActivationPlace : MonoBehaviour
 
     private void Update()
     {
-        if (IsShown && !isActivated)
+        if (IsShown && !isActivated && !cameraManager.IsBlocked)
         {
             var diff = transform.position - player.transform.position;
             diff.y = 0f;

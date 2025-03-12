@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class BuildingTutorialStep : TutorialStep
@@ -17,12 +18,31 @@ public class BuildingTutorialStep : TutorialStep
         this.levelIndex = levelIndex;
         this.price = building.GetPriceForLevel(levelIndex);
         this.typeIndex = typeIndex;
+        if (!IsCompleted())
+        {
+            this.building.BuyPlace.gameObject.SetActive(false);
+            this.building.BuyPlace.transform.localScale = Vector3.zero;
+        }
     }
 
     public override void Start()
     {
         base.Start();
-        Debug.Log($"starting building tutorial!");
+        if (!IsCompleted())
+        {
+            this.building.BuyPlace.gameObject.SetActive(true);
+            this.building.BuyPlace.transform.localScale = Vector3.zero;
+            this.building.BuyPlace.transform.DOScale(Vector3.one * 1.15f, 0.3f).OnComplete(() =>
+            {
+                this.building.BuyPlace.transform.DOScale(Vector3.one, 0.3f);
+            });
+            Debug.Log($"starting building tutorial!");
+        }
+        else
+        {
+            this.building.BuyPlace.gameObject.SetActive(true);
+            this.building.BuyPlace.transform.localScale = Vector3.one;
+        }
         this.building.SetAllowBuy(levelIndex+1, true);
     }
 

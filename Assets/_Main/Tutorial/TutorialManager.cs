@@ -75,7 +75,7 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             var curStep = tutorialSteps[curStepIndex];
             curStep.UpdateProgress();
-            if (curStep.IsCompleted())
+            if (curStep.IsCompleted() && cameraManager.IsOnPlayer && !cameraManager.IsBlocked)
             {
                 curStep.SaveAsCompleted();
                 curStepIndex++;
@@ -87,7 +87,7 @@ public class TutorialManager : Singleton<TutorialManager>
                     {
                         ShowTargetPlace(callback: () =>
                         {
-  
+                            newStep.Start();
                         });   
                     });
                     RefreshArrowTarget(newStep); 

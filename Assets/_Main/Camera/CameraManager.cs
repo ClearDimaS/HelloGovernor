@@ -60,7 +60,8 @@ public class CameraManager : MonoBehaviour, ICameraManager
     private CameraTarget currentTarget;
     private Queue<CameraTarget> targetsQueue = new ();
     public HashSet<int> Blockers { get; set; } = new();
-    private bool IsBlocked => Blockers.Count > 0;
+    public bool IsBlocked => Blockers.Count > 0;
+    public int blockersCount;
 
     private void Awake()
     {
@@ -81,6 +82,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
 
     private void Update()
     {
+        blockersCount = Blockers.Count;
         if (currentTarget.HasTimer && !isTransition && !IsBlocked)
         {
             currentTarget.timer -= Time.deltaTime;
@@ -98,7 +100,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
             }
         }
 
-        IsOnPlayer = targetsQueue.Count == 0 && !isTransition && currentTarget.target == defaultTarget;
+        IsOnPlayer = !isTransition && currentTarget.target == defaultTarget;
 
         if (!isTransition)
         {

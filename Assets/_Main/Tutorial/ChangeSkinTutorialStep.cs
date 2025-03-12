@@ -15,9 +15,9 @@ public class ChangeSkinTutorialStep : TutorialStep
     {
         base.Start();
         Debug.Log($"starting skin tutorial!");
-        if (!IsCompleted() && playerRepository.Money < 400)
+        if (!IsCompleted() && playerRepository.Money < 200)
         {
-            playerRepository.Money += 400;
+            playerRepository.Money += 200;
         }
     }
 

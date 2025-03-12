@@ -63,10 +63,5 @@ public class CityProgressPanel : UI_Panel
         {
             completedTimeout = 0f;
         }
-
-        if (completedTimeout > 10f)
-        {
-            gameObject.SetActive(false);
-        }
     }
 }
