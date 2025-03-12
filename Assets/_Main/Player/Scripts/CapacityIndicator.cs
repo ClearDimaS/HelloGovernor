@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class CapacityIndicator : MonoBehaviour
 {
-    [SerializeField] private TextMesh currentText;
-    [SerializeField] private TextMesh maxText;
+    [SerializeField] private TextMesh[] currentTexts;
+    [SerializeField] private TextMesh[] maxTexts;
     [SerializeField] private Transform content;
     [SerializeField] private SpriteAlphaGroup alphaGroup;
     [SerializeField] protected float showAfterChangeTime = 2f;
     [SerializeField] private float fadeTime = 1f;
-    [SerializeField] private SpriteRadialFiller filler;
+    [SerializeField] private SpriteRadialFiller[] fillers;
     
     protected float lastChangeTime = -10;
     [SerializeField] protected int lastCount;
@@ -22,7 +22,10 @@ public class CapacityIndicator : MonoBehaviour
     {
         interactor = GetComponentInParent<Interactor>();
         alphaGroup.Fade(0f, 0f);
-        filler.fillAmount = 0f;
+        foreach (var filler in fillers)
+        {
+            filler.fillAmount = 0f;   
+        }
     }
 
     private void Update()
@@ -32,21 +35,35 @@ public class CapacityIndicator : MonoBehaviour
         {
             lastCount = interactor.interactables.Count;
             lastChangeTime = Time.time;
-            currentText.text = lastCount.ToString();
+            var curString = lastCount.ToString();
+            foreach (var currentText in currentTexts)
+            {
+                currentText.text = curString;
+            }
             if (lastCount > 0)
             {
-                maxText.text = interactor.GetCurrentMaxPlaces().ToString();
+                var maxString = interactor.GetCurrentMaxPlaces().ToString();
+                foreach (var maxText in maxTexts)
+                {
+                    maxText.text = maxString;
+                }
             }
 
             var endVal = lastCount / (float)interactor.GetCurrentMaxPlaces();
-            var startVal = filler.fillAmount;
+            var startVal = fillers[0].fillAmount;
             var t = 0f;
             DOTween.To(() => t, x => t = x, 1f, 0.3f).OnUpdate(() =>
             {
-                filler.fillAmount = Mathf.Lerp(startVal, endVal, t);
+                foreach (var filler in fillers)
+                {
+                    filler.fillAmount = Mathf.Lerp(startVal, endVal, t); 
+                }
             }).OnComplete(() =>
             {
-                filler.fillAmount = endVal;
+                foreach (var filler in fillers)
+                {
+                    filler.fillAmount = endVal;
+                }
             });
         }
 
