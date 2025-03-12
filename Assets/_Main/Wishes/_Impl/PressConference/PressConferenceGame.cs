@@ -1,4 +1,5 @@
-using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class PressConferenceGame : Minigame
 {
@@ -9,13 +10,15 @@ public class PressConferenceGame : Minigame
     private int otherThemeIndex;
     private int curIndex = 0;
     private int correctIndex = 0;
-    
+
+    private Action<int> onComplete;
     private WishGranterGameTimer timer;
     public int correctCounter { get; private set; }
     public int wrongCounter { get; private set; }
 
-    public PressConferenceGame(PressConferenceConfig config, WishGranterGameTimer timer)
+    public PressConferenceGame(PressConferenceConfig config, WishGranterGameTimer timer, Action<int> onComplete)
     {
+        this.onComplete = onComplete;
         this.config = config;
         themeIndex = Random.Range(0, config.datas.Length);
         this.timer = timer;
@@ -32,6 +35,9 @@ public class PressConferenceGame : Minigame
     public override void Complete()
     {
         timer.ResetToCooldown();
+        var fire = onComplete;
+        onComplete = null;
+        fire?.Invoke(GetReward());
     }
 
     public void Answer(int index)

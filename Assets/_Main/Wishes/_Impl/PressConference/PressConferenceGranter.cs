@@ -19,8 +19,13 @@ public class PressConferenceGranter : UIWishGranter
 
     protected override void OnActivate()
     {
-        var game = new PressConferenceGame(conferenceConfig, coolDownTimer.GetGameTimer());
+        var game = new PressConferenceGame(conferenceConfig, coolDownTimer.GetGameTimer(), GiveReward);
         (panel as PressConferenceUI_Panel).Init(game);
         base.OnActivate();
+    }
+    
+    private void GiveReward(int count)
+    {
+        AddMoney(count, processPlaces[0].Position + Vector3.up);
     }
 }
