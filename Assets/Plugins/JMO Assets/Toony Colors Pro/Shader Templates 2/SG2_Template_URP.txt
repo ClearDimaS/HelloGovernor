@@ -180,12 +180,13 @@ sngl		lbl="Enable Lightmaps"					kw=ENABLE_LIGHTMAP
 sngl		lbl="Enable LOD Dither Crossfade"		kw=ENABLE_DITHER_LOD
 mult		lbl="Dithering Pattern"					kw=4x4 Pixels|,8x8 Pixels|DITHER_LOD_8x8	indent	tt="The size of the dithering pattern to use, 8x8 looks more progressive than 4x4."
 sngl		lbl="Disable Dynamic Batching"			kw=DISABLE_BATCHING				tt="Disable dynamic batching support for this shader"
-sngl		lbl="Enable Depth Normals Pass"			kw=ENABLE_DEPTH_NORMALS_PASS
+sngl		lbl="Enable Depth Normals Pass"			kw=ENABLE_DEPTH_NORMALS_PASS	enabled_for="6000.0.0"
 sngl		lbl="Enable Meta Pass"					kw=ENABLE_META_PASS				tt="Enable meta pass: it is needed to be able to bake lighting but can prevent SRP Batcher compatibility."
 sngl		lbl="Enable Light Layers (URP 12+)"		kw=ENABLE_LIGHT_LAYERS
 sngl		lbl="Enable Rendering Layers (URP 14+)"	kw=ENABLE_RENDERING_LAYERS
-sngl		lbl="Enable Forward+ (URP 14+)"			kw=ENABLE_FORWARD_PLUS
-sngl		lbl="Enable DOTS Instancing (URP 14+)"	kw=ENABLE_DOTS_INSTANCING
+sngl		lbl="Enable Forward+ (URP 14+)"			kw=ENABLE_FORWARD_PLUS			enabled_for="6000.0.0"
+sngl		lbl="Enable BRG Instancing (DOTS, GPU RD)"	kw=ENABLE_DOTS_INSTANCING	tt="Enable BatchRendererGroup API support in the shader, enabling DOTS instancing and GPU Resident Drawer support. You need to explicitly define which variables will be instanced in the SHADER PROPERTIES tab."
+sngl		lbl="Enable Adaptive Probe Volumes (URP 16+)"	kw=ENABLE_APV
 space	space=4
 subh	lbl="GPU Instancing Options"
 flag	lbl="Assume Uniform Scaling"	kw=assumeuniformscaling		block="pragma_gpu_instancing"		tt="Use this to instruct Unity to assume that all the instances have uniform scalings (the same scale for all X, Y and Z axes)."
@@ -366,7 +367,7 @@ feature_on		LWRP
 feature_on		URP
 
 # features
-/// IF GLOSSY_REFLECTIONS || AMBIENT_VIEW_DIR
+/// IF GLOSSY_REFLECTIONS || AMBIENT_VIEW_DIR || ENABLE_APV
 	feature_on		USE_VIEW_DIRECTION_FRAGMENT
 ///
 
@@ -744,11 +745,6 @@ Shader "@%SHADER_NAME%@"
 		#endif
 ///
 
-		#if defined(UNITY_INSTANCING_ENABLED) || defined(UNITY_DOTS_INSTANCING_ENABLED)
-			#define unity_ObjectToWorld UNITY_MATRIX_M
-			#define unity_WorldToObject UNITY_MATRIX_I_M
-		#endif
-
 		[[VARIABLES_GPU_INSTANCING_INCLUDE]]
 
 		[[MODULE:FUNCTIONS]]
@@ -871,10 +867,10 @@ Shader "@%SHADER_NAME%@"
 			[[INJECTION_POINT:Outline Pass/Vertex Shader/Start]]
 
 	/// IF USE_WORLD_POSITION_UV_VERTEX
-			float3 worldPosUv = mul(unity_ObjectToWorld, v.vertex).xyz;
+			float3 worldPosUv = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 	/// IF USE_WORLD_NORMAL_UV_VERTEX || USE_WORLD_NORMAL_FRAGMENT
-			float3 worldNormalUv = mul(unity_ObjectToWorld, float4(v.normal, 1.0)).xyz;
+			float3 worldNormalUv = mul(UNITY_MATRIX_M, float4(v.normal, 1.0)).xyz;
 	///
 			[[VERTEX_TEXCOORDS]]
 			[[SAMPLE_CUSTOM_PROPERTIES]]
@@ -888,7 +884,7 @@ Shader "@%SHADER_NAME%@"
 			v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT
-			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+			float3 worldPos = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 			[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
@@ -896,7 +892,7 @@ Shader "@%SHADER_NAME%@"
 	///
 			[[MODULE:VERTEX:Wind(worldPos.xyz)]]
 	/// IF APPLY_WORLD_POSITION
-			v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
+			v.vertex.xyz = mul(UNITY_MATRIX_I_M, float4(worldPos, 1)).xyz;
 	///
 			[[MODULE:VERTEX:Water(v.vertex, worldPos, v.normal)]]
 	/// IF USE_OBJECT_POSITION_FRAGMENT
@@ -1070,10 +1066,10 @@ Shader "@%SHADER_NAME%@"
 				[[INJECTION_POINT:Silhouette Pass/Vertex Shader/Start]]
 
 	/// IF USE_WORLD_POSITION_UV_VERTEX
-				float3 worldPosUv = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 worldPosUv = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 	/// IF USE_WORLD_NORMAL_UV_VERTEX || USE_WORLD_NORMAL_FRAGMENT
-				float3 worldNormalUv = mul(unity_ObjectToWorld, float4(v.normal, 1.0)).xyz;
+				float3 worldNormalUv = mul(UNITY_MATRIX_M, float4(v.normal, 1.0)).xyz;
 	///
 				[[VERTEX_TEXCOORDS]]
 				[[SAMPLE_CUSTOM_PROPERTIES]]
@@ -1087,7 +1083,7 @@ Shader "@%SHADER_NAME%@"
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
-				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 worldPos = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
@@ -1095,7 +1091,7 @@ Shader "@%SHADER_NAME%@"
 	///
 				[[MODULE:VERTEX:Wind(worldPos.xyz)]]
 	/// IF APPLY_WORLD_POSITION
-				v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
+				v.vertex.xyz = mul(UNITY_MATRIX_I_M, float4(worldPos, 1)).xyz;
 	///
 				[[MODULE:VERTEX:Water(v.vertex, worldPos, v.normal)]]
 	/// IF USE_OBJECT_POSITION_FRAGMENT
@@ -1226,10 +1222,10 @@ Shader "@%SHADER_NAME%@"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 	/// IF USE_WORLD_POSITION_UV_VERTEX
-				float3 worldPosUv = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 worldPosUv = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 	/// IF USE_WORLD_NORMAL_UV_VERTEX || USE_WORLD_NORMAL_FRAGMENT
-				float3 worldNormalUv = mul(unity_ObjectToWorld, float4(v.normal, 1.0)).xyz;
+				float3 worldNormalUv = mul(UNITY_MATRIX_M, float4(v.normal, 1.0)).xyz;
 	///
 				[[VERTEX_TEXCOORDS]]
 				[[SAMPLE_CUSTOM_PROPERTIES]]
@@ -1243,7 +1239,7 @@ Shader "@%SHADER_NAME%@"
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
-				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				float3 worldPos = mul(UNITY_MATRIX_M, v.vertex).xyz;
 	///
 				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
@@ -1251,7 +1247,7 @@ Shader "@%SHADER_NAME%@"
 	///
 				[[MODULE:VERTEX:Wind(worldPos.xyz)]]
 	/// IF APPLY_WORLD_POSITION
-				v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
+				v.vertex.xyz = mul(UNITY_MATRIX_I_M, float4(worldPos, 1)).xyz;
 	///
 				[[MODULE:VERTEX:Water(v.vertex, worldPos, v.normal)]]
 	/// IF USE_WORLD_POSITION_FRAGMENT
@@ -1432,6 +1428,9 @@ Shader "@%SHADER_NAME%@"
 ///
 /// IF SSAO
 			#pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+///
+/// IF ENABLE_APV
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ProbeVolumeVariants.hlsl"
 ///
 
 			// -------------------------------------
@@ -1626,10 +1625,10 @@ Shader "@%SHADER_NAME%@"
 				[[MODULE:VERTEX:Terrain(input.vertex, input.normal, input.texcoord0, _unused_)]]
 
 /// IF USE_WORLD_POSITION_UV_VERTEX
-				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+				float3 worldPosUv = mul(UNITY_MATRIX_M, input.vertex).xyz;
 ///
 /// IF USE_WORLD_NORMAL_UV_VERTEX
-				float3 worldNormalUv = mul(unity_ObjectToWorld, float4(input.normal, 1.0)).xyz;
+				float3 worldNormalUv = mul(UNITY_MATRIX_M, float4(input.normal, 1.0)).xyz;
 ///
 /// IF UV_SINE_ANIMATION_VERTEX
 
@@ -1653,7 +1652,9 @@ Shader "@%SHADER_NAME%@"
 				[[SAMPLE_SHADER_PROPERTIES]]
 /// IF ENABLE_LIGHTMAP
 	/// IF TERRAIN_SHADER
-				output.staticLightmapUV = input.texcoord0.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+				#if defined(LIGHTMAP_ON)
+					output.staticLightmapUV = input.texcoord0.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+				#endif
 	/// ELSE
 				#if defined(LIGHTMAP_ON)
 					output.staticLightmapUV = input.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
@@ -1672,7 +1673,7 @@ Shader "@%SHADER_NAME%@"
 				input.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 ///
 /// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
-				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				float3 worldPos = mul(UNITY_MATRIX_M, input.vertex).xyz;
 ///
 				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 /// IF HOOK_VERTEX_POSITION_WORLD
@@ -1680,7 +1681,7 @@ Shader "@%SHADER_NAME%@"
 ///
 				[[MODULE:VERTEX:Wind(worldPos.xyz)]]
 /// IF APPLY_WORLD_POSITION
-				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
+				input.vertex.xyz = mul(UNITY_MATRIX_I_M, float4(worldPos, 1)).xyz;
 ///
 				[[MODULE:VERTEX:Water(input.vertex, worldPos, input.normal)]]
 /// IF USE_OBJECT_POSITION_FRAGMENT
@@ -1746,7 +1747,7 @@ Shader "@%SHADER_NAME%@"
 				output.vertexColor = input.vertexColor;
 ///
 /// IF USE_VIEW_DIRECTION_VERTEX
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - vertexInput.positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(vertexInput.positionWS);
 ///
 #ENABLE_IMPL: float ndv, lbl = "Special/N·V (Vertex)", help = "The dot product between the normal and view direction.", toggles = "USE_NDV_VERTEX", options = "(Use Min/Max Properties,USE_NDV_MIN_MAX_VERT,config),(Invert,USE_NDV_INVERT_VERT)"
 /// IF USE_NDV_VERTEX
@@ -1841,7 +1842,7 @@ Shader "@%SHADER_NAME%@"
 				normalWS.xyz *= (vFace < 0) ? -1.0 : 1.0;
 ///
 /// IF USE_VIEW_DIRECTION_FRAGMENT
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(positionWS);
 ///
 /// IF USE_TANGENT_FRAGMENT
 				half3 tangentWS = input.[[INPUT_VALUE:tangent]];
@@ -2069,6 +2070,11 @@ Shader "@%SHADER_NAME%@"
 				half3 bakedGI = SampleSH(viewDirWS);
 		/// ELSE
 				half3 bakedGI = SampleSH(normalWS);
+		///
+		/// IF ENABLE_APV
+				#if defined(PROBE_VOLUMES_L1) || defined(PROBE_VOLUMES_L2)
+					bakedGI = SampleProbeVolumePixel(0.0, positionWS, normalWS, viewDirWS, input.positionCS.xy);
+				#endif
 		///
 	/// IF AMBIENT_SHADER_FEATURE
 			#else
@@ -2607,7 +2613,7 @@ Shader "@%SHADER_NAME%@"
 			#pragma multi_compile _ TCP2_UV_NORMALS_FULL TCP2_UV_NORMALS_ZW
 			#pragma multi_compile_instancing
 			[[GPU_INSTANCING_OPTIONS]]
-			
+
 	#if_not_empty
 			//--------------------------------------
 			// Toony Colors Pro 2 keywords
@@ -2731,10 +2737,10 @@ Shader "@%SHADER_NAME%@"
 				[[INJECTION_POINT:Depth + Shadow Caster Pass/Vertex Shader/Start]]
 
 /// IF USE_WORLD_POSITION_UV_VERTEX
-				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+				float3 worldPosUv = mul(UNITY_MATRIX_M, input.vertex).xyz;
 ///
 /// IF USE_WORLD_NORMAL_UV_VERTEX || USE_WORLD_NORMAL_FRAGMENT || USE_NDV_VERTEX
-				float3 worldNormalUv = mul(unity_ObjectToWorld, float4(input.normal, 1.0)).xyz;
+				float3 worldNormalUv = mul(UNITY_MATRIX_M, float4(input.normal, 1.0)).xyz;
 ///
 /// IF UV_SINE_ANIMATION_VERTEX
 
@@ -2765,7 +2771,7 @@ Shader "@%SHADER_NAME%@"
 				input.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 ///
 /// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
-				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				float3 worldPos = mul(UNITY_MATRIX_M, input.vertex).xyz;
 ///
 				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 /// IF HOOK_VERTEX_POSITION_WORLD
@@ -2773,14 +2779,14 @@ Shader "@%SHADER_NAME%@"
 ///
 				[[MODULE:VERTEX:Wind(worldPos.xyz)]]
 /// IF APPLY_WORLD_POSITION
-				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
+				input.vertex.xyz = mul(UNITY_MATRIX_I_M, float4(worldPos, 1)).xyz;
 ///
 				[[MODULE:VERTEX:Water(input.vertex, worldPos, input.normal)]]
 /// IF USE_VIEW_DIRECTION_VERTEX || USE_CLIP_POSITION_VERTEX || USE_SCREEN_POSITION_FRAGMENT || USE_SCREEN_POSITION_VERTEX || USE_WORLD_POSITION_FRAGMENT
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 ///
 /// IF USE_VIEW_DIRECTION_VERTEX
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - vertexInput.positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(vertexInput.positionWS);
 ///
 /// IF USE_NDV_VERTEX
 				half ndv = abs(dot(viewDirWS, worldNormalUv));
@@ -2865,7 +2871,7 @@ Shader "@%SHADER_NAME%@"
 				[[SAMPLE_SHADER_PROPERTIES]]
 
 /// IF USE_VIEW_DIRECTION_FRAGMENT
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(positionWS);
 ///
 /// IF USE_NDV_FRAGMENT
 #		/// IF USE_NDV_IGNORE_NORMAL_MAP

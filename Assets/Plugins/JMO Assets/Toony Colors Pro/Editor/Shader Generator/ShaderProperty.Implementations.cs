@@ -529,7 +529,7 @@ namespace ToonyColorsPro
 						BeginHorizontal();
 						{
 							bool highlighted = !IsDefaultImplementation ? IsDotsInstanced : IsDotsInstanced != GetDefaultImplementation<Imp_MaterialProperty>().IsDotsInstanced;
-							SGUILayout.InlineLabel("DOTS Instanced", "Tag this property as a supporting DOTS instancing", highlighted);
+							SGUILayout.InlineLabel("DOTS/BRG Instanced", "Tag this property as supporting BatchRendererGroup instancing (DOTS, GPU Resident Drawer). BRG Instancing must also be enabled in the FEATURES tab.", highlighted);
 							EditorGUI.BeginChangeCheck();
 							IsDotsInstanced = SGUILayout.Toggle(IsDotsInstanced);
 							if (EditorGUI.EndChangeCheck())
@@ -2831,6 +2831,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("cc")] public int ChannelsCount = 3;
 				[Serialization.SerializeAs("chan")] public string Channels = "RGB";
 				string DefaultChannels = "RGB";
+				[Serialization.SerializeAs("linear")] public bool ConvertToLinearSpace = false;
 
 				public Imp_VertexColor(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
@@ -2874,7 +2875,15 @@ namespace ToonyColorsPro
 				{
 					var hideChannels = TryGetArgument("hide_channels", arguments);
 					var channels = string.IsNullOrEmpty(hideChannels) ? "." + Channels.ToLowerInvariant() : "";
-					return string.Format("{0}.vertexColor{1}", inputSource, channels);
+					var vertexColorsVariable = $"{inputSource}.vertexColor";
+					if (ConvertToLinearSpace)
+					{
+						if (ShaderGenerator2.IsURP)
+							vertexColorsVariable = $"SRGBToLinear({vertexColorsVariable})";
+						else
+							vertexColorsVariable = $"half4(GammaToLinearSpace({vertexColorsVariable}.rgb), {vertexColorsVariable}.a)";
+					}
+					return string.Format($"{vertexColorsVariable}{channels}");
 				}
 
 				internal override void NewLineGUI(bool usedByCustomCode)
@@ -2902,6 +2911,14 @@ namespace ToonyColorsPro
 							else
 								Channels = SGUILayout.RGBASwizzle(Channels, ChannelsCount);
 						}
+					}
+					EndHorizontal();
+
+					BeginHorizontal();
+					{
+						bool highlighted = !IsDefaultImplementation ? ConvertToLinearSpace : ConvertToLinearSpace != GetDefaultImplementation<Imp_VertexColor>().ConvertToLinearSpace;
+						SGUILayout.InlineLabel(TCP2_GUI.TempContent("Convert to Linear Space", "Convert the vertex colors to linear color space if the project is in linear color space."), highlighted);
+						ConvertToLinearSpace = SGUILayout.Toggle(ConvertToLinearSpace);
 					}
 					EndHorizontal();
 				}
@@ -4198,7 +4215,7 @@ namespace ToonyColorsPro
 					}
 				}
 
-				// Used to show the properties in the Features tab directy
+				// Used to show the properties in the Features tab directly
 				internal void EmbeddedGUI(float indent = 0, float labelWidth = 130)
 				{
 					// Embedded through the "mult_fs" UIFeature
@@ -4215,7 +4232,7 @@ namespace ToonyColorsPro
 					GUILayout.BeginHorizontal();
 					{
 						GUILayout.Space(indent);
-						bool highlighted = EnumValue != GetDefaultImplementation<Imp_Enum>().EnumValue;
+						bool highlighted = !IsDefaultImplementation || EnumValue != GetDefaultImplementation<Imp_Enum>().EnumValue;
 						TCP2_GUI.SubHeader(IsConstant() ? "Value" : "Default Value", null, highlighted, labelWidth + 4);
 						GUILayout.Space(-4); // hack to align the highlighted part with the regular UIFeatures
 						EnumValue = EditorGUILayout.Popup(EnumValue, enumDisplayNames);

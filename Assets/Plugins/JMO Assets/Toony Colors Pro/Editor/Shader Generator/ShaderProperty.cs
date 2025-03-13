@@ -1464,7 +1464,7 @@ namespace ToonyColorsPro
 				menu.AddItem(gc_ResetImplementations, false, OnResetImplementation, true);
 				menu.AddItem(gc_ResetImplementationsML, false, OnResetImplementation, null);
 
-				if (ShaderGenerator2.DebugMode)
+				if (ShaderGenerator2.DEBUG_MODE)
 				{
 					menu.AddItem(gc_debugCompareImplementations, false, () =>
 					{

@@ -15,6 +15,7 @@
 #else
 	// URP to BIRP
 	#define CopySign(x,s) ((s >= 0) ? abs(x) : -abs(x))
+	#define UNITY_MATRIX_I_M unity_WorldToObject
 #endif
 
 #if defined(TCP2_HYBRID_URP)
@@ -132,8 +133,8 @@ CBUFFER_END
 
 #if URP_VERSION >= 14 && defined(UNITY_DOTS_INSTANCING_ENABLED)
 
-// not sure why unity_ObjectToWorld doesn't work when DOTS is enabled...
-#define unity_ObjectToWorld UNITY_MATRIX_M
+// --------------------------------
+// DOTS INSTANCING & BRG SUPPORT
 
 UNITY_DOTS_INSTANCING_START(UserPropertyMetadata)
 	UNITY_DOTS_INSTANCED_PROP(float, _RampSmoothing)
@@ -143,16 +144,12 @@ UNITY_DOTS_INSTANCING_START(UserPropertyMetadata)
 	UNITY_DOTS_INSTANCED_PROP(float, _RampScale)
 	UNITY_DOTS_INSTANCED_PROP(float, _RampOffset)
 
-	UNITY_DOTS_INSTANCED_PROP(float4, _BumpMap_ST)
 	UNITY_DOTS_INSTANCED_PROP(float, _BumpScale)
-
-	UNITY_DOTS_INSTANCED_PROP(float4, _BaseMap_ST)
 
 	UNITY_DOTS_INSTANCED_PROP(float, _Cutoff)
 
 	UNITY_DOTS_INSTANCED_PROP(float4, _BaseColor)
 
-	UNITY_DOTS_INSTANCED_PROP(float4, _EmissionMap_ST)
 	UNITY_DOTS_INSTANCED_PROP(float, _EmissionChannel)
 	UNITY_DOTS_INSTANCED_PROP(float4, _EmissionColor)
 
@@ -194,49 +191,144 @@ UNITY_DOTS_INSTANCING_START(UserPropertyMetadata)
 	UNITY_DOTS_INSTANCED_PROP(float, _IndirectIntensityOutline)
 UNITY_DOTS_INSTANCING_END(UserPropertyMetadata)
 
-#define _RampSmoothing 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampSmoothing)
-#define _RampThreshold 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampThreshold)
-#define _RampBands 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampBands)
-#define _RampBandsSmoothing 		UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampBandsSmoothing)
-#define _RampScale 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampScale)
-#define _RampOffset 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampOffset)
-#define _BumpMap_ST 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BumpMap_ST)
-#define _BumpScale 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _BumpScale)
-#define _BaseMap_ST 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BaseMap_ST)
-#define _Cutoff 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _Cutoff)
-#define _BaseColor 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BaseColor)
-#define _EmissionMap_ST 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _EmissionMap_ST)
-#define _EmissionChannel 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _EmissionChannel)
-#define _EmissionColor 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _EmissionColor)
-#define _MatCapColor 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _MatCapColor)
-#define _MatCapMaskChannel 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _MatCapMaskChannel)
-#define _MatCapType 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _MatCapType)
-#define _SColor 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _SColor)
-#define _HColor 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _HColor)
-#define _RimMin 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RimMin)
-#define _RimMax 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RimMax)
-#define _RimColor 					UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _RimColor)
-#define _SpecularRoughness 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularRoughness)
-#define _SpecularColor 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _SpecularColor)
-#define _SpecularMapType 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularMapType)
-#define _SpecularToonSize 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularToonSize)
-#define _SpecularToonSmoothness 	UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularToonSmoothness)
-#define _ReflectionSmoothness 		UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _ReflectionSmoothness)
-#define _ReflectionColor 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _ReflectionColor)
-#define _FresnelMax 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _FresnelMax)
-#define _FresnelMin 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _FresnelMin)
-#define _ReflectionMapType 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _ReflectionMapType)
-#define _OcclusionStrength 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OcclusionStrength)
-#define _OcclusionChannel 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OcclusionChannel)
-#define _IndirectIntensity 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _IndirectIntensity)
-#define _SingleIndirectColor 		UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SingleIndirectColor)
-#define _OutlineWidth 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineWidth)
-#define _OutlineMinWidth 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineMinWidth)
-#define _OutlineMaxWidth 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineMaxWidth)
-#define _OutlineColor 				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _OutlineColor)
-#define _OutlineTextureLOD 			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineTextureLOD)
-#define _DirectIntensityOutline 	UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _DirectIntensityOutline)
-#define _IndirectIntensityOutline 	UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _IndirectIntensityOutline)
+// --------
+
+// See URP's LitInput.hlsl for why we use static variables
+static float unity_DOTS_Sampled_RampSmoothing;
+static float unity_DOTS_Sampled_RampThreshold;
+static float unity_DOTS_Sampled_RampBands;
+static float unity_DOTS_Sampled_RampBandsSmoothing;
+static float unity_DOTS_Sampled_RampScale;
+static float unity_DOTS_Sampled_RampOffset;
+static float unity_DOTS_Sampled_BumpScale;
+static float unity_DOTS_Sampled_Cutoff;
+static float4 unity_DOTS_Sampled_BaseColor;
+static float unity_DOTS_Sampled_EmissionChannel;
+static float4 unity_DOTS_Sampled_EmissionColor;
+static float4 unity_DOTS_Sampled_MatCapColor;
+static float unity_DOTS_Sampled_MatCapMaskChannel;
+static float unity_DOTS_Sampled_MatCapType;
+static float4 unity_DOTS_Sampled_SColor;
+static float4 unity_DOTS_Sampled_HColor;
+static float unity_DOTS_Sampled_RimMin;
+static float unity_DOTS_Sampled_RimMax;
+static float4 unity_DOTS_Sampled_RimColor;
+static float unity_DOTS_Sampled_SpecularRoughness;
+static float4 unity_DOTS_Sampled_SpecularColor;
+static float unity_DOTS_Sampled_SpecularMapType;
+static float unity_DOTS_Sampled_SpecularToonSize;
+static float unity_DOTS_Sampled_SpecularToonSmoothness;
+static float unity_DOTS_Sampled_ReflectionSmoothness;
+static float4 unity_DOTS_Sampled_ReflectionColor;
+static float unity_DOTS_Sampled_FresnelMax;
+static float unity_DOTS_Sampled_FresnelMin;
+static float unity_DOTS_Sampled_ReflectionMapType;
+static float unity_DOTS_Sampled_OcclusionStrength;
+static float unity_DOTS_Sampled_OcclusionChannel;
+static float unity_DOTS_Sampled_IndirectIntensity;
+static float unity_DOTS_Sampled_SingleIndirectColor;
+static float unity_DOTS_Sampled_OutlineWidth;
+static float unity_DOTS_Sampled_OutlineMinWidth;
+static float unity_DOTS_Sampled_OutlineMaxWidth;
+static float4 unity_DOTS_Sampled_OutlineColor;
+static float unity_DOTS_Sampled_OutlineTextureLOD;
+static float unity_DOTS_Sampled_DirectIntensityOutline;
+static float unity_DOTS_Sampled_IndirectIntensityOutline;
+
+// --------
+
+void SetupDOTSTcp2PropertyCaches()
+{
+	unity_DOTS_Sampled_RampSmoothing = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampSmoothing);
+	unity_DOTS_Sampled_RampThreshold = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampThreshold);
+	unity_DOTS_Sampled_RampBands = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampBands);
+	unity_DOTS_Sampled_RampBandsSmoothing = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampBandsSmoothing);
+	unity_DOTS_Sampled_RampScale = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampScale);
+	unity_DOTS_Sampled_RampOffset = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RampOffset);
+	// unity_DOTS_Sampled_BumpMap_ST = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BumpMap_ST);
+	unity_DOTS_Sampled_BumpScale = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _BumpScale);
+	// unity_DOTS_Sampled_BaseMap_ST = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BaseMap_ST);
+	unity_DOTS_Sampled_Cutoff = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _Cutoff);
+	unity_DOTS_Sampled_BaseColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _BaseColor);
+	// unity_DOTS_Sampled_EmissionMap_ST = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _EmissionMap_ST);
+	unity_DOTS_Sampled_EmissionChannel = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _EmissionChannel);
+	unity_DOTS_Sampled_EmissionColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _EmissionColor);
+	unity_DOTS_Sampled_MatCapColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _MatCapColor);
+	unity_DOTS_Sampled_MatCapMaskChannel = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _MatCapMaskChannel);
+	unity_DOTS_Sampled_MatCapType = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _MatCapType);
+	unity_DOTS_Sampled_SColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _SColor);
+	unity_DOTS_Sampled_HColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _HColor);
+	unity_DOTS_Sampled_RimMin = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RimMin);
+	unity_DOTS_Sampled_RimMax = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _RimMax);
+	unity_DOTS_Sampled_RimColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _RimColor);
+	unity_DOTS_Sampled_SpecularRoughness = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularRoughness);
+	unity_DOTS_Sampled_SpecularColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _SpecularColor);
+	unity_DOTS_Sampled_SpecularMapType = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularMapType);
+	unity_DOTS_Sampled_SpecularToonSize = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularToonSize);
+	unity_DOTS_Sampled_SpecularToonSmoothness = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SpecularToonSmoothness);
+	unity_DOTS_Sampled_ReflectionSmoothness = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _ReflectionSmoothness);
+	unity_DOTS_Sampled_ReflectionColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _ReflectionColor);
+	unity_DOTS_Sampled_FresnelMax = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _FresnelMax);
+	unity_DOTS_Sampled_FresnelMin = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _FresnelMin);
+	unity_DOTS_Sampled_ReflectionMapType = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _ReflectionMapType);
+	unity_DOTS_Sampled_OcclusionStrength = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OcclusionStrength);
+	unity_DOTS_Sampled_OcclusionChannel = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OcclusionChannel);
+	unity_DOTS_Sampled_IndirectIntensity = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _IndirectIntensity);
+	unity_DOTS_Sampled_SingleIndirectColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _SingleIndirectColor);
+	unity_DOTS_Sampled_OutlineWidth = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineWidth);
+	unity_DOTS_Sampled_OutlineMinWidth = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineMinWidth);
+	unity_DOTS_Sampled_OutlineMaxWidth = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineMaxWidth);
+	unity_DOTS_Sampled_OutlineColor = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float4 , _OutlineColor);
+	unity_DOTS_Sampled_OutlineTextureLOD = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _OutlineTextureLOD);
+	unity_DOTS_Sampled_DirectIntensityOutline = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _DirectIntensityOutline);
+	unity_DOTS_Sampled_IndirectIntensityOutline = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT (float  , _IndirectIntensityOutline);
+}
+
+#undef UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES
+#define UNITY_SETUP_DOTS_MATERIAL_PROPERTY_CACHES() SetupDOTSTcp2PropertyCaches()
+
+#define _RampSmoothing 				unity_DOTS_Sampled_RampSmoothing
+#define _RampThreshold 				unity_DOTS_Sampled_RampThreshold
+#define _RampBands 					unity_DOTS_Sampled_RampBands
+#define _RampBandsSmoothing 		unity_DOTS_Sampled_RampBandsSmoothing
+#define _RampScale 					unity_DOTS_Sampled_RampScale
+#define _RampOffset 				unity_DOTS_Sampled_RampOffset
+#define _BumpScale 					unity_DOTS_Sampled_BumpScale
+#define _Cutoff 					unity_DOTS_Sampled_Cutoff
+#define _BaseColor 					unity_DOTS_Sampled_BaseColor
+#define _EmissionChannel 			unity_DOTS_Sampled_EmissionChannel
+#define _EmissionColor 				unity_DOTS_Sampled_EmissionColor
+#define _MatCapColor 				unity_DOTS_Sampled_MatCapColor
+#define _MatCapMaskChannel 			unity_DOTS_Sampled_MatCapMaskChannel
+#define _MatCapType 				unity_DOTS_Sampled_MatCapType
+#define _SColor 					unity_DOTS_Sampled_SColor
+#define _HColor 					unity_DOTS_Sampled_HColor
+#define _RimMin 					unity_DOTS_Sampled_RimMin
+#define _RimMax 					unity_DOTS_Sampled_RimMax
+#define _RimColor 					unity_DOTS_Sampled_RimColor
+#define _SpecularRoughness 			unity_DOTS_Sampled_SpecularRoughness
+#define _SpecularColor 				unity_DOTS_Sampled_SpecularColor
+#define _SpecularMapType 			unity_DOTS_Sampled_SpecularMapType
+#define _SpecularToonSize 			unity_DOTS_Sampled_SpecularToonSize
+#define _SpecularToonSmoothness 	unity_DOTS_Sampled_SpecularToonSmoothness
+#define _ReflectionSmoothness 		unity_DOTS_Sampled_ReflectionSmoothness
+#define _ReflectionColor 			unity_DOTS_Sampled_ReflectionColor
+#define _FresnelMax 				unity_DOTS_Sampled_FresnelMax
+#define _FresnelMin 				unity_DOTS_Sampled_FresnelMin
+#define _ReflectionMapType 			unity_DOTS_Sampled_ReflectionMapType
+#define _OcclusionStrength 			unity_DOTS_Sampled_OcclusionStrength
+#define _OcclusionChannel 			unity_DOTS_Sampled_OcclusionChannel
+#define _IndirectIntensity 			unity_DOTS_Sampled_IndirectIntensity
+#define _SingleIndirectColor 		unity_DOTS_Sampled_SingleIndirectColor
+#define _OutlineWidth 				unity_DOTS_Sampled_OutlineWidth
+#define _OutlineMinWidth 			unity_DOTS_Sampled_OutlineMinWidth
+#define _OutlineMaxWidth 			unity_DOTS_Sampled_OutlineMaxWidth
+#define _OutlineColor 				unity_DOTS_Sampled_OutlineColor
+#define _OutlineTextureLOD 			unity_DOTS_Sampled_OutlineTextureLOD
+#define _DirectIntensityOutline 	unity_DOTS_Sampled_DirectIntensityOutline
+#define _IndirectIntensityOutline 	unity_DOTS_Sampled_IndirectIntensityOutline
+
+// --------------------------------
 
 #endif
 
@@ -541,7 +633,7 @@ VERTEX_OUTPUT Vertex(Attributes input)
 				output.lmap.zw = input.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
 			#endif
 
-			float3 positionWS = mul(unity_ObjectToWorld, input.vertex).xyz;
+			float3 positionWS = mul(UNITY_MATRIX_M, input.vertex).xyz;
 			float4 positionCS = UnityWorldToClipPos(positionWS);
 			output.pos = positionCS;
 
@@ -583,16 +675,16 @@ VERTEX_OUTPUT Vertex(Attributes input)
 		#if defined(TCP2_MOBILE) && (defined(TCP2_RIM_LIGHTING) || (defined(TCP2_REFLECTIONS) && defined(TCP2_REFLECTIONS_FRESNEL))) // if mobile + rim or fresnel
 			// Calculate ndv in vertex shader
 			#if defined(TCP2_HYBRID_URP)
-				half3 viewDirWS = TCP2_SafeNormalize(GetCameraPositionWS() - positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(positionWS);
 			#else
-				half3 viewDirWS = TCP2_SafeNormalize(_WorldSpaceCameraPos.xyz - positionWS);
+				half3 viewDirWS = TCP2_SafeNormalize(UnityWorldSpaceViewDir(positionWS));
 			#endif
 			output.tangentWS.w = 1 - max(0, dot(viewDirWS, normalWS));
 		#endif
 
 		#if defined(TCP2_MATCAP) && !defined(_NORMALMAP)
 			// MatCap
-			float3 worldNorm = normalize(unity_WorldToObject[0].xyz * input.normal.x + unity_WorldToObject[1].xyz * input.normal.y + unity_WorldToObject[2].xyz * input.normal.z);
+			float3 worldNorm = normalize(UNITY_MATRIX_I_M[0].xyz * input.normal.x + UNITY_MATRIX_I_M[1].xyz * input.normal.y + UNITY_MATRIX_I_M[2].xyz * input.normal.z);
 			worldNorm = mul((float3x3)UNITY_MATRIX_V, worldNorm);
 			float4 screenPos = ComputeScreenPos(positionCS);
 			float3 perspectiveOffset = (screenPos.xyz / screenPos.w) - 0.5;
@@ -709,86 +801,14 @@ half4 Fragment (
 	#endif
 
 	#if defined(TCP2_HYBRID_URP)
-		half3 viewDirWS = TCP2_SafeNormalize(GetCameraPositionWS() - positionWS);
+		half3 viewDirWS = GetWorldSpaceNormalizeViewDir(positionWS);
 	#else
-		half3 viewDirWS = TCP2_SafeNormalize(_WorldSpaceCameraPos.xyz - positionWS);
+		half3 viewDirWS = TCP2_SafeNormalize(UnityWorldSpaceViewDir(positionWS));
 	#endif
 	#if defined(_NORMALMAP)
 		half3 tangentWS = input.tangentWS.xyz;
 		half3 bitangentWS = input.bitangentWS.xyz;
 		half3x3 tangentToWorldMatrix = half3x3(tangentWS.xyz, bitangentWS.xyz, normalWS.xyz);
-	#endif
-
-	// Lighting
-
-	#if defined(TCP2_HYBRID_URP)
-		#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-			float4 shadowCoord = input.shadowCoord;
-		#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
-			float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-		#else
-			float4 shadowCoord = float4(0, 0, 0, 0);
-		#endif
-
-		#if defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
-			half4 shadowMask = SAMPLE_SHADOWMASK(input.staticLightmapUV);
-		#elif !defined (LIGHTMAP_ON)
-			half4 shadowMask = unity_ProbesOcclusion;
-		#else
-			half4 shadowMask = half4(1, 1, 1, 1);
-		#endif
-
-		#if defined(DEBUG_DISPLAY)
-			debugInputData.shadowMask = shadowMask;
-		#endif
-
-		#if URP_VERSION >= 14
-			uint meshRenderingLayers = GetMeshRenderingLayer();
-		#elif URP_VERSION >= 12
-			uint meshRenderingLayers = GetMeshRenderingLightLayer();
-		#endif
-
-		#if URP_VERSION <= 7
-			Light mainLight = GetMainLight(shadowCoord);
-		#else
-			Light mainLight = GetMainLight(shadowCoord, positionWS, shadowMask);
-		#endif
-
-		#if defined(_SCREEN_SPACE_OCCLUSION)
-			float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.pos);
-			AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(normalizedScreenSpaceUV);
-			mainLight.color *= aoFactor.directAmbientOcclusion;
-		#endif
-
-		#if URP_VERSION >= 12
-			half3 lightDir = half3(0, 1, 0);
-			half3 lightColor = half3(0, 0, 0);
-			#if (URP_VERSION >= 14 && defined(_LIGHT_LAYERS)) || URP_VERSION <= 12
-				if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
-			#endif
-				{
-					lightDir = mainLight.direction;
-					lightColor = mainLight.color.rgb;
-				}
-		#else
-			half3 lightDir = mainLight.direction;
-			half3 lightColor = mainLight.color.rgb;
-		#endif
-		half atten = mainLight.shadowAttenuation * mainLight.distanceAttenuation;
-	#else
-		half3 lightDir = normalize(UnityWorldSpaceLightDir(positionWS));
-		half3 lightColor = _LightColor0.rgb;
-
-		#if defined(SHADOW_CASTER_PASS)
-			half atten = 1.0;
-		#else
-			TCP2_LIGHT_ATTENUATION(input, positionWS)
-			#if defined(_RECEIVE_SHADOWS_OFF)
-				half atten = attenuation;
-			#else
-				half atten = shadow * attenuation;
-			#endif
-		#endif
 	#endif
 
 	// Base
@@ -913,6 +933,212 @@ half4 Fragment (
 		#endif
 	#endif
 
+	// Lighting
+
+	// Occlusion
+	#if defined(TCP2_OCCLUSION)
+		#if defined(TCP2_MOBILE)
+			half occlusion = tex2D(_OcclusionMap, mainTexcoord).a;
+		#else
+			half occlusion = 1.0;
+			if (_OcclusionChannel >= 4)
+			{
+				occlusion = tex2D(_OcclusionMap, mainTexcoord).a;
+			}
+			else if (_OcclusionChannel >= 3)
+			{
+				occlusion = tex2D(_OcclusionMap, mainTexcoord).b;
+			}
+			else if (_OcclusionChannel >= 2)
+			{
+				occlusion = tex2D(_OcclusionMap, mainTexcoord).g;
+			}
+			else if (_OcclusionChannel >= 1)
+			{
+				occlusion = tex2D(_OcclusionMap, mainTexcoord).r;
+			}
+			else
+			{
+				occlusion = albedo.a;
+			}
+		#endif
+		occlusion = lerp(1, occlusion, _OcclusionStrength);
+	#else
+		half occlusion = 1.0;
+	#endif
+	#if defined(HAS_DECAL_MAOS)
+		occlusion = occlusion * decals.MAOSAlpha + decals.occlusion;
+	#endif
+
+	#if defined(TCP2_HYBRID_URP) && defined(_SCREEN_SPACE_OCCLUSION)
+		float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.pos);
+		AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(normalizedScreenSpaceUV);
+		occlusion = min(occlusion, aoFactor.indirectAmbientOcclusion);
+	#endif
+
+	// Setup lighting environment (Built-In)
+	#if !defined(TCP2_HYBRID_URP)
+		half3 lightDir = normalize(UnityWorldSpaceLightDir(positionWS));
+		half3 lightColor = _LightColor0.rgb;
+		#if defined(SHADOW_CASTER_PASS)
+			half atten = 1.0;
+		#else
+			TCP2_LIGHT_ATTENUATION(input, positionWS)
+			#if defined(_RECEIVE_SHADOWS_OFF)
+				half atten = attenuation;
+			#else
+				half atten = shadow * attenuation;
+			#endif
+		#endif
+	#endif
+
+	#if !defined(TCP2_HYBRID_URP) && defined(UNITY_PASS_FORWARDBASE)
+		UnityGI gi;
+		UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
+		gi.indirect.diffuse = 0;
+		gi.indirect.specular = 0;
+		gi.light.color = lightColor;
+		gi.light.dir = lightDir;
+
+		// Call GI (lightmaps/SH/reflections) lighting function
+		UnityGIInput giInput;
+		UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
+		giInput.light = gi.light;
+		giInput.worldPos = positionWS;
+		giInput.worldViewDir = viewDirWS;
+		giInput.atten = atten;
+		#if defined(LIGHTMAP_ON) || defined(DYNAMICLIGHTMAP_ON)
+			giInput.lightmapUV = input.lmap;
+		#else
+			giInput.lightmapUV = 0.0;
+		#endif
+		giInput.ambient.rgb = 0.0;
+		giInput.probeHDR[0] = unity_SpecCube0_HDR;
+		giInput.probeHDR[1] = unity_SpecCube1_HDR;
+		#if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION)
+			giInput.boxMin[0] = unity_SpecCube0_BoxMin; // .w holds lerp value for blending
+		#endif
+		#ifdef UNITY_SPECCUBE_BOX_PROJECTION
+			giInput.boxMax[0] = unity_SpecCube0_BoxMax;
+			giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
+			giInput.boxMax[1] = unity_SpecCube1_BoxMax;
+			giInput.boxMin[1] = unity_SpecCube1_BoxMin;
+			giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
+		#endif
+
+		half3 shNormal = (_SingleIndirectColor > 0) ? viewDirWS : normalWS;
+		#if defined(TCP2_REFLECTIONS)
+			// GI: indirect diffuse & specular
+			half smoothness = _ReflectionSmoothness;
+			Unity_GlossyEnvironmentData g = UnityGlossyEnvironmentSetup(smoothness, giInput.worldViewDir, normalWS, half3(0,0,0));
+			gi = UnityGlobalIllumination(giInput, occlusion, shNormal, g);
+		#else
+			// GI: indirect diffuse only
+			gi = UnityGlobalIllumination(giInput, occlusion, shNormal);
+		#endif
+
+		gi.light.color = _LightColor0.rgb; // remove attenuation, taken into account separately
+	#endif
+
+	// Ambient/indirect lighting
+	#if defined(UNITY_PASS_FORWARDBASE)
+		half3 indirectDiffuse = 0;
+		#if !defined(TCP2_MOBILE)
+		if (_IndirectIntensity > 0)
+		#endif
+		{
+			#if defined(TCP2_HYBRID_URP)
+					// Normal is required in case Directional lightmaps are baked
+				#if defined(LIGHTMAP_ON) && defined(DYNAMICLIGHTMAP_ON)
+					// Static & Dynamic Lightmap
+					half3 bakedGI = SampleLightmap(input.staticLightmapUV, input.dynamicLightmapUV, normalWS);
+					MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
+				#elif defined(LIGHTMAP_ON)
+					// Static Lightmap
+					half3 bakedGI = SampleLightmap(input.staticLightmapUV, 0, normalWS);
+					MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
+				#elif defined(DYNAMICLIGHTMAP_ON)
+					// Dynamic Lightmap
+					half3 bakedGI = SampleLightmap(0, input.dynamicLightmapUV, normalWS);
+					MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
+				#elif defined(PROBE_VOLUMES_L1) || defined(PROBE_VOLUMES_L2)
+					// Adaptive Probe Volumes APV
+					#ifdef USE_APV_PROBE_OCCLUSION
+						float4 probeOcclusion;
+						half3 bakedGI = SampleProbeVolumePixel(0.0, positionWS, normalWS, viewDirWS, input.pos.xy, 1.0, probeOcclusion);
+					#else
+						half3 bakedGI = SampleProbeVolumePixel(0.0, positionWS, normalWS, viewDirWS, input.pos.xy);
+					#endif
+				#else
+					// Sample SH fully per-pixel
+					half3 bakedGI = SampleSH(_SingleIndirectColor > 0 ? viewDirWS : normalWS);
+				#endif
+				#if defined(DEBUG_DISPLAY)
+					debugInputData.bakedGI = bakedGI;
+				#endif
+				indirectDiffuse = bakedGI * occlusion * albedo.rgb * _IndirectIntensity;
+			#else
+				indirectDiffuse = gi.indirect.diffuse * albedo.rgb * _IndirectIntensity;
+			#endif
+		}
+	#endif
+
+	#if defined(TCP2_HYBRID_URP)
+		#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+			float4 shadowCoord = input.shadowCoord;
+		#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+			float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
+		#else
+			float4 shadowCoord = float4(0, 0, 0, 0);
+		#endif
+
+		#if defined(USE_APV_PROBE_OCCLUSION)
+			half4 shadowMask = probeOcclusion;
+		#elif defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
+			half4 shadowMask = SAMPLE_SHADOWMASK(input.staticLightmapUV);
+		#elif !defined (LIGHTMAP_ON)
+			half4 shadowMask = unity_ProbesOcclusion;
+		#else
+			half4 shadowMask = half4(1, 1, 1, 1);
+		#endif
+
+		#if defined(DEBUG_DISPLAY)
+			debugInputData.shadowMask = shadowMask;
+		#endif
+
+		#if URP_VERSION >= 14
+			uint meshRenderingLayers = GetMeshRenderingLayer();
+		#elif URP_VERSION >= 12
+			uint meshRenderingLayers = GetMeshRenderingLightLayer();
+		#endif
+
+		#if URP_VERSION <= 7
+			Light mainLight = GetMainLight(shadowCoord);
+		#else
+			Light mainLight = GetMainLight(shadowCoord, positionWS, shadowMask);
+		#endif
+
+		#if defined(_SCREEN_SPACE_OCCLUSION)
+			mainLight.color *= aoFactor.directAmbientOcclusion;
+		#endif
+
+		#if URP_VERSION >= 12
+			half3 lightDir = half3(0, 1, 0);
+			half3 lightColor = half3(0, 0, 0);
+			#if (URP_VERSION >= 14 && defined(_LIGHT_LAYERS)) || URP_VERSION <= 12
+				if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
+			#endif
+				{
+					lightDir = mainLight.direction;
+					lightColor = mainLight.color.rgb;
+				}
+		#else
+			half3 lightDir = mainLight.direction;
+			half3 lightColor = mainLight.color.rgb;
+		#endif
+		half atten = mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+	#endif
+
 	half ndl = dot(normalWS, lightDir);
 	half ndlWrapped = ndl * 0.5 + 0.5;
 	ndl = saturate(ndl);
@@ -975,130 +1201,19 @@ half4 Fragment (
 		}
 	#endif
 
-	// Occlusion
-	#if defined(TCP2_OCCLUSION)
-		#if defined(TCP2_MOBILE)
-			half occlusion = tex2D(_OcclusionMap, mainTexcoord).a;
-		#else
-			half occlusion = 1.0;
-			if (_OcclusionChannel >= 4)
-			{
-				occlusion = tex2D(_OcclusionMap, mainTexcoord).a;
-			}
-			else if (_OcclusionChannel >= 3)
-			{
-				occlusion = tex2D(_OcclusionMap, mainTexcoord).b;
-			}
-			else if (_OcclusionChannel >= 2)
-			{
-				occlusion = tex2D(_OcclusionMap, mainTexcoord).g;
-			}
-			else if (_OcclusionChannel >= 1)
-			{
-				occlusion = tex2D(_OcclusionMap, mainTexcoord).r;
-			}
-			else
-			{
-				occlusion = albedo.a;
-			}
-		#endif
-		occlusion = lerp(1, occlusion, _OcclusionStrength);
-	#else
-		half occlusion = 1.0;
-	#endif
-	#if defined(HAS_DECAL_MAOS)
-		occlusion = occlusion * decals.MAOSAlpha + decals.occlusion;
-	#endif
-
-	#if defined(TCP2_HYBRID_URP) && defined(_SCREEN_SPACE_OCCLUSION)
-		occlusion = min(occlusion, aoFactor.indirectAmbientOcclusion);
-	#endif
-
-	// Setup lighting environment (Built-In)
-	#if !defined(TCP2_HYBRID_URP) && defined(UNITY_PASS_FORWARDBASE)
-		UnityGI gi;
-		UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
-		gi.indirect.diffuse = 0;
-		gi.indirect.specular = 0;
-		gi.light.color = lightColor;
-		gi.light.dir = lightDir;
-
-		// Call GI (lightmaps/SH/reflections) lighting function
-		UnityGIInput giInput;
-		UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
-		giInput.light = gi.light;
-		giInput.worldPos = positionWS;
-		giInput.worldViewDir = viewDirWS;
-		giInput.atten = atten;
-		#if defined(LIGHTMAP_ON) || defined(DYNAMICLIGHTMAP_ON)
-			giInput.lightmapUV = input.lmap;
-		#else
-			giInput.lightmapUV = 0.0;
-		#endif
-		giInput.ambient.rgb = 0.0;
-		giInput.probeHDR[0] = unity_SpecCube0_HDR;
-		giInput.probeHDR[1] = unity_SpecCube1_HDR;
-		#if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION)
-			giInput.boxMin[0] = unity_SpecCube0_BoxMin; // .w holds lerp value for blending
-		#endif
-		#ifdef UNITY_SPECCUBE_BOX_PROJECTION
-			giInput.boxMax[0] = unity_SpecCube0_BoxMax;
-			giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
-			giInput.boxMax[1] = unity_SpecCube1_BoxMax;
-			giInput.boxMin[1] = unity_SpecCube1_BoxMin;
-			giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
-		#endif
-
-		half3 shNormal = (_SingleIndirectColor > 0) ? viewDirWS : normalWS;
-		#if defined(TCP2_REFLECTIONS)
-			// GI: indirect diffuse & specular
-			half smoothness = _ReflectionSmoothness;
-			Unity_GlossyEnvironmentData g = UnityGlossyEnvironmentSetup(smoothness, giInput.worldViewDir, normalWS, half3(0,0,0));
-			gi = UnityGlobalIllumination(giInput, occlusion, shNormal, g);
-		#else
-			// GI: indirect diffuse only
-			gi = UnityGlobalIllumination(giInput, occlusion, shNormal);
-		#endif
-
-		gi.light.color = _LightColor0.rgb; // remove attenuation, taken into account separately
-	#endif
-
 	// Apply ambient/indirect lighting
 	#if defined(UNITY_PASS_FORWARDBASE)
 		#if !defined(TCP2_MOBILE)
-			if (_IndirectIntensity > 0)
+		if (_IndirectIntensity > 0)
 		#endif
-	{
-		#if defined(TCP2_HYBRID_URP)
-				// Normal is required in case Directional lightmaps are baked
-			#if defined(LIGHTMAP_ON) && defined(DYNAMICLIGHTMAP_ON)
-				// Static & Dynamic Lightmap
-				half3 bakedGI = SampleLightmap(input.staticLightmapUV, input.dynamicLightmapUV, normalWS);
-				MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
-			#elif defined(LIGHTMAP_ON)
-				// Static Lightmap
-				half3 bakedGI = SampleLightmap(input.staticLightmapUV, 0, normalWS);
-				MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
-			#elif defined(DYNAMICLIGHTMAP_ON)
-				// Dynamic Lightmap
-				half3 bakedGI = SampleLightmap(0, input.dynamicLightmapUV, normalWS);
-				MixRealtimeAndBakedGI(mainLight, normalWS, bakedGI, half4(0, 0, 0, 0));
-			#else
-				// Sample SH fully per-pixel
-				half3 bakedGI = SampleSH(_SingleIndirectColor > 0 ? viewDirWS : normalWS);
-			#endif
-			#if defined(DEBUG_DISPLAY)
-				debugInputData.bakedGI = bakedGI;
-			#endif
-			half3 indirectDiffuse = bakedGI * occlusion * albedo.rgb * _IndirectIntensity;
+		{
+			#if defined(TCP2_HYBRID_URP)
 			IS_LIGHTING_FEATURE_ENABLED(DEBUGLIGHTINGFEATUREFLAGS_GLOBAL_ILLUMINATION)
-			color += indirectDiffuse;
-		#else
-			half3 indirectDiffuse = gi.indirect.diffuse * albedo.rgb * _IndirectIntensity;
+			#endif
 			color.rgb += indirectDiffuse;
-		#endif
-	}
+		}
 	#endif
+
 
 	// Calculate N.V
 	#if defined(TCP2_RIM_LIGHTING) || (defined(TCP2_REFLECTIONS) && defined(TCP2_REFLECTIONS_FRESNEL))
@@ -1498,7 +1613,7 @@ Varyings_Outline vertex_outline (Attributes_Outline input)
 		#endif
 		float3 positionWS = vertexInput.positionWS;
 	#else
-		float3 positionWS = mul(unity_ObjectToWorld, input.vertex).xyz;
+		float3 positionWS = mul(UNITY_MATRIX_M, input.vertex).xyz;
 		#if !defined(SHADOW_CASTER_PASS)
 			UNITY_TRANSFER_LIGHTING(output, input.texcoord1.xy);
 		#endif
@@ -1556,7 +1671,7 @@ Varyings_Outline vertex_outline (Attributes_Outline input)
 
 	#if !defined(SHADOW_CASTER_PASS)
 		output.pos = UnityObjectToClipPos(input.vertex.xyz);
-		normal = mul(unity_ObjectToWorld, float4(normal, 0)).xyz;
+		normal = mul(UNITY_MATRIX_M, float4(normal, 0)).xyz;
 		float2 clipNormals = normalize(mul(UNITY_MATRIX_VP, float4(normal,0)).xy);
 		#if defined(TCP2_OUTLINE_CONST_SIZE)
 			float2 outlineWidth = (_OutlineWidth * output.pos.w) / (_ScreenParams.xy / 2.0);
@@ -1652,20 +1767,18 @@ float4 fragment_outline (Varyings_Outline input) : SV_Target
 
 	#if defined(TCP2_OUTLINE_LIGHTING)
 
-			#if defined(_LIGHT_LAYERS)
-				#if URP_VERSION >= 14
-					uint meshRenderingLayers = GetMeshRenderingLayer();
-				#elif URP_VERSION >= 12
-					uint meshRenderingLayers = GetMeshRenderingLightLayer();
-				#endif
+			#if URP_VERSION >= 14
+				uint meshRenderingLayers = GetMeshRenderingLayer();
+			#elif URP_VERSION >= 12
+				uint meshRenderingLayers = GetMeshRenderingLightLayer();
 			#endif
 
 			float3 positionWS = input.worldPos.xyz;
 			float3 normalWS = input.normal;
 			#if defined(TCP2_HYBRID_URP)
-				half3 viewDirWS = TCP2_SafeNormalize(GetCameraPositionWS() - positionWS);
+				half3 viewDirWS = GetWorldSpaceNormalizeViewDir(positionWS);
 			#else
-				half3 viewDirWS = TCP2_SafeNormalize(_WorldSpaceCameraPos.xyz - positionWS);
+				half3 viewDirWS = TCP2_SafeNormalize(UnityWorldSpaceViewDir(positionWS));
 			#endif
 
 		#if defined(TCP2_OUTLINE_LIGHTING_INDIRECT)
@@ -1825,8 +1938,14 @@ float4 fragment_outline (Varyings_Outline input) : SV_Target
 
 		// Apply ambient/indirect lighting
 		#if defined(TCP2_HYBRID_URP)
-			// Sample SH fully per-pixel
-			half3 bakedGI = SampleSH(_SingleIndirectColor > 0 ? viewDirWS : normalWS);
+
+			#if defined(PROBE_VOLUMES_L1) || defined(PROBE_VOLUMES_L2)
+				// Adaptive Probe Volumes APV
+				half3 bakedGI = SampleProbeVolumePixel(0.0, positionWS, normalWS, viewDirWS, input.pos.xy);
+			#else
+				// Sample SH fully per-pixel
+				half3 bakedGI = SampleSH(_SingleIndirectColor > 0 ? viewDirWS : normalWS);
+			#endif
 			half3 indirectDiffuse = bakedGI * occlusion * albedo.rgb * _IndirectIntensityOutline;
 			outlineColor.rgb += indirectDiffuse;
 		#else

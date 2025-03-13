@@ -21,9 +21,9 @@ namespace ToonyColorsPro
 	{
 		public class ShaderGenerator2 : EditorWindow
 		{
-			public static bool DebugMode = false;
+			public static bool DEBUG_MODE = false;
 
-			internal const string TCP2_VERSION = "2.9.10";
+			internal const string TCP2_VERSION = "2.9.16";
 			internal const string DOCUMENTATION_URL = "https://jeanmoreno.com/unity/toonycolorspro/doc/shader_generator_2";
 			internal const string OUTPUT_PATH = "/JMO Assets/Toony Colors Pro/Shaders Generated/";
 
@@ -43,6 +43,31 @@ namespace ToonyColorsPro
 			static void OpenTool()
 			{
 				GetWindowTCP2();
+			}
+
+			[MenuItem(Menu.MENU_PATH + "Update Selected Shaders with the Shader Generator 2", false, 800)]
+			static void UpdateSelectedShaders()
+			{
+				foreach (Object obj in Selection.objects)
+				{
+					var shaderList = new List<Shader>();
+					{
+						if (obj is Shader shader)
+						{
+							shaderList.Add(shader);
+						}
+					}
+
+					for (int i = 0; i < shaderList.Count; i++)
+					{
+						Shader shader = shaderList[i];
+						var sg2 = GetWindowTCP2();
+						if (sg2.LoadCurrentConfigFromShader(shader, true))
+						{
+							sg2.GenerateOrUpdateShader(true);
+						}
+					}
+				}
 			}
 
 			internal static ShaderGenerator2 OpenWithShader(Shader shader)
@@ -1030,7 +1055,7 @@ namespace ToonyColorsPro
 				}
 			}
 
-			public void GenerateOrUpdateShader()
+			public void GenerateOrUpdateShader(bool force = false)
 			{
 				currentConfig.templateFile = template.textAsset.name;
 				currentConfig.OnBeforeGenerateShader();
@@ -1038,7 +1063,7 @@ namespace ToonyColorsPro
 				Shader generatedShader = null;
 				try
 				{
-					generatedShader = Compile(currentConfig, currentShader, template, true, !ProjectOptions.data.OverwriteConfig);
+					generatedShader = Compile(currentConfig, currentShader, template, true, !ProjectOptions.data.OverwriteConfig && !force, !force);
 				}
 				finally
 				{
@@ -1087,6 +1112,7 @@ namespace ToonyColorsPro
 			void NewShader()
 			{
 				currentShader = null;
+				_template = null;
 				template.ResetShaderProperties();
 				LoadConfig(new Config(), false);
 			}
@@ -1097,9 +1123,13 @@ namespace ToonyColorsPro
 				if (currentShader != null)
 				{
 					outputDir = AssetDatabase.GetAssetPath(currentShader);
-					if (!string.IsNullOrEmpty(outputDir) && outputDir.StartsWith("Assets/"))
+					if (!string.IsNullOrEmpty(outputDir))
 					{
-						outputDir = Path.GetDirectoryName(outputDir).Substring("Assets/".Length);
+						outputDir = Path.GetDirectoryName(outputDir);
+						if (outputDir.StartsWith("Assets"))
+						{
+							outputDir = outputDir.Substring("Assets".Length);
+						}
 					}
 				}
 
@@ -1109,13 +1139,13 @@ namespace ToonyColorsPro
 				this.currentConfig.Filename += " Copy";
 				this.currentConfig.isModifiedExternally = false;
 
-				if (!string.IsNullOrEmpty(outputDir))
+				if (outputDir != null)
 				{
 					ProjectOptions.data.CustomOutputPath = outputDir;
 				}
 			}
 
-			public void LoadCurrentConfigFromShader(Shader shader)
+			bool LoadCurrentConfigFromShader(Shader shader, bool silentFail = false)
 			{
 				var newConfig = Config.CreateFromShader(shader);
 				if (newConfig != null)
@@ -1132,11 +1162,17 @@ namespace ToonyColorsPro
 					template.ApplyKeywords(currentConfig);
 
 					currentHash = currentConfig.ToHash();
+
+					return true;
 				}
 				else
 				{
-					EditorApplication.Beep();
-					ShowNotification(TCP2_GUI.TempContent("Invalid shader loaded:\nit has not been generated\nwith the Shader Generator 2!"));
+					if (!silentFail)
+					{
+						EditorApplication.Beep();
+						ShowNotification(TCP2_GUI.TempContent("Invalid shader loaded:\nit has not been generated\nwith the Shader Generator 2!"));
+					}
+					return false;
 				}
 			}
 
@@ -2104,6 +2140,7 @@ namespace ToonyColorsPro
 						{
 							// Terrain always needs TEXCOORD0
 							AddUvChannelUsage(usedUvChannelsVertex, 0, 2);
+							AddUvChannelUsage(usedUvChannelsFragment, 0, 2);
 						}
 
 						uvChannelGlobalTilingOffset = new Dictionary<int, List<ShaderProperty.Imp_MaterialProperty_Texture>>();
@@ -3254,12 +3291,28 @@ namespace ToonyColorsPro
 													}
 												}
 											}
-											
-											// Sort each layer based on their order in the UI
+
+											// Material Layers: apply contrast/noise to layers source if needed
 											var sortedBlendedProperties = blendedProperties.OrderBy(kvp => config.materialLayers.FindIndex(ml => ml.uid == kvp.Key));
 											foreach (var kvp in sortedBlendedProperties)
 											{
-												var uid = kvp.Key;
+												var materialLayer = config.GetMaterialLayerByUID(kvp.Key);
+												string layerSourceVariable = materialLayer.sourceShaderProperty.GetVariableName();
+												string layerSourceVariableModified = layerSourceVariable;
+
+												if (materialLayer.UseNoiseProperty)
+													layerSourceVariableModified = string.Format("({0} + [[VALUE:{1}]])", layerSourceVariableModified, materialLayer.noiseProperty.Name);
+												if (materialLayer.UseContrastProperty)
+													layerSourceVariableModified = string.Format("saturate(({0} + ([[VALUE:{1}]] * 0.5 - 0.5)) / [[VALUE:{1}]])", layerSourceVariableModified, materialLayer.contrastProperty.Name);
+
+												if (layerSourceVariable != layerSourceVariableModified)
+													materialLayersBlending.AppendLine(string.Format($"{indent}{layerSourceVariable} = {layerSourceVariableModified};"));
+											}
+
+											// Sort each layer based on their order in the UI
+											foreach (var kvp in sortedBlendedProperties)
+											{
+												string uid = kvp.Key;
 												var list = kvp.Value;
 												foreach (var shaderProperty in list)
 												{
@@ -3269,14 +3322,6 @@ namespace ToonyColorsPro
 													// Get layer variable name + modifiers if any (noise, contrast...)
 													var ml = config.GetMaterialLayerByUID(uid);
 													string layerSourceVariable = ml.sourceShaderProperty.GetVariableName();
-													if (ml.UseNoiseProperty)
-													{
-														layerSourceVariable = string.Format("({0} + [[VALUE:{1}]])", layerSourceVariable, ml.noiseProperty.Name);
-													}
-													if (ml.UseContrastProperty)
-													{
-														layerSourceVariable = string.Format("saturate(({0} + ([[VALUE:{1}]] * 0.5 - 0.5)) / [[VALUE:{1}]])", layerSourceVariable, ml.contrastProperty.Name);
-													}
 
 													// Print layer according to blending
 													string originalProp = variableName;
