@@ -38,8 +38,9 @@ public class CitizenController : CulledBehaviour
         behaviours = GetComponentsInChildren<CitizenBehaviour>();
     }
 
-    private void OnEnable()
+    protected override void OnOnEnable()
     {
+        base.OnOnEnable();
         foreach (var behaviour in behaviours)
         {
             behaviour.OnReset();

@@ -5,7 +5,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(UpgradableSavable))]
-public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableData>
+public abstract class UpgradableObject : CulledBehaviour, IDataHolder<UpgradableData>
 {
     [Inject] private PlayerController playerController;
     
@@ -31,14 +31,14 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
     private bool isPriceSet = false;
     private event Action upgradeEvent;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         if (moneyConsumer == null)
         {
             moneyConsumer = GetComponentInChildren<MoneyConsumer>();
         }
         moneyConsumer.reachGoalEvent += LevelUp;
-        OnAwake();
     }
 
     public int GetPriceForLevel(int level)
@@ -46,13 +46,9 @@ public abstract class UpgradableObject : MonoBehaviour, IDataHolder<UpgradableDa
         return levelPrices[level].price;
     }
 
-    protected virtual void OnAwake()
+    protected override void OnUpdate(bool visible)
     {
-        
-    }
-
-    private void Update()
-    {
+        base.OnUpdate(visible);
         if (!isPriceSet)
         {
             isPriceSet = true;

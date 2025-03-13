@@ -63,7 +63,7 @@ public class WishGranterExtraPlacesData
     public QueueExtraPlacesMode queueMode = QueueExtraPlacesMode.Sequential;
 }
 
-public abstract class WishGranter : MonoBehaviour, ICooldownable
+public abstract class WishGranter : CulledBehaviour, ICooldownable
 {
     [Inject] protected GameConfig _gameConfig;
     
@@ -120,8 +120,10 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
     {
         
     }
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         foreach (var extraPlacesData in extraPlaces)
         {
             foreach (var processPlace in extraPlacesData.processPlaces)
@@ -134,12 +136,6 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         {
             freePlaces.Enqueue(processPlaces[i]);
         }
-        OnAwake();
-    }
-
-    protected virtual void OnAwake()
-    {
-        
     }
 
     private void Start()
@@ -153,8 +149,9 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
         
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         #if UNITY_EDITOR
         foreach (var citizen in queue)
         {
@@ -319,6 +316,7 @@ public abstract class WishGranter : MonoBehaviour, ICooldownable
             wishPostProcessor.OnUpdate();
         }
     }
+
 
     protected void LeaveAllCitizens()
     {

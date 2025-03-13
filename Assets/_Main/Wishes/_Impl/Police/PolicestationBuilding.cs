@@ -22,8 +22,9 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
     public float CoolDownTimeLeft { get; protected set; }
     public bool IsCooldown => CoolDownTimeLeft > 0;
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (!IsBought)
         {
             return;

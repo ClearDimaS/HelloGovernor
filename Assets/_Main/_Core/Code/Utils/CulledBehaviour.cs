@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -125,7 +126,17 @@ public class CulledBehaviour : MonoBehaviour
 
     protected void Awake()
     {
-        culledRoot = GetComponentInParent<CulledRoot>();
+        culledRoot = GetComponentInParent<CulledRoot>(true);
+        OnAwake();
+    }
+
+    protected virtual void OnAwake()
+    {
+        
+    }
+
+    private void OnEnable()
+    {
         if (culledRoot != null)
         {
             culledRoot.AddCulledBehaviour(this);
@@ -135,14 +146,41 @@ public class CulledBehaviour : MonoBehaviour
             Debug.LogError($"culled root is null for {GetType()} at {transform.GetHierarchyString()}");
         }
 
-        OnAwake();
+        OnOnEnable();
     }
 
-    protected virtual void OnAwake()
+    protected virtual void OnOnEnable()
     {
         
     }
+
+    private void OnDisable()
+    {
+        if (culledRoot != null)
+        {
+            culledRoot.RemoveCulledBehaviour(this);
+        }
+        else
+        {
+            Debug.LogError($"culled root is null for {GetType()} at {transform.GetHierarchyString()}");
+        }
+
+        OnOnDisable();
+    }
     
+    protected virtual void OnOnDisable()
+    {
+        
+    }
+
+    private void OnDestroy()
+    {
+        if (culledRoot != null)
+        {
+            culledRoot.RemoveCulledBehaviour(this);
+        }
+    }
+
     public void UpdateCulled(bool isVisible)
     {
         OnUpdate(isVisible);

@@ -5,15 +5,16 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class OperatorAssistant : MonoBehaviour, IOperator
+public class OperatorAssistant : CulledBehaviour, IOperator
 {
     [SerializeField] private Walker walker;
     private OperatableGranter wishGranter;
     
     public Transform Root => transform;
-    
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         wishGranter = GetComponentInParent<OperatableGranter>();
     }
 
@@ -23,8 +24,9 @@ public class OperatorAssistant : MonoBehaviour, IOperator
         operated.AddOperator(this);
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (!wishGranter.IsOperated())
         {
             var operated = wishGranter.GetOperatedPlace();

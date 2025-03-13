@@ -8,8 +8,9 @@ public class RendererCulledRoot : CulledRoot
 
     public override bool IsVisible => isVisible;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         if (renderer == null)
         {
             renderer = GetComponent<Renderer>();
@@ -21,7 +22,7 @@ public class RendererCulledRoot : CulledRoot
             renderer = mr;
         }
     }
-    
+
     private void OnBecameVisible()
     {
         isVisible = true;

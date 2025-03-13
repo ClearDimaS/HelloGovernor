@@ -24,10 +24,9 @@ public class OperatableFillPlace : CulledBehaviour
     {
         if (Max <= 0)
         {
-            Destroy(gameObject);
             return;
         }
-        granter = GetComponentInParent<OperatableWithItems>();
+        granter = GetComponentInParent<OperatableWithItems>(true);
         curText.text = GetMaxString();
         maxText.text = GetCurString();
         var operatable = GetComponentInParent<UpgradableBuilding>();
@@ -41,6 +40,11 @@ public class OperatableFillPlace : CulledBehaviour
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
+        
+        if (granter == null)
+        {
+           return;
+        }
         if (visible)
         {
             var show = currentCount < Max;
@@ -50,11 +54,6 @@ public class OperatableFillPlace : CulledBehaviour
             }
             curText.text = GetMaxString();
             maxText.text = GetCurString();
-        }
-
-        if (granter == null)
-        {
-            Debug.LogError($"granter null at: {transform.name}");
         }
         if (lastServed != granter.ServedCounter)
         {

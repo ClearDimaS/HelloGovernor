@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MoneyGiverBase : MonoBehaviour, ICooldownable
+public abstract class MoneyGiverBase : CulledBehaviour, ICooldownable
 {
     [SerializeField] protected UpgradableBuilding building;
     [SerializeField] protected CurrencyStackBehaviour stack;
@@ -31,14 +31,16 @@ public abstract class MoneyGiverBase : MonoBehaviour, ICooldownable
 
     public bool IsCooldown => isWorking;
 
-    private void OnEnable()
+    protected override void OnOnEnable()
     {
+        base.OnOnEnable();
         lastTimeSpawn = Time.time;
         enableWhenWorking.speed = 0f;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (!building.IsBought)
         {
             return;

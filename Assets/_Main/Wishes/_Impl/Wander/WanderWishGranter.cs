@@ -12,8 +12,10 @@ public class WanderWishGranter : TimerWishGranter
     public override bool ProcessInstant => true;
     protected IEnumerator cor;
     protected int lastReshuffleIndex;
-    private void Start()
+
+    protected override void OnStart()
     {
+        base.OnStart();
         cor = ReshuffleCoroutine();
         Reshuffle();
     }

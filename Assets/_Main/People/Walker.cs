@@ -23,8 +23,9 @@ public class Walker : CulledBehaviour
         agent.stoppingDistance = stopDistance/2f;
     }
 
-    private void OnDisable()
+    protected override void OnOnDisable()
     {
+        base.OnOnDisable();
         isFinished = true;
         reachTargetEvent = null;
     }
@@ -78,11 +79,19 @@ public class Walker : CulledBehaviour
                 SetFinished();
                 return;
             }
-
-            agent.isStopped = false;
+            
             isFinished = false;
             this.target = target;
-            agent.SetDestination(hit.position);   
+            if (!agent.isOnNavMesh)
+            {
+                agent.Warp(hit.position);
+                agent.isStopped = false;
+            }
+            else
+            {
+                agent.isStopped = false;
+                agent.SetDestination(hit.position);   
+            }
         }
     }
 

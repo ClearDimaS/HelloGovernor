@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class UIWishActivationPlace : MonoBehaviour
+public class UIWishActivationPlace : CulledBehaviour
 {
     [Inject] private PlayerController player;
     [Inject] protected CameraManager cameraManager;
@@ -25,8 +25,9 @@ public class UIWishActivationPlace : MonoBehaviour
         Hide();
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (IsShown && !isActivated && !cameraManager.IsBlocked)
         {
             var diff = transform.position - player.transform.position;

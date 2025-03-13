@@ -36,8 +36,9 @@ public class HouseRepairable : SimpleRepairerPhysicsBehaviour, IRepairable
         houseBuilding = GetComponentInParent<HouseBuilding>();
     }
 
-    private void OnEnable()
+    protected override void OnOnEnable()
     {
+        base.OnOnEnable();
         var rand = Random.Range(0, gfxVariants.Length);
         for (int i = 0; i < gfxVariants.Length; i++)
         {

@@ -2,20 +2,23 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OrderWishDisplayer : MonoBehaviour
+public class OrderWishDisplayer : CulledBehaviour
 {
     [SerializeField] private SpriteRenderer icon;
     [SerializeField] private Transform content;
     protected bool isShown;
     protected OrderProcessPlace processPlace;
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         processPlace = GetComponentInParent<OrderProcessPlace>();
         content.transform.localScale = Vector3.zero;
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         var show = processPlace.IsAtPlace();
         if (show != isShown)
         {
@@ -40,7 +43,7 @@ public class OrderWishDisplayer : MonoBehaviour
             var curColor = processPlace.GetCurrentColor();
             if (icon.sprite != curIcon || icon.color.r != curColor.r 
                                        || icon.color.g != curColor.g
-                || icon.color.b != curColor.b)
+                                       || icon.color.b != curColor.b)
             {
                 icon.sprite = curIcon;
                 icon.color = curColor;

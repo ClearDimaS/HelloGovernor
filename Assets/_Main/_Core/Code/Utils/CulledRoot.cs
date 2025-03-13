@@ -9,8 +9,9 @@ public abstract class CulledRoot : UpdateableBehaviour
     public override void UpdateCall(float deltaTime)
     {
         base.UpdateCall(deltaTime);
-        foreach (var culled in culledBehaviours)
+        for (var i = 0; i < culledBehaviours.Count; i++)
         {
+            var culled = culledBehaviours[i];
             culled.UpdateCulled(IsVisible);
         }
     }
@@ -18,14 +19,20 @@ public abstract class CulledRoot : UpdateableBehaviour
     public override void LateUpdateCall(float deltaTime)
     {
         base.UpdateCall(deltaTime);
-        foreach (var culled in culledBehaviours)
+        for (var i = 0; i < culledBehaviours.Count; i++)
         {
+            var culled = culledBehaviours[i];
             culled.LateUpdateCulled(IsVisible);
         }
     }
 
-    public void AddCulledBehaviour(CulledBehaviour culledBehaviour)
+    public virtual void AddCulledBehaviour(CulledBehaviour culledBehaviour)
     {
         culledBehaviours.Add(culledBehaviour);
+    }
+
+    public virtual void RemoveCulledBehaviour(CulledBehaviour culledBehaviour)
+    {
+        culledBehaviours.Remove(culledBehaviour);
     }
 }

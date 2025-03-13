@@ -5,23 +5,25 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class AssistantVFXPlayer : MonoBehaviour
+public class AssistantVFXPlayer : CulledBehaviour
 {
     [SerializeField] protected ParticleSystem[] upgradePS;
 
     private Animator assitantAnimator;
     private UpgradableAssistant upgradable;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         upgradable = GetComponentInParent<UpgradableAssistant>();
         assitantAnimator = upgradable.GetComponentInChildren<Animator>();
         
         upgradable.SubscribeUpgrade(PlayUpgradeVFX);
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         foreach (var ps in upgradePS)
         {
             ps.transform.position = assitantAnimator.transform.position;

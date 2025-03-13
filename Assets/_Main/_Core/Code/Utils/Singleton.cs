@@ -18,6 +18,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    public static T UnsafeInstance => instance;
     private static T instance;
 
     private void Awake()

@@ -8,16 +8,18 @@ public class ItemsProcessPlace : ItemsUserProcessPlace
     [SerializeField] protected GameObject gfx;
     protected ItemsWishGranter granter;
 
-    private void OnDisable()
+    protected override void OnOnDisable()
     {
+        base.OnOnDisable();
         if (gfx != null)
         {
             gfx.SetActive(false);
         }
     }
 
-    private void OnEnable()
+    protected override void OnOnEnable()
     {
+        base.OnOnEnable();
         if (gfx != null)
         {
             gfx.SetActive(true);

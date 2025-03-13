@@ -3,13 +3,15 @@ public class EnabledDisabledVisibleRoot : CulledRoot
     public override bool IsVisible => isEnabled;
     private bool isEnabled;
 
-    private void OnEnable()
+    protected override void OnOnEnable()
     {
+        base.OnOnEnable();
         isEnabled = true;
     }
 
-    private void OnDisable()
+    protected override void OnOnDisable()
     {
+        base.OnOnDisable();
         isEnabled = false;
     }
 }

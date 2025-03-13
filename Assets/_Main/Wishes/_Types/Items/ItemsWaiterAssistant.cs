@@ -17,7 +17,7 @@ public interface IItemsUserWishGranter
 }
 
 
-public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
+public class ItemsWaiterAssistant : CulledBehaviour, IWishAssistant, IItemTaker
 {
     [SerializeField] private Interactor interactor;
     [SerializeField] private Walker walker;
@@ -30,13 +30,15 @@ public class ItemsWaiterAssistant : MonoBehaviour, IWishAssistant, IItemTaker
     public Transform Root => transform;
     public Transform TransformRoot => transform;
 
-    private void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         wishGranter = GetComponentInParent<IItemsUserWishGranter>();
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         if (target != null)
         {
             if (target.Assistant != null && target.Assistant != this)
