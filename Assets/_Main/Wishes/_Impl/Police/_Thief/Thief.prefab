@@ -375,11 +375,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: f140188d9000b4e37b203de125038fee,
         type: 3}
+    - target: {fileID: 1452127228182923797, guid: 4273faf3cf25e4d46a754648beaa98e8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 442ff58bdd30b8d4792313e410a92ef5,
+        type: 3}
     - target: {fileID: 1830054286302478860, guid: 4273faf3cf25e4d46a754648beaa98e8,
         type: 3}
       propertyPath: m_Name
       value: TimerCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2887642268081499833, guid: 4273faf3cf25e4d46a754648beaa98e8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 442ff58bdd30b8d4792313e410a92ef5,
+        type: 3}
     - target: {fileID: 5621813044024700274, guid: 4273faf3cf25e4d46a754648beaa98e8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -497,8 +509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375c64a9a9834d17b15fc99c2bb51c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7619709128674140646 stripped
-RectTransform:
+--- !u!4 &7619709128674140646 stripped
+Transform:
   m_CorrespondingSourceObject: {fileID: 5621813044024700274, guid: 4273faf3cf25e4d46a754648beaa98e8,
     type: 3}
   m_PrefabInstance: {fileID: 2862622749951757460}

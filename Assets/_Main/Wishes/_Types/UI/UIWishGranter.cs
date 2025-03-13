@@ -31,14 +31,24 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
         }
         if (!activationPlace.IsShown && CanShowActivation())
         {
-            activationPlace.Show(OnActivate, IsFinished, OnFinish);
+            ShowActivationPlace();
         }
 
         if (isStarted && !panel.IsShown())
         {
             isFinished = true;
-            activationPlace.Hide();
+            HideActivationPlace();
         }
+    }
+
+    protected virtual void ShowActivationPlace()
+    {
+        activationPlace.Show(OnActivate, IsFinished, OnFinish);
+    }
+
+    protected virtual void HideActivationPlace()
+    {
+        activationPlace.Hide();
     }
 
     protected override void OnPurchase()

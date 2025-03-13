@@ -127,10 +127,13 @@ public class PlayerController : Singleton<PlayerController>,
     public void ReturnMoney(int stolenAmount, Transform from)
     {
         var reward = stolenAmount;
-        var currency = currencyStackPool.GetElement();
-        currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
-        currency.Initialize(reward);
-        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+        for (int i = 0; i < 10; i++)
+        {
+            var currency = currencyStackPool.GetElement();
+            currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
+            currency.Initialize(reward/10);
+            currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);   
+        }
     }
 
     public bool HasItems(GenericCitizenItem item)

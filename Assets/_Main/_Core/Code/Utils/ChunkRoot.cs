@@ -30,9 +30,20 @@ public class ChunkRoot : CulledRoot
         }
     }
 
+    private bool isInit;
+
     protected override void OnAwake()
     {
         base.OnAwake();
+        if (!isInit)
+        {
+            Init();
+        }
+    }
+
+    private void Init()
+    {
+        isInit = true;
         var xIndex = 0;
         for (int x = 0; x < worldSizeXZ.x; x+=chunkSize)
         {
@@ -40,8 +51,8 @@ public class ChunkRoot : CulledRoot
             for (int z = 0; z < worldSizeXZ.y; z+=chunkSize)
             {
                 var c = new Vector2(x + chunkSize / 2, z + chunkSize / 2) 
-                    + center 
-                    - new Vector2(worldSizeXZ.x/2f, worldSizeXZ.y/2f);
+                        + center 
+                        - new Vector2(worldSizeXZ.x/2f, worldSizeXZ.y/2f);
                 chunks.Add(new CullableChunk(
                     c, 
                     new Vector2(chunkSize, chunkSize), 
@@ -129,6 +140,10 @@ public class ChunkRoot : CulledRoot
 
     public override void AddCulledBehaviour(CulledBehaviour culledBehaviour)
     {
+        if (!isInit)
+        {
+            Init();
+        }
         base.AddCulledBehaviour(culledBehaviour);
         var chunk = GetNearestChunk(culledBehaviour.transform);
         chunksDict[culledBehaviour] = chunk;

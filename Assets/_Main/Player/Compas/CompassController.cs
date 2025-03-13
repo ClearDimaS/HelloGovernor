@@ -19,7 +19,10 @@ public class CompassController : MonoBehaviour
 
     private Dictionary<Transform, CompasMarker> targetMarkersDict = new ();
     private Queue<CompasMarker> freeTargetMarkers = new ();
+    [field: SerializeField] public ECompasTarget Type { get; set; }
 
+    private Camera renderCam;
+    
     private void Awake()
     {
         foreach (var marker in targetMarkers)
@@ -28,6 +31,11 @@ public class CompassController : MonoBehaviour
             marker.SetSprite(icon);
             marker.SetColor(color);
         }
+    }
+
+    private void Start()
+    {
+        renderCam = GetComponent<RectTransform>().GetRenderCamera();
     }
 
     private void Update()
@@ -79,7 +87,10 @@ public class CompassController : MonoBehaviour
 
             var sp = new Vector2(vp.x * Screen.width, vp.y * Screen.height);
             
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(markersParent, sp, cameraManager.ActiveCamera, out Vector2 lp);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(markersParent, 
+                sp, 
+                renderCam,
+                out Vector2 lp);
 
             marker.Root.anchoredPosition = lp;
             var direction = (vp - Vector2.one / 2f) * 2f;

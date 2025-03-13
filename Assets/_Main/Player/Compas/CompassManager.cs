@@ -4,29 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/*public enum ECompasTarget
+public enum ECompasTarget
 {
-    Drink,
-    Flower,
-    IceCream,
-    Robbery,
-    Repair,
-    NewPurchase,
+    Thief,
+    Bank,
     PressConference
-}*/
+}
 public class CompassManager : MonoBehaviour
 {
     private CompassController[] compasses;
 
-   // private Dictionary<ECompasTarget, CompassController> compassesDict;
+    private Dictionary<ECompasTarget, CompassController> compassesDict;
 
     private void Awake()
     {
         compasses = GetComponentsInChildren<CompassController>();
-      //  compassesDict = compasses.ToDictionary(x => x.Type, x => x);
+        compassesDict = compasses.ToDictionary(x => x.Type, x => x);
     }
 
-    /*public void AddTarget(Transform target, ECompasTarget type)
+    public void AddTarget(Transform target, ECompasTarget type)
     {
         compassesDict[type].AddTarget(target);
     }
@@ -34,5 +30,5 @@ public class CompassManager : MonoBehaviour
     public void RemoveTarget(Transform target, ECompasTarget type)
     {
         compassesDict[type].RemoveTarget(target);
-    }*/
+    }
 }

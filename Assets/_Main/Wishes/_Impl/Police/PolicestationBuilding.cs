@@ -3,7 +3,8 @@ using UnityEngine;
 using Zenject;
 
 public class PolicestationBuilding : BuildingBase, ICooldownable
-{
+{    
+    [Inject] private CompassManager compassManager;
     [Inject] private PlayerController player;
     [Inject] private WishesCollectionConfig wishesConfig;
     [Inject] protected ThiefsPool thiefsPool;
@@ -55,6 +56,10 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
             if (GetTimeLeft() <= 0 && activeThief != null)
             {
                 thiefsPool.Pool(activeThief);
+                if (compassManager != null)
+                {
+                    compassManager.RemoveTarget(activeThief.transform, ECompasTarget.Thief);
+                }
                 activeThief = null;
             }
         }
@@ -78,8 +83,14 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
 
     private void SetThiefCatched(PlayerController catcher)
     {
+        lastSpawnTime = Time.time;
         catcher.ReturnMoney(wishesConfig.thiefReward, activeThief.transform);
         thiefsPool.Pool(activeThief);
+        if (compassManager != null)
+        {
+            compassManager.RemoveTarget(activeThief.transform, ECompasTarget.Thief);
+        }
+        activeThief = null;
     }
 
     private void SpawnThief()
@@ -87,6 +98,10 @@ public class PolicestationBuilding : BuildingBase, ICooldownable
         catchProgress = 0f;
         activeThief = thiefsPool.GetElement();
         activeThief.transform.position = spawnPlace.position;
+        if (compassManager != null)
+        {
+            compassManager.AddTarget(activeThief.transform, ECompasTarget.Thief);
+        }
     }
 
     public bool HasThief()

@@ -5,20 +5,28 @@ using Zenject;
 
 public class BankGranter : UIWishGranter
 {
+    [Inject] protected CompassManager compassManager;
     [Inject] protected WishesCollectionConfig wishesConfig;
 
     protected override bool CanAddToStarted => true;
     protected float lastAnswerTime;
     protected float minPause = 0.2f;
 
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-    }
-
     protected override UI_Panel GetPanel()
     {
         return UI_Manager.Instance.GetPanel<BankWishPanel>();
+    }
+
+    protected override void ShowActivationPlace()
+    {
+        base.ShowActivationPlace();
+        compassManager.AddTarget(activationPlace.transform, ECompasTarget.Bank);
+    }
+
+    protected override void HideActivationPlace()
+    {
+        base.HideActivationPlace();
+        compassManager.RemoveTarget(activationPlace.transform, ECompasTarget.Bank);
     }
 
     protected override void OnActivate()

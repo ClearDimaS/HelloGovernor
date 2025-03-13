@@ -89,7 +89,8 @@ public class UpgradableBuilding : UpgradableObject
             
             spawnedLevel = data.level;
             var buildingData = buildingsCollection.GetBuildingData(buildingBase);
-            var level = buildingData.levels[data.level - 1];
+            var levelIndex = Mathf.Clamp(data.level - 1, 0, buildingData.levels.Length - 1);
+            var level = buildingData.levels[levelIndex];
             var optionPrefab = level.option;
             if (level.variants != null && level.variants.Length > 0)
             {
@@ -105,7 +106,7 @@ public class UpgradableBuilding : UpgradableObject
                 Destroy(spawnedGFX);
             }
 
-            spawnedGFX = container.InstantiatePrefab(optionPrefab, levels[data.level - 1].transform);
+            spawnedGFX = container.InstantiatePrefab(optionPrefab, levels[levelIndex].transform);
             spawnedGFX.transform.localPosition = Vector3.zero;
             spawnedGFX.transform.localRotation = Quaternion.identity;
 

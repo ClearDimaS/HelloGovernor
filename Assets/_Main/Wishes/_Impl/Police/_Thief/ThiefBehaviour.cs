@@ -9,10 +9,10 @@ using Zenject;
 public class ThiefBehaviour : MonoBehaviour, IResetable
 {
     [Inject] private EnvironmentManager environmentManager;
-    
+
     [SerializeField] private TimerBase catchTimer;
     [SerializeField] private Walker walker;
-    
+
     public void OnReset()
     {
         catchTimer.SetProgress(0f);

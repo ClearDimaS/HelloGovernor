@@ -4,14 +4,23 @@ using Zenject;
 
 public class PressConferenceGranter : UIWishGranter
 {
-    [SerializeField] private PressConferenceConfig conferenceConfig;
     [Inject] protected UI_Manager uiManager;
+    [Inject] private CompassManager compassManager;
+    
+    [SerializeField] private PressConferenceConfig conferenceConfig;
 
-    protected override void OnAwake()
+    protected override void ShowActivationPlace()
     {
-        base.OnAwake();
+        base.ShowActivationPlace();
+        compassManager.AddTarget(activationPlace.transform, ECompasTarget.PressConference);
     }
 
+    protected override void HideActivationPlace()
+    {
+        base.HideActivationPlace();
+        compassManager.RemoveTarget(activationPlace.transform, ECompasTarget.PressConference);
+    }
+    
     protected override UI_Panel GetPanel()
     {
         return uiManager.GetPanel<PressConferenceUI_Panel>();
