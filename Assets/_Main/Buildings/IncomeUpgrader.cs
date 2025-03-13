@@ -35,7 +35,7 @@ public class IncomeUpgrader : UpgradableObject
         {
             Debug.LogError($"couldnt place income upgrader! my parent: {transform.parent}");
         }
-        Consumer.transform.position = building.Consumer.transform.position + Vector3.forward * 1.4f;
+        Consumer.transform.position = building.Consumer.transform.position + Vector3.forward * 1.15f;
         Consumer.transform.rotation = building.Consumer.transform.rotation;
     }
 

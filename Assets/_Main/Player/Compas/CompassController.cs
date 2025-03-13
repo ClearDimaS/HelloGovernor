@@ -11,7 +11,7 @@ public class CompassController : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private RectTransform markersParent;
     [SerializeField] private CompasMarker[] targetMarkers;
-
+    [SerializeField] private Vector2 screenOffsets = new Vector2(0.1f, 0.1f);
     [SerializeField] private Sprite icon;
     
     private List<Transform> notVisibleTargets = new ();
@@ -82,8 +82,8 @@ public class CompassController : MonoBehaviour
             }
             
             Vector2 vp = cameraManager.ActiveCamera.WorldToViewportPoint(target.position);
-            vp.x = Mathf.Clamp(vp.x, 0.05f, 0.95f);
-            vp.y = Mathf.Clamp(vp.y, 0.05f, 0.95f);
+            vp.x = Mathf.Clamp(vp.x, screenOffsets.x, 1f - screenOffsets.x);
+            vp.y = Mathf.Clamp(vp.y, screenOffsets.y, 1f - screenOffsets.y);
 
             var sp = new Vector2(vp.x * Screen.width, vp.y * Screen.height);
             
