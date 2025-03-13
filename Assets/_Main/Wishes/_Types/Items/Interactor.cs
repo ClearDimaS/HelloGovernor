@@ -39,7 +39,9 @@ public class Interactor : CulledBehaviour
 
     public void AddItem(CitizenItem item)
     {
-        if (interactables.Count > 0 && interactables[0].GetData().key != item.GetData().key)
+        if (interactables.Count > 0 && 
+            (interactables[0].GetData().key != item.GetData().key || 
+             interactables[0].secondaryKey != item.secondaryKey))
         {
             var count = interactables.Count;
             for (int i = 0; i < count; i++)
@@ -126,9 +128,10 @@ public class Interactor : CulledBehaviour
         return interactables.Count == 0 || interactables.Count < GetMaxItemsCount();
     }
 
-    public bool HasItemOfType(string key)
+    public bool HasItemOfType(string key, string secondaryKey)
     {
-        return interactables.Count > 0 && interactables[0].GetData().key == key;
+        return interactables.Count > 0 && 
+               interactables[0].GetData().key == key && interactables[0].secondaryKey == secondaryKey;
     }
 
     public Transform GetPlace(int i)

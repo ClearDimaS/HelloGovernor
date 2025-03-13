@@ -81,7 +81,7 @@ public class ItemsWaiterAssistant : CulledBehaviour, IWishAssistant, IItemTaker
 
     public bool HasItems(GenericCitizenItem item)
     {
-        return interactor.HasItemOfType(item.GetData().key);
+        return interactor.HasItemOfType(item.GetData().key, item.secondaryKey);
     }
 
     public bool CanAddItems()

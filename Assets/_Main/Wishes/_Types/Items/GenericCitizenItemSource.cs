@@ -66,7 +66,8 @@ public class GenericCitizenItemSource : CulledBehaviour
         {
             var diffToPlayer = TakePlace.position - player.transform.position;
             diffToPlayer.y = 0f;
-            if (diffToPlayer.magnitude < radius && (player.CanAddItems() || !player.HasItemOfType(prefabs[0])))
+            if (diffToPlayer.magnitude < radius && (player.CanAddItems() || 
+                                                    !player.HasItemOfType(prefabs[0])))
             {
                 takers.Add(player);
             }

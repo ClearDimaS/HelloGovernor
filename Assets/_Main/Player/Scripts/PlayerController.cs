@@ -135,7 +135,7 @@ public class PlayerController : Singleton<PlayerController>,
 
     public bool HasItems(GenericCitizenItem item)
     {
-        return interactor.HasItemOfType(item.GetData().key);
+        return interactor.HasItemOfType(item.GetData().key, item.secondaryKey);
     }
 
     public bool CanAddItems()
@@ -165,7 +165,7 @@ public class PlayerController : Singleton<PlayerController>,
 
     public bool HasItemOfType(GenericCitizenItem prefab)
     {
-        return interactor.HasItemOfType(prefab.GetData().key);
+        return interactor.HasItemOfType(prefab.GetData().key, prefab.secondaryKey);
     }
 
     public void AddBoughtBuilding(UpgradableObject upgradableObject)

@@ -733,6 +733,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2083138658000415684, guid: c4723027b5d33451e9983f1c3fd0fcca,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2083138658000415706, guid: c4723027b5d33451e9983f1c3fd0fcca,
         type: 3}
       propertyPath: m_Cameras.Array.size

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class CitizenItem : MonoBehaviour
 {
+    public string secondaryKey;
+    
     public abstract void PoolPlease();
     public abstract ItemConfigData GetData();
 
