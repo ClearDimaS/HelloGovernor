@@ -27,9 +27,6 @@ public class UpdateCallManager : Singleton<UpdateCallManager>
                 i--;
                 continue;
             }
-            #if UNITY_EDITOR
-            Debug.Log($"updating: {updatable.transform.name}");
-            #endif
             updatable.UpdateCall(Time.deltaTime);
         }
     }

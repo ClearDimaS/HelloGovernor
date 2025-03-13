@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1159871806101587630}
   - component: {fileID: 2596545972724799565}
-  - component: {fileID: -4589523936783408984}
   m_Layer: 0
   m_Name: LightChain
   m_TagString: Untagged
@@ -50,19 +49,6 @@ MonoBehaviour:
   objects: []
   content: {fileID: 5614968278651228291}
   nightContent: {fileID: 1302723323689967125}
---- !u!114 &-4589523936783408984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 90112673229802650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderer: {fileID: 0}
 --- !u!1001 &1302723323690123483
 PrefabInstance:
   m_ObjectHideFlags: 0

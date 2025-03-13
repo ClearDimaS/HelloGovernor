@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 7817450110306230326}
   - component: {fileID: 4179678458075790292}
   - component: {fileID: 6533214046412964063}
-  - component: {fileID: -4787868103306671528}
+  - component: {fileID: 1545305636129084001}
   m_Layer: 0
   m_Name: BuildingBase
   m_TagString: Untagged
@@ -293,7 +293,7 @@ MonoBehaviour:
   - min: {x: -3, y: 0, z: -9}
     max: {x: 9, y: 0, z: -3}
   boughtRoot: {fileID: 6128440657515243465}
---- !u!114 &-4787868103306671528
+--- !u!114 &1545305636129084001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  culledBehaviours: []
   renderer: {fileID: 0}
 --- !u!1001 &1120545918216259894
 PrefabInstance:

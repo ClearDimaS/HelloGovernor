@@ -127,6 +127,10 @@ public class CulledBehaviour : MonoBehaviour
     protected void Awake()
     {
         culledRoot = GetComponentInParent<CulledRoot>(true);
+        if (culledRoot == null)
+        {
+            culledRoot = ChunkRoot.Instance;
+        }
         OnAwake();
     }
 
@@ -137,6 +141,10 @@ public class CulledBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
+        if (culledRoot == null)
+        {
+            culledRoot = ChunkRoot.Instance;
+        }
         if (culledRoot != null)
         {
             culledRoot.AddCulledBehaviour(this);
@@ -159,10 +167,6 @@ public class CulledBehaviour : MonoBehaviour
         if (culledRoot != null)
         {
             culledRoot.RemoveCulledBehaviour(this);
-        }
-        else
-        {
-            Debug.LogError($"culled root is null for {GetType()} at {transform.GetHierarchyString()}");
         }
 
         OnOnDisable();

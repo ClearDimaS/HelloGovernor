@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3314266}
   - component: {fileID: 2383126}
   - component: {fileID: 387356864855017368}
-  - component: {fileID: 2316016736829676514}
   m_Layer: 0
   m_Name: Lantern_Small
   m_TagString: Untagged
@@ -108,19 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.815295, y: 1.7139382, z: 0.8152949}
   m_Center: {x: 0.000000074505806, y: 0.8569691, z: -0.000000059604645}
---- !u!114 &2316016736829676514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderer: {fileID: 0}
 --- !u!1001 &1585170904960317923
 PrefabInstance:
   m_ObjectHideFlags: 0

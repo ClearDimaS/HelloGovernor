@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3314574}
   - component: {fileID: 2384122}
   - component: {fileID: 8103117762326748491}
-  - component: {fileID: 720969767909953705}
   m_Layer: 0
   m_Name: Lantern_Path
   m_TagString: Untagged
@@ -108,19 +107,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.35, y: 3.3481991, z: 0.35}
   m_Center: {x: 0.00000008940697, y: 1.6740997, z: -0.00000014901161}
---- !u!114 &720969767909953705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderer: {fileID: 0}
 --- !u!1001 &2425108094330283527
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,10 +17,7 @@ public abstract class UpdateableBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        if (UpdateCallManager.UnsafeInstance != null)
-        {
-            UpdateCallManager.UnsafeInstance.AddUpdatable(this);   
-        }
+        UpdateCallManager.Instance.AddUpdatable(this); 
 
         OnOnEnable();
     }

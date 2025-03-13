@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 567727775015595479}
+  - {fileID: 5525593949549151576}
   - {fileID: 7544738548692401843}
   - {fileID: 1832001678089122442}
   - {fileID: 8290455515685949939}
@@ -91,6 +92,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatables: []
+--- !u!1 &6966140793132840006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5525593949549151576}
+  - component: {fileID: 5936947267594985563}
+  m_Layer: 0
+  m_Name: CunksRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5525593949549151576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966140793132840006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.9, y: 0, z: 8.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1744898146863668968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5936947267594985563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966140793132840006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f1dd3486a642c2bbc61a9ed5597199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  culledBehaviours: []
+  chunkSize: 10
+  chunksCountPerAxis: 0
+  center: {x: -25, y: 4}
+  worldSizeXZ: {x: 100, y: 100}
+  chunks: []
 --- !u!1 &7989878078002043009
 GameObject:
   m_ObjectHideFlags: 0
