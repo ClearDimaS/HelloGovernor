@@ -45,11 +45,25 @@ public abstract class SimplePhysicsBehaviourBase<T> : CulledBehaviour
     private List<T> components;
     private List<int> isInsideStatuses = new ();
     
-    protected float sqrRadius;
+    protected float sqrRadius = -1;
 
     protected override void OnAwake()
     {
         base.OnAwake();
+        InitSize();
+    }
+
+    protected override void OnOnEnable()
+    {
+        base.OnOnEnable();
+        if (sqrRadius < 0f)
+        {
+            InitSize();
+        }
+    }
+
+    protected void InitSize()
+    {
         sqrRadius = interactRadius * interactRadius;
         components = GetComponentsForWork();
         foreach (var component in components)
