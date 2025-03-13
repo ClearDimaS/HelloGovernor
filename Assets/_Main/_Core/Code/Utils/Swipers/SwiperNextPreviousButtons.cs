@@ -25,7 +25,10 @@ public class SwiperNextPreviousButtons : MonoBehaviour
         }
 
         isInit = true;
-        pageSwiper = GetComponent<ElementsSwiper>();
+        if (pageSwiper == null)
+        {
+            pageSwiper = GetComponent<ElementsSwiper>();   
+        }
         if (nextButton != null)
             nextButton.onClick.AddListener(Next);
         if (previousButton != null)
