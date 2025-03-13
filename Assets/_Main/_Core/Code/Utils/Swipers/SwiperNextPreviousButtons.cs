@@ -61,16 +61,12 @@ public class SwiperNextPreviousButtons : MonoBehaviour
     
     private void Next()
     {
-        Debug.Log($"next");
         pageSwiper.MoveElements(1, false);
-        Debug.Log($"next post");
     }
 
     private void Previous()
     {
-        Debug.Log($"prev");
         pageSwiper.MoveElements(-1, false);
-        Debug.Log($"prev post");
     }
 
     private void Start()
