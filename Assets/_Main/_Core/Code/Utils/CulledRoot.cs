@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,9 +38,9 @@ public abstract class CulledRoot : UpdateableBehaviour
 #if UNITY_EDITOR
             culled.LateUpdateCulled(IsVisible);
 #else
-            try
+              try
             {
-           culled.LateUpdateCulled(IsVisible);
+                culled.LateUpdateCulled(IsVisible);
             }
             catch (Exception e)
             {
