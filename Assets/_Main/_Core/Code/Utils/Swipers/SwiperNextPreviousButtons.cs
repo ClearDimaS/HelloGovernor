@@ -1,3 +1,4 @@
+using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,13 +9,26 @@ public class SwiperNextPreviousButtons : MonoBehaviour
     [SerializeField] private Button previousButton;
 
     private ElementsSwiper pageSwiper;
+    private bool isInit;
+    private bool isSubscribed;
 
-    private void Awake()
+    private void OnEnable()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        if (isInit)
+        {
+            return;
+        }
+
+        isInit = true;
         pageSwiper = GetComponent<ElementsSwiper>();
-        if (nextButton)
+        if (nextButton != null)
             nextButton.onClick.AddListener(Next);
-        if (previousButton)
+        if (previousButton != null)
             previousButton.onClick.AddListener(Previous);
         if (pageSwiper != null)
         {
@@ -24,12 +38,19 @@ public class SwiperNextPreviousButtons : MonoBehaviour
 
     public void SetSwiper(ElementsSwiper swiper)
     {
+        isSubscribed = false;
         pageSwiper = swiper;
         SubscribeSwiper();
     }
     
     private void SubscribeSwiper()
     {
+        if (isSubscribed)
+        {
+            return;
+        }
+
+        isSubscribed = true;
         pageSwiper.Element.Subscribe(RefreshButtons).AddTo(this);
         pageSwiper.ElementAddCommand.Subscribe(_ => OnElementsChange()).AddTo(this);
         pageSwiper.ElementRemoveCommand.Subscribe(_ => OnElementsChange()).AddTo(this);
