@@ -30,7 +30,7 @@ public class VibrationManager : MonoBehaviour
         PlayVibration(levelUp);
     }
 
-    public void Grab()
+    public void GetMoney()
     {
         PlayVibration(grab);
     }
@@ -40,7 +40,12 @@ public class VibrationManager : MonoBehaviour
         PlayVibration(reward);
     }
 
-    public void Chew()
+    public void Purchase()
+    {
+        PlayVibration(levelUp);
+    }
+
+    public void SpendMoney()
     {
         PlayVibration(chew);
     }

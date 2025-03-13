@@ -12,6 +12,7 @@ public class PlayerController : Singleton<PlayerController>,
     IItemTaker,
     IWishAssistant
 {
+    [Inject] private VibrationManager vibrationManager;
     [Inject] private SoundManager soundManager;
     [Inject] private PlayerDataRepository repository;
     [Inject] private CurrencyPool currencyPool;
@@ -111,6 +112,7 @@ public class PlayerController : Singleton<PlayerController>,
         {
             var t = 0f;
             soundManager.PlayerGetMoney();
+            vibrationManager.GetMoney();
             DOTween.To(() => t, x => t = x, 1f, gameConfig.moneyFlyTime2).OnUpdate(() =>
             {
                 currency.transform.rotation = Quaternion.Lerp(middleRot, endRot, t);

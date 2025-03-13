@@ -31,6 +31,10 @@ public class SoundManager : MonoBehaviour
     
     public void PlaySound(AudioClip clip, float volume)
     {
+        if (!cacheManager.IsSoundOn)
+        {
+            return;
+        }
         PlayClip(clip, volume);
     }
 

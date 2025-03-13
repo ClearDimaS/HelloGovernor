@@ -67,6 +67,7 @@ public class Price
 
 public class MoneyConsumer : SimplePlayerPhysicsBehaviour
 {
+    [Inject] private VibrationManager vibrationManager;
     [Inject] private SoundManager soundManager;
     [Inject] private PlayerInput playerInput;
     [Inject] private CurrencyPool currencyPool;
@@ -135,6 +136,7 @@ public class MoneyConsumer : SimplePlayerPhysicsBehaviour
                 isReached = true;
                 spender = null;
                 soundManager.PlayPurchase();
+                vibrationManager.Purchase();
                 reachGoalEvent?.Invoke();
             }
             return;
@@ -155,6 +157,7 @@ public class MoneyConsumer : SimplePlayerPhysicsBehaviour
         if (diff > 0)
         {
             soundManager.PlaySpendMoney();
+            vibrationManager.SpendMoney();
             spender.Spend(diff);
             if ((Time.time - lastSpawnCashTime) > gameConfig.moneySpendPause)
             {
