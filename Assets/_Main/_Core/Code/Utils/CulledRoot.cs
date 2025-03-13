@@ -12,7 +12,18 @@ public abstract class CulledRoot : UpdateableBehaviour
         for (var i = 0; i < culledBehaviours.Count; i++)
         {
             var culled = culledBehaviours[i];
+#if UNITY_EDITOR
+            culled.LateUpdateCulled(IsVisible);
+#else
+            try
+            {
             culled.UpdateCulled(IsVisible);
+            }
+            catch (Exception e)
+            {
+                
+            }
+#endif
         }
     }
     
@@ -22,7 +33,18 @@ public abstract class CulledRoot : UpdateableBehaviour
         for (var i = 0; i < culledBehaviours.Count; i++)
         {
             var culled = culledBehaviours[i];
+#if UNITY_EDITOR
             culled.LateUpdateCulled(IsVisible);
+#else
+            try
+            {
+           culled.LateUpdateCulled(IsVisible);
+            }
+            catch (Exception e)
+            {
+                
+            }
+#endif
         }
     }
 

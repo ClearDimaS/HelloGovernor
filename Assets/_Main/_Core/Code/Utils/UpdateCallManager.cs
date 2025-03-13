@@ -27,7 +27,18 @@ public class UpdateCallManager : Singleton<UpdateCallManager>
                 i--;
                 continue;
             }
+            #if UNITY_EDITOR
             updatable.UpdateCall(Time.deltaTime);
+            #else
+            try
+            {
+                updatable.UpdateCall(Time.deltaTime);
+            }
+            catch (Exception e)
+            {
+                
+            }
+            #endif
         }
     }
 
@@ -36,7 +47,18 @@ public class UpdateCallManager : Singleton<UpdateCallManager>
         for (var i = 0; i < updatables.Count; i++)
         {
             var updatable = updatables[i];
+#if UNITY_EDITOR
             updatable.LateUpdateCall(Time.deltaTime);
+#else
+            try
+            {
+            updatable.LateUpdateCall(Time.deltaTime);
+            }
+            catch (Exception e)
+            {
+                
+            }
+#endif
         }
     }
 }
