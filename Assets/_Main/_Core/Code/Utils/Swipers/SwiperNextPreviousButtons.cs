@@ -58,9 +58,6 @@ public class SwiperNextPreviousButtons : MonoBehaviour
 
     private void RefreshButtons(int pageIndex)
     {
-        if (nextButton)
-            nextButton.interactable = pageIndex < (pageSwiper.ElementsCount - 1);
-        if (previousButton)
-            previousButton.interactable = pageIndex > 0;
+
     }
 }

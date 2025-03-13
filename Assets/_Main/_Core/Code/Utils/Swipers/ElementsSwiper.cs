@@ -260,6 +260,14 @@ public abstract class ElementsSwiper : MonoBehaviour
 
         public virtual void MoveToElement(int elementNum, bool instant)
         {
+            if (elementNum >= elements.Count)
+            {
+                elementNum = 0;
+            }
+            if (elementNum < 0)
+            {
+                elementNum = elements.Count - 1;
+            }
             curElementNumber = elementNum;
             var finalPosition = GetParentLocation(elementNum);
             if (instant)
