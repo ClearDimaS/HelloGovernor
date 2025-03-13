@@ -13,17 +13,18 @@ public abstract class CulledRoot : UpdateableBehaviour
         {
             var culled = culledBehaviours[i];
 #if UNITY_EDITOR
-            culled.LateUpdateCulled(IsVisible);
+            culled.UpdateCulled(IsVisible);
 #else
             try
             {
-            culled.UpdateCulled(IsVisible);
+               culled.UpdateCulled(IsVisible);
             }
             catch (Exception e)
             {
                 
             }
 #endif
+
         }
     }
     
