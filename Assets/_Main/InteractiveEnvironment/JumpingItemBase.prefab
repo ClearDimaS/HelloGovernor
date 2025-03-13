@@ -165,6 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5686634214830479516}
   - component: {fileID: 8921419133303309285}
+  - component: {fileID: 6783970183022533578}
   m_Layer: 0
   m_Name: JumpingItemBase
   m_TagString: Untagged
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyCountMinMax: {x: 1, y: 3}
-  moneyAfterJumps: 4
+  moneyAfterJumpsMinMax: {x: 3, y: 7}
   minPlaces: 2
   places:
   - {fileID: 5125074295095316910}
@@ -218,6 +219,20 @@ MonoBehaviour:
   interactionRadius: 0.7
   speed: 3
   jumpHeight: 1
+  lookFwd: 1
+--- !u!114 &6783970183022533578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493222615072158162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
 --- !u!1 &8511363264868043810
 GameObject:
   m_ObjectHideFlags: 0

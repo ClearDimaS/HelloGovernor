@@ -30,7 +30,7 @@ public class GameSceneMonoInstaller : MonoInstaller
         Container.Bind<UpgradablePricesManager>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.Bind<ThiefsPool>().FromInstance(thiefsPool).AsSingle().NonLazy();
-        Container.Bind<WishesPool>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<WishesPool>().FromNew().AsSingle().NonLazy();
         Container.Bind<CurrencyPool>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<CurrencySingleStackPool>().FromComponentInHierarchy().AsSingle().NonLazy();
 

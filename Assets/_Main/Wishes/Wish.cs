@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Wish : UpdateableBehaviour, IResetable
+public class Wish : IResetable
 {
     private CitizenController citizen;
     private Walker walker;

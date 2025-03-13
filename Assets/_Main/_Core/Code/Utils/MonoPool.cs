@@ -42,6 +42,31 @@ public class MonoPool<T> : MonoBehaviour where T : MonoBehaviour, IResetable
     }
 }
 
+public class PlainPool<T> where T : IResetable
+{
+    [Inject] private DiContainer container;
+
+    private Queue<T> spawned = new ();
+
+    public T GetElement()
+    {
+        if (spawned.Count == 0)
+        {
+            spawned.Enqueue(container.Instantiate<T>());
+        }
+
+        var element = spawned.Dequeue();
+        element.OnReset();
+        return element;
+    }
+
+    public virtual void Pool(T element)
+    {
+        spawned.Enqueue(element);
+        element.OnPool();
+    }
+}
+
 public class MonoPoolCollection<T, U> : MonoBehaviour where T : MonoBehaviour, IResetable, IKey<U>
 {
     [Inject] private DiContainer container;

@@ -979,6 +979,7 @@ GameObject:
   - component: {fileID: 5009663287472790330}
   - component: {fileID: 453781319252667328}
   - component: {fileID: 4651692956250476424}
+  - component: {fileID: -4936970488366606093}
   m_Layer: 5
   m_Name: CityProgressPanel
   m_TagString: Untagged
@@ -1126,6 +1127,19 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   setActive: 1
+--- !u!114 &-4936970488366606093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446327758840167759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b51814d70f4b079b805b04a881fd62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
 --- !u!1 &8133352968654048271
 GameObject:
   m_ObjectHideFlags: 0

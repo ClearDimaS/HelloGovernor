@@ -85,7 +85,6 @@ public class WishesController : CitizenBehaviour
         }
         isWishOver = false;
         currentWish = wishesPool.GetElement();
-        currentWish.transform.SetParent(transform);
         currentWish.Initialize(citizenController, OnWishResult, granter);
     }
 

@@ -1,4 +1,4 @@
-public class WishesPool : MonoPool<Wish>
+public class WishesPool : PlainPool<Wish>
 {
     
 }

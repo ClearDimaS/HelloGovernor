@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,34 +117,39 @@ public abstract class SimplePhysicsBehaviourBase<T> : CulledBehaviour
     }
 }
 
-public class CulledBehaviour : UpdateableBehaviour
+public class CulledBehaviour : MonoBehaviour
 {
-    private Renderer renderer;
+    private CulledRoot culledRoot;
+    
+    public bool IsVisible => culledRoot.IsVisible;
 
-    private bool isVisible;
-    public bool IsVisible => isVisible;
-
-    protected override void OnAwake()
+    protected void Awake()
     {
-        base.OnAwake();
-        renderer = GetComponent<Renderer>();
-        if (renderer == null)
+        culledRoot = GetComponentInParent<CulledRoot>();
+        if (culledRoot != null)
         {
-            var mr = gameObject.AddComponent<MeshRenderer>();
-            mr.materials = Array.Empty<Material>();
-            renderer = mr;
+            culledRoot.AddCulledBehaviour(this);
         }
+        else
+        {
+            Debug.LogError($"culled root is null for {GetType()} at {transform.GetHierarchyString()}");
+        }
+
+        OnAwake();
     }
 
-    public override void UpdateCall(float deltaTime)
+    protected virtual void OnAwake()
     {
-        base.UpdateCall(deltaTime);
+        
+    }
+    
+    public void UpdateCulled(bool isVisible)
+    {
         OnUpdate(isVisible);
     }
 
-    public override void LateUpdateCall(float deltaTime)
+    public void LateUpdateCulled(bool isVisible)
     {
-        base.LateUpdateCall(deltaTime);
         OnLateUpdate(isVisible);
     }
 
@@ -157,15 +161,5 @@ public class CulledBehaviour : UpdateableBehaviour
     protected virtual void OnLateUpdate(bool visible)
     {
         
-    }
-
-    private void OnBecameVisible()
-    {
-        isVisible = true;
-    }
-    
-    private void OnBecameInvisible()
-    {
-        isVisible = false;
     }
 }

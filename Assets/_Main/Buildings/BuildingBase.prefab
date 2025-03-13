@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 7817450110306230326}
   - component: {fileID: 4179678458075790292}
   - component: {fileID: 6533214046412964063}
+  - component: {fileID: -4787868103306671528}
   m_Layer: 0
   m_Name: BuildingBase
   m_TagString: Untagged
@@ -279,6 +280,7 @@ MonoBehaviour:
   levels:
   - {fileID: 3794667813681806740}
   moneyConsumer: {fileID: 270391778550255219}
+  addObstacles: 1
   minMaxX: {x: -9, y: 9}
   minMaxZ: {x: -9, y: 9}
   allowedSides:
@@ -291,6 +293,19 @@ MonoBehaviour:
   - min: {x: -3, y: 0, z: -9}
     max: {x: 9, y: 0, z: -3}
   boughtRoot: {fileID: 6128440657515243465}
+--- !u!114 &-4787868103306671528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7817450110306230329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7801424f734df68f0aaea5add4d5c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
 --- !u!1001 &1120545918216259894
 PrefabInstance:
   m_ObjectHideFlags: 0

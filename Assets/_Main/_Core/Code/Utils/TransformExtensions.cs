@@ -65,4 +65,17 @@ public static class TransformExtensions
           var canvas = rectTransform.GetComponentsInParent<Canvas>().Last();
           return canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
      }
+
+     public static string GetHierarchyString(this Transform transform)
+     {
+          var hierarchyString = transform.name;
+          var parent = transform.parent;
+          while (parent != null)
+          {
+               hierarchyString = $"{parent.name}/{hierarchyString}";
+               parent = parent.parent;
+          }
+
+          return hierarchyString;
+     }
 }
