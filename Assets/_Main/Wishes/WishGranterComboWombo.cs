@@ -40,12 +40,12 @@ public class WishGranterComboWombo : CulledBehaviour
         var reward = 10;
         var models = 2;
         var combo = comboCounter;
+        player.ReturnMoney(reward, place, models);
         foreach (var comboText in comboTexts)
         {
             comboText.transform.DOScale(Vector3.one * 1.15f, 0.15f).OnComplete(() =>
             {
                 comboText.text = GetString(combo);
-                player.ReturnMoney(reward, place, models);
                 comboText.transform.DOScale(Vector3.one, 0.15f);
             });   
         }
