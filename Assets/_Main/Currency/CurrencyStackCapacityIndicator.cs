@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CurrencyStackCapacityIndicator : CulledBehaviour
@@ -8,6 +9,8 @@ public class CurrencyStackCapacityIndicator : CulledBehaviour
     [SerializeField] protected TextMesh[] maxTexts;
     [SerializeField] protected GameObject content;
     [SerializeField] protected SpriteFillerHorizontal filler;
+    [SerializeField] protected float fillTime = 0.6f;
+    [SerializeField] protected GameObject fullGO;
     
     private CurrencyStackBehaviour currencyStack;
     private Dictionary<int, string> countsDict = new ();
@@ -33,14 +36,31 @@ public class CurrencyStackCapacityIndicator : CulledBehaviour
             var curCount = currencyStack.GetMoney();
             if (curCount != lastCount)
             {
+                var start = lastCount;
                 lastCount = curCount;
-                string stringValue = GetStringValue(lastCount);
-                foreach (var curText in curTexts)
-                {
-                    curText.text = stringValue;
-                }
 
-                filler.Fill((lastCount / (float)lastMaxCount), 0.3f);
+                var t = 0f;
+                
+                DOTween.To(() => t, x => t = x, 1f, fillTime).OnUpdate(() =>
+                {
+                    var cur = Mathf.RoundToInt(Mathf.Lerp(start, curCount, t));
+                    string stringValue = GetStringValue(cur);
+                    foreach (var curText in curTexts)
+                    {
+                        curText.text = stringValue;
+                    }
+
+                    filler.fillAmount = (cur / (float)lastMaxCount);
+                }).OnComplete(() =>
+                {
+                    string stringValue = GetStringValue(lastCount);
+                    foreach (var curText in curTexts)
+                    {
+                        curText.text = stringValue;
+                    }
+
+                    filler.fillAmount = (lastCount / (float)lastMaxCount);
+                });
             }
         
             var maxCount = currencyStack.GetMaxMoney();
@@ -58,6 +78,9 @@ public class CurrencyStackCapacityIndicator : CulledBehaviour
 
             var show = curCount > 0;
             content.SetActiveOnce(show);
+
+            var showFull = currencyStack.IsFull();
+            fullGO.SetActiveOnce(showFull);
         }
     }
 

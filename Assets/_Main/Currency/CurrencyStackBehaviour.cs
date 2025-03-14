@@ -151,7 +151,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             if (gridPlacer.Count < gridPlacer.MaxPlaces)
             {
                 CurrencyBehaviour currency = currencyPool.GetElement();
-                currency.Init(toGive);
+                currency.Init(Mathf.Min(GetMaxMoney() - GetMoney(), toGive));
                 currency.transform.position = worldStart;
                 gridPlacer.Add(currency);
             }
