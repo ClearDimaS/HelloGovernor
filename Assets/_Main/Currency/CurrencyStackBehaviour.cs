@@ -127,6 +127,14 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
     public void MoveCurrencyToMe(int amount, Vector3 worldStart)
     {
+        if (IsFull() && !allowOverflow)
+        {
+            return;
+        }
+
+        var maxAdd = GetMaxMoney() - GetMoney();
+        amount = Mathf.Min(maxAdd, amount);
+        
         var oldAmount = GetMoney();
         var newAmount = amount + oldAmount;
         
@@ -151,7 +159,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             if (gridPlacer.Count < gridPlacer.MaxPlaces)
             {
                 CurrencyBehaviour currency = currencyPool.GetElement();
-                currency.Init(Mathf.Min(GetMaxMoney() - GetMoney(), toGive));
+                currency.Init(toGive);
                 currency.transform.position = worldStart;
                 gridPlacer.Add(currency);
             }
