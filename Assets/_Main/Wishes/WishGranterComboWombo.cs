@@ -25,6 +25,7 @@ public class WishGranterComboWombo : CulledBehaviour
             Destroy(gameObject);
         }
         wishGranter.SubscribePlayerProcess(AddCombo);
+        transform.position = wishGranter.GetMiddleProcessPlace();
     }
 
     protected override void OnUpdate(bool visible)
