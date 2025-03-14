@@ -46,14 +46,24 @@ public class OperatablePlace : CulledBehaviour
         {
             foreach (var @operator in operators)
             {
-                var diff = @operator.Root.position - operatedPlace.position;
-                diff.y = 0f;
-                if (diff.sqrMagnitude < radius * radius)
+                if(IsOperatedBy(@operator.Root))
                 {
                     IsOperated = true;
                 }
             }   
         }
+    }
+
+    protected bool IsOperatedBy(Transform t)
+    {
+        var diff = t.position - operatedPlace.position;
+        diff.y = 0f;
+        if (diff.sqrMagnitude < radius * radius)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public Quaternion GetTargetRotation()
@@ -82,5 +92,10 @@ public class OperatablePlace : CulledBehaviour
     public void SetShowExtraCondition(Func<bool> func)
     {
         extraShowCondition = func;
+    }
+
+    public bool IsAnyOperatedByPlayer()
+    {
+        return IsOperatedBy(player.transform) || (fillPlace != null && fillPlace.IsFilledByPlayer());
     }
 }

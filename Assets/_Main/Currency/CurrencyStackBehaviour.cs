@@ -30,6 +30,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
     [SerializeField] private GameObject takeZone;
     [SerializeField] private CurrencyPlacer gridPlacer;
 
+    private WishGranter granter;
     private static CurrencyStackBehaviour instance;
     private CurrencyStackData saveData;
 
@@ -47,6 +48,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         fwd.y = 0f;
         fwd = fwd.normalized;
         transform.rotation = Quaternion.LookRotation(-fwd, Vector3.up);
+        granter = GetComponentInParent<WishGranter>();
     }
     
     public void Initialize(CurrencyStackData data)
@@ -132,14 +134,16 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             return;
         }
 
+        var moneyInOneModel = GetMoneyInOneModel();
+
         var maxAdd = GetMaxMoney() - GetMoney();
         amount = Mathf.Min(maxAdd, amount);
         
         var oldAmount = GetMoney();
         var newAmount = amount + oldAmount;
         
-        var oldModelCount = oldAmount / gameConfig.moneyInOneModel;
-        var newModelCount = newAmount / gameConfig.moneyInOneModel;
+        var oldModelCount = oldAmount / moneyInOneModel;
+        var newModelCount = newAmount / moneyInOneModel;
         var modelCount = newModelCount - oldModelCount;
 
         if (modelCount <= 0)
@@ -170,7 +174,18 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             }
         }
     }
-    
+
+    private int GetMoneyInOneModel()
+    {
+        var mult = 1f;
+        if (granter != null)
+        {
+            mult *= granter.IncomeMultiplier;
+        }
+
+        return Mathf.RoundToInt(gameConfig.moneyInOneModel * mult);
+    }
+
     public void MoveCurrencyToMe(CurrencyBehaviour currency)
     {
         gridPlacer.Add(currency);
@@ -226,6 +241,6 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
     public int GetMaxMoney()
     {
-        return gridPlacer.MaxPlaces * gameConfig.moneyInOneModel;
+        return gridPlacer.MaxPlaces * GetMoneyInOneModel();
     }
 }

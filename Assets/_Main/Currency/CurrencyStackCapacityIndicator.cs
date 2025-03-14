@@ -92,7 +92,7 @@ public class CurrencyStackCapacityIndicator : CulledBehaviour
         }
         else
         {
-            var stringValue = Price.ToMoneyString(count);
+            var stringValue = Price.ToMoneyString(count, true);
             countsDict[count] = stringValue;
             return stringValue;
         }

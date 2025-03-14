@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class OperatableFillPlace : CulledBehaviour
 {
+    [Inject] protected PlayerController player;
+    
     [SerializeField] protected float fillTime = 1f;
     [SerializeField] protected TextMesh maxText;
     [SerializeField] protected TextMesh curText;
@@ -62,9 +65,7 @@ public class OperatableFillPlace : CulledBehaviour
         var isFilling = false;
         foreach (var @operator in operators)
         {
-            var diff = @operator.Root.position - fillPlace.position;
-            diff.y = 0f;
-            if (diff.sqrMagnitude < radius * radius)
+            if (IsFilledBy(@operator.Root))
             {
                 isFilling = true;
             }
@@ -90,6 +91,18 @@ public class OperatableFillPlace : CulledBehaviour
             timerBase.gameObject.SetActive(showTimer);
         }
         timerBase.SetProgress(fillProgress);
+    }
+
+    private bool IsFilledBy(Transform t)
+    {
+        var diff = t.position - fillPlace.position;
+        diff.y = 0f;
+        if (diff.sqrMagnitude < radius * radius)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private string GetMaxString()
@@ -119,5 +132,10 @@ public class OperatableFillPlace : CulledBehaviour
     public void Add(IOperator @operator)
     {
        operators.Add(@operator);
+    }
+
+    public bool IsFilledByPlayer()
+    {
+        return Max > 0 && IsFilledBy(player.Root);
     }
 }

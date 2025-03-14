@@ -100,6 +100,7 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
     protected bool IsBought => upgradable == null || upgradable.IsBought;
     public abstract float Weight { get; }
 
+    protected Action<Transform> onPlayerProcess;
     protected WishesCollectionConfig wishesCollectionConfig;
     private WishGrantersManager grantersManager;
     protected WishGranterCooldownTimer coolDownTimer;
@@ -271,6 +272,11 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
             {
                 ProcessedCounter++;
                 pendingLeaving.Add(citizen);
+                if (visible && IsPlayerProcessing(citizen))
+                {
+                    var place = citizen.transform;
+                    onPlayerProcess?.Invoke(place);
+                }
                 OnLeave(citizen);
             }
         }
@@ -316,6 +322,8 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
             wishPostProcessor.OnUpdate();
         }
     }
+
+    protected abstract bool IsPlayerProcessing(CitizenController citizenController);
 
 
     protected void LeaveAllCitizens()
@@ -601,5 +609,10 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
         }
 
         return middle / processPlaces.Length;
+    }
+
+    public void SubscribePlayerProcess(Action<Transform> onProcess)
+    {
+        this.onPlayerProcess = onProcess;
     }
 }

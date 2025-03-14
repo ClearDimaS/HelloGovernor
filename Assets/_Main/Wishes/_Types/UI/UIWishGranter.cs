@@ -20,6 +20,11 @@ public abstract class UIWishGranter : WishGranter<UIWishGranterConfig, UIProcess
 
     protected abstract UI_Panel GetPanel();
 
+    protected override bool IsPlayerProcessing(CitizenController citizenController)
+    {
+        return false;
+    }
+
     protected override void OnUpdate()
     {
         base.OnUpdate();

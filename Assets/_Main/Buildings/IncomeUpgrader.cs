@@ -54,12 +54,17 @@ public class IncomeUpgrader : UpgradableObject
         return titles[Mathf.Clamp(Level - 1, 0, titles.Length - 1)];;
     }
 
+    public float GetMultiplier()
+    {
+        return incomeMultipliers[Mathf.Clamp(Level - 1, 0, titles.Length - 1)];
+    }
+
     protected override void RefreshLevelGFX(bool instant)
     {
         base.RefreshLevelGFX(instant);
         if (IsBought)
         {
-            wishGranter.IncomeMultiplier = incomeMultipliers[Mathf.Clamp(Level - 1, 0, incomeMultipliers.Length - 1)];
+            wishGranter.IncomeMultiplier = GetMultiplier();
         }
     }
 }

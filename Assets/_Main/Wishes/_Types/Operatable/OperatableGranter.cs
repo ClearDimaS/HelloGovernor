@@ -16,6 +16,19 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
         });
     }
 
+    protected override bool IsPlayerProcessing(CitizenController citizenController)
+    {
+        foreach (var processPlace in wishPlacesTyped)
+        {
+            if (processPlace.GetOwner() == citizenController && operatablePlace.IsAnyOperatedByPlayer())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Sprite GetIconOperator()
     {
         return config.operatorIcon;

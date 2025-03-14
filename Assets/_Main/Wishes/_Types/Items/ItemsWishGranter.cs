@@ -10,7 +10,20 @@ public abstract class ItemsWishGranter : WishGranter<ItemsWishGranterConfig, Ite
     public int PlayerUseCounts { get; protected set; }
 
     [field: SerializeField] public float ProcessPlaceUserTime { get; private set; } = 1f;
-    
+
+    protected override bool IsPlayerProcessing(CitizenController citizenController)
+    {
+        foreach (var processPlace in wishPlacesTyped)
+        {
+            if (processPlace.GetOwner() == citizenController && processPlace.Assistant == player)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Transform GetIdlePlace()
     {
         return itemSource.IdlePlace;

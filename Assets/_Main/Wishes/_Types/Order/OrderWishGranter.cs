@@ -12,7 +12,20 @@ public abstract class OrderWishGranter : WishGranter<OrderWishGranterConfig, Ord
 
     public int TakesCount => wishPlacesTyped[0].GetItemSource().TakesCount;
     public int PlayerUseCounts { get; protected set; }
-    
+
+    protected override bool IsPlayerProcessing(CitizenController citizenController)
+    {
+        foreach (var processPlace in wishPlacesTyped)
+        {
+            if (processPlace.GetOwner() == citizenController && processPlace.Assistant == player)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Transform GetItemTakePlace()
     {
         return wishPlacesTyped[0].GetItemSource().TakePlace;

@@ -32,7 +32,7 @@ public class Price
         return new Price(price, spent);
     }
 
-    public static string ToMoneyString(int money)
+    public static string ToMoneyString(int money, bool isShort = false)
     {
         if (money > 100_000_000)
         {
@@ -44,7 +44,14 @@ public class Price
         }
         if (money > 1_000_000)
         {
-            return (money / 1_000_000f).ToString("0.00") + "M";
+            if (isShort)
+            {
+                return (money / 1_000_000f).ToString("0.0") + "M";
+            }
+            else
+            {
+                return (money / 1_000_000f).ToString("0.00") + "M";
+            }
         }
         else if (money > 100_000)
         {
@@ -56,7 +63,14 @@ public class Price
         }
         else if (money > 1000)
         {
-            return (money / 1000f).ToString("0.00") + "K";
+            if (isShort)
+            {
+                return (money / 1000f).ToString("0.0") + "K";
+            }
+            else
+            {
+                return (money / 1000f).ToString("0.00") + "K";
+            }
         }
         else
         {
