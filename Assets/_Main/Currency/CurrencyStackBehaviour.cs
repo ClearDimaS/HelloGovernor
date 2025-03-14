@@ -126,7 +126,13 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
 
     public void MoveCurrencyToMe(int amount, Vector3 worldStart)
     {
-        var  modelCount = amount / gameConfig.moneyInOneModel;
+        var oldAmount = GetMoney();
+        var newAmount = amount + oldAmount;
+        
+        var oldModelCount = oldAmount / gameConfig.moneyInOneModel;
+        var newModelCount = newAmount / gameConfig.moneyInOneModel;
+        var modelCount = oldModelCount - newModelCount;
+
         if (modelCount == 0)
         {
             modelCount = 1;
@@ -207,5 +213,10 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         currency.transform.position = pos + Vector3.up;
         currency.Initialize(reward);
         currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+    }
+
+    public int GetMaxMoney()
+    {
+        return gridPlacer.MaxPlaces * gameConfig.moneyInOneModel;
     }
 }

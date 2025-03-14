@@ -17,7 +17,8 @@ public class LookAtCamera : CulledBehaviour
         base.OnLateUpdate(visible);
         if (visible)
         {
-            transform.rotation = Quaternion.LookRotation(cam.transform.forward, cam.transform.up);   
+            var diff = transform.position - cam.transform.position;
+            transform.rotation = Quaternion.LookRotation(diff.normalized, cam.transform.up);   
         }
     }
 }
