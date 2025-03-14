@@ -26,6 +26,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
     [Inject] private CurrencyPool currencyPool;
     [Inject] private CurrencySingleStackPool currencySinglePool;
 
+    [SerializeField] private bool allowOverflow = false;
     [SerializeField] private GameObject takeZone;
     [SerializeField] private CurrencyPlacer gridPlacer;
 
@@ -131,9 +132,9 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         
         var oldModelCount = oldAmount / gameConfig.moneyInOneModel;
         var newModelCount = newAmount / gameConfig.moneyInOneModel;
-        var modelCount = oldModelCount - newModelCount;
+        var modelCount = newModelCount - oldModelCount;
 
-        if (modelCount == 0)
+        if (modelCount <= 0)
         {
             modelCount = 1;
         }
@@ -154,7 +155,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
                 currency.transform.position = worldStart;
                 gridPlacer.Add(currency);
             }
-            else
+            else if(allowOverflow)
             {
                 var currency = gridPlacer.GetLast();
                 currency.AddAmount(toGive);
