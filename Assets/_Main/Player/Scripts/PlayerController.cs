@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
@@ -129,12 +130,18 @@ public class PlayerController : Singleton<PlayerController>,
     public void ReturnMoney(int stolenAmount, Transform from)
     {
         var reward = stolenAmount;
+        StartCoroutine(ReturnMoneyCoroutine(reward, from));
+    }
+
+    private IEnumerator ReturnMoneyCoroutine(int reward, Transform from)
+    {
         for (int i = 0; i < 10; i++)
         {
             var currency = currencyStackPool.GetElement();
             currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
             currency.Initialize(reward/10);
-            currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);   
+            currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
