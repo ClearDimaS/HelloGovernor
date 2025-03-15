@@ -17,7 +17,7 @@ public class ItemPlacesData
     public Vector3 rootLocalPlace;
     public Transform[] places;
 }
-public class Interactor : CulledBehaviour
+public class Interactor : CulledBehaviour, IItemsCountable
 {
     [SerializeField] private ItemPlacesData[] places;
     [HideInInspector] public List<CitizenItem> interactables = new ();
@@ -203,5 +203,15 @@ public class Interactor : CulledBehaviour
         }
 
         return null;
+    }
+
+    public int GetCurrentPlaces()
+    {
+        return interactables.Count;
+    }
+
+    public int GetMaxPlaces()
+    {
+        return GetCurrentMaxPlaces();
     }
 }

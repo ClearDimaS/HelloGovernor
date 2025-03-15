@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class CapacityIndicator : MonoBehaviour
+public interface IItemsCountable
+{
+    public int GetCurrentPlaces();
+    public int GetMaxPlaces();
+}
+
+public class CapacityIndicator : CulledBehaviour
 {
     [SerializeField] private TextMesh[] currentTexts;
     [SerializeField] private TextMesh[] maxTexts;
@@ -14,13 +20,15 @@ public class CapacityIndicator : MonoBehaviour
     [SerializeField] private float fadeTime = 1f;
     [SerializeField] private SpriteRadialFiller[] fillers;
     
+    protected Dictionary<int, string> stringsDict = new ();
     protected float lastChangeTime = -10;
     [SerializeField] protected int lastCount;
-    protected Interactor interactor;
+    protected IItemsCountable interactor;
 
-    private void Awake()
+    protected override void OnAwake()
     {
-        interactor = GetComponentInParent<Interactor>();
+        base.OnAwake();
+        interactor = GetComponentInParent<IItemsCountable>();
         alphaGroup.Fade(0f, 0f);
         foreach (var filler in fillers)
         {
@@ -28,28 +36,29 @@ public class CapacityIndicator : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected override void OnUpdate(bool visible)
     {
+        base.OnUpdate(visible);
         var show = Time.time - lastChangeTime < showAfterChangeTime;
-        if (lastCount != interactor.interactables.Count)
+        if (lastCount != interactor.GetCurrentPlaces())
         {
-            lastCount = interactor.interactables.Count;
+            lastCount = interactor.GetCurrentPlaces();
             lastChangeTime = Time.time;
-            var curString = lastCount.ToString();
+            var curString = GetString(lastCount);
             foreach (var currentText in currentTexts)
             {
                 currentText.text = curString;
             }
             if (lastCount > 0)
             {
-                var maxString = interactor.GetCurrentMaxPlaces().ToString();
+                var maxString = GetString(interactor.GetMaxPlaces());
                 foreach (var maxText in maxTexts)
                 {
                     maxText.text = maxString;
                 }
             }
 
-            var endVal = lastCount / (float)interactor.GetCurrentMaxPlaces();
+            var endVal = lastCount / (float)interactor.GetMaxPlaces();
             var startVal = fillers[0].fillAmount;
             var t = 0f;
             DOTween.To(() => t, x => t = x, 1f, 0.3f).OnUpdate(() =>
@@ -72,4 +81,14 @@ public class CapacityIndicator : MonoBehaviour
             alphaGroup.Fade(show ? 1f : 0f, fadeTime);
         }
     }
+
+    private string GetString(int count)
+    {
+        if (!stringsDict.ContainsKey(count))
+        {
+            stringsDict[count] = count.ToString();
+        }
+        return stringsDict[count];
+    }
+
 }

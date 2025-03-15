@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class OperatableFillPlace : CulledBehaviour
+public class OperatableFillPlace : CulledBehaviour, IItemsCountable
 {
     [Inject] protected PlayerController player;
     
     [SerializeField] protected float fillTime = 1f;
-    [SerializeField] protected TextMesh maxText;
-    [SerializeField] protected TextMesh curText;
     [SerializeField] protected Transform fillPlace;
     [SerializeField] protected float radius = 1.3f;
     [field: SerializeField] public int Max { get; private set; }
@@ -21,7 +19,7 @@ public class OperatableFillPlace : CulledBehaviour
     protected float fillProgress;
     protected List<IOperator> operators = new ();
     protected int currentCount => granter.GetItemsCount();
-    protected Dictionary<int, string> stringsDict = new ();
+
     protected int lastServed;
     private void Start()
     {
@@ -30,8 +28,6 @@ public class OperatableFillPlace : CulledBehaviour
             return;
         }
         granter = GetComponentInParent<OperatableWithItems>(true);
-        curText.text = GetMaxString();
-        maxText.text = GetCurString();
         var operatable = GetComponentInParent<UpgradableBuilding>();
         timerBase.SetIcon(operatable.GetPurchaseIcon());
         if (granter == null)
@@ -55,8 +51,6 @@ public class OperatableFillPlace : CulledBehaviour
             {
                 fillPlace.gameObject.SetActive(show);
             }
-            curText.text = GetMaxString();
-            maxText.text = GetCurString();
         }
         if (lastServed != granter.ServedCounter)
         {
@@ -105,25 +99,6 @@ public class OperatableFillPlace : CulledBehaviour
         return false;
     }
 
-    private string GetMaxString()
-    {
-        return GetString(Max);
-    }
-
-    private string GetCurString()
-    {
-        return GetString(currentCount);
-    }
-    
-    private string GetString(int count)
-    {
-        if (!stringsDict.ContainsKey(count))
-        {
-            stringsDict[count] = count.ToString();
-        }
-        return stringsDict[count];
-    }
-
     public Transform GetPlace()
     {
         return fillPlace;
@@ -137,5 +112,15 @@ public class OperatableFillPlace : CulledBehaviour
     public bool IsFilledByPlayer()
     {
         return Max > 0 && IsFilledBy(player.Root);
+    }
+
+    public int GetCurrentPlaces()
+    {
+        return currentCount;
+    }
+
+    public int GetMaxPlaces()
+    {
+        return Max;
     }
 }
