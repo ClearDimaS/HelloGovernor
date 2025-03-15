@@ -1,4 +1,4 @@
-/*
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,8 +32,8 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
 
     public void LoseLevel(int level)
     {
-       // AM_Manager.Instance.TrackLevelFail(level);
+       AM_Manager.Instance.TrackLevelFail(level);
        //AM_Manager.Instance.TrackLevelFail(level);
     }
 }
-*/
+

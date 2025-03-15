@@ -1,5 +1,4 @@
 
-/*
 using System;
 using System.Collections.Generic;
 using Io.AppMetrica;
@@ -64,5 +63,4 @@ public class AM_Manager : Singleton<AM_Manager>
         return @params;
     }
 }
-*/
 
