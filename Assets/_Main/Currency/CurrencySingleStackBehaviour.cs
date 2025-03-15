@@ -9,6 +9,7 @@ using Zenject;
 
 public class CurrencySingleStackBehaviour : SimplePlayerPhysicsBehaviour, IResetable, ICurrencyHolder
 {
+    [Inject] private PlayerController playerController;
     [Inject] private CurrencySingleStackPool singleStackPool;
     [Inject] private CurrencyPool currencyPool;
 
@@ -88,6 +89,10 @@ public class CurrencySingleStackBehaviour : SimplePlayerPhysicsBehaviour, IReset
             transform.DOMove(end, timeEnd).OnComplete(() =>
             {
                 hasDropped = true;
+                if (IsInside(playerController))
+                {
+                    Remove(playerController);
+                }
             }).SetEase(Ease.InCirc);
         }).SetEase(Ease.OutCirc);
     }
