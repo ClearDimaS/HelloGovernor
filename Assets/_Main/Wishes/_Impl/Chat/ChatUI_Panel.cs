@@ -33,6 +33,7 @@ public class ChatUI_Panel : UI_Panel
     
     [SerializeField] private Button answer1;
     [SerializeField] private Button answer2;
+    [SerializeField] private Button answer3;
 
     [SerializeField] private MinigameResultPanel resultElement;
     [SerializeField] private TMP_Text questionText;
@@ -46,6 +47,7 @@ public class ChatUI_Panel : UI_Panel
         base.OnAwake();
         answer1.onClick.AddListener(() => resultElement.Show(chatMinigame, Hide));
         answer2.onClick.AddListener(() => resultElement.Show(chatMinigame, Hide));
+        answer3.onClick.AddListener(() => resultElement.Show(chatMinigame, Hide));
     }
 
     private void Start()
