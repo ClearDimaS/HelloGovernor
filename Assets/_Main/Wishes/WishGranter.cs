@@ -551,7 +551,7 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
         var rwrd = Reward;
         if (upgradable != null && upgradable.Level > 1)
         {
-            rwrd = Mathf.RoundToInt(rwrd * _gameConfig.incomeIncrease * IncomeMultiplier);
+            rwrd = GetRewardWithMultipliers();
         }
         if (currencyStack != null)
         {
@@ -561,6 +561,11 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
         {
             CurrencyStackBehaviour.SpawnSingleCurrency(Reward, citizen.transform.position);
         }
+    }
+
+    public int GetRewardWithMultipliers()
+    {
+        return Mathf.RoundToInt(Reward * _gameConfig.incomeIncrease * IncomeMultiplier);
     }
 
     public virtual bool CanAddOneMore()

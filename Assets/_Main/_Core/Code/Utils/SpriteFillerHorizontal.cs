@@ -31,10 +31,13 @@ public class SpriteFillerHorizontal : MonoBehaviour
         }
     }
 
+    public bool IsMoving { get; set; }
+
     protected float? originalWidth;
 
     public void Fill(float fill, float timer)
     {
+        IsMoving = true;
         var t = 0f;
         var start = fillAmount;
         DOTween.To(() => t, x => t = x, 1f, timer).OnUpdate(() =>
@@ -43,6 +46,13 @@ public class SpriteFillerHorizontal : MonoBehaviour
         }).OnComplete(() =>
         {
             fillAmount = fill;
-        });
+            IsMoving = false;
+        }).SetTarget(this);
+    }
+
+    public void StopFill()
+    {
+        this.DOKill();
+        IsMoving = false;
     }
 }
