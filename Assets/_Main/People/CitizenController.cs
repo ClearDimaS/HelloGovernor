@@ -59,7 +59,7 @@ public class CitizenController : CulledBehaviour
             bhvr.OnUpdate(visible);
         }
 
-        if (visible)
+        /*if (visible)
         {
             if (!isPushed && walker.IsMoving && playerInput.IsMoving)
             {
@@ -77,7 +77,7 @@ public class CitizenController : CulledBehaviour
             {
                 isPushed = false;
             }
-        }
+        }*/
     }
 
     public void PlaceRandom()
