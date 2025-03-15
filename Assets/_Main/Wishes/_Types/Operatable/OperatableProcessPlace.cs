@@ -30,6 +30,11 @@ public class OperatableProcessPlace : ProcessPlace
         }
     }
 
+    protected override bool ShowTimer()
+    {
+        return base.ShowTimer() && granter.HasEnoughItemsToWork();
+    }
+
     public override bool CanAddProgress(CitizenController citizen)
     {
         return granter.IsOperated();

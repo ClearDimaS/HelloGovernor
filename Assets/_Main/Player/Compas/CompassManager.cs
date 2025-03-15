@@ -8,7 +8,8 @@ public enum ECompasTarget
 {
     Thief,
     Bank,
-    PressConference
+    PressConference,
+    Money,
 }
 public class CompassManager : MonoBehaviour
 {

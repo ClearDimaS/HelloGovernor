@@ -123,4 +123,9 @@ public class OperatableFillPlace : CulledBehaviour, IItemsCountable
     {
         return Max;
     }
+
+    public bool ShowAnyway()
+    {
+        return true;
+    }
 }

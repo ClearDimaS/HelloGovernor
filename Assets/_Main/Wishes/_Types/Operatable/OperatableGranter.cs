@@ -53,4 +53,9 @@ public abstract class OperatableGranter : WishGranter<OperatableWishGranterConfi
     {
         return operatablePlace;
     }
+
+    public bool HasEnoughItemsToWork()
+    {
+        return operatablePlace.HasEnoughItemsToWork();
+    }
 }

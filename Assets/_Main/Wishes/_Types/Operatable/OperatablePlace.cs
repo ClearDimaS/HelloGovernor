@@ -98,4 +98,13 @@ public class OperatablePlace : CulledBehaviour
     {
         return IsOperatedBy(player.transform) || (fillPlace != null && fillPlace.IsFilledByPlayer());
     }
+
+    public bool HasEnoughItemsToWork()
+    {
+        if (fillPlace != null)
+        {
+            return !fillPlace.IsEmpty && fillPlace.Max > 0;
+        }
+        return true;
+    }
 }

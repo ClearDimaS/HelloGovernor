@@ -214,4 +214,9 @@ public class Interactor : CulledBehaviour, IItemsCountable
     {
         return GetCurrentMaxPlaces();
     }
+
+    public bool ShowAnyway()
+    {
+        return false;
+    }
 }

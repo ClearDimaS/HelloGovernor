@@ -620,4 +620,13 @@ public abstract class WishGranter : CulledBehaviour, ICooldownable
     {
         this.onPlayerProcess = onProcess;
     }
+
+    public Transform GetStackPlace()
+    {
+        if (currencyStack == null)
+        {
+            return transform;
+        }
+        return currencyStack.transform;
+    }
 }

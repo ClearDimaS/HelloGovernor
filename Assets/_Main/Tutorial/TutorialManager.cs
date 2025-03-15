@@ -8,6 +8,7 @@ using Zenject;
 
 public class TutorialManager : Singleton<TutorialManager>
 {
+    [Inject] private CompassManager compassManager;
     [Inject] private SkinChooser skinChooser;
     [Inject] private GameConfig gameConfig;
     [Inject] private CameraManager cameraManager;
@@ -26,6 +27,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private int skippedFrames;
     private bool isInit;
+    private bool isMoneyCompassAdded;
     
     private void Start()
     {
@@ -71,6 +73,20 @@ public class TutorialManager : Singleton<TutorialManager>
                 });   
             }
         }
+
+        if (!isMoneyCompassAdded && pricesManager.GetBoughtGranters().Count == 1)
+        {
+            isMoneyCompassAdded = true;
+            var granter = pricesManager.GetBoughtGranters().ElementAt(0);
+            compassManager.AddTarget(granter.GetStackPlace(), ECompasTarget.Money);
+        }
+        if (isMoneyCompassAdded && pricesManager.GetBoughtGranters().Count > 1)
+        {
+            isMoneyCompassAdded = false;
+            var granter = pricesManager.GetBoughtGranters().ElementAt(0);
+            compassManager.RemoveTarget(granter.GetStackPlace(), ECompasTarget.Money);
+        }
+        
         if (curStepIndex >= 0 && curStepIndex < tutorialSteps.Count)
         {
             var curStep = tutorialSteps[curStepIndex];

@@ -8,6 +8,7 @@ public interface IItemsCountable
 {
     public int GetCurrentPlaces();
     public int GetMaxPlaces();
+    public bool ShowAnyway();
 }
 
 public class CapacityIndicator : CulledBehaviour
@@ -39,7 +40,7 @@ public class CapacityIndicator : CulledBehaviour
     protected override void OnUpdate(bool visible)
     {
         base.OnUpdate(visible);
-        var show = Time.time - lastChangeTime < showAfterChangeTime;
+        var show = Time.time - lastChangeTime < showAfterChangeTime || interactor.ShowAnyway();
         if (lastCount != interactor.GetCurrentPlaces())
         {
             lastCount = interactor.GetCurrentPlaces();
