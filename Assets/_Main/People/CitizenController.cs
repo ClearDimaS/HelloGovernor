@@ -91,11 +91,25 @@ public class CitizenController : CulledBehaviour
 
     public void PlayAnimation(string animName)
     {
-        Animator.CrossFade(animName, 0.01f);
+        if (IsVisible)
+        {
+            Animator.CrossFade(animName, 0.01f);
+        }
+        else
+        {
+            Animator.Play(animName);
+        }
     }
 
     public void ResetAnimation()
     {
-        Animator.CrossFade("Idle", 0.01f);
+        if (IsVisible)
+        {
+            Animator.CrossFade("Idle", 0.01f);
+        }
+        else
+        {
+            Animator.Play("Idle");
+        }
     }
 }
