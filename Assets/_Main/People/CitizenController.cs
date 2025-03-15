@@ -17,6 +17,8 @@ public abstract class CitizenBehaviour : MonoBehaviour
 
 public class CitizenController : CulledBehaviour
 {
+    [Inject] private PlayerInput playerInput;
+    [Inject] private PlayerController player;
     [Inject] private EnvironmentManager environment;
     
     [SerializeField] private Walker walker;
@@ -30,6 +32,7 @@ public class CitizenController : CulledBehaviour
     public bool IsChatting { get; set; }
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
+    protected bool isPushed;
 
     protected override void OnAwake()
     {
@@ -53,6 +56,17 @@ public class CitizenController : CulledBehaviour
         foreach (var bhvr in behaviours)
         {
             bhvr.OnUpdate(visible);
+        }
+
+        if (visible && !isPushed && walker.IsMoving && playerInput.IsMoving)
+        {
+            var diff = transform.position - player.transform.position;
+            diff.y = 0f;
+            var isMovingToMe = Vector3.Dot(diff.normalized, player.transform.forward) > dotTreshold;
+            if (diff.magnitude < pushedRadius)
+            {
+                GetPushed(-diff.normalized);
+            }
         }
     }
 
@@ -86,6 +100,45 @@ public class CitizenController : CulledBehaviour
         item.PoolPleaseAtTimeout(() =>
         {
             interactor.RemoveItem(item);
+        });
+    }
+
+    protected float dotTreshold = 0.2f;
+    protected float pushedRadius = 1f;
+    protected Vector2 pushedTimeMinMax = new Vector2(3, 6);
+    protected float recoverTime = 2.3f;
+    protected void GetPushed(Vector3 dir)
+    {
+        isPushed = true;
+        var isSide = Mathf.Abs(dir.x) > Mathf.Abs(dir.z);
+        if (isSide)
+        {
+            Animator.CrossFade("SidePushed", 0.1f);
+        }
+        else
+        {
+            var isFront = dir.z > 0;
+            if (isFront)
+            {
+                Animator.CrossFade("FrontPushed", 0.1f);
+            }
+            else
+            {
+                Animator.CrossFade("BackPushed", 0.1f);
+            }
+        }
+
+        walker.SetSpeedMult(0f);
+        var knockdownTime = Random.Range(pushedTimeMinMax.x, pushedTimeMinMax.y);
+        UniTask.Delay(TimeSpan.FromSeconds(knockdownTime)).ContinueWith(Recover);
+    }
+
+    private void Recover()
+    {
+        Animator.CrossFade("GetUp", 0.1f);
+        UniTask.Delay(TimeSpan.FromSeconds(recoverTime)).ContinueWith(() =>
+        {
+            walker.SetSpeedMult(1f);
         });
     }
 

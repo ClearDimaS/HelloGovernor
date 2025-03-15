@@ -14,6 +14,7 @@ public class Walker : CulledBehaviour
     public bool IsMoving => !isFinished;
     protected bool isFinished = true;
     private NavMeshHit hit;
+    private float speedMult = 1f;
 
     private event Action reachTargetEvent;
     
@@ -111,4 +112,8 @@ public class Walker : CulledBehaviour
                Mathf.Approximately(target1.z, target2.z);
     }
 
+    public void SetSpeedMult(float mult)
+    {
+        agent.speed = speed * mult;
+    }
 }
