@@ -33,6 +33,7 @@ public class CitizenController : CulledBehaviour
     public Walker Walker => walker;
     public WishesController WishesController => wishesController;
     protected bool isPushed;
+    protected float lastPushTime;
 
     protected override void OnAwake()
     {
@@ -58,14 +59,23 @@ public class CitizenController : CulledBehaviour
             bhvr.OnUpdate(visible);
         }
 
-        if (visible && !isPushed && walker.IsMoving && playerInput.IsMoving)
+        if (visible)
         {
-            var diff = transform.position - player.transform.position;
-            diff.y = 0f;
-            var isMovingToMe = Vector3.Dot(diff.normalized, player.transform.forward) > dotTreshold;
-            if (diff.magnitude < pushedRadius)
+            if (!isPushed && walker.IsMoving && playerInput.IsMoving)
             {
-                GetPushed(-diff.normalized);
+                var diff = transform.position - player.transform.position;
+                diff.y = 0f;
+                var isMovingToMe = Vector3.Dot(diff.normalized, player.transform.forward) > dotTreshold;
+                if (diff.magnitude < pushedRadius)
+                {
+                    lastPushTime = Time.time;
+                    GetPushed(-diff.normalized);
+                }   
+            }
+
+            if (isPushed && Time.time - lastPushTime > pushTimeout)
+            {
+                isPushed = false;
             }
         }
     }
@@ -103,6 +113,7 @@ public class CitizenController : CulledBehaviour
         });
     }
 
+    private float pushTimeout = 35f;
     protected float dotTreshold = 0.2f;
     protected float pushedRadius = 1f;
     protected Vector2 pushedTimeMinMax = new Vector2(3, 6);
@@ -135,7 +146,14 @@ public class CitizenController : CulledBehaviour
 
     private void Recover()
     {
-        Animator.CrossFade("GetUp", 0.1f);
+        if (IsVisible)
+        {
+            Animator.CrossFade("GetUp", 0.1f);
+        }
+        else
+        {
+            Animator.Play("Idle");
+        }
         UniTask.Delay(TimeSpan.FromSeconds(recoverTime)).ContinueWith(() =>
         {
             walker.SetSpeedMult(1f);
