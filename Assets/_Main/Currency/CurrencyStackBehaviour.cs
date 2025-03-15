@@ -21,7 +21,7 @@ public class CurrencyStackData
 public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHolder, IDataHolder<CurrencyStackData>
 {
     [Inject] private CameraManager cameraManager;
-    
+    [Inject] private PlayerController player;
     [Inject] private GameConfig gameConfig;
     [Inject] private CurrencyPool currencyPool;
     [Inject] private CurrencySingleStackPool currencySinglePool;
@@ -84,6 +84,11 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         if (takeZone.activeSelf != hasAny)
         {
             takeZone.gameObject.SetActive(hasAny);
+        }
+
+        if (visible && gridPlacer.Count > 0)
+        {
+            Remove(player);
         }
         saveData.moneyAmount = gridPlacer.GetMoneyAmount();
     }

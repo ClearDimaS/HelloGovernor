@@ -8,13 +8,14 @@ public class CityProgressPanel : UI_Panel
 {
     [Inject] private TutorialManager tutorialManager;
 
+    [SerializeField] private GameObject completeGO;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image progressImage;
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button hintButton;
     [SerializeField] private float completionPause = 3f;
-
+    
     private float completionTime = -4f;
     private CanvasGroup group;
     private TutorialStep lastStep;
@@ -37,6 +38,7 @@ public class CityProgressPanel : UI_Panel
 
     private void Update()
     {
+        completeGO.SetActiveOnce(Time.time - completionTime < completionPause);
         if (Time.time - completionTime < completionPause)
         {
             return;
@@ -57,6 +59,7 @@ public class CityProgressPanel : UI_Panel
 
         if (step != null && step.IsCompleted())
         {
+            completionTime = Time.time;
             completedTimeout += Time.deltaTime;
         }
         else
