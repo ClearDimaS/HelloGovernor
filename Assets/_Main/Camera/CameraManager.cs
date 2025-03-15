@@ -62,6 +62,7 @@ public class CameraManager : MonoBehaviour, ICameraManager
     public HashSet<int> Blockers { get; set; } = new();
     public bool IsBlocked => Blockers.Count > 0;
     public int blockersCount;
+    private float notOnPlayerTimer;
 
     private void Awake()
     {
@@ -101,6 +102,18 @@ public class CameraManager : MonoBehaviour, ICameraManager
         }
 
         IsOnPlayer = !isTransition && currentTarget.target == defaultTarget;
+        if (currentTarget.target != defaultTarget && blockersCount == 0)
+        {
+            notOnPlayerTimer += Time.deltaTime;
+            if (notOnPlayerTimer > 10f)
+            {
+                SetDefaultTarget(false);
+            }
+        }
+        else
+        {
+            notOnPlayerTimer = 0f;
+        }
 
         if (!isTransition)
         {
