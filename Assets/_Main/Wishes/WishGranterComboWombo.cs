@@ -8,6 +8,8 @@ public class WishGranterComboWombo : CulledBehaviour
 {
     [Inject] private PlayerController player;
 
+    [SerializeField] protected ParticleSystem comboIncreasePS;
+    [SerializeField] protected ParticleSystem comboMaxPS;
     [SerializeField] protected GameObject content;
     [SerializeField] protected TextMesh[] comboTexts;
     [SerializeField] protected Transform[] scales;
@@ -26,6 +28,8 @@ public class WishGranterComboWombo : CulledBehaviour
         }
         wishGranter.SubscribePlayerProcess(AddCombo);
         transform.position = wishGranter.GetMiddleProcessPlace();
+        comboMaxPS.Stop();
+        comboMaxPS.transform.position = transform.position;
     }
 
     protected override void OnUpdate(bool visible)
@@ -37,7 +41,12 @@ public class WishGranterComboWombo : CulledBehaviour
 
     private void AddCombo(Transform place)
     {
+        comboIncreasePS.Play();
         comboCounter++;
+        if (comboCounter > 10)
+        {
+            comboMaxPS.Play();
+        }
         var reward = 10;
         var models = 2;
         var combo = comboCounter;
