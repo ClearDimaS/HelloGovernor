@@ -120,10 +120,8 @@ public class UpgradablePricesManager : MonoBehaviour
                     AllowBuy(lastUnlocked, gameConfig.unlockCameraDelay);
                     
                     //VodooAnalyticsManagerFacade.WinLevel(levelCounter);
-                    //AnalyticsManager.Instance.WinLevel(levelCounter);
                     levelCounter++;
                     //VodooAnalyticsManagerFacade.StartLevel(levelCounter);
-                    //AnalyticsManager.Instance.StartLevel(levelCounter);
                 }
                 else
                 {
