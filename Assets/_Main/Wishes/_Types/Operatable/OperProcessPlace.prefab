@@ -59,6 +59,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimerCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2215395287273659024, guid: 4273faf3cf25e4d46a754648beaa98e8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5621813044024700274, guid: 4273faf3cf25e4d46a754648beaa98e8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -176,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375c64a9a9834d17b15fc99c2bb51c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4938361276236809051 stripped
-RectTransform:
+--- !u!4 &4938361276236809051 stripped
+Transform:
   m_CorrespondingSourceObject: {fileID: 5621813044024700274, guid: 4273faf3cf25e4d46a754648beaa98e8,
     type: 3}
   m_PrefabInstance: {fileID: 760022324481895977}
