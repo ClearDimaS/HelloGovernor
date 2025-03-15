@@ -98,7 +98,7 @@ public class CompassController : MonoBehaviour
                 out Vector2 lp);
 
             marker.Root.anchoredPosition = lp;
-            var direction = (vp - Vector2.one / 2f) * 2f;
+            var direction = (new Vector2(vp.x, vp.y) - Vector2.one / 2f) * 2f;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             var rot = Quaternion.AngleAxis(angle, Vector3.forward);
             marker.Root.localRotation = rot;
