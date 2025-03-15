@@ -140,7 +140,7 @@ public class PlayerController : Singleton<PlayerController>,
             var currency = currencyStackPool.GetElement();
             currency.transform.position = from.position + Vector3.up + new Vector3(1f, 0, 1f).AxisToRandomDir();
             currency.Initialize(reward/modelsCount);
-            currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+            currency.AddForce(Vector3.up * 2.3f + new Vector3(1f, 0, 1f).AxisToRandomDir() * 1);
             yield return new WaitForSeconds(0.1f);
         }
     }

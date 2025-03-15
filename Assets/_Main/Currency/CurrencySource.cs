@@ -12,6 +12,7 @@ public class CurrencySource : MonoBehaviour
     
     private List<CurrencySingleStackBehaviour> spawned = new ();
 
+    /*
     public void GiveCurrency(int amount)
     {
         if (spawned.Count >= maxSpawned)
@@ -25,6 +26,7 @@ public class CurrencySource : MonoBehaviour
             newStack.AddForce(GetRandomDir() * force);
         }
     }
+    */
 
     private Vector3 GetRandomDir()
     {

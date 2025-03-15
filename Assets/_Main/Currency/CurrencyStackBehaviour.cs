@@ -236,7 +236,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
         var currency = instance.currencySinglePool.GetElement();
         currency.transform.position = pos + Vector3.up;
         currency.Initialize(reward);
-        currency.AddForce(Vector3.up * 3 + new Vector3(1f, 0, 1f).AxisToRandomDir() * 2);
+        currency.AddForce(Vector3.up * 2.3f + new Vector3(1f, 0, 1f).AxisToRandomDir() * 1);
     }
 
     public int GetMaxMoney()
