@@ -1,13 +1,17 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnalyticsManager : Singleton<AnalyticsManager>
+public class AnalyticsManager : MonoBehaviour
 {
-    protected override void OnCreated()
+    [SerializeField] private AM_Manager amManager;
+    
+    public static AnalyticsManager Instance { get; private set; }
+    private void Awake()
     {
-        base.OnCreated();
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         //AppMetrica.Instance.RequestTrackingAuthorization (status => {  });
         #if UNITY_IOS
                 if (Unity.Advertisement.IosSupport.ATTrackingStatusBinding.GetAuthorizationTrackingStatus() ==
@@ -15,25 +19,21 @@ public class AnalyticsManager : Singleton<AnalyticsManager>
                 {
                     Unity.Advertisement.IosSupport.ATTrackingStatusBinding.RequestAuthorizationTracking();
                 }
-        #endif
+#endif
     }
 
     public void StartLevel(int level)
     {
-        //AM_Manager.Instance.TrackLevelStart(level);
-        //AM_Manager.Instance.TrackLevelStart(level);
+        amManager.TrackLevelStart(level);
     }
 
     public void WinLevel(int level)
     {
-       // AM_Manager.Instance.TrackLevelSuccess(level);
-       //AM_Manager.Instance.TrackLevelSuccess(level);
+       amManager.TrackLevelSuccess(level);
     }
 
-    public void LoseLevel(int level)
+    public void LoseLevel(int level, bool quit = false)
     {
-       AM_Manager.Instance.TrackLevelFail(level);
-       //AM_Manager.Instance.TrackLevelFail(level);
+       amManager.TrackLevelFail(level, quit);
     }
 }
-

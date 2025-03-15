@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,17 +16,13 @@ public class FB_Manager : MonoBehaviour
             FB.ActivateApp();
         }
     }
-    
     private void InitCallback ()
     {
         if (FB.IsInitialized) {
             // Signal an app activation App Event
             FB.ActivateApp();
-            // Continue with Facebook SDK
-            // ...
         } else {
             Debug.Log("Failed to Initialize the Facebook SDK");
         }
     }
 }
-
