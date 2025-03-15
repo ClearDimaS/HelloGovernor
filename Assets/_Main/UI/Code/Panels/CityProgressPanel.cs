@@ -15,6 +15,7 @@ public class CityProgressPanel : UI_Panel
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button hintButton;
     [SerializeField] private float completionPause = 3f;
+    [SerializeField] private GameObject content;
     
     private float completionTime = -4f;
     private CanvasGroup group;
@@ -29,6 +30,8 @@ public class CityProgressPanel : UI_Panel
         {
             group = gameObject.AddComponent<CanvasGroup>();
         }
+
+        completeGO.SetActiveOnce(false);
     }
 
     private void ShowTarget()
@@ -38,12 +41,22 @@ public class CityProgressPanel : UI_Panel
 
     private void Update()
     {
+        content.SetActiveOnce(tutorialManager.IsInit);
+        if (!tutorialManager.IsInit)
+        {
+            return;
+        }
         completeGO.SetActiveOnce(Time.time - completionTime < completionPause);
         if (Time.time - completionTime < completionPause)
         {
             return;
         }
 
+        if (lastStep != null && lastStep.IsCompleted())
+        {
+            completionTime = Time.time;
+            completeGO.SetActiveOnce(true);
+        }
         var step = tutorialManager.GetCurrentStep();
         if (step != lastStep && step != null)
         {
@@ -55,16 +68,6 @@ public class CityProgressPanel : UI_Panel
         {
             progressImage.rectTransform.FillParent(lastStep.GetProgress());
             progressText.text = lastStep.GetProgressText();
-        }
-
-        if (step != null && step.IsCompleted())
-        {
-            completionTime = Time.time;
-            completedTimeout += Time.deltaTime;
-        }
-        else
-        {
-            completedTimeout = 0f;
         }
     }
 }

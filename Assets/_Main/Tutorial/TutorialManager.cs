@@ -24,6 +24,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     public List<TutorialStep> TutorialSteps => tutorialSteps;
     public int CurrentIndex => curStepIndex;
+    public bool IsInit => isInit;
 
     private int skippedFrames;
     private bool isInit;

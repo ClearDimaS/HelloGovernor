@@ -86,7 +86,7 @@ public class CurrencyStackBehaviour : SimplePlayerPhysicsBehaviour, ICurrencyHol
             takeZone.gameObject.SetActive(hasAny);
         }
 
-        if (visible && gridPlacer.Count > 0)
+        if (visible && IsInside(player) && gridPlacer.Count > 1)
         {
             Remove(player);
         }
