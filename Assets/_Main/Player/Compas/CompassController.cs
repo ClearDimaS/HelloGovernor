@@ -81,7 +81,12 @@ public class CompassController : MonoBehaviour
                 marker.gameObject.SetActive(true);
             }
             
-            Vector2 vp = cameraManager.ActiveCamera.WorldToViewportPoint(target.position);
+            Vector3 vp = cameraManager.ActiveCamera.WorldToViewportPoint(target.position);
+            if (vp.z < 0)
+            {
+                vp.x = -vp.x;
+                vp.y = -vp.y;
+            }
             vp.x = Mathf.Clamp(vp.x, screenOffsets.x, 1f - screenOffsets.x);
             vp.y = Mathf.Clamp(vp.y, screenOffsets.y, 1f - screenOffsets.y);
 
