@@ -18,7 +18,7 @@ public class CheatsManager : MonoBehaviour
     
     private void Start()
     {
-        /*gameObject.SetActive(false);*/
+        gameObject.SetActive(false);
         #if !DEVELOPMENT 
         Destroy(gameObject);
         return;
@@ -38,7 +38,7 @@ public class CheatsManager : MonoBehaviour
 
     private void Update()
     {
-        /*return;*/
+        return;
         if (Input.touchCount > 3 || Input.GetKeyDown(KeyCode.Space))
         {
             view.SetActive(true);
