@@ -19,7 +19,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void Update()
     {
-        if (Input.touchCount >= 4)
+        /*if (Input.touchCount >= 4)
         {
             if (!wasMultiTouch)
             {
@@ -31,7 +31,7 @@ public class UI_Manager : Singleton<UI_Manager>
         else
         {
             wasMultiTouch = false;
-        }
+        }*/
     }
 
     protected override void OnCreated()
