@@ -5,7 +5,7 @@ public static class AppMetricaActivator
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Activate() {
-        AppMetrica.Activate(new AppMetricaConfig("9db2c504-ce43-4a25-b5f3-22d5400f922f") {
+        AppMetrica.Activate(new AppMetricaConfig("4c2159fd-9467-40de-ba5f-db03ddc4487c") {
             FirstActivationAsUpdate = !IsFirstLaunch(),
             LocationTracking = true,
         });
