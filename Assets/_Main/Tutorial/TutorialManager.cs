@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Unity.Services.LevelPlay;
 using UnityEngine;
 using Zenject;
 
@@ -29,6 +30,7 @@ public class TutorialManager : Singleton<TutorialManager>
     private int skippedFrames;
     private bool isInit;
     private bool isMoneyCompassAdded;
+    private bool isBusyWithAds;
     
     private void Start()
     {
@@ -94,6 +96,11 @@ public class TutorialManager : Singleton<TutorialManager>
             curStep.UpdateProgress();
             if (curStep.IsCompleted() && cameraManager.IsOnPlayer && !cameraManager.IsBlocked)
             {
+                if (isBusyWithAds)
+                {
+                    return;
+                }
+                
                 AnalyticsManager.Instance.StartLevel(curStepIndex);
                 AnalyticsManager.Instance.WinLevel(curStepIndex);
                 curStep.SaveAsCompleted();
