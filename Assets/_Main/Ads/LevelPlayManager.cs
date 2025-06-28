@@ -11,7 +11,7 @@ public class LevelPlayManager : MonoBehaviour
     private LevelPlayInterstitialAd interstitialAd;
     private LevelPlayRewardedAd rewardedVideoAd;
 
-    bool isAdsEnabled = true;
+    bool isAdsEnabled = false;
 
     public void Start()
     {
