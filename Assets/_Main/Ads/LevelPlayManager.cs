@@ -2,7 +2,7 @@ using Unity.Services.LevelPlay;
 using UnityEngine;
 
 // This sample demonstrates how to use the LevelPlay SDK to load and show ads in a Unity game.
-public class LevelPlaySample : MonoBehaviour
+public class LevelPlayManager : MonoBehaviour
 {
     [SerializeField]
     private Texture2D lpLogo;
@@ -75,9 +75,9 @@ public class LevelPlaySample : MonoBehaviour
 
     public void OnGUI()
     {
-        #if !UNITY_EDITOR && !DEVELOPMENT
+        /*#if !UNITY_EDITOR && !DEVELOPMENT
             return;
-        #endif
+        #endif*/
         GUI.enabled = isAdsEnabled;
 
         var safeArea = new Rect(
@@ -324,3 +324,4 @@ public class LevelPlaySample : MonoBehaviour
         interstitialAd?.DestroyAd();
     }
 }
+

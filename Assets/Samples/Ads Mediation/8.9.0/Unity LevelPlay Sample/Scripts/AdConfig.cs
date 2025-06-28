@@ -19,9 +19,9 @@ public static class AdConfig
     static string GetBannerAdUnitId()
     {
         #if UNITY_ANDROID
-            return "Banner_Android";
+            return "hbwcefwcyb5zuzo8";
         #elif UNITY_IPHONE
-            return "Banner_iOS";
+            return "0z8skq9vgjb73hry";
         #else
             return "unexpected_platform";
         #endif
@@ -29,9 +29,9 @@ public static class AdConfig
     static string GetInterstitialAdUnitId()
     {
 #if UNITY_ANDROID
-        return "Interstitial_Android";
+        return "v09u52bhqfxbipom";
 #elif UNITY_IPHONE
-            return "Interstitial_iOS";
+            return "1yx4xaftg8yaxfba";
 #else
             return "unexpected_platform";
         #endif
@@ -40,9 +40,9 @@ public static class AdConfig
     static string GetRewardedVideoAdUnitId()
     {
 #if UNITY_ANDROID
-        return "Rewarded_Android";
+        return "uti54guhiory2xk9";
 #elif UNITY_IPHONE
-            return "Rewarded_iOS";
+            return "4uddchai11obhhh8";
 #else
             return "unexpected_platform";
         #endif
