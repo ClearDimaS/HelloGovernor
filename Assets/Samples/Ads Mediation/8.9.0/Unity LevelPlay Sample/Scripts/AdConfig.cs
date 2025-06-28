@@ -8,9 +8,9 @@ public static class AdConfig
     static string GetAppKey()
     {
         #if UNITY_ANDROID
-            return "85460dcd";
+            return "21fe71be5";
         #elif UNITY_IPHONE
-            return "8545d445";
+            return "22966076d";
         #else
             return "unexpected_platform";
         #endif
@@ -19,31 +19,31 @@ public static class AdConfig
     static string GetBannerAdUnitId()
     {
         #if UNITY_ANDROID
-            return "thnfvcsog13bhn08";
+            return "Banner_Android";
         #elif UNITY_IPHONE
-            return "iep3rxsyp9na3rw8";
+            return "Banner_iOS";
         #else
             return "unexpected_platform";
         #endif
     }
     static string GetInterstitialAdUnitId()
     {
-        #if UNITY_ANDROID
-            return "aeyqi3vqlv6o8sh9";
-        #elif UNITY_IPHONE
-            return "wmgt0712uuux8ju4";
-        #else
+#if UNITY_ANDROID
+        return "Interstitial_Android";
+#elif UNITY_IPHONE
+            return "Interstitial_iOS";
+#else
             return "unexpected_platform";
         #endif
     }
 
     static string GetRewardedVideoAdUnitId()
     {
-        #if UNITY_ANDROID
-            return "76yy3nay3ceui2a3";
-        #elif UNITY_IPHONE
-            return "qwouvdrkuwivay5q";
-        #else
+#if UNITY_ANDROID
+        return "Rewarded_Android";
+#elif UNITY_IPHONE
+            return "Rewarded_iOS";
+#else
             return "unexpected_platform";
         #endif
     }
