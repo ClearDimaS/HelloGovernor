@@ -66,7 +66,7 @@ public class PlayerController : Singleton<PlayerController>,
         if (transform.position.y < -4f)
         {
             transform.position = spawnPlace;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
         }
     }
 

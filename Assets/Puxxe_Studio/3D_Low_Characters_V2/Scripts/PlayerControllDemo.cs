@@ -1144,7 +1144,7 @@ namespace PuxxeStudio{
 		}
 		public void Jump(){
 			if (isGrounded == true){
-				rigidbody.velocity = new Vector3(0f, jumpForce, 0f);
+				rigidbody.linearVelocity = new Vector3(0f, jumpForce, 0f);
 				isGrounded = false;
 				isJumping = true;
 				EnableDoubleJumping = true;
@@ -1152,7 +1152,7 @@ namespace PuxxeStudio{
 			}else{
 				if (EnableDoubleJumping == true){
 					if ((isJumping == true ) && isDoubleJumping == false){
-						rigidbody.velocity = new Vector3(0f, jumpForce * 1.5f, 0f);
+						rigidbody.linearVelocity = new Vector3(0f, jumpForce * 1.5f, 0f);
 						isDoubleJumping = true;
 						isFalling = false;
 					}
@@ -1160,7 +1160,7 @@ namespace PuxxeStudio{
 			}
 		}
 		public Vector3 GetRigidBoy_Velocity(){
-			return rigidbody.velocity;
+			return rigidbody.linearVelocity;
 		}
 		public void ActionNoLoopedReturnToIdle(bool value){
 			actionNoLoopedReturnToIdle = value;
@@ -1213,7 +1213,7 @@ namespace PuxxeStudio{
 				Debug.LogWarning("rigidbody NOT FOUND!");
 				return;
 			}		
-			if (rigidbody.velocity.y > .1f){
+			if (rigidbody.linearVelocity.y > .1f){
 				if (actionID != (int)actions[A_041_JUMP_1] && isDoubleJumping == false){
 					actionID = (int)actions[A_041_JUMP_1];
 					SetActionInt(41);
@@ -1222,14 +1222,14 @@ namespace PuxxeStudio{
 					actionID = (int)actions[A_051_JUMP_SPIN_1];
 					SetActionInt(51);
 				}
-			}else if (rigidbody.velocity.y < -.1f && isFalling == false){
+			}else if (rigidbody.linearVelocity.y < -.1f && isFalling == false){
 				if (actionID != (int)actions[A_061_FALL_1]){
 					SetActionInt(61);
 					isJumping = false;
 					isFalling = true; 
 					isDoubleJumping = false;				
 				}
-			}else if(rigidbody.velocity.y == 0){
+			}else if(rigidbody.linearVelocity.y == 0){
 				if (actionID != (int)actions[A_071_LAND_1] && actionID == (int)actions[A_061_FALL_1]  ){
 					SetActionInt(71);
 					isJumping = false;

@@ -49,6 +49,7 @@ class MyEditorScript {
         EditorUserBuildSettings.buildAppBundle = false;
         var ext = ".apk";
         var envTarget = EnvironmentVariableTarget.Process;
+        PlayerSettings.Android.useCustomKeystore = false;
         if (TryGetEnv(BUILD_TYPE_VAR, out string buildType, envTarget))
         {
             if (buildType == $"RELEASE")
@@ -62,7 +63,6 @@ class MyEditorScript {
                 PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable(KEYSTORE_ALIAS_PASS_VAR, envTarget);
             }
         }
-        PlayerSettings.Android.useCustomKeystore = false;
 
         var dir = Application.productName;
         if (TryGetEnv(BUILD_NAME_VAR, out string buildPath))
