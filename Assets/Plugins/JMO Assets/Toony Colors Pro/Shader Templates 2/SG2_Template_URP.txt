@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2023 Jean Moreno
+// (c) 2014-2025 Jean Moreno
 
 #NAME=Default (Universal Pipeline)
 #ID=TEMPLATE_URP
@@ -712,6 +712,7 @@ Shader "@%SHADER_NAME%@"
 	/// IF TERRAIN_BASEPASS
 		#define TERRAIN_BASE_PASS
 	///
+		[[MODULE:FUNCTIONS:Terrain]]
 ///
 
 /// IF CUSTOM_TIME
@@ -1404,7 +1405,16 @@ Shader "@%SHADER_NAME%@"
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
-			#pragma multi_compile_fragment _ _SHADOWS_SOFT
+			#pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
+
+/// IF GLOSSY_REFLECTIONS
+			#pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
+			#pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
+	/// IF UNITY_6000_1
+			#pragma multi_compile_fragment _ _REFLECTION_PROBE_ATLAS
+	///
+///
+
 /// IF UNITY_2020_1
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
@@ -1421,7 +1431,12 @@ Shader "@%SHADER_NAME%@"
 			#pragma multi_compile_fragment _ _LIGHT_LAYERS
 ///
 /// IF ENABLE_FORWARD_PLUS
+	/// IF UNITY_6000_1
+			#pragma multi_compile _ _CLUSTER_LIGHT_LOOP
+	/// ELSE
 			#pragma multi_compile _ _FORWARD_PLUS
+	///
+			#include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
 ///
 /// IF ENABLE_RENDERING_LAYERS
 			#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
@@ -1433,14 +1448,25 @@ Shader "@%SHADER_NAME%@"
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ProbeVolumeVariants.hlsl"
 ///
 
+
 			// -------------------------------------
 /// IF ENABLE_LIGHTMAP
 			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile _ LIGHTMAP_ON
 			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
+	/// IF UNITY_6000_0
+			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+	///
+	/// IF UNITY_6000_1
+			#pragma multi_compile_fragment _ LIGHTMAP_BICUBIC_SAMPLING
+	///
 ///
 /// IF FOG
+	/// IF UNITY_6000_1
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
+	/// ELSE
 			#pragma multi_compile_fog
+	///
 ///
 /// IF ENABLE_DITHER_LOD
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
@@ -1577,7 +1603,7 @@ Shader "@%SHADER_NAME%@"
 			};
 
 /// IF ENABLE_FORWARD_PLUS
-			#if USE_FORWARD_PLUS
+			#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 				// Fake InputData struct needed for Forward+ macro
 				struct InputDataForwardPlusDummy
 				{
@@ -1601,15 +1627,6 @@ Shader "@%SHADER_NAME%@"
 	///
 		};
 ///
-
-/// IF TERRAIN_SHADER
-		//--------------------------------------
-		// Terrain functions
-
-		[[MODULE:FUNCTIONS:Terrain]]
-///
-
-
 
 #VERTEX, INPUT = input, OUTPUT = output
 			Varyings Vertex(Attributes input)
@@ -1806,7 +1823,11 @@ Shader "@%SHADER_NAME%@"
 ///
 /// IF ENABLE_RENDERING_LAYERS
 			#ifdef _WRITE_RENDERING_LAYERS
-				, out float4 outRenderingLayers : SV_Target1
+				#if UNITY_VERSION >= 60020000
+					, out uint outRenderingLayers : SV_Target1
+				#else
+					, out float4 outRenderingLayers : SV_Target1
+				#endif
 			#endif
 ///
 			) : SV_Target
@@ -2031,7 +2052,7 @@ Shader "@%SHADER_NAME%@"
 			#endif
 
 /// IF SSAO || ENABLE_FORWARD_PLUS
-			#if defined(_SCREEN_SPACE_OCCLUSION) || defined(USE_FORWARD_PLUS)
+			#if defined(_SCREEN_SPACE_OCCLUSION) || defined(USE_FORWARD_PLUS) || defined(USE_CLUSTER_LIGHT_LOOP)
 				float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
 			#endif
 ///
@@ -2234,11 +2255,15 @@ Shader "@%SHADER_NAME%@"
 				uint pixelLightCount = GetAdditionalLightsCount();
 
 	/// IF ENABLE_FORWARD_PLUS
-				#if USE_FORWARD_PLUS
+				#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 					// Additional directional lights in Forward+
 					for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
 					{
+		/// IF UNITY_6000_1
+						CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
+		/// ELSE
 						FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+		///
 
 						Light light = GetAdditionalLight(lightIndex, positionWS, shadowMask);
 
@@ -2506,7 +2531,7 @@ Shader "@%SHADER_NAME%@"
 				half3 reflectVector = reflect(-viewDirWS, normalWS);
 				
 	/// IF ENABLE_FORWARD_PLUS
-				#if USE_FORWARD_PLUS
+				#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 					half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, reflectionRoughness, occlusion, normalizedScreenSpaceUV);
 				#else
 					half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, reflectionRoughness, occlusion);
@@ -2558,7 +2583,11 @@ Shader "@%SHADER_NAME%@"
 
 /// IF ENABLE_RENDERING_LAYERS
 				#if defined(URP_14_OR_NEWER) && defined(_WRITE_RENDERING_LAYERS)
-					outRenderingLayers = float4(EncodeMeshRenderingLayer(meshRenderingLayers), 0, 0, 0);
+					#if UNITY_VERSION >= 60020000
+						outRenderingLayers = EncodeMeshRenderingLayer();
+					#else
+						outRenderingLayers = float4(EncodeMeshRenderingLayer(GetMeshRenderingLayer()), 0, 0, 0);
+					#endif
 				#endif
 ///
 
@@ -2734,6 +2763,8 @@ Shader "@%SHADER_NAME%@"
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				#endif
 
+				[[MODULE:VERTEX:Terrain(input.vertex, input.normal, input.texcoord0, _unused_)]]
+
 				[[INJECTION_POINT:Depth + Shadow Caster Pass/Vertex Shader/Start]]
 
 /// IF USE_WORLD_POSITION_UV_VERTEX
@@ -2848,7 +2879,11 @@ Shader "@%SHADER_NAME%@"
 				Varyings input
 /// IF ENABLE_DEPTH_NORMALS_PASS
 	#if defined(DEPTH_NORMALS_PASS) && defined(_WRITE_RENDERING_LAYERS)
+		#if UNITY_VERSION >= 60020000
+				, out uint outRenderingLayers : SV_Target1
+		#else
 				, out float4 outRenderingLayers : SV_Target1
+		#endif
 	#endif
 ///
 			) : SV_TARGET
@@ -2912,13 +2947,7 @@ Shader "@%SHADER_NAME%@"
 				half cutoffValue = [[VALUE:Cutoff]];
 	///
 	/// IF !ALPHA_TO_COVERAGE
-		/// IF ALPHA_TESTING_DITHERING
-				#if defined(DEPTH_ONLY_PASS)
-					clip(alpha - cutoffValue);
-				#endif
-		/// ELSE
 				clip(alpha - cutoffValue);
-		///
 	/// ELIF !ALPHA_TO_COVERAGE_RAW
 				// Sharpen Alpha-to-Coverage
 				alpha = (alpha - cutoffValue) / max(fwidth(alpha), 0.0001) + 0.5;
@@ -2930,8 +2959,11 @@ Shader "@%SHADER_NAME%@"
 /// IF ENABLE_DEPTH_NORMALS_PASS
 				#if defined(DEPTH_NORMALS_PASS)
 					#if defined(_WRITE_RENDERING_LAYERS)
-						uint meshRenderingLayers = GetMeshRenderingLayer();
-						outRenderingLayers = float4(EncodeMeshRenderingLayer(meshRenderingLayers), 0, 0, 0);
+						#if UNITY_VERSION >= 60020000
+							outRenderingLayers = EncodeMeshRenderingLayer();
+						#else
+							outRenderingLayers = float4(EncodeMeshRenderingLayer(GetMeshRenderingLayer()), 0, 0, 0);
+						#endif
 					#endif
 
 					#if defined(URP_12_OR_NEWER)
@@ -3102,6 +3134,16 @@ Shader "@%SHADER_NAME%@"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 
+	#if_not_empty
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+	#start_not_empty_block
+			[[MODULE:SHADER_FEATURES_BLOCK:Wind]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Vertex Displacement]]
+	#end_not_empty_block
+	#end_not_empty
+
 			ENDHLSL
 		}
 ///
@@ -3180,6 +3222,98 @@ Shader "@%SHADER_NAME%@"
 			#include "@%CURVED_WORLD_2020_INCLUDE%@/SceneSelection.cginc"
 
 			ENDCG
+		}
+/// ELSE
+		// Scene selection and picking passes
+		Pass
+		{
+			Name "SceneSelectionPass"
+			Tags
+			{
+				"LightMode" = "SceneSelectionPass"
+			}
+
+/// IF AUTO_TRANSPARENT_BLENDING
+			Cull [_Cull]
+/// ELIF CULLING
+			Cull [[VALUE:Face Culling]]
+///
+
+			HLSLPROGRAM
+			#pragma exclude_renderers gles gles3 glcore
+			#pragma target 2.0
+
+			#pragma multi_compile_instancing
+			#pragma multi_compile DEPTH_ONLY_PASS
+
+			#pragma vertex ShadowDepthPassVertex
+			#pragma fragment SceneSelectionFragment
+
+	#if_not_empty
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+	#start_not_empty_block
+			[[MODULE:SHADER_FEATURES_BLOCK:Wind]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Vertex Displacement]]
+	#end_not_empty_block
+	#end_not_empty
+
+			int _ObjectId;
+			int _PassValue;
+
+			half4 SceneSelectionFragment(Varyings input) : SV_Target
+			{
+				ShadowDepthPassFragment(input);
+				return float4(_ObjectId, _PassValue, 1, 1);
+			}
+
+			ENDHLSL
+		}
+
+		Pass
+		{
+			Name "ScenePickingPass"
+			Tags
+			{
+				"LightMode" = "Picking"
+			}
+
+/// IF AUTO_TRANSPARENT_BLENDING
+			Cull [_Cull]
+/// ELIF CULLING
+			Cull [[VALUE:Face Culling]]
+///
+
+			HLSLPROGRAM
+			#pragma exclude_renderers gles gles3 glcore
+			#pragma target 2.0
+
+			#pragma multi_compile_instancing
+			#pragma multi_compile DEPTH_ONLY_PASS
+
+			#pragma vertex ShadowDepthPassVertex
+			#pragma fragment ScenePickingFragment
+
+	#if_not_empty
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+	#start_not_empty_block
+			[[MODULE:SHADER_FEATURES_BLOCK:Wind]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Vertex Displacement]]
+	#end_not_empty_block
+	#end_not_empty
+
+			float4 _SelectionID;
+
+			half4 ScenePickingFragment(Varyings input) : SV_Target
+			{
+				ShadowDepthPassFragment(input);
+				return _SelectionID;
+			}
+
+			ENDHLSL
 		}
 ///
 #------------------------------------------------------------

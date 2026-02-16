@@ -74,7 +74,7 @@ namespace ToonyColorsPro
 					RenderPipelineManager.beginCameraRendering += BeginCameraRendering;
 				else
 #endif
-					Camera.onPreRender += BeginCameraRendering;
+					Camera.onPreCull += BeginCameraRendering;
 
 				UpdateRenderTexture();
 				UpdateCommandBuffer();
@@ -85,7 +85,7 @@ namespace ToonyColorsPro
 				if (isURP)
 					RenderPipelineManager.beginCameraRendering -= BeginCameraRendering;
 				else
-					Camera.onPreRender -= BeginCameraRendering;
+					Camera.onPreCull -= BeginCameraRendering;
 
 				ClearCommandBuffer();
 				ClearRenderTexture();

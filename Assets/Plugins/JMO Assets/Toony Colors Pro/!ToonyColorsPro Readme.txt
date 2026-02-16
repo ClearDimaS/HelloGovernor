@@ -1,6 +1,6 @@
 Toony Colors Pro, version 2.9
-2024/12/18
-© 2024 - Jean Moreno
+2026/01/13
+© 2013-2026 - Jean Moreno
 =============================
 
 QUICK START
@@ -38,20 +38,64 @@ UPDATE NOTES
 
 See full and formatted changelog here: https://jeanmoreno.com/unity/toonycolorspro/doc/changelog
 
+2.9.21
+#### Added
+- [Shader Generator 2] (URP) Added Scene Selection and Picking passes, so that mouse picking and selection outline work properly when the shader does vertex displacement
+- [Shader Generator 2] (URP) Water Vertex Waves: added options to move and rotate the whole object along with the wave, for shader-based animation of floating objects on the water
+- [Shader Generator 2] (URP) Wind: added an option for rotation-based movement instead of vertex position (useful for trees and bigger objects)
+- [Shader Generator 2] Added "Vertex/Mesh World Position" variable in "Shader Properties" system
+#### Modified
+- Updated URP shaders for Cat and Material Layers demos so that they work properly with the latest URP versions
+- [Shader Generator 2] Renamed "Vertex/Object Normal" to "Vertex/Local Normal" for consistency with "Vertex/Local Position"
+#### Fixed
+- [Shader Generator 2] (URP) Prevent Rim Lighting from being very high when light-based mask is used due to point lights distance attenuation being very high
+- [Demo Scenes] Fixed InputAbstraction class error when using the new input system
+- [Cat Demo Scene] Fixed Ground shader not having "Depth Normals" pass (and thus not working with water depth effects)
+
+2.9.20
+#### Fixed
+- [Hybrid Shader 2] (URP) Fixed compilation error with mesh rendering layers following last update
+- [Hybrid Shader 2] (URP) Use proper "_CLUSTER_LIGHT_LOOP" keyword instead of "_FORWARD_PLUS" (Unity 6.1+)
+
+2.9.19
+#### Added
+- [Shader Generator 2] (URP) Added support for Reflection Probes blending and box projection
+- [Shader Generator 2] Code Injection: added option to ignore indent spaces (enabled by default), and "append"/"prepend" alternatives to the "replace" function to easily add code without removing the existing one
+#### Fixed
+- [Hybrid Shader 2][Shader Generator 2] (URP) Fixed rendering layers support in Unity 6.2
+- [Shader Generator 2] (URP) Use proper "_CLUSTER_LIGHT_LOOP" keyword instead of "_FORWARD_PLUS" (Unity 6.1+)
+- [Shader Generator 2] (URP) Fixed lightmap support when "GPU Resident Drawer" is active (Unity 6+)
+- [Shader Generator 2] (URP) Fixed soft shadow quality levels support (low/medium/high) for platforms requiring strict static branches
+- Fixed various deprecated scripting APIs triggering upgrade prompt (mostly Unity 6.1+)
+- Fixed demo scripts and scenes so that the new Input System also works when enabled
+- Reorganized some files
+
+2.9.18
+#### Fixed
+- [Shader Generator 2] (URP) Hotfix for template outputing an error on opening
+
+2.9.17
+#### Fixed
+- [Hybrid Shader 2] (URP) Fixed shader compilation error when using lightmaps
+- [Shader Generator 2] (URP) Fixed shadow rendering with Terrain shaders when using "Draw Instanced" terrain option
+- [Shader Generator 2] (BIRP) Fixed Planar Reflections errors and rendering with Terrains
+- [Shader Generator 2] (URP) Fixed alpha cutout shadows when using dithering
+- [Shader Generator 2] Fixed error when using a texture "Custom Material Property" for both vertex and fragment variables
+
 2.9.16
 #### Fixed
-- [Hybrid Shader 2](BIRP) Fixed Hybrid Shader 2 not compiling for the built-in render pipeline
-- [Hybrid Shader 2](URP) Fixed Reflection Probes when using "Forward+" and probes blending
+- [Hybrid Shader 2] (BIRP) Fixed Hybrid Shader 2 not compiling for the built-in render pipeline
+- [Hybrid Shader 2] (URP) Fixed Reflection Probes when using "Forward+" and probes blending
 
 2.9.15
 #### Added
-- [Hybrid Shader 2](URP) Added support for "GPU Resident Drawer"
-- [Hybrid Shader 2][Shader Generator 2](URP) Added support for "Adaptive Probe Volumes"
+- [Hybrid Shader 2] (URP) Added support for "GPU Resident Drawer"
+- [Hybrid Shader 2][Shader Generator 2] (URP) Added support for "Adaptive Probe Volumes"
 #### Modified
-- [Shader Generator 2](URP) Renamed "DOTS Instancing" feature to "BRG Instancing" (for 'Batch Renderer Group') as it also enables support for GPU Resident Drawer
-- [Shader Generator 2](URP) "Forward+" and "Depth Normals Pass" support is now enabled by default in Unity 6
+- [Shader Generator 2] (URP) Renamed "DOTS Instancing" feature to "BRG Instancing" (for 'Batch Renderer Group') as it also enables support for GPU Resident Drawer
+- [Shader Generator 2] (URP) "Forward+" and "Depth Normals Pass" support is now enabled by default in Unity 6
 #### Fixed
-- [Shader Generator 2](URP) Fixed "DOTS Instancing" object and world matrices compilation errors
+- [Shader Generator 2] (URP) Fixed "DOTS Instancing" object and world matrices compilation errors
 
 2.9.14
 #### Fixed

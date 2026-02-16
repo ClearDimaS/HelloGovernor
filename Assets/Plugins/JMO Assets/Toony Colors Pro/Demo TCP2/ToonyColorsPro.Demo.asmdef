@@ -1,9 +1,10 @@
 {
     "name": "ToonyColorsPro2.Demo",
+    "rootNamespace": "",
     "references": [
-        "ToonyColorsPro.Runtime"
+        "GUID:cbba45b94392f074d8497831a104abf9",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -11,5 +12,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1",
+            "define": "TCP2_NEW_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
 }

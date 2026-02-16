@@ -252,13 +252,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.mobile.android-logcat": {
-      "version": "1.4.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.2",
       "depth": 0,
@@ -317,7 +310,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.12.5",
+      "version": "1.16.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -328,11 +321,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.services.levelplay": {
-      "version": "8.9.0",
+      "version": "9.3.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.services.core": "1.8.1"
+        "com.unity.services.core": "1.15.1"
       },
       "url": "https://packages.unity.com"
     },

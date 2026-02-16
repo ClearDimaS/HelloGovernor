@@ -4231,8 +4231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b74aadd00d9d549a23e8f134fa334d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 1, z: 0}
-  Speed: -40
 --- !u!1 &1328155096
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,8 +4745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b74aadd00d9d549a23e8f134fa334d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 1, z: 0}
-  Speed: -40
 --- !u!1 &1552672012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,8 +5396,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pivot: {fileID: 1578950465}
   pivotOffset: {x: 0, y: 1, z: 0}
-  OrbitStrg: 5
-  OrbitClamp: 100
+  OrbitStrg: 0.5
+  OrbitClamp: 20
   PanStrgMin: 0.25
   PanStrgMax: 1
   ZoomStrg: 100
@@ -5410,6 +5406,7 @@ MonoBehaviour:
   ZoomDistMax: 100
   Decceleration: 10
   ignoreMouseRect: {fileID: 1842205047}
+  uiEventSystem: {fileID: 1708289486}
 --- !u!1 &1661135826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5546,7 +5543,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1708289487}
   - component: {fileID: 1708289486}
-  - component: {fileID: 1708289485}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -5554,26 +5550,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1708289485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708289484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1708289486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6340,8 +6316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b74aadd00d9d549a23e8f134fa334d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: {x: 0, y: 1, z: 0}
-  Speed: 40
 --- !u!1 &1910931520
 GameObject:
   m_ObjectHideFlags: 0

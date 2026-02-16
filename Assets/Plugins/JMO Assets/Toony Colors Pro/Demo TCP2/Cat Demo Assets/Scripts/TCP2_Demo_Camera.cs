@@ -1,7 +1,11 @@
 ﻿// Toony Colors Pro+Mobile 2
-// (c) 2014-2023 Jean Moreno
+// (c) 2014-2026 Jean Moreno
 
 using UnityEngine;
+using UnityEngine.EventSystems;
+#if TCP2_NEW_INPUT_SYSTEM && ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem.UI;
+#endif
 
 namespace ToonyColorsPro
 {
@@ -28,25 +32,22 @@ namespace ToonyColorsPro
 			[Header("Misc")]
 			public float Decceleration = 8f;
 			public RectTransform ignoreMouseRect;
+			public EventSystem uiEventSystem;
 			Rect ignoreMouseActualRect;
 
 			//--------------------------------------------------------------------------------------------------
 			// PRIVATE PROPERTIES
 
-			private Vector3 mouseDelta;
-			private Vector3 orbitAcceleration;
-			private Vector3 panAcceleration;
-			private Vector3 moveAcceleration;
-			private float zoomAcceleration;
-			private float zoomDistance;
-			private const float XMax = 60;
-			private const float XMin = 300;
-
-			private Vector3 mResetCamPos, mResetPivotPos, mResetCamRot, mResetPivotRot;
-
-			bool leftMouseHeld;
-			bool rightMouseHeld;
-			bool middleMouseHeld;
+			Vector2 mouseDelta;
+			Vector2 lastMousePos;
+			Vector3 orbitAcceleration;
+			Vector3 panAcceleration;
+			Vector3 moveAcceleration;
+			float zoomAcceleration;
+			float zoomDistance;
+			const float XMax = 60;
+			const float XMin = 300;
+			Vector3 mResetCamPos, mResetPivotPos, mResetCamRot, mResetPivotRot;
 
 			//--------------------------------------------------------------------------------------------------
 			// UNITY EVENTS
@@ -57,11 +58,20 @@ namespace ToonyColorsPro
 				mResetCamRot = transform.eulerAngles;
 				mResetPivotPos = Pivot.position;
 				mResetPivotRot = Pivot.eulerAngles;
+
+				if (uiEventSystem != null)
+				{
+#if TCP2_NEW_INPUT_SYSTEM && ENABLE_INPUT_SYSTEM
+					uiEventSystem.gameObject.AddComponent<InputSystemUIInputModule>();
+#else
+					uiEventSystem.gameObject.AddComponent<StandaloneInputModule>();
+#endif
+				}
 			}
 
 			void OnEnable()
 			{
-				mouseDelta = Input.mousePosition;
+				lastMousePos = InputAbstraction.Mouse_Position;
 
 				Vector2 size = Vector2.Scale(ignoreMouseRect.rect.size, ignoreMouseRect.lossyScale);
 				Rect rect = new Rect(ignoreMouseRect.position.x, ignoreMouseRect.position.y, size.x, size.y);
@@ -71,39 +81,31 @@ namespace ToonyColorsPro
 				ignoreMouseActualRect = rect;
 			}
 
-			void Update()
+			void FixedUpdate()
 			{
-				mouseDelta = Input.mousePosition - mouseDelta;
+				var mousePos = InputAbstraction.Mouse_Position;
+				mouseDelta = mousePos - lastMousePos;
 				mouseDelta.x = Mathf.Clamp(mouseDelta.x, -150f, 150f);
 				mouseDelta.y = Mathf.Clamp(mouseDelta.y, -150f, 150f);
+				lastMousePos = mousePos;
+			}
 
-				var ignoreMouse = ignoreMouseRect != null ? ignoreMouseActualRect.Contains(Input.mousePosition) : false;
+			void Update()
+			{
+				// mouseDelta = InputAbstraction.Mouse_Position - mouseDelta;
 
-				if (Input.GetMouseButtonDown(0))
-					leftMouseHeld = !ignoreMouse;
-				else if (Input.GetMouseButtonUp(0) || !Input.GetMouseButton(0))
-					leftMouseHeld = false;
-
-				if (Input.GetMouseButtonDown(1))
-					rightMouseHeld = !ignoreMouse;
-				else if (Input.GetMouseButtonUp(1) || !Input.GetMouseButton(1))
-					rightMouseHeld = false;
-
-				if (Input.GetMouseButtonDown(2))
-					middleMouseHeld = !ignoreMouse;
-				else if (Input.GetMouseButtonUp(2) || !Input.GetMouseButton(2))
-					middleMouseHeld = false;
+				var ignoreMouse = ignoreMouseRect != null && ignoreMouseActualRect.Contains(InputAbstraction.Mouse_Position);
 
 				//Left Button held
-				if (leftMouseHeld)
+				if (!ignoreMouse && InputAbstraction.Mouse_LeftDown)
 				{
 					orbitAcceleration.x += Mathf.Clamp(mouseDelta.x * OrbitStrg, -OrbitClamp, OrbitClamp);
 					orbitAcceleration.y += Mathf.Clamp(-mouseDelta.y * OrbitStrg, -OrbitClamp, OrbitClamp);
 				}
 				//Middle/Right Button held
-				else if (middleMouseHeld || rightMouseHeld)
+				else if (!ignoreMouse && (InputAbstraction.Mouse_MiddleDown || InputAbstraction.Mouse_RightDown))
 				{
-					var str = Mathf.Lerp(PanStrgMin, PanStrgMax, Mathf.Clamp01((zoomDistance-ZoomDistMin)/(ZoomDistMax-ZoomDistMin)));
+					var str = Mathf.Lerp(PanStrgMin, PanStrgMax, Mathf.Clamp01((zoomDistance - ZoomDistMin) / (ZoomDistMax - ZoomDistMin)));
 					panAcceleration.x = -mouseDelta.x * str;
 					panAcceleration.y = -mouseDelta.y * str;
 				}
@@ -112,7 +114,7 @@ namespace ToonyColorsPro
 				//orbitAcceleration.x += Input.GetKey(KeyCode.LeftArrow) ? 15 : (Input.GetKey(KeyCode.RightArrow) ? -15 : 0);
 				//orbitAcceleration.y += Input.GetKey(KeyCode.UpArrow) ? 15 : (Input.GetKey(KeyCode.DownArrow) ? -15 : 0);
 
-				if (Input.GetKeyDown(KeyCode.R))
+				if (InputAbstraction.KeyDown_R)
 				{
 					ResetView();
 				}
@@ -134,13 +136,15 @@ namespace ToonyColorsPro
 				transform.Translate(panAcceleration * Time.deltaTime, transform);
 
 				//Zoom
-				var scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+				var scrollWheel = InputAbstraction.Mouse_ScrollWheel;
+				scrollWheel = scrollWheel > 0 ? 0.1f : (scrollWheel < 0 ? -0.1f : 0);
+
 				zoomAcceleration += scrollWheel * ZoomStrg;
 				zoomAcceleration = Mathf.Clamp(zoomAcceleration, -ZoomClamp, ZoomClamp);
 				zoomDistance = Vector3.Distance(transform.position, pivotPlusOffset);
 				if ((zoomDistance >= ZoomDistMin && zoomAcceleration > 0) || (zoomDistance <= ZoomDistMax && zoomAcceleration < 0))
 				{
-					transform.Translate(Vector3.forward * zoomAcceleration * Time.deltaTime, Space.Self);
+					transform.Translate(Vector3.forward * (zoomAcceleration * Time.deltaTime), Space.Self);
 				}
 
 				//Decelerate
@@ -149,10 +153,13 @@ namespace ToonyColorsPro
 				zoomAcceleration = Mathf.Lerp(zoomAcceleration, 0, Decceleration * Time.deltaTime);
 				moveAcceleration = Vector3.Lerp(moveAcceleration, Vector3.zero, Decceleration * Time.deltaTime);
 
-				mouseDelta = Input.mousePosition;
+				// mouseDelta = InputAbstraction.Mouse_Position;
 			}
 
-			public void ResetView()
+			//--------------------------------------------------------------------------------------------------
+			// MISC
+
+			void ResetView()
 			{
 				moveAcceleration = Vector3.zero;
 				orbitAcceleration = Vector3.zero;
@@ -164,7 +171,6 @@ namespace ToonyColorsPro
 				transform.eulerAngles = mResetCamRot;
 				Pivot.position = mResetPivotPos;
 				Pivot.eulerAngles = mResetPivotRot;
-
 			}
 		}
 	}

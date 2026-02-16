@@ -12,22 +12,25 @@
 ///         All the following lines will be inserted in the .shader file at the injection point location, including comments with two slashes '//'
 [Toggle(INJECTED_SHADER_FEATURE)] _InjectedShaderFeature ("Enable Injected Color", Float) = 0.0
 _InjectedColor ("Injected Color", Color) = (1.0, 1.0, 0.0, 1.0)
-///         Some material decorator drawers are included with Toony Colors Pro 2, you can freely use them like this separator
+///         Some material decorator drawers are included with Toony Colors Pro 2, you can freely use them like this line separator
 [TCP2Separator]
 
 ///         The current BLOCK will end when a new command starts, or the end of the file is reached.
 ///         Any additional line breaks between the two will be trimmed, so you can freely add more for readability.
 
+/// --------------------------------------------------------------------------------------------------------------------------------
 
 //# BLOCK: Declare Custom Properties
 //# Inject @ Variables/Inside CBuffer
 half4 _InjectedColor;
 
+/// --------------------------------------------------------------------------------------------------------------------------------
 
 //# BLOCK: Custom Shader Features
 //# Inject @ Main Pass/Pragma
 #pragma shader_feature INJECTED_SHADER_FEATURE
 
+/// --------------------------------------------------------------------------------------------------------------------------------
 
 //# BLOCK: Add Pulse Color to Albedo
 //# Inject @ Main Pass/Surface Function/End
@@ -39,17 +42,40 @@ half4 _InjectedColor;
 
 #if defined(INJECTED_SHADER_FEATURE)
 ///         We know that these variables do exist in the .shader file, so we can freely alter them
-	half4 pulsingInjectedColor = _InjectedColor * ((sin(_Time.y * pulseSpeed) + 1) / 2.0);
-	output.Albedo += pulsingInjectedColor.rgb;
+    half4 pulsingInjectedColor = _InjectedColor * ((sin(_Time.y * pulseSpeed) + 1) / 2.0);
+    output.Albedo += pulsingInjectedColor.rgb;
 #endif
 
-///         The '//# REPLACE:' line defines a line to replace in the final .shader, so that you can override or append code to about anywhere in your .shader file.
-///         Note: searching for the line to replace only works on a single line; however you can replace it with multiple lines.
+/// ================================================================================================================================
+
+///         The '//# REPLACE:' line defines one or multiple lines to replace in the final .shader, so that you can override code about anywhere in your .shader file.
+///         Note: you can both search and replace multiple lines at the same time
+///         Note 2: by default, indent spaces are igored when searching for the lines to replace, but you can force them to be taken into account in the user interface
 //# REPLACE: Disable Ambient
-            #ifdef UNITY_LIGHT_FUNCTION_APPLY_INDIRECT
-///         The '//# WITH:' defines the lines with which to replace the found line.
-///         You can re-add the original search line if you only want to append lines to it.
+    #ifdef UNITY_LIGHT_FUNCTION_APPLY_INDIRECT
+///         The '//# WITH:' defines the line(s) with which to replace the found line(s).
 //# WITH:
-            #if false
+    #if false
 ///         The '//# INFO: ' prefix defines additional information for this replacement that will show in the Shader Generator 2.
 //# INFO: Disable applying indirect diffuse (ambient color)
+
+/// --------------------------------------------------------------------------------------------------------------------------------
+
+///         The '//# PREPEND:' line works like the REPLACE one, but it will add the code *before* the match, without removing it.
+//# PREPEND: Animate shadow color darkening
+    ramp = lerp(surface.__shadowColor, surface.__highlightColor, ramp);
+///         The '//# WITH:' defines the line(s) to prepend.
+//# WITH:
+    surface.__shadowColor *= cos(_Time.y) * 0.5 + 0.5;
+//# INFO: Prepend example: animate shadow color by darkening it periodically
+
+/// --------------------------------------------------------------------------------------------------------------------------------
+
+///         The '//# APPEND:' line works like the REPLACE one, but it will add the code *after* the match, without removing it.
+//# APPEND: Animate Light Direction Vector
+    half3 lightDir = gi.light.dir;
+///         The '//# WITH:' defines the line(s) to append.
+//# WITH:
+    lightDir.y += sin(_Time.y) * 0.33;
+    lightDir = normalize(lightDir);
+//# INFO: Append example: animate the light direction vector periodically

@@ -1,5 +1,5 @@
 ﻿// Toony Colors Pro+Mobile 2
-// (c) 2014-2023 Jean Moreno
+// (c) 2014-2026 Jean Moreno
 
 /// #define fixed half
 /// #define fixed2 half2
@@ -561,7 +561,7 @@ struct Varyings_Meta
 	float2 uv    : TEXCOORD0;
 };
 
-#if USE_FORWARD_PLUS
+#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 	// Fake InputData struct needed for Forward+ macro
 	struct InputDataForwardPlusDummy
 	{
@@ -765,7 +765,11 @@ half4 Fragment (
 	Varyings input
 	, half vFace : VFACE
 #ifdef _WRITE_RENDERING_LAYERS
-	, out float4 outRenderingLayers : SV_Target1
+	#if UNITY_VERSION >= 60020000
+		, out uint outRenderingLayers : SV_Target1
+	#else
+		, out float4 outRenderingLayers : SV_Target1
+	#endif
 #endif
 	) : SV_Target
 {
@@ -773,7 +777,11 @@ half4 Fragment (
 	UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
 	#ifdef _WRITE_RENDERING_LAYERS
-		outRenderingLayers = float4(0, 0, 0, 0);
+		#if UNITY_VERSION >= 60020000
+			outRenderingLayers = 0;
+		#else
+			outRenderingLayers = float4(0, 0, 0, 0);
+		#endif
 	#endif
 
 	// LOD Crossfading
@@ -1040,6 +1048,36 @@ half4 Fragment (
 		gi.light.color = _LightColor0.rgb; // remove attenuation, taken into account separately
 	#endif
 
+	#if defined(TCP2_HYBRID_URP)
+		#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+			float4 shadowCoord = input.shadowCoord;
+		#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+			float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
+		#else
+			float4 shadowCoord = float4(0, 0, 0, 0);
+		#endif
+
+		#if defined(USE_APV_PROBE_OCCLUSION)
+			half4 shadowMask = probeOcclusion;
+		#elif defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
+			half4 shadowMask = SAMPLE_SHADOWMASK(input.staticLightmapUV);
+		#elif !defined (LIGHTMAP_ON)
+			half4 shadowMask = unity_ProbesOcclusion;
+		#else
+			half4 shadowMask = half4(1, 1, 1, 1);
+		#endif
+
+		#if defined(DEBUG_DISPLAY)
+			debugInputData.shadowMask = shadowMask;
+		#endif
+
+		#if URP_VERSION <= 7
+			Light mainLight = GetMainLight(shadowCoord);
+		#else
+			Light mainLight = GetMainLight(shadowCoord, positionWS, shadowMask);
+		#endif
+	#endif
+
 	// Ambient/indirect lighting
 	#if defined(UNITY_PASS_FORWARDBASE)
 		half3 indirectDiffuse = 0;
@@ -1084,38 +1122,10 @@ half4 Fragment (
 	#endif
 
 	#if defined(TCP2_HYBRID_URP)
-		#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-			float4 shadowCoord = input.shadowCoord;
-		#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
-			float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
-		#else
-			float4 shadowCoord = float4(0, 0, 0, 0);
-		#endif
-
-		#if defined(USE_APV_PROBE_OCCLUSION)
-			half4 shadowMask = probeOcclusion;
-		#elif defined(SHADOWS_SHADOWMASK) && defined(LIGHTMAP_ON)
-			half4 shadowMask = SAMPLE_SHADOWMASK(input.staticLightmapUV);
-		#elif !defined (LIGHTMAP_ON)
-			half4 shadowMask = unity_ProbesOcclusion;
-		#else
-			half4 shadowMask = half4(1, 1, 1, 1);
-		#endif
-
-		#if defined(DEBUG_DISPLAY)
-			debugInputData.shadowMask = shadowMask;
-		#endif
-
 		#if URP_VERSION >= 14
 			uint meshRenderingLayers = GetMeshRenderingLayer();
 		#elif URP_VERSION >= 12
 			uint meshRenderingLayers = GetMeshRenderingLightLayer();
-		#endif
-
-		#if URP_VERSION <= 7
-			Light mainLight = GetMainLight(shadowCoord);
-		#else
-			Light mainLight = GetMainLight(shadowCoord, positionWS, shadowMask);
 		#endif
 
 		#if defined(_SCREEN_SPACE_OCCLUSION)
@@ -1305,11 +1315,15 @@ half4 Fragment (
 	#if defined(TCP2_HYBRID_URP) && defined(_ADDITIONAL_LIGHTS)
 		uint pixelLightCount = GetAdditionalLightsCount();
 		#if URP_VERSION >= 12
-			#if USE_FORWARD_PLUS
+			#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 				// Additional directional lights in Forward+
 				for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
 				{
-					FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+					#if URP_VERSION >= 171
+						CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
+					#else
+						FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+					#endif
 
 					Light light = GetAdditionalLight(lightIndex, positionWS, shadowMask);
 
@@ -1451,7 +1465,7 @@ half4 Fragment (
 
 		#if defined(TCP2_HYBRID_URP)
 			half3 reflectVector = reflect(-viewDirWS, normalWS);
-			#if USE_FORWARD_PLUS
+			#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 				half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, reflectionRoughness, occlusion, normalizedScreenSpaceUV);
 			#else
 				half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, reflectionRoughness, occlusion);
@@ -1528,7 +1542,11 @@ half4 Fragment (
 	#endif
 
 	#if defined(TCP2_HYBRID_URP) && URP_VERSION >= 14 && defined(_WRITE_RENDERING_LAYERS)
-		outRenderingLayers = float4(EncodeMeshRenderingLayer(meshRenderingLayers), 0, 0, 0);
+		#if UNITY_VERSION >= 60020000
+			outRenderingLayers = EncodeMeshRenderingLayer();
+		#else
+			outRenderingLayers = float4(EncodeMeshRenderingLayer(GetMeshRenderingLayer()), 0, 0, 0);
+		#endif
 	#endif
 
 	return half4(color, alpha);
@@ -1874,11 +1892,15 @@ float4 fragment_outline (Varyings_Outline input) : SV_Target
 			uint pixelLightCount = GetAdditionalLightsCount();
 
 			#if URP_VERSION >= 12
-				#if USE_FORWARD_PLUS
+				#if USE_FORWARD_PLUS || USE_CLUSTER_LIGHT_LOOP
 					// Additional directional lights in Forward+
 					for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
 					{
-						FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+						#if URP_VERSION >= 171
+							CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
+						#else
+							FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+						#endif
 
 						Light light = GetAdditionalLight(lightIndex, positionWS, shadowMask);
 
