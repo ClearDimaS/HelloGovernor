@@ -81,6 +81,7 @@ public class LanguageSettings : MonoBehaviour
         {
             newElement.SetSelected(currentLocale.Identifier.Code == newElement.Code);
         }
+        SetLocaleImage(currentLocale);
     }
 
     private void Start()
