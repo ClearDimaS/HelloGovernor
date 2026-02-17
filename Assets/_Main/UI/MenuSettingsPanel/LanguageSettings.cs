@@ -70,6 +70,19 @@ public class LanguageSettings : MonoBehaviour
         });
     }
 
+    private void OnEnable()
+    {
+        var currentLocale = LocalizationManager.Instance.CurrentLocale.Value;
+        if (currentLocale == null)
+        {
+            return;
+        }
+        foreach (var newElement in languageElements)
+        {
+            newElement.SetSelected(currentLocale.Identifier.Code == newElement.Code);
+        }
+    }
+
     private void Start()
     {
         HideLanguagesList();
