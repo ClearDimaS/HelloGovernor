@@ -35,6 +35,17 @@ public class LanguageSettings : MonoBehaviour
         }
         languageElements.Clear();
 
+        LocalizationManager.Instance.Locales.Subscribe(locales =>
+        {
+            if (locales == null)
+            {
+                return;
+            }
+            foreach (var locale in locales)
+            {
+                SpawnLocale(locale);
+            }
+        }).AddTo(this);
         LocalizationManager.Instance.CurrentLocale.Subscribe(currentLocale =>
         {
             if (currentLocale == null)
@@ -48,18 +59,7 @@ public class LanguageSettings : MonoBehaviour
                 newElement.SetSelected(currentLocale.Identifier.Code == newElement.Code);
             }
         });
-        LocalizationManager.Instance.Locales.Subscribe(locales =>
-        {
-            if (locales == null)
-            {
-                return;
-            }
-            foreach (var locale in locales)
-            {
-                SpawnLocale(locale);
-            }
-        }).AddTo(this);
-        
+
         openSelectButton.onClick.AddListener(() =>
         {
             ShowLanguagesList();
@@ -68,19 +68,6 @@ public class LanguageSettings : MonoBehaviour
         {
             HideLanguagesList();
         });
-    }
-
-    private void OnEnable()
-    {
-        var currentLocale = LocalizationManager.Instance.CurrentLocale.Value;
-        if (currentLocale == null)
-        {
-            return;
-        }
-        foreach (var newElement in languageElements)
-        {
-            newElement.SetSelected(currentLocale.Identifier.Code == newElement.Code);
-        }
     }
 
     private void Start()
