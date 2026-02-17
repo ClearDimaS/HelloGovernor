@@ -13,38 +13,311 @@ MonoBehaviour:
   m_Name: ChatQustions
   m_EditorClassIdentifier: 
   questions:
-  - question: Why do politicians make terrible comedians?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2360976859136
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2593764925440
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2600387731456
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Why do politicians make terrible comedians?
     answer1: They can't find the punchline!
     answer2: Because it always leaves them hanging!
-  - question: Is AI taking over?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2432942727168
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2594515705856
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2606851153920
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Is AI taking over?
     answer1: Only if they can figure out how to make coffee!
     answer2: "Don\u2019t worry! They still need us to teach them sarcasm!"
-  - question: Are college degrees essential?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2435463503872
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2595270680576
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2607522242560
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Are college degrees essential?
     answer1: Only if you want to prove you can survive ramen noodles!
     answer2: Yes, especially if you want to impress your cat with your knowledge!
-  - question: Can we save the Earth?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2437896200192
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2595945963520
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2608193331200
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Can we save the Earth?
     answer1: Absolutely! Just stop using plastic straws and start using reusable
       ones... made of unicorn horns!
     answer2: Sure, just convince raccoons to recycle their trash!
-  - question: Is soccer really exciting?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2440077238272
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2596617052160
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2608864419840
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Is soccer really exciting?
     answer1: Only if you enjoy watching grass grow in fast motion!
     answer2: "Yes, especially when the players fall like they\u2019ve been hit by
       a meteor!"
-  - question: Is pineapple on pizza okay?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2440748326912
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2597288140800
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2609535508480
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Is pineapple on pizza okay?
     answer1: "Only if you\u2019re trying to confuse your taste buds!"
     answer2: "Sure, it\u2019s a tropical vacation for your mouth\u2014just don\u2019t
       forget the sunscreen!"
-  - question: What's key to a happy marriage?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2441419415552
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2597875343360
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2610206597120
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: What's key to a happy marriage?
     answer1: "Mastering the art of saying \"You\u2019re right, dear\"!"
     answer2: "Compromise\u2014like agreeing on what to watch on Netflix without a
       three-hour debate!"
-  - question: Are skinny jeans still cool?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2441922732032
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2598546432000
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2610961571840
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Are skinny jeans still cool?
     answer1: Only if you enjoy feeling like a stuffed sausage!
     answer2: Yes, but only if you can still breathe and sit down!
-  - question: What's toughest about parenting?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2442509934592
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2599217520640
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2612303749120
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: What's toughest about parenting?
     answer1: Bedtime negotiations that would make a diplomat weep!
     answer2: "Sneaking snacks without the kids finding out\u2014it's like a covert
       mission!"
-  - question: Is traveling overrated?
+  - questionLocalized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2443097137152
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer1_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2599804723200
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    answer2_Localized:
+      m_TableReference:
+        m_TableCollectionName: GUID:75e8584c563754b76a8204d40388f5f9
+      m_TableEntryReference:
+        m_KeyId: 2613310382080
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    question: Is traveling overrated?
     answer1: Only when you realize your suitcase weighs more than a small car!
     answer2: Sure, especially when the best part is coming home to your own bed!
+  references:
+    version: 2
+    RefIds: []
