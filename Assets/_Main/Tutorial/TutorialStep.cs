@@ -47,7 +47,10 @@ public abstract class TutorialStep
         }
         return title;
     }
-
+    public void RecreateTitle()
+    {
+        title = CreateTitle();
+    }
     public string GetProgressText()
     {
         if (lastProgress != GetProgress())

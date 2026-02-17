@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -21,6 +22,7 @@ public class CityProgressPanel : UI_Panel
     private CanvasGroup group;
     private TutorialStep lastStep;
     private float completedTimeout;
+    private bool needRecreateTitle;
 
     private void Start()
     {
@@ -32,6 +34,10 @@ public class CityProgressPanel : UI_Panel
         }
 
         completeGO.SetActiveOnce(false);
+        LocalizationManager.Instance.CurrentLocale.Subscribe(locale =>
+        {
+            needRecreateTitle = true;
+        }).AddTo(this);
     }
 
     private void ShowTarget()
@@ -58,9 +64,14 @@ public class CityProgressPanel : UI_Panel
             completeGO.SetActiveOnce(true);
         }
         var step = tutorialManager.GetCurrentStep();
-        if (step != lastStep && step != null)
+        if (step != lastStep && step != null || needRecreateTitle)
         {
             lastStep = step;
+            if (needRecreateTitle)
+            {
+                needRecreateTitle = false;
+                step.RecreateTitle();
+            }
             titleText.text = step.GetTitle();
             iconImage.sprite = step.GetTutorialIcon();
         }
