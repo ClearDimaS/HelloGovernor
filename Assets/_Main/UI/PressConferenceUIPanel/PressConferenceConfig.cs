@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "PressConference", menuName = "Configs/PressConference/Topics")]
 public class PressConferenceConfig : ScriptableObject
@@ -11,7 +13,7 @@ public class PressConferenceConfig : ScriptableObject
     public int rewardPerAnswer = 100;
     public int penaltyPerAnswer = 100;
     
-    [Button]
+    /*[Button]
     protected void ReSplitSentences()
     {
         foreach (var data in datas)
@@ -21,7 +23,7 @@ public class PressConferenceConfig : ScriptableObject
                 data.sentences = SplitTextIntoSentences(data.sentences[0]).ToArray();
             }
         }
-    }
+    }*/
     
     private List<string> SplitTextIntoSentences(string text)
     {
@@ -62,6 +64,29 @@ public class PressConferenceConfig : ScriptableObject
 [Serializable]
 public class PressConferenceTopicData
 {
-    public string title;
-    public string[] sentences;
+    public LocalizedString titleLocalized;
+    public LocalizedString[] sentencesLocalized;
+
+
+    public string title => titleLocalized.GetLocalizedString();
+    private string[] _sentences;
+
+    public string[] sentences
+    {
+        get
+        {
+            if (_sentences == null)
+            {
+                _sentences = CreateSentences();
+            }
+
+            return _sentences;
+        }
+    }
+
+    private string[] CreateSentences()
+    {
+        var newSentences = sentencesLocalized.Select(x => x.GetLocalizedString()).ToArray();
+        return newSentences;
+    }
 }
