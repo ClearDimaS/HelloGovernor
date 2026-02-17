@@ -12,7 +12,8 @@ public class BuildingTutorialStep : TutorialStep
     public override bool UseCache => false;
     public UpgradableBuilding Building => building;
 
-    public BuildingTutorialStep(UpgradableBuilding building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
+    public BuildingTutorialStep(UpgradableBuilding building, int levelIndex, int typeIndex, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.building = building;
         this.levelIndex = levelIndex;

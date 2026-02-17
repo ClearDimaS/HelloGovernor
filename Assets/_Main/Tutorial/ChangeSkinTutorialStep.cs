@@ -5,7 +5,8 @@ public class ChangeSkinTutorialStep : TutorialStep
     protected SkinChooser skinChooser;
     protected Transform activationPlace;
 
-    public ChangeSkinTutorialStep(SkinChooser skinChooser, Transform activationPlace, PlayerDataRepository repository) : base(repository)
+    public ChangeSkinTutorialStep(SkinChooser skinChooser, Transform activationPlace, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.skinChooser = skinChooser;
         this.activationPlace = activationPlace;

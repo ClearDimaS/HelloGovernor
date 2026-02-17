@@ -5,7 +5,8 @@ public class UIGranterTutorialStep : TutorialStep
 {
     protected UIWishGranter uiGranter;
     protected bool wasLaunched;
-    public UIGranterTutorialStep(UIWishGranter uiGranter, PlayerDataRepository repository) : base(repository)
+    public UIGranterTutorialStep(UIWishGranter uiGranter, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.uiGranter = uiGranter;
     }

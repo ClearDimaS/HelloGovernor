@@ -8,7 +8,8 @@ public class IncomeUpgraderTutorialStep : TutorialStep
     public int LevelIndex => levelIndex;
     public override bool UseCache => false;
 
-    public IncomeUpgraderTutorialStep(IncomeUpgrader building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
+    public IncomeUpgraderTutorialStep(IncomeUpgrader building, int levelIndex, int typeIndex, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.building = building;
         this.levelIndex = levelIndex;

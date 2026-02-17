@@ -6,7 +6,8 @@ public class ItemsUseTutorialStep : TutorialStep
     protected IItemsUserWishGranter itemsGranter;
     protected int usedItemsCount;
     
-    public ItemsUseTutorialStep(IItemsUserWishGranter itemsGranter, PlayerDataRepository repository) : base(repository)
+    public ItemsUseTutorialStep(IItemsUserWishGranter itemsGranter, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.itemsGranter = itemsGranter;
     }

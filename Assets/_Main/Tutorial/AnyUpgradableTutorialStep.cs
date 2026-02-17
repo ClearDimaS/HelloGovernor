@@ -8,7 +8,8 @@ public class AnyUpgradableTutorialStep : TutorialStep
     public int LevelIndex => levelIndex;
     public override bool UseCache => false;
 
-    public AnyUpgradableTutorialStep(UpgradableObject building, int levelIndex, int typeIndex, PlayerDataRepository repository) : base(repository)
+    public AnyUpgradableTutorialStep(UpgradableObject building, int levelIndex, int typeIndex, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.building = building;
         this.levelIndex = levelIndex;

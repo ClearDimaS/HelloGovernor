@@ -9,7 +9,8 @@ public class OperatableTutorialStep : TutorialStep
 
     protected bool wasServeShown;
     protected Transform startTarget;
-    public OperatableTutorialStep(OperatableGranter operatable, PlayerDataRepository repository, CameraManager cameraManager) : base(repository)
+    public OperatableTutorialStep(OperatableGranter operatable,CameraManager cameraManager, PlayerDataRepository repository, 
+        TutorialsConfig tutorialsConfig) : base(repository, tutorialsConfig)
     {
         this.operatable = operatable;
         this.cameraManager = cameraManager;

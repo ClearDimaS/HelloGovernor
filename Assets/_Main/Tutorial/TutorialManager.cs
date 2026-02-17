@@ -8,6 +8,7 @@ using Zenject;
 
 public class TutorialManager : Singleton<TutorialManager>
 {
+    [Inject] private TutorialsConfig tutorialsConfig;
     [Inject] private CompassManager compassManager;
     [Inject] private SkinChooser skinChooser;
     [Inject] private GameConfig gameConfig;
@@ -173,7 +174,8 @@ public class TutorialManager : Singleton<TutorialManager>
                     building, 
                     purchasable.level-1, 
                     purchasable.thisTypeIndex, 
-                    playerRepository)
+                    playerRepository,
+                    tutorialsConfig)
                 );
                 if (!wasFashionFound)
                 {
@@ -184,7 +186,8 @@ public class TutorialManager : Singleton<TutorialManager>
                         tutorialSteps.Add(new ChangeSkinTutorialStep(
                             skinChooser: skinChooser,
                             activationPlace: fashion.ActivationPlace,
-                            repository:playerRepository));
+                            repository:playerRepository,
+                            tutorialsConfig));
                     }
                 }
             }
@@ -195,7 +198,8 @@ public class TutorialManager : Singleton<TutorialManager>
                     incomeUpgrader, 
                     purchasable.level-1,
                     purchasable.thisTypeIndex,
-                    playerRepository)
+                    playerRepository,
+                    tutorialsConfig)
                 );
             }
 
@@ -204,7 +208,8 @@ public class TutorialManager : Singleton<TutorialManager>
             {
                 if (granter is OperatableGranter operatable)
                 {
-                    tutorialSteps.Add(new OperatableTutorialStep(operatable, playerRepository, cameraManager));
+                    tutorialSteps.Add(new OperatableTutorialStep(operatable, cameraManager, playerRepository,
+                        tutorialsConfig));
                     var operatorUpgradable = granter.GetComponentInChildren<UpgradableOperator>();
                     if (operatorUpgradable != null)
                     {
@@ -212,13 +217,16 @@ public class TutorialManager : Singleton<TutorialManager>
                             operatorUpgradable,
                             0,
                             100,
-                            playerRepository));
+                            playerRepository,
+                            tutorialsConfig));
                     }
                 }else
                 if (granter is ItemsWishGranter itemsGranter)
                 {
-                    tutorialSteps.Add(new ItemsTakeTutorialStep(itemsGranter, playerRepository));
-                    tutorialSteps.Add(new ItemsUseTutorialStep(itemsGranter, playerRepository));
+                    tutorialSteps.Add(new ItemsTakeTutorialStep(itemsGranter, playerRepository,
+                        tutorialsConfig));
+                    tutorialSteps.Add(new ItemsUseTutorialStep(itemsGranter, playerRepository,
+                        tutorialsConfig));
                     
                     var assistantUpgradable = granter.GetComponentInChildren<UpgradableAssistant>();
                     if (assistantUpgradable != null)
@@ -227,14 +235,17 @@ public class TutorialManager : Singleton<TutorialManager>
                             assistantUpgradable,
                             0,
                             1000,
-                            playerRepository));  
+                            playerRepository,
+                            tutorialsConfig));  
                     }
                 }
                 else
                 if (granter is OrderWishGranter orderGranter)
                 {
-                    tutorialSteps.Add(new ItemsTakeTutorialStep(orderGranter, playerRepository));
-                    tutorialSteps.Add(new ItemsUseTutorialStep(orderGranter, playerRepository));
+                    tutorialSteps.Add(new ItemsTakeTutorialStep(orderGranter, playerRepository,
+                        tutorialsConfig));
+                    tutorialSteps.Add(new ItemsUseTutorialStep(orderGranter, playerRepository,
+                        tutorialsConfig));
                     
                     var assistantUpgradable = granter.GetComponentInChildren<UpgradableAssistant>();
                     if (assistantUpgradable != null)
@@ -243,12 +254,14 @@ public class TutorialManager : Singleton<TutorialManager>
                             assistantUpgradable,
                             0,
                             1000,
-                            playerRepository));  
+                            playerRepository,
+                            tutorialsConfig));  
                     }
                 }else
                 if (granter is UIWishGranter uiGranter)
                 {
-                    tutorialSteps.Add(new UIGranterTutorialStep(uiGranter, playerRepository));
+                    tutorialSteps.Add(new UIGranterTutorialStep(uiGranter, playerRepository,
+                        tutorialsConfig));
                 }
             }
         }

@@ -28,8 +28,9 @@ public abstract class TutorialStep
 
     protected string _keyCache;
     
-    public TutorialStep(PlayerDataRepository playerRepository)
+    public TutorialStep(PlayerDataRepository playerRepository, TutorialsConfig tutorialsConfig)
     {
+        this.tutorialsConfig = tutorialsConfig;
         this.playerRepository = playerRepository;
     }
 
