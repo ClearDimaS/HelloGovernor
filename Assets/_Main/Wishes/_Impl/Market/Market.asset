@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 1690722703351138819, guid: 6047a527896924aa480089edfe93dc41,
     type: 3}
-  title: Market
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 158866595840
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: fcd0f586fba30944795d326e4d9b3616, type: 3}
   levels:
   - option: {fileID: 2445526818711929869, guid: 181ca106979514ab3931bb9f5217ef7b,
@@ -23,3 +31,6 @@ MonoBehaviour:
   - option: {fileID: 2445526818711929869, guid: 181ca106979514ab3931bb9f5217ef7b,
       type: 3}
     variants: []
+  references:
+    version: 2
+    RefIds: []

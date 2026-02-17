@@ -10,11 +10,13 @@ public class ProjectConfigsInstaller : ScriptableObjectInstaller<ProjectConfigsI
     [SerializeField] private GameConfig gameConfig;
     [FormerlySerializedAs("wishesConfig")] [SerializeField] private WishesCollectionConfig wishesCollectionConfig;
     [SerializeField] private BuildingsCollectionConfig buildingsCollectionConfig;
+    [SerializeField] private TutorialsConfig tutorialsConfig;
     
     public override void InstallBindings()
     {
         Container.Bind<GameConfig>().FromInstance(gameConfig).AsSingle().NonLazy();
         Container.Bind<WishesCollectionConfig>().FromInstance(wishesCollectionConfig).AsSingle().NonLazy();
         Container.Bind<BuildingsCollectionConfig>().FromInstance(buildingsCollectionConfig).AsSingle().NonLazy();
+        Container.Bind<TutorialsConfig>().FromInstance(tutorialsConfig).AsSingle().NonLazy();
     }
 }

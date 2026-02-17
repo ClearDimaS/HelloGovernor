@@ -58,7 +58,7 @@ public class OperatableTutorialStep : TutorialStep
 
     protected override string CreateTitle()
     {
-        return $"Serve {Mathf.RoundToInt(targetServeCount)} people";
+        return string.Format(tutorialsConfig.OperatableTitle, Mathf.RoundToInt(targetServeCount));
     }
 
     public override Sprite GetTutorialIcon()

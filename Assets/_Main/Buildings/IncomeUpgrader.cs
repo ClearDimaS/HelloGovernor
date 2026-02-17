@@ -6,7 +6,7 @@ using UnityEngine;
 public class IncomeUpgrader : UpgradableObject
 {
     [SerializeField] private float[] incomeMultipliers;
-    [SerializeField] private string[] titles;
+
     private WishGranter wishGranter;
 
     private UpgradableBuilding building
@@ -51,12 +51,12 @@ public class IncomeUpgrader : UpgradableObject
 
     public override string GetTitle()
     {
-        return titles[Mathf.Clamp(Level - 1, 0, titles.Length - 1)];;
+        return building.GetTitle();
     }
 
     public float GetMultiplier()
     {
-        return incomeMultipliers[Mathf.Clamp(Level - 1, 0, titles.Length - 1)];
+        return incomeMultipliers[Mathf.Clamp(Level - 1, 0, incomeMultipliers.Length - 1)];
     }
 
     protected override void RefreshLevelGFX(bool instant)

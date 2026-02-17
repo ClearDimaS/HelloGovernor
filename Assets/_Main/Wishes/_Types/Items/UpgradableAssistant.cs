@@ -5,6 +5,7 @@ using Zenject;
 public class UpgradableAssistant : UpgradableObject
 {
     [Inject] private GameConfig gameConfig;
+    [Inject] private TutorialsConfig questsConfig;
     
     [SerializeField] private Transform boughtRoot;
 
@@ -70,6 +71,6 @@ public class UpgradableAssistant : UpgradableObject
     
     public override string GetTitle()
     {
-        return $"{upgradableBuilding.GetTitle()} helper";
+        return string.Format(questsConfig.Assistant, upgradableBuilding.GetTitle());
     }
 }

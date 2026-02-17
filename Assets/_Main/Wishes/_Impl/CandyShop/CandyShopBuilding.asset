@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 3423621939799396741, guid: 35143d3ada9274059a84fcfae01e8047,
     type: 3}
-  title: Candy Shop
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 106936918016
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: f3e807424d15f0147814406a8a4c9f5b, type: 3}
   levels:
   - option: {fileID: 3804475624784209401, guid: 77c1dbdf0a5934b5687fef5738b9542f,
@@ -23,3 +31,6 @@ MonoBehaviour:
   - option: {fileID: 3804475624784209401, guid: 77c1dbdf0a5934b5687fef5738b9542f,
       type: 3}
     variants: []
+  references:
+    version: 2
+    RefIds: []

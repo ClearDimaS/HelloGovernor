@@ -66,7 +66,7 @@ public class ChangeSkinTutorialStep : TutorialStep
 
     protected override string CreateTitle()
     {
-        return $"Visit fashion";   
+        return tutorialsConfig.ChangeSkin;   
     }
 
     public override Sprite GetTutorialIcon()

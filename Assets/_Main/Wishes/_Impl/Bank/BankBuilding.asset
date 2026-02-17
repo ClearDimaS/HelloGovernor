@@ -14,10 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 3551273749894818008, guid: 19093a0d97d304adaa5eec5549041577,
     type: 3}
-  title: Bank
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 101903753216
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: d41104913bdc9214d84599945b80020b, type: 3}
   levels:
   - option: {fileID: 949597686166449831, guid: b71ca5791020a490295ae4f3bd2464fe, type: 3}
     variants: []
   - option: {fileID: 949597686166449831, guid: b71ca5791020a490295ae4f3bd2464fe, type: 3}
     variants: []
+  references:
+    version: 2
+    RefIds: []

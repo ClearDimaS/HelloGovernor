@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: -1742031957177078778, guid: 1fadc80b04b064575af2bb67958769f2,
     type: 3}
-  title: Baloon
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 53727977472
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: ce6ee3173efd6b04996b6e10ddae64ab, type: 3}
   levels:
   - option: {fileID: 5439475662375362683, guid: c26fbe815ff4b464284d30ea73992d67,
@@ -23,3 +31,6 @@ MonoBehaviour:
   - option: {fileID: 5439475662375362683, guid: c26fbe815ff4b464284d30ea73992d67,
       type: 3}
     variants: []
+  references:
+    version: 2
+    RefIds: []

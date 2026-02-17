@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Buildings Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Buildings
+  m_TableCollectionNameGuidString: 4614b5a0ea9f5428eb83b06dfd73993a
+  m_Entries:
+  - m_Id: 53727977472
+    m_Key: Buildings.Baloon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 101903753216
+    m_Key: Buildings.Bank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104000905216
+    m_Key: Buildings.Boat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106936918016
+    m_Key: Buildings.Candy_Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116260855808
+    m_Key: Buildings.Cafe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120358690816
+    m_Key: Buildings.Fashion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150729646080
+    m_Key: Buildings.Flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 153162342400
+    m_Key: Buildings.Hospital
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155762810880
+    m_Key: Buildings.house
+    m_Metadata:
+      m_Items: []
+  - m_Id: 157608304640
+    m_Key: Buildings.magic_shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 158866595840
+    m_Key: Buildings.Market
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159537684480
+    m_Key: Buildings.Police
+    m_Metadata:
+      m_Items: []
+  - m_Id: 160292659200
+    m_Key: Buildings.PressConference
+    m_Metadata:
+      m_Items: []
+  - m_Id: 160879861760
+    m_Key: Buildings.Repair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161634836480
+    m_Key: Buildings.TownHall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162305925120
+    m_Key: Buildings.TrainStation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162977013760
+    m_Key: Buildings.Umbrella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 163643908096
+    m_Key: Buildings.Windmill
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 9166125258114597180
+  references:
+    version: 2
+    RefIds:
+    - rid: 9166125258114597180
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1771351696685

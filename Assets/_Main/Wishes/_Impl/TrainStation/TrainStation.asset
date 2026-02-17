@@ -14,8 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 5965697286692907825, guid: eca1b3f9659f84036a8b7905c8cbd3dc,
     type: 3}
-  title: Train Station
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 162305925120
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 300fa4fd0e78f5943b5bae739a9d1d50, type: 3}
   levels:
   - option: {fileID: 6288942314032710531, guid: 82822dd457fe14a0bada088e5464dba0,
       type: 3}
+    variants: []
+  references:
+    version: 2
+    RefIds: []

@@ -5,6 +5,7 @@ using Zenject;
 public class UpgradableOperator : UpgradableObject
 {
     [Inject] private GameConfig gameConfig;
+    [Inject] protected TutorialsConfig tutorialsConfig;
     
     [SerializeField] private Transform boughtRoot;
 
@@ -70,6 +71,6 @@ public class UpgradableOperator : UpgradableObject
     
     public override string GetTitle()
     {
-        return $"{upgradableBuilding.GetTitle()} helper";
+        return string.Format(tutorialsConfig.Cashier, upgradableBuilding.GetTitle());
     }
 }

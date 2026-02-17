@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Quests Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Quests
+  m_TableCollectionNameGuidString: 201229d15de814cf483a88a887bacd3c
+  m_Entries:
+  - m_Id: 45934960640
+    m_Key: quests.wishes.bank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148565385216
+    m_Key: quests.wishes.press_conference
+    m_Metadata:
+      m_Items: []
+  - m_Id: 151589478400
+    m_Key: quests.wishes.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8021555011584
+    m_Key: quests.Operatable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8113183776768
+    m_Key: quests.ItemsUse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8115817799680
+    m_Key: quests.ItemsTake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8117998837760
+    m_Key: quests.Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8120691580928
+    m_Key: quests.Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8123283660800
+    m_Key: quests.BuyIncomeUpgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8125213040640
+    m_Key: quests.UpgradeIncomeUpgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8126395834368
+    m_Key: quests.Helper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8127314386944
+    m_Key: quests.Cashier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8128568483840
+    m_Key: quests.Assistant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8129914855424
+    m_Key: quests.ChangeSkin
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 9166125258114597175
+  references:
+    version: 2
+    RefIds:
+    - rid: 9166125258114597175
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1771350381328

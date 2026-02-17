@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
@@ -7,8 +8,9 @@ using Object = UnityEngine.Object;
 public class BuildingConfig : ScriptableObject, IKey<Type>
 {
     [SerializeField] private BuildingBase building;
-    
-    public string title;
+    [SerializeField] private LocalizedString titleLocalized;
+
+    public string title => titleLocalized.GetLocalizedString();
     public Sprite icon;
     public BuildingLevelData[] levels;
 

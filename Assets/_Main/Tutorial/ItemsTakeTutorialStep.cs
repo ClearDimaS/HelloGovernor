@@ -44,7 +44,7 @@ public class ItemsTakeTutorialStep : TutorialStep
 
     protected override string CreateTitle()
     {
-        return $"Take {Mathf.RoundToInt(targetItemsCount)} items";
+        return string.Format(tutorialsConfig.ItemsTake, Mathf.RoundToInt(targetItemsCount));
     }
 
     public override Sprite GetTutorialIcon()

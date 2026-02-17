@@ -4,6 +4,7 @@ using Zenject;
 
 public abstract class TutorialStep
 {
+    [Inject] protected TutorialsConfig tutorialsConfig;
     [Inject] protected PlayerDataRepository playerRepository;
 
     protected float lastProgress = -1;

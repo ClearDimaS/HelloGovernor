@@ -68,11 +68,11 @@ public class IncomeUpgraderTutorialStep : TutorialStep
     {
         if (levelIndex == 0)
         {
-            return $"Buy {building.GetTitle()}";   
+            return string.Format(tutorialsConfig.BuyIncomeUpgrade, building.GetTitle());
         }
         else
         {
-            return $"Upgrade {building.GetTitle()}";
+            return string.Format(tutorialsConfig.UpgradeIncomeUpgrade, building.GetTitle());
         }
     }
 

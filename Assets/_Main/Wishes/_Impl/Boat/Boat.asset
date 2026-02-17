@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 5105204913426415420, guid: 51609ab6c47e44653b5dfc01223b7463,
     type: 3}
-  title: Boat
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 104000905216
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: fed8e6c6ab674eb498b0d5f4b4cb1044, type: 3}
   levels:
   - option: {fileID: 6045018191227223351, guid: 4b01461b768c040f7950e68d51235695,
@@ -23,3 +31,6 @@ MonoBehaviour:
   - option: {fileID: 6045018191227223351, guid: 4b01461b768c040f7950e68d51235695,
       type: 3}
     variants: []
+  references:
+    version: 2
+    RefIds: []

@@ -93,11 +93,11 @@ public class BuildingTutorialStep : TutorialStep
     {
         if (levelIndex == 0)
         {
-            return $"Buy {building.GetTitle()}";   
+            return string.Format(tutorialsConfig.Buy, building.GetTitle());
         }
         else
         {
-            return $"Upgrade {building.GetTitle()}";
+            return string.Format(tutorialsConfig.Upgrade, building.GetTitle());
         }
     }
 

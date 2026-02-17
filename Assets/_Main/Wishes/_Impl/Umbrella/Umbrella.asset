@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: -7280073963066760305, guid: a41739a176ee94388a3273bff7b6146d,
     type: 3}
-  title: Umbrella
+  titleLocalized:
+    m_TableReference:
+      m_TableCollectionName: GUID:4614b5a0ea9f5428eb83b06dfd73993a
+    m_TableEntryReference:
+      m_KeyId: 162977013760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 60a91f82ad3df9344b877ae98fd41204, type: 3}
   levels:
   - option: {fileID: 8538257444572054308, guid: 806bfc29c1e124b8794ce0e6b30fbf93,
@@ -29,3 +37,6 @@ MonoBehaviour:
     - {fileID: 8538257444572054308, guid: 7b6e06dff486c425c9a5b61e2c405fa5, type: 3}
     - {fileID: 8538257444572054308, guid: 0343f83d8ef5d4aed837dab09080120c, type: 3}
     - {fileID: 8538257444572054308, guid: 3e0f14fd9f79d48e9a39e26294495542, type: 3}
+  references:
+    version: 2
+    RefIds: []

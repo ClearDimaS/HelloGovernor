@@ -5,6 +5,7 @@ using Zenject;
 
 public class UpgradableHelper : UpgradableObject
 {
+    [Inject] protected TutorialsConfig tutorialsConfig;
     [Inject] protected GameConfig gameConfig;
     [Inject] protected BuildingsCollectionConfig buildingsCollectionConfig;
     
@@ -67,6 +68,6 @@ public class UpgradableHelper : UpgradableObject
              
     public override string GetTitle()
     {
-        return $"{upgradableBuilding.GetTitle()} helper";
+        return string.Format(tutorialsConfig.Helper, upgradableBuilding.GetTitle());
     }
 }
