@@ -43,23 +43,8 @@ public abstract class TutorialStep
     }
     public void GetTitle(bool needRecreate, Action<string> handler)
     {
-        if (string.IsNullOrEmpty(title) || needRecreate)
-        {
-            UniTask.WaitUntil(() =>
-            {
-                return LocalizationManager.Instance.IsLoadedQuests();
-            }).ContinueWith(() =>
-            {
-                title = CreateTitle();
-                handler(title);
-            });
-        }
-        else
-        {
-            handler(title);
-        }
-
-
+        title = CreateTitle();
+        handler(title);
     }
 
     public string GetProgressText()
