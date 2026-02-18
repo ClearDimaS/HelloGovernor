@@ -67,12 +67,11 @@ public class CityProgressPanel : UI_Panel
         if (step != lastStep && step != null || needRecreateTitle)
         {
             lastStep = step;
-            if (needRecreateTitle)
+            step.GetTitle(needRecreateTitle, title =>
             {
-                needRecreateTitle = false;
-                step.RecreateTitle();
-            }
-            titleText.text = step.GetTitle();
+               titleText.text = title;
+            });
+            needRecreateTitle = false;
             iconImage.sprite = step.GetTutorialIcon();
         }
         if (lastStep != null)

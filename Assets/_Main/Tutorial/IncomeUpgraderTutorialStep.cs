@@ -65,7 +65,7 @@ public class IncomeUpgraderTutorialStep : TutorialStep
         return notBoughtProgressText;
     }
 
-    protected override string CreateTitle()
+        protected override string CreateTitle()
     {
         if (levelIndex == 0)
         {

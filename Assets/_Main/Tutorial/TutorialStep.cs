@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -40,18 +41,27 @@ public abstract class TutorialStep
     {
         
     }
-    public string GetTitle()
+    public void GetTitle(bool needRecreate, Action<string> handler)
     {
-        if (string.IsNullOrEmpty(title))
+        if (string.IsNullOrEmpty(title) || needRecreate)
         {
-            title = CreateTitle();
+            UniTask.WaitUntil(() =>
+            {
+                return LocalizationManager.Instance.IsLoadedQuests();
+            }).ContinueWith(() =>
+            {
+                title = CreateTitle();
+                handler(title);
+            });
         }
-        return title;
+        else
+        {
+            handler(title);
+        }
+
+
     }
-    public void RecreateTitle()
-    {
-        title = CreateTitle();
-    }
+
     public string GetProgressText()
     {
         if (lastProgress != GetProgress())

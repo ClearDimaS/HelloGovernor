@@ -23,7 +23,7 @@ public class AdvertisementsManager : MonoBehaviour
 #else
         adsStrategy = new LevelPlayAdsStrategy();
 #endif
-
+        adsStrategy.Init();
     }
 
     public void ShowInterstitial()
