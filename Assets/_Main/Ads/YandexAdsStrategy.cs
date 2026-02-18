@@ -4,7 +4,7 @@ public class YandexAdsStrategy : AdsStrategy
 {
     public override void Init(PlayerInput input)
     {
-        if (YG2.Device.Mobile  == YG2.infoYG.Simulation.device || YG2.Device.Tablet == YG2.infoYG.Simulation.device)
+        if (YG2.Device.Mobile  == YG2.envir.device || YG2.Device.Tablet == YG2.envir.device)
         {
             input.ForceMobile();
         }
