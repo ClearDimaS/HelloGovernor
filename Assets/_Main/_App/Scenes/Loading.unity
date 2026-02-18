@@ -182,6 +182,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 9110299980717017170, guid: 974774ddfadfd407cb630a8f9dcc0cba,
+        type: 3}
+      propertyPath: localizedAssetTable.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9110299980717017170, guid: 974774ddfadfd407cb630a8f9dcc0cba,
+        type: 3}
+      propertyPath: localizedAssetTable.Array.data[0].m_TableReference.m_TableCollectionName
+      value: GUID:59cf463eabbd24e3b9b40a9260bb90d3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

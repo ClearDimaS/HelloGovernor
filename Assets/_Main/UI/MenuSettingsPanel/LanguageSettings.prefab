@@ -961,17 +961,11 @@ MonoBehaviour:
   openSelectButton: {fileID: 8915272943670680443}
   closeSelectButton: {fileID: 281414432231700341}
   selectedIcon: {fileID: 3621377830648552272}
-  assetTable:
-    m_TableReference:
-      m_TableCollectionName: GUID:59cf463eabbd24e3b9b40a9260bb90d3
-  flag:
-    m_TableReference:
-      m_TableCollectionName: GUID:59cf463eabbd24e3b9b40a9260bb90d3
-    m_TableEntryReference:
-      m_KeyId: 40432033792
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
+  languages:
+  - flag: {fileID: 21300000, guid: e455fbde22f6c40cd9b61c06a9b172ec, type: 3}
+    locale: {fileID: 11400000, guid: c68a3f58efafc4612923553bddfcaaf9, type: 2}
+  - flag: {fileID: 21300000, guid: 1d666b12daa28411fa40a5a69dd7b390, type: 3}
+    locale: {fileID: 11400000, guid: f0343132a4e86476db874beaa46c4552, type: 2}
   content: {fileID: 6406008854285728294}
   languagePrefab: {fileID: 2396565628749375200, guid: 3b38e20842efd43aeb597a40b880c1fd,
     type: 3}

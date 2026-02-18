@@ -11,6 +11,7 @@ using UnityEngine.Video;
 using Zenject;
 using Object = UnityEngine.Object;
 using DG.Tweening;
+using UnityEngine.Localization;
 
 public class LoadingScreen : Singleton<LoadingScreen>
 {
@@ -18,6 +19,7 @@ public class LoadingScreen : Singleton<LoadingScreen>
     [SerializeField] protected CanvasGroup blockerCanvas;
     [SerializeField] private RectMask2D rectMask2D;
     [SerializeField] private TMP_Text loadedNameText;
+    [SerializeField] private LocalizedAssetTable[] localizedAssetTable;
     
     private int loadedScene = -1;
     
@@ -41,7 +43,21 @@ public class LoadingScreen : Singleton<LoadingScreen>
         await LoadSceneAsync(1, null, 0.75f);
 
         await WaitOperation(() => true, () =>1f, 0.75f, 1f);
-        
+
+        var doneCounter = 0;
+        foreach (var tab in localizedAssetTable)
+        {
+            var tableOp = tab.GetTableAsync();
+            UniTask.WaitUntil(() =>tableOp.IsDone).ContinueWith(() =>
+            {
+                doneCounter++;
+            });
+        }
+
+        while (doneCounter < localizedAssetTable.Length)
+        {
+            await UniTask.Yield();
+        }
         await blockerCanvas.Fade(0.5f, 0.5f, 0f);
         raycaster.enabled = false;
     }

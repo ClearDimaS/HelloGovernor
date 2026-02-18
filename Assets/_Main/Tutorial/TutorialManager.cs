@@ -31,10 +31,12 @@ public class TutorialManager : Singleton<TutorialManager>
     private bool isInit;
     private bool isMoneyCompassAdded;
     private bool isBusyWithAds;
+    private AdvertisementsManager advertisementsManager;
     
     private void Start()
     {
         BuildTutorialSteps();
+        advertisementsManager = FindAnyObjectByType<AdvertisementsManager>();
     }
     
     private void Update()
@@ -117,6 +119,7 @@ public class TutorialManager : Singleton<TutorialManager>
                         });   
                     });
                     RefreshArrowTarget(newStep); 
+                    advertisementsManager.ShowInterstitial();
                 }
                 else
                 {

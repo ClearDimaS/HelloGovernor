@@ -9,6 +9,13 @@ using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
 using Zenject;
 
+[Serializable]
+public class LanguagesData
+{
+    public Sprite flag;
+    public Locale locale;
+}
+
 public class LanguageSettings : MonoBehaviour
 {
     [Inject] private DiContainer diContainer;
@@ -16,8 +23,7 @@ public class LanguageSettings : MonoBehaviour
     [SerializeField] private Button openSelectButton;
     [SerializeField] private Button closeSelectButton;
     [SerializeField] private Image selectedIcon;
-    [SerializeField] private LocalizedAssetTable assetTable;
-    [SerializeField] private LocalizedAsset<Sprite> flag;
+    [SerializeField] private LanguagesData[] languages;
     
     [SerializeField] private GameObject content;
     
@@ -91,7 +97,16 @@ public class LanguageSettings : MonoBehaviour
 
     private void GetLocaleIcon(string identifierCode, Action<Sprite> onLoad)
     {
-        LocalizationManager.Instance.GetAssetFor(assetTable, flag, identifierCode, onLoad);
+        foreach (var data in languages)
+        {
+            if (data.locale.Identifier.Code == identifierCode)
+            {
+                onLoad(data.flag);
+                return;
+            }
+        }
+
+        onLoad(null);
     }
     
     private void SpawnLocale(Locale locale)
