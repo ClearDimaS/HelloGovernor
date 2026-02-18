@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -31,5 +32,11 @@ public class PlayerInput : MonoBehaviour
     public bool HasRecentPresser()
     {
         return Time.time - lastPressTime < gameConfig.moneySpendDelayAfterInput;
+    }
+
+    public async UniTaskVoid ForceMobile()
+    {
+        await UniTask.WaitUntil(() => joystickPanel != null);
+        joystickPanel.ForceMobile();
     }
 }

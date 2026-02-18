@@ -1,10 +1,11 @@
 
 using System;
+using CrazyGames;
 using UnityEngine;
 
 public abstract class AdsStrategy
 {
-    public abstract void Init();
+    public abstract void Init(PlayerInput playerInput);
     public abstract void ShowInter();
 }
 
@@ -14,6 +15,7 @@ public class AdvertisementsManager : MonoBehaviour
     private AdsStrategy adsStrategy;
     private void Awake()
     {
+        var input = FindAnyObjectByType<PlayerInput>(FindObjectsInactive.Include);
 #if UNITY_WEBGL
     #if YandexWeb
         adsStrategy = new YandexAdsStrategy();
@@ -23,7 +25,7 @@ public class AdvertisementsManager : MonoBehaviour
 #else
         adsStrategy = new LevelPlayAdsStrategy();
 #endif
-        adsStrategy.Init();
+        adsStrategy.Init(input);
     }
 
     public void ShowInterstitial()

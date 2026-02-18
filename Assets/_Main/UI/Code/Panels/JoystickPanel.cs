@@ -14,6 +14,7 @@ public class JoystickPanel : UI_Panel
     public float Magnitude => lastMagn.magnitude;
     public bool IsMoving => (lastDIr.y != 0f || lastDIr.x != 0f);
 
+    private bool forceMobile;
     protected Vector2 lastDIr;
     protected Vector2 lastMagn;
     protected event Action<Vector2> inputEvent;
@@ -40,20 +41,31 @@ public class JoystickPanel : UI_Panel
     
     private void Update()
     {
+#if UNITY_WEBGL
+        if (forceMobile)
+        {
+            UpdateMobile();
+        }
+        else
+        {
+            UpdateDesktop();
+        }
+        #else
+        UpdateMobile();
+        #endif
+    }
+
+    void UpdateMobile()
+    {
         var activeJoystick = cameraManager.IsOnPlayer;
-#if UNITY_IOS || UNITY_ANDROID
         if (activeJoystick != joystick.gameObject.activeSelf)
         {
             inputEvent?.Invoke(Vector2.zero);
             joystick.OnPointerUp(new PointerEventData(EventSystem.current));
             joystick.gameObject.SetActive(activeJoystick);
         }
-
-#endif
         if (activeJoystick)
         {
-
-          #if UNITY_IOS || UNITY_ANDROID
             if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
             {
                 inputEvent?.Invoke(joystick.Direction);
@@ -63,8 +75,23 @@ public class JoystickPanel : UI_Panel
             {
                 lastMagn = Vector2.zero;
             }
-            #else
+            lastDIr = joystick.Direction;
 
+        }          
+        else
+        {
+            lastMagn = Vector2.zero;
+            lastDIr = Vector2.zero;
+        }
+    }
+
+    void UpdateDesktop()
+    {
+        var activeJoystick = cameraManager.IsOnPlayer;
+        joystick.gameObject.SetActiveOnce(false);
+        if (activeJoystick)
+        {
+            
             var dir = Vector2.zero;
             if (Input.GetKey(KeyCode.W))
             {
@@ -90,12 +117,16 @@ public class JoystickPanel : UI_Panel
 
             lastDIr = dir;
             lastMagn = dir;
-#endif
-
         }          
         else
         {
             lastMagn = Vector2.zero;
+            lastDIr = Vector2.zero;
         }
+    }
+
+    public void ForceMobile()
+    {
+        forceMobile = true;
     }
 }
