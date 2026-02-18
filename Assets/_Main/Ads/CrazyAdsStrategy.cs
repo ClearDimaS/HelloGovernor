@@ -30,7 +30,7 @@ public class CrazyAdsStrategy : AdsStrategy
                     playerInput.ForceMobile();
                     break;
                 default:
-                    throw new NotImplementedException($"not supported OS: {systemInfo.os.version}");
+                    break;
             }
         });
     }
