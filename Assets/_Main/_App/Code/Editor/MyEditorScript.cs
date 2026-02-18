@@ -16,13 +16,15 @@ class MyEditorScript {
     private const string BUILD_NAME_VAR = "BUILD_NAME_VAR";
     private const string PRODUCT_NAME_VAR = "PRODUCT_NAME_VAR";
     private const string VERSION_CODE_VAR = "VERSION_CODE_VAR";
-    private const string BUILD_NUMBER_IOS_VAR = "BUILD_NUMBER_IOS_VAR";
-    private const string BUNDLE_VERSION_ANDROID_VAR = "BUNDLE_VERSION_NUMBER_ANDROID_VAR";
     private const string BUILD_TYPE_VAR = "BUILD_TYPE_VAR";
     private const string KEYSTORE_PATH_VAR = "KEYSTORE_PATH_VAR";
     private const string KEYSTORE_PASS_VAR = "KEYSTORE_PASS_VAR";
     private const string KEYSTORE_ALIAS_VAR = "KEYSTORE_ALIAS_VAR";
     private const string KEYSTORE_ALIAS_PASS_VAR = "KEYSTORE_ALIAS_PASS_VAR";
+    
+    private const string BUILD_NUMBER_IOS_VAR = "BUILD_NUMBER_IOS_VAR";
+    private const string BUNDLE_VERSION_ANDROID_VAR = "BUNDLE_VERSION_NUMBER_ANDROID_VAR";
+    private const string BUNDLE_VERSION_WEBGL_VAR = "BUNDLE_VERSION_NUMBER_WEBGL_VAR";
 
     [MenuItem ("Custom/CI/Build iOS")]
     static void PerformIOSBuild ()
@@ -38,6 +40,22 @@ class MyEditorScript {
         }
         string target_dir = $"IOS/{dir}";
         GenericBuild(SCENES, TARGET_DIR + "/" + target_dir, BuildTarget.iOS,BuildOptions.None);
+    }
+
+    [MenuItem ("Custom/CI/Build WebGL")]
+    static void PerformWebGL_Build()
+    {
+        GenericPreBuild();
+        UnityEditor.PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
+        UnityEditor.PlayerSettings.SetIncrementalIl2CppBuild(BuildTargetGroup.iOS, true);
+        
+        var dir = Application.productName;
+        if (TryGetEnv(BUILD_NAME_VAR, out string buildPath))
+        {
+            dir = buildPath;
+        }
+        string target_dir = $"WebGL/{dir}";
+        GenericBuild(SCENES, TARGET_DIR + "/" + target_dir, BuildTarget.WebGL,BuildOptions.None);
     }
     
     [MenuItem ("Custom/CI/Build Android")]
@@ -93,6 +111,7 @@ class MyEditorScript {
         {
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, bundleId);
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, bundleId);
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.WebGL, bundleId);
         }
     }
     
@@ -114,6 +133,14 @@ class MyEditorScript {
                 PlayerSettings.Android.bundleVersionCode = bundleNumber; 
             }
             buildTarget = NamedBuildTarget.Android;
+        }
+        else if (build_target == BuildTarget.WebGL)
+        {
+            if (TryGetEnv(BUNDLE_VERSION_WEBGL_VAR, out var bundleVersionNumber) && Int32.TryParse(bundleVersionNumber, out int bundleNumber))
+            {
+                PlayerSettings.Android.bundleVersionCode = bundleNumber; 
+            }
+            buildTarget = NamedBuildTarget.WebGL;
         }
         
         var envTarget = EnvironmentVariableTarget.Process;
@@ -164,6 +191,10 @@ class MyEditorScript {
             {
                 PlayerSettings.Android.bundleVersionCode = bundleNumber; 
             }
+        }
+        else
+        {
+       
         }
 
         if (TryGetEnv(VERSION_CODE_VAR, out var version_code))
