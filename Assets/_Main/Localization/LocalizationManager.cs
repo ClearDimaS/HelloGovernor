@@ -15,8 +15,6 @@ public class LocalizationManager : Singleton<LocalizationManager>
     public ReactiveProperty<List<Locale>> Locales { get; private set; } = new();
     public ReactiveProperty<Locale> CurrentLocale { get; private set; } = new();
 
-    private float lastChangeTime = 1f;
-    
     protected override void OnCreated()
     {
         base.OnCreated();
@@ -43,6 +41,17 @@ public class LocalizationManager : Singleton<LocalizationManager>
         Locales.Value = locales;
         
         SetLocale(savedLocale.Get());
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    private void OnLocaleChanged(Locale newLocale)
+    {
+        CurrentLocale.Value = newLocale;
     }
 
     public void SetLocale(string code)
@@ -50,9 +59,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
         Locale desiredLocale = LocalizationSettings.AvailableLocales.GetLocale(code);
         if (desiredLocale != null)
         {
-            lastChangeTime = Time.time;
             LocalizationSettings.SelectedLocale = desiredLocale;
-            CurrentLocale.Value = desiredLocale;
         }
         else
         {
@@ -83,11 +90,5 @@ public class LocalizationManager : Singleton<LocalizationManager>
         }
 
         onLoad(op.Result);
-    }
-
-
-    public bool IsLoadedQuests()
-    {
-        return Time.time - lastChangeTime > 1f;
     }
 }
