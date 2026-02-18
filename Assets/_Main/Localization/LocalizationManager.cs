@@ -18,6 +18,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     protected override void OnCreated()
     {
         base.OnCreated();
+        DontDestroyOnLoad(gameObject);
         StartCoroutine(Init());
         savedLocale = new PlayerPrefsStringRepository("locale_cache");
     }

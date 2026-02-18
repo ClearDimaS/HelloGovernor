@@ -44,17 +44,7 @@ public class LoadingScreen : Singleton<LoadingScreen>
 
         await WaitOperation(() => true, () =>1f, 0.75f, 1f);
 
-        var doneCounter = 0;
-        foreach (var tab in localizedAssetTable)
-        {
-            var tableOp = tab.GetTableAsync();
-            UniTask.WaitUntil(() =>tableOp.IsDone).ContinueWith(() =>
-            {
-                doneCounter++;
-            });
-        }
-
-        while (doneCounter < localizedAssetTable.Length)
+        while (LocalizationManager.Instance.CurrentLocale.Value == null)
         {
             await UniTask.Yield();
         }
