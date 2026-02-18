@@ -26,6 +26,8 @@ class MyEditorScript {
     private const string BUNDLE_VERSION_ANDROID_VAR = "BUNDLE_VERSION_NUMBER_ANDROID_VAR";
     private const string BUNDLE_VERSION_WEBGL_VAR = "BUNDLE_VERSION_NUMBER_WEBGL_VAR";
 
+    private const string PLATFORM_VAR = "PLATFORM_VAR";
+
     [MenuItem ("Custom/CI/Build iOS")]
     static void PerformIOSBuild ()
     {
@@ -141,6 +143,46 @@ class MyEditorScript {
                 PlayerSettings.Android.bundleVersionCode = bundleNumber; 
             }
             buildTarget = NamedBuildTarget.WebGL;
+            
+            var symbols = PlayerSettings.GetScriptingDefineSymbols(buildTarget);
+            List<string> symbolsArr;
+            if (TryGetEnv(PLATFORM_VAR, out string platform))
+            {
+                var YandexWeb = "YandexWeb";
+                var CrazyWeb = "CrazyWeb";
+                symbolsArr = symbols.Split(";").ToList();
+                symbolsArr.Remove(YandexWeb);
+                symbolsArr.Remove(CrazyWeb);
+                
+                if (platform == "Yandex")
+                {
+                    symbolsArr.Add(YandexWeb);
+                }
+                else if(platform == "Crazy")
+                {
+                    symbolsArr.Add(CrazyWeb);
+                }
+                else
+                {
+                    Debug.LogError($"couldnt change define symbols! (no platform var found)");
+                    throw new NotImplementedException("couldnt change define symbols! (no platform var found)");
+                    return;
+                }
+                
+                var edittedSymbols = "";
+                foreach (var symbol in symbolsArr)
+                {
+                    edittedSymbols += $"{symbol};";
+                }
+                Debug.Log($"scripting symbols after platform: {edittedSymbols}");
+                PlayerSettings.SetScriptingDefineSymbols(buildTarget, edittedSymbols);
+            }
+            else
+            {
+                Debug.LogError($"couldnt change define symbols! (no platform var found)");
+                throw new NotImplementedException("couldnt change define symbols! (no platform var found)");
+                return;
+            }
         }
         
         var envTarget = EnvironmentVariableTarget.Process;
